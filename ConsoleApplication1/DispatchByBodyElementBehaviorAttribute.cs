@@ -42,6 +42,7 @@ namespace OnvifProxy
                 {
                      dispatchDictionary.Add(dispatchBodyElement.QName, 
                                       operationDescription.Name);
+                     break;
                 }
             }
             dispatchRuntime.OperationSelector = 

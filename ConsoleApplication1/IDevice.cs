@@ -33,10 +33,8 @@ namespace Device
     [System.ServiceModel.ServiceContractAttribute(Namespace = "http://www.onvif.org/ver10/device/wsdl",
         ConfigurationName = "NetworkVideoTransmitter"),
     XmlSerializerFormat,
-    OnvifProxy.DispatchByBodyElementBehavior
-    /*,
-    SecurityContractBehavior*/
-    ] //my addition
+    OnvifProxy.DispatchByBodyElementBehavior,
+    OnvifProxy.SecurityContractBehavior]
 
     public interface IDevice
     {
@@ -44,6 +42,7 @@ namespace Device
         // CODEGEN: Параметр "Service" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
        OnvifProxy.DispatchBodyElement("GetServices", "http://www.onvif.org/ver10/device/wsdl")]
+        [OnvifProxy.SecurityOperationBehavoir("GetServices", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "Service")]
@@ -59,6 +58,7 @@ namespace Device
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"/*, ProtectionLevel = ProtectionLevel.Sign*/),
        OnvifProxy.DispatchBodyElement("GetDeviceInformation", "http://www.onvif.org/ver10/device/wsdl")]
+        [OnvifProxy.SecurityOperationBehavoir("GetDeviceInformation", "http://www.onvif.org/ver10/device/wsdl", 0)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "Manufacturer")]

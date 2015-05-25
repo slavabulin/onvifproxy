@@ -12,7 +12,7 @@ using System.Runtime.Serialization;
 using System.Security.Cryptography;
 using System.Collections.ObjectModel;
 
-namespace NetworkVideoTransmitter
+namespace OnvifProxy
 {
     public class SecurityOperationBehavoirAttribute : Attribute, IOperationBehavior
     {
@@ -20,7 +20,7 @@ namespace NetworkVideoTransmitter
         static List<XmlQualifiedName> anonList = new List<XmlQualifiedName>();
         static List<XmlQualifiedName> operatorList = new List<XmlQualifiedName>();
         static List<XmlQualifiedName> userList = new List<XmlQualifiedName>();
-        static Dictionary<string, List<XmlQualifiedName>> summartList = new Dictionary<string, List<XmlQualifiedName>>();
+        static Dictionary<string, List<XmlQualifiedName>> summaryList = new Dictionary<string, List<XmlQualifiedName>>();
 
 
         public SecurityOperationBehavoirAttribute(string name)
@@ -61,13 +61,17 @@ namespace NetworkVideoTransmitter
         {
             get
             {
-                summartList.Add("anon", anonList);
-                summartList.Add("admin", adminList);
-                summartList.Add("user", userList);
-                summartList.Add("oper", operatorList);
-                return summartList;
+                summaryList = new Dictionary<string, List<XmlQualifiedName>>();
+                summaryList.Add("anon", anonList);
+                summaryList.Add("admin", adminList);
+                summaryList.Add("user", userList);
+                summaryList.Add("oper", operatorList);
+                return summaryList;
             }
-            set { summartList = value; }
+            set
+            {
+                summaryList = value; 
+            }
         }
 
         public void AddBindingParameters(OperationDescription operationDescription, BindingParameterCollection bindingParameters)
@@ -108,16 +112,23 @@ namespace NetworkVideoTransmitter
         public void ApplyDispatchBehavior(ContractDescription contractDescription, ServiceEndpoint endpoint, System.ServiceModel.Dispatcher.DispatchRuntime dispatchRuntime)
         {
             Dictionary<string, List<XmlQualifiedName>> dispatchDictionary = new Dictionary<string, List<XmlQualifiedName>>();
+            SecurityOperationBehavoirAttribute securityOperationBehavoirAttribute;
 
-            SecurityOperationBehavoirAttribute securityOperationBehavoirAttribute =
-                    contractDescription.Operations[0].Behaviors.Find<SecurityOperationBehavoirAttribute>();
-            dispatchDictionary = securityOperationBehavoirAttribute.QName;
+            foreach (OperationDescription operationDescription in contractDescription.Operations)
+            {
+                securityOperationBehavoirAttribute =
+                    operationDescription.Behaviors.Find<SecurityOperationBehavoirAttribute>();
+                if (securityOperationBehavoirAttribute != null && securityOperationBehavoirAttribute.QName != null)
+                {
+                    dispatchDictionary = securityOperationBehavoirAttribute.QName;
+                    dispatchRuntime.OperationSelector = new SecurityOperationSelector(
+                      dispatchDictionary,
+                      dispatchRuntime.UnhandledDispatchOperation.Name
+                      );
+                }
+            }
 
-            dispatchRuntime.OperationSelector =
-               new SecurityOperationSelector(
-                  dispatchDictionary,
-                  dispatchRuntime.UnhandledDispatchOperation.Name
-                  );
+            
         }
 
         public void Validate(ContractDescription contractDescription, ServiceEndpoint endpoint)
