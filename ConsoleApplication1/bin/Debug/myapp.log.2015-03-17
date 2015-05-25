@@ -1,0 +1,14 @@
+2015-03-17 11:34:20,640 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-03-17 11:34:22,593 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-03-17 11:34:22,593 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-03-17 11:34:22,671 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-03-17 11:34:22,890 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-03-17 11:34:25,218 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-03-17 11:34:25,234 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-03-17 11:34:25,250 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-03-17 11:34:29,734 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-03-17 11:34:29,750 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-03-17 11:35:31,546 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-03-17 11:35:37,031 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue

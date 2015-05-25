@@ -1,0 +1,14 @@
+
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkCards - массив сетевых карт в виде их id-шников- отсюда берем id
+
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4D36E972-E325-11CE-BFC1-08002bE10318}\0008
+
+ищем по - NetCfgInstanceId - {201DF4B6-B3C8-435F-8427-80594800CA41} - id сетевушки
+
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4D36E972-E325-11CE-BFC1-08002bE10318} - путь, где лежат настройки сетевушки (дуплекс-хуюплекс)
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\{30E75CDA-8088-4A67-997C-24D329DDB652}\Parameters\Tcpip - настройки дхцп enableDHCP=1 - включен.
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\Tcpip\Parameters\Interfaces\{72284FD1-5687-4F12-9175-B2BB34446ED5} - всё-таки значения надо брать наверное отсюда
+
+как делать это без реестра:
+http://msdn.microsoft.com/en-us/library/windows/desktop/aa394217(v=vs.85).aspx
+http://social.msdn.microsoft.com/Forums/ru-RU/csharpgeneral/thread/8bf269bd-128e-457f-8c64-09834e995b59

@@ -1,0 +1,17 @@
+2015-05-15 12:07:04,109 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-05-15 12:07:05,250 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-05-15 12:07:05,250 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-05-15 12:07:05,359 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-05-15 12:07:05,703 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-05-15 12:07:06,671 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-05-15 12:07:06,703 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-05-15 12:07:06,703 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-05-15 12:07:08,890 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-05-15 12:07:08,890 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-05-15 12:08:28,328 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
+2015-05-15 12:08:28,734 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-05-15 12:08:51,296 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetSnapshotUri
+2015-05-15 12:10:03,406 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-05-15 12:10:25,937 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetSnapshotUri

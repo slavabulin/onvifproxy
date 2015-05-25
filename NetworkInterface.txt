@@ -1,0 +1,48 @@
+NetworkInterface:
+
+NetworkInterfaceInfo
+	string Name
+	string HwAddress - NetworkInterface.GetPhysicalAddress
+	int MTU - IPv4InterfaceProperties.Mtu
+	bool MTUSpecified
+NetworkInterfaceLink
+	NetworkInterfaceConnectionSetting AdminSettings
+		bool AutoNegotiation
+		int Speed
+		Duplex Duplex - (Full,Half)
+	NetworkInterfaceConnectionSetting OperSettings
+		bool AutoNegotiation
+		int Speed - NetworkInterface.Speed
+		Duplex Duplex - (Full,Half)
+	int InterfaceType
+IPv4NetworkInterface
+	bool Enabled
+	IPv4Configuration Config
+		PrefixedIPv4Address[] Manual
+			string Address
+			int PrefixLength
+		PrefixedIPv4Address LinkLocal - IPv4InterfaceProperties.IsAutomaticPrivateAddressingActive
+			string Address
+			int PrefixLength
+		PrefixedIPv4Address FromDHCP - IPv4InterfaceProperties.IsDhcpEnabled
+			string Address
+			int PrefixLength
+		bool DHCP
+IPv6NetworkInterface
+	bool Enabled
+	IPv6Configuration Config
+		bool AcceptRouterAdvert
+		bool AcceptRouterAdvertSpecified
+		IPv6DHCPConfiguration DHCP
+		PrefixedIPv6Address[] Manual
+			string Address
+			int PrefixLength
+		PrefixedIPv6Address[] LinkLocal
+			string Address
+			int PrefixLength
+		PrefixedIPv6Address[] FromDHCP
+			string Address
+			int PrefixLength
+		PrefixedIPv6Address[] FromRA
+			string Address
+			int PrefixLength
