@@ -258,3 +258,79 @@
 2015-05-25 16:54:25,203 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
 2015-05-25 16:54:25,203 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
 2015-05-25 16:55:01,375 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-05-25 17:16:35,156 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-05-25 17:16:59,234 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-05-25 17:17:01,312 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-05-25 17:17:01,312 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-05-25 17:17:01,484 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-05-25 17:17:01,765 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-05-25 17:17:04,703 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-05-25 17:17:04,765 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-05-25 17:17:04,781 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-05-25 17:17:27,265 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-05-25 17:17:28,390 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-05-25 17:17:28,390 [DEBUG] OnvifProxy.TyphoonCom - IOException - Не удается прочитать данные из транспортного соединения: EndReceive может вызываться только один раз для каждой асинхронной операции..
+2015-05-25 17:17:28,656 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-05-25 17:18:34,437 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-05-25 17:18:34,453 [DEBUG] OnvifProxy.TyphoonCom - stream.DataAvailable - Exception Ссылка на объект не указывает на экземпляр объекта.
+2015-05-25 17:18:36,328 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-05-25 17:18:38,000 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-05-25 17:18:38,562 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-05-25 17:18:38,609 [DEBUG] OnvifProxy.TyphoonCom - stream.DataAvailable - Exception Ссылка на объект не указывает на экземпляр объекта.
+2015-05-25 17:18:38,609 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-05-25 17:18:38,609 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-05-25 17:18:39,796 [DEBUG] OnvifProxy.TyphoonCom - stream.DataAvailable - Exception Ссылка на объект не указывает на экземпляр объекта.
+2015-05-25 17:18:39,796 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-05-25 17:18:39,796 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-05-25 17:18:40,859 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-05-25 17:18:40,859 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-05-25 17:18:40,859 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-05-25 17:18:41,343 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-05-25 17:18:41,359 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-05-25 17:20:55,640 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-05-25 17:20:56,765 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-05-25 17:20:56,781 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-05-25 17:20:56,828 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-05-25 17:20:56,906 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-05-25 17:20:57,984 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-05-25 17:20:58,015 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-05-25 17:20:58,015 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-05-25 17:21:01,343 [DEBUG] OnvifProxy.TyphoonCom - IOException - Не удается прочитать данные из транспортного соединения: EndReceive может вызываться только один раз для каждой асинхронной операции..
+2015-05-25 17:21:05,031 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-05-25 17:21:05,031 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-05-25 17:21:16,828 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-05-25 17:21:17,593 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-05-25 17:21:17,593 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-05-25 17:21:17,609 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-05-25 17:21:17,687 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-05-25 17:21:18,593 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-05-25 17:21:18,609 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-05-25 17:21:18,609 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-05-25 17:21:20,734 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-05-25 17:21:20,734 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-05-25 17:40:10,640 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-05-25 17:40:11,984 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-05-25 17:40:11,984 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-05-25 17:40:12,015 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-05-25 17:40:12,140 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-05-25 17:40:13,343 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-05-25 17:40:13,375 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-05-25 17:40:13,375 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-05-25 17:40:19,718 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-05-25 17:40:19,718 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/

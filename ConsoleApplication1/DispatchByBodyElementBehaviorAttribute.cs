@@ -42,13 +42,14 @@ namespace OnvifProxy
                 {
                      dispatchDictionary.Add(dispatchBodyElement.QName, 
                                       operationDescription.Name);
-                     break;
+                     dispatchRuntime.OperationSelector =
+                     new DispatchByBodyElementOperationSelector(
+                        dispatchDictionary,
+                        dispatchRuntime.UnhandledDispatchOperation.Name);
+                     //break;
                 }
             }
-            dispatchRuntime.OperationSelector = 
-                    new DispatchByBodyElementOperationSelector(
-                       dispatchDictionary, 
-                       dispatchRuntime.UnhandledDispatchOperation.Name);
+            
         }
 
         public void Validate(ContractDescription contractDescription, ServiceEndpoint endpoint)
