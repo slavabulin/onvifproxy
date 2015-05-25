@@ -33,7 +33,10 @@ namespace Device
     [System.ServiceModel.ServiceContractAttribute(Namespace = "http://www.onvif.org/ver10/device/wsdl",
         ConfigurationName = "NetworkVideoTransmitter"),
     XmlSerializerFormat,
-    OnvifProxy.DispatchByBodyElementBehavior] //my addition
+    OnvifProxy.DispatchByBodyElementBehavior
+    /*,
+    SecurityContractBehavior*/
+    ] //my addition
 
     public interface IDevice
     {

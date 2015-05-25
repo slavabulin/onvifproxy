@@ -18,9 +18,6 @@ using System.ServiceModel.Dispatcher;
 
 
 
-
-
-
 namespace OnvifProxy
 {    
     public class Program
