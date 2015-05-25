@@ -120,11 +120,13 @@ namespace OnvifProxy
                     operationDescription.Behaviors.Find<SecurityOperationBehavoirAttribute>();
                 if (securityOperationBehavoirAttribute != null && securityOperationBehavoirAttribute.QName != null)
                 {
+                    //dispatchDictionary.Add(securityOperationBehavoirAttribute.QName.
                     dispatchDictionary = securityOperationBehavoirAttribute.QName;
                     dispatchRuntime.OperationSelector = new SecurityOperationSelector(
                       dispatchDictionary,
                       dispatchRuntime.UnhandledDispatchOperation.Name
                       );
+                    break;
                 }
             }
 
