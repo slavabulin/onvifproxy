@@ -41,8 +41,8 @@ namespace Device
 
         // CODEGEN: Параметр "Service" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetServices", "http://www.onvif.org/ver10/device/wsdl")]
-        [OnvifProxy.SecurityOperationBehavoir("GetServices", "http://www.onvif.org/ver10/device/wsdl", 3)]
+       OnvifProxy.SecurityOperationBehavoir("GetServices", "http://www.onvif.org/ver10/device/wsdl", 3)]
+        //[OnvifProxy.SecurityOperationBehavoir("GetServices", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "Service")]
@@ -50,42 +50,42 @@ namespace Device
 
         
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetServiceCapabilities", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetServiceCapabilities", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "Capabilities")]
         DeviceServiceCapabilities GetServiceCapabilities();
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"/*, ProtectionLevel = ProtectionLevel.Sign*/),
-       OnvifProxy.DispatchBodyElement("GetDeviceInformation", "http://www.onvif.org/ver10/device/wsdl")]
-        [OnvifProxy.SecurityOperationBehavoir("GetDeviceInformation", "http://www.onvif.org/ver10/device/wsdl", 0)]
+       OnvifProxy.SecurityOperationBehavoir("GetDeviceInformation", "http://www.onvif.org/ver10/device/wsdl", 0)]
+       // [OnvifProxy.SecurityOperationBehavoir("GetDeviceInformation", "http://www.onvif.org/ver10/device/wsdl", 3, 0)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "Manufacturer")]
         string GetDeviceInformation(out string Model, out string FirmwareVersion, out string SerialNumber, out string HardwareId);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("SetSystemDateAndTime", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("SetSystemDateAndTime", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void SetSystemDateAndTime(SetDateTimeType DateTimeType, bool DaylightSavings, TimeZone TimeZone, DateTime UTCDateTime);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetSystemDateAndTime", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetSystemDateAndTime", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "SystemDateAndTime")]
         SystemDateTime GetSystemDateAndTime();
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("SetSystemFactoryDefault", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("SetSystemFactoryDefault", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void SetSystemFactoryDefault(FactoryDefaultType FactoryDefault);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*", Action = "*"),
         //[System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("UpgradeSystemFirmware", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("UpgradeSystemFirmware", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [System.ServiceModel.FaultContract(typeof(AttachmentData))]
@@ -93,7 +93,7 @@ namespace Device
         string UpgradeSystemFirmware(AttachmentData Firmware);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("SystemReboot", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("SystemReboot", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "Message")]
@@ -101,28 +101,28 @@ namespace Device
 
         // CODEGEN: Параметр "BackupFiles" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
        [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("RestoreSystem", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("RestoreSystem", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         RestoreSystemResponse RestoreSystem(RestoreSystemRequest request);
 
         // CODEGEN: Параметр "BackupFiles" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetSystemBackup", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetSystemBackup", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "BackupFiles")]
         GetSystemBackupResponse GetSystemBackup(GetSystemBackupRequest request);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetSystemLog", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetSystemLog", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "SystemLog")]
         SystemLog GetSystemLog(SystemLogType LogType);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetSystemSupportInformation", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetSystemSupportInformation", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "SupportInformation")]
@@ -130,7 +130,7 @@ namespace Device
 
         // CODEGEN: Параметр "Scopes" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetScopes", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetScopes", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         //[return: System.ServiceModel.MessageParameterAttribute(Name = "Scopes")]
@@ -139,54 +139,54 @@ namespace Device
 
         // CODEGEN: Параметр "Scopes" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("SetScopes", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("SetScopes", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         SetScopesResponse SetScopes(SetScopesRequest request);
 
         // CODEGEN: Параметр "ScopeItem" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("AddScopes", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("AddScopes", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         AddScopesResponse AddScopes(AddScopesRequest request);
 
         // CODEGEN: Параметр "ScopeItem" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("RemoveScopes", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("RemoveScopes", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         RemoveScopesResponse RemoveScopes(RemoveScopesRequest request);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetDiscoveryMode", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetDiscoveryMode", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "DiscoveryMode")]
         DiscoveryMode GetDiscoveryMode();
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("SetDiscoveryMode", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("SetDiscoveryMode", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void SetDiscoveryMode(DiscoveryMode DiscoveryMode);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetRemoteDiscoveryMode", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetRemoteDiscoveryMode", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "RemoteDiscoveryMode")]
         DiscoveryMode GetRemoteDiscoveryMode();
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("SetRemoteDiscoveryMode", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("SetRemoteDiscoveryMode", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void SetRemoteDiscoveryMode(DiscoveryMode RemoteDiscoveryMode);
 
         // CODEGEN: Параметр "DPAddress" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetDPAddresses", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetDPAddresses", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "DPAddress")]
@@ -194,35 +194,35 @@ namespace Device
 
         // CODEGEN: Параметр "DPAddress" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("SetDPAddresses", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("SetDPAddresses", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         SetDPAddressesResponse SetDPAddresses(SetDPAddressesRequest request);
 
         // CODEGEN: Контракт генерации сообщений с пространством имен частей сообщения () не соответствует значению по умолчанию (http://www.onvif.org/ver10/device/wsdl).
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetEndpointReference", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetEndpointReference", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "GUID")]
         GetEndpointReferenceResponse GetEndpointReference(GetEndpointReferenceRequest request);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetRemoteUser", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetRemoteUser", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "RemoteUser")]
         RemoteUser GetRemoteUser();
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("SetRemoteUser", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("SetRemoteUser", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void SetRemoteUser(RemoteUser RemoteUser);
 
         // CODEGEN: Параметр "User" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetUsers", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetUsers", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "User")]
@@ -230,28 +230,28 @@ namespace Device
 
         // CODEGEN: Параметр "User" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("CreateUsers", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("CreateUsers", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         CreateUsersResponse CreateUsers(CreateUsersRequest request);
 
         // CODEGEN: Параметр "Username" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("DeleteUsers", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("DeleteUsers", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         DeleteUsersResponse DeleteUsers(DeleteUsersRequest request);
 
         // CODEGEN: Параметр "User" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("SetUser", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("SetUser", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         SetUserResponse SetUser(SetUserRequest request);
 
         // CODEGEN: Параметр "WsdlUrl" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetWsdlUrl", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetWsdlUrl", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "WsdlUrl")]
@@ -259,14 +259,14 @@ namespace Device
 
         // CODEGEN: Параметр "Category" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*", Action = "http://www.onvif.org/ver10/device/wsdl/GetCapabilities"),
-       OnvifProxy.DispatchBodyElement("GetCapabilities", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetCapabilities", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "Capabilities")]
         GetCapabilitiesResponse GetCapabilities(GetCapabilitiesRequest request);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetHostname", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetHostname", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "HostnameInformation")]
@@ -274,20 +274,20 @@ namespace Device
 
         // CODEGEN: Параметр "Name" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("SetHostname", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("SetHostname", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         SetHostnameResponse SetHostname(SetHostnameRequest request);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("SetHostnameFromDHCP", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("SetHostnameFromDHCP", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "RebootNeeded")]
         bool SetHostnameFromDHCP(bool FromDHCP);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetDNS", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetDNS", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "DNSInformation")]
@@ -295,13 +295,13 @@ namespace Device
 
         // CODEGEN: Параметр "SearchDomain" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("SetDNS", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("SetDNS", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         SetDNSResponse SetDNS(SetDNSRequest request);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetNTP", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetNTP", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "NTPInformation")]
@@ -309,13 +309,13 @@ namespace Device
 
         // CODEGEN: Параметр "NTPManual" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("SetNTP", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("SetNTP", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         SetNTPResponse SetNTP(SetNTPRequest request);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetDynamicDNS", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetDynamicDNS", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "DynamicDNSInformation")]
@@ -323,21 +323,21 @@ namespace Device
 
         // CODEGEN: Параметр "Name" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("SetDynamicDNS", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("SetDynamicDNS", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         SetDynamicDNSResponse SetDynamicDNS(SetDynamicDNSRequest request);
 
         // CODEGEN: Параметр "NetworkInterfaces" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetNetworkInterfaces", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetNetworkInterfaces", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "NetworkInterfaces")]
         GetNetworkInterfacesResponse GetNetworkInterfaces(GetNetworkInterfacesRequest request);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("SetNetworkInterfaces", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("SetNetworkInterfaces", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "RebootNeeded")]
@@ -345,7 +345,7 @@ namespace Device
 
         // CODEGEN: Параметр "NetworkProtocols" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetNetworkProtocols", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetNetworkProtocols", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "NetworkProtocols")]
@@ -353,13 +353,13 @@ namespace Device
 
         // CODEGEN: Параметр "NetworkProtocols" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("SetNetworkProtocols", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("SetNetworkProtocols", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         SetNetworkProtocolsResponse SetNetworkProtocols(SetNetworkProtocolsRequest request);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetNetworkDefaultGateway", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetNetworkDefaultGateway", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "NetworkGateway")]
@@ -367,65 +367,65 @@ namespace Device
 
         // CODEGEN: Параметр "IPv4Address" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("SetNetworkDefaultGateway", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("SetNetworkDefaultGateway", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         SetNetworkDefaultGatewayResponse SetNetworkDefaultGateway(SetNetworkDefaultGatewayRequest request);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetZeroConfiguration", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetZeroConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "ZeroConfiguration")]
         NetworkZeroConfiguration GetZeroConfiguration();
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("SetZeroConfiguration", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("SetZeroConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void SetZeroConfiguration(string InterfaceToken, bool Enabled);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetIPAddressFilter", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetIPAddressFilter", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "IPAddressFilter")]
         IPAddressFilter GetIPAddressFilter();
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("SetIPAddressFilter", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("SetIPAddressFilter", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void SetIPAddressFilter(IPAddressFilter IPAddressFilter);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("AddIPAddressFilter", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("AddIPAddressFilter", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void AddIPAddressFilter(IPAddressFilter IPAddressFilter);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("RemoveIPAddressFilter", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("RemoveIPAddressFilter", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void RemoveIPAddressFilter(IPAddressFilter IPAddressFilter);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetAccessPolicy", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetAccessPolicy", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "PolicyFile")]
         BinaryData GetAccessPolicy();
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("SetAccessPolicy", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("SetAccessPolicy", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void SetAccessPolicy(BinaryData PolicyFile);
 
         // CODEGEN: Параметр "CertificateID" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("CreateCertificate", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("CreateCertificate", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "NvtCertificate")]
@@ -433,7 +433,7 @@ namespace Device
 
         // CODEGEN: Параметр "NvtCertificate" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetCertificates", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetCertificates", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "NvtCertificate")]
@@ -441,7 +441,7 @@ namespace Device
 
         // CODEGEN: Параметр "CertificateStatus" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetCertificatesStatus", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetCertificatesStatus", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "CertificateStatus")]
@@ -449,21 +449,21 @@ namespace Device
 
         // CODEGEN: Параметр "CertificateStatus" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("SetCertificatesStatus", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("SetCertificatesStatus", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         SetCertificatesStatusResponse SetCertificatesStatus(SetCertificatesStatusRequest request);
 
         // CODEGEN: Параметр "CertificateID" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("DeleteCertificates", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("DeleteCertificates", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         DeleteCertificatesResponse DeleteCertificates(DeleteCertificatesRequest request);
 
         // CODEGEN: Параметр "CertificateID" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetPkcs10Request", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetPkcs10Request", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "Pkcs10Request")]
@@ -471,46 +471,46 @@ namespace Device
 
         // CODEGEN: Параметр "NVTCertificate" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("LoadCertificates", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("LoadCertificates", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         LoadCertificatesResponse LoadCertificates(LoadCertificatesRequest request);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetClientCertificateMode", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetClientCertificateMode", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "Enabled")]
         bool GetClientCertificateMode();
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("SetClientCertificateMode", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("SetClientCertificateMode", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void SetClientCertificateMode(bool Enabled);
 
         // CODEGEN: Параметр "RelayOutputs" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetRelayOutputs", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetRelayOutputs", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "RelayOutputs")]
         GetRelayOutputsResponse GetRelayOutputs(GetRelayOutputsRequest request);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("SetRelayOutputSettings", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("SetRelayOutputSettings", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void SetRelayOutputSettings(string RelayOutputToken, RelayOutputSettings Properties);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("SetRelayOutputState", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("SetRelayOutputState", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void SetRelayOutputState(string RelayOutputToken, RelayLogicalState LogicalState);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("SendAuxiliaryCommand", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("SendAuxiliaryCommand", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "AuxiliaryCommandResponse")]
@@ -518,7 +518,7 @@ namespace Device
 
         // CODEGEN: Параметр "CACertificate" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetCACertificates", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetCACertificates", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "CACertificate")]
@@ -526,14 +526,14 @@ namespace Device
 
         // CODEGEN: Параметр "CertificateWithPrivateKey" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("LoadCertificateWithPrivateKey", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("LoadCertificateWithPrivateKey", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         LoadCertificateWithPrivateKeyResponse LoadCertificateWithPrivateKey(LoadCertificateWithPrivateKeyRequest request);
 
         // CODEGEN: Параметр "CertificateID" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetCertificateInformation", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetCertificateInformation", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "CertificateInformation")]
@@ -541,25 +541,25 @@ namespace Device
 
         // CODEGEN: Параметр "CACertificate" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("LoadCACertificates", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("LoadCACertificates", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         LoadCACertificatesResponse LoadCACertificates(LoadCACertificatesRequest request);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("CreateDot1XConfiguration", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("CreateDot1XConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void CreateDot1XConfiguration(Dot1XConfiguration Dot1XConfiguration);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("SetDot1XConfiguration", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("SetDot1XConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void SetDot1XConfiguration(Dot1XConfiguration Dot1XConfiguration);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetDot1XConfiguration", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetDot1XConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "Dot1XConfiguration")]
@@ -567,7 +567,7 @@ namespace Device
 
         // CODEGEN: Параметр "Dot1XConfiguration" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetDot1XConfigurations", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetDot1XConfigurations", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "Dot1XConfiguration")]
@@ -575,21 +575,21 @@ namespace Device
 
         // CODEGEN: Параметр "Dot1XConfigurationToken" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("DeleteDot1XConfiguration", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("DeleteDot1XConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         DeleteDot1XConfigurationResponse DeleteDot1XConfiguration(DeleteDot1XConfigurationRequest request);
 
         // CODEGEN: Контракт генерации сообщений с пространством имен частей сообщения () не соответствует значению по умолчанию (http://www.onvif.org/ver10/device/wsdl).
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetDot11Capabilities", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetDot11Capabilities", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "Capabilities")]
         GetDot11CapabilitiesResponse GetDot11Capabilities(GetDot11CapabilitiesRequest request);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetDot11Status", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetDot11Status", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "Status")]
@@ -597,7 +597,7 @@ namespace Device
 
         // CODEGEN: Параметр "Networks" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("ScanAvailableDot11Networks", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("ScanAvailableDot11Networks", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "Networks")]
@@ -605,7 +605,7 @@ namespace Device
 
         // CODEGEN: Параметр "SystemLogUris" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlArrayItemAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("GetSystemUris", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("GetSystemUris", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "SystemLogUris")]
@@ -613,7 +613,7 @@ namespace Device
 
         // CODEGEN: Параметр "UploadUri" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("StartFirmwareUpgrade", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("StartFirmwareUpgrade", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "UploadUri")]
@@ -621,7 +621,7 @@ namespace Device
 
         // CODEGEN: Параметр "UploadUri" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.DispatchBodyElement("StartSystemRestore", "http://www.onvif.org/ver10/device/wsdl")]
+       OnvifProxy.SecurityOperationBehavoir("StartSystemRestore", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "UploadUri")]
