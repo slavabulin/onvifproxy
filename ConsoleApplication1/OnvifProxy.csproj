@@ -110,6 +110,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SecurityAttributes.cs" />
+    <Compile Include="SecurityContractBehaviorAttribute.cs" />
+    <Compile Include="SecurityOperationBehaviorAttribute.cs" />
+    <Compile Include="SecurityOperationSelector.cs" />
     <Compile Include="Service1.svc.cs" />
     <Compile Include="SubscriptionManager.cs" />
     <Compile Include="TyphoonCom.cs" />
