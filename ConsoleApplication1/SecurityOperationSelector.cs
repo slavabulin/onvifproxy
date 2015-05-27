@@ -40,7 +40,7 @@ namespace OnvifProxy
                 XmlDictionaryReader bodyReader = msgcopy2.GetReaderAtBodyContents();
                 XmlQualifiedName lookupQName = new XmlQualifiedName(bodyReader.LocalName, bodyReader.NamespaceURI);
 
-                message = msgcopy1;
+                //message = msgcopy1;
                 //---------------------------------------
                 foreach (MessageHeaderInfo mheadinfo in message.Headers)
                 {
@@ -116,7 +116,7 @@ namespace OnvifProxy
                                                 //check if allowed method requested
                                                 foreach (XmlQualifiedName methodname in methodList)
                                                 {
-                                                    string tmpstring = methodname.Namespace + "/" + methodname.Name;
+                                                    //string tmpstring = methodname.Namespace + "/" + methodname.Name;
                                                     if (methodname == lookupQName)
                                                     {
                                                         message = msgcopy1;
