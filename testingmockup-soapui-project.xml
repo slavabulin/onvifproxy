@@ -13561,7 +13561,67 @@ xmlns="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext
 </s:Body></s:Envelope>
 
 -->
-]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.onvif.org/ver10/device/wsdl/Device/GetScopesRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="http://www.onvif.org/ver10/device/wsdl/GetServiceCapabilities" name="GetServiceCapabilities" bindingOperationName="GetServiceCapabilities" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://192.168.1.170/onvif/device_service</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:wsdl="http://www.onvif.org/ver10/device/wsdl">
+]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.onvif.org/ver10/device/wsdl/Device/GetScopesRequest"/><con:wsrmConfig version="1.2"/></con:call><con:call name="user_creds"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://192.168.1.170/onvif/device_service</con:endpoint><con:request><![CDATA[<s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope"
+xmlns:a="http://www.w3.org/2005/08/addressing">
+<s:Header>
+<Security s:mustUnderstand="1"
+xmlns="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+	<UsernameToken>
+		<Username>user</Username>
+		<Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest">o9Pv3czBUu4B+mUJRqkFsIz/CNY=</Password>
+		<Nonce EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary">39VOCjFTqEGHdamjw1XvBVkAAAAAAA==</Nonce>
+		<Created xmlns="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">2015-05-22T13:46:38.170Z</Created>
+	</UsernameToken>
+</Security>
+<a:MessageID>urn:uuid:fe273794-dfc6-4c15-887c-3d43055c74cb</a:MessageID>
+<a:ReplyTo>
+	<a:Address>http://www.w3.org/2005/08/addressing/anonymous</a:Address>
+</a:ReplyTo>
+<a:To s:mustUnderstand="1">http://192.168.1.170/onvif/device_service</a:To>
+</s:Header>
+<s:Body>
+<GetScopes xmlns="http://www.onvif.org/ver10/device/wsdl">
+<n1>5.9</n1>
+<n2>15.99</n2>
+</GetScopes>
+</s:Body></s:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.onvif.org/ver10/device/wsdl/Device/AddRequest"/><con:wsrmConfig version="1.2"/></con:call><con:call name="admin_creds"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://192.168.1.170/onvif/device_service</con:endpoint><con:request><![CDATA[<s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope"
+xmlns:a="http://www.w3.org/2005/08/addressing">
+<s:Header>
+<Security s:mustUnderstand="1"
+xmlns="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+	<UsernameToken>
+		<Username>admin</Username>
+		<Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest">wRHUFc1slwB8LaMm7QJnLaiD4cI=</Password>
+		<Nonce EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary">aN6VJLJZfkCkkjpXT6GbX1UAAAAAAA==</Nonce>
+		<Created xmlns="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">2015-05-13T13:44:47.631Z</Created>
+	</UsernameToken>
+</Security     >
+<a:MessageID>urn:uuid:fe273794-dfc6-4c15-887c-3d43055c74cb</a:MessageID>
+<a:ReplyTo>
+	<a:Address>http://www.w3.org/2005/08/addressing/anonymous</a:Address>
+</a:ReplyTo>
+<a:To s:mustUnderstand="1">http://192.168.1.170/onvif/device_service</a:To>
+</s:Header>
+<s:Body>
+<GetScopes xmlns="http://www.onvif.org/ver10/device/wsdl">
+<n1>5.9</n1>
+<n2>15.99</n2>
+</GetScopes>
+</s:Body></s:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.onvif.org/ver10/device/wsdl/Device/AddRequest"/><con:wsrmConfig version="1.2"/></con:call><con:call name="no_creds"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://192.168.1.170/onvif/device_service</con:endpoint><con:request><![CDATA[<s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope"
+xmlns:a="http://www.w3.org/2005/08/addressing">
+<s:Header>
+<a:MessageID>urn:uuid:fe273794-dfc6-4c15-887c-3d43055c74cb</a:MessageID>
+<a:ReplyTo>
+	<a:Address>http://www.w3.org/2005/08/addressing/anonymous</a:Address>
+</a:ReplyTo>
+<a:To s:mustUnderstand="1">http://192.168.1.170/onvif/device_service</a:To>
+</s:Header>
+<s:Body>
+<GetScopes xmlns="http://www.onvif.org/ver10/device/wsdl">
+<n1>5.9</n1>
+<n2>15.99</n2>
+</GetScopes>
+</s:Body></s:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.onvif.org/ver10/device/wsdl/Device/AddRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="http://www.onvif.org/ver10/device/wsdl/GetServiceCapabilities" name="GetServiceCapabilities" bindingOperationName="GetServiceCapabilities" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://192.168.1.170/onvif/device_service</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:wsdl="http://www.onvif.org/ver10/device/wsdl">
    <soap:Header/>
    <soap:Body>
       <wsdl:GetServiceCapabilities/>

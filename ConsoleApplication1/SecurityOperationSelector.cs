@@ -12,6 +12,7 @@ using System.Text;
 using System.Runtime.Serialization;
 using System.Security.Cryptography;
 using System.Collections.ObjectModel;
+using System.Xml.XPath;
 
 namespace OnvifProxy
 {
@@ -26,6 +27,38 @@ namespace OnvifProxy
             this.defaultOperationName = defaultOperationName;
         }
 
+        private Message CreateMessageCopy(Message message, XmlDictionaryReader body)
+        {
+            Message copy;
+
+            try
+            {
+                copy = Message.CreateMessage(message.Version, message.Headers.Action, body);
+                //copy = Message.CreateMessage(message.Version, null, body);//19.08
+            }
+            catch (ArgumentNullException e)
+            {
+                throw e;
+            }
+            if (message.Headers.Action == null)
+            {
+                message.Headers.Action = body.LocalName;
+                copy.Headers.CopyHeaderFrom(message, 0);///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                //
+                //copy.Headers.Action = "http://www.onvif.org/ver10/device/wsdl/" + body.LocalName;
+                copy.Headers.Action = body.NamespaceURI + "/" + body.LocalName;
+
+                copy.Properties.CopyProperties(message.Properties);
+                //Console.WriteLine(copy.Headers.Action.ToString());
+
+                //return copy;
+            }
+            //return message;
+            //Console.WriteLine("------------");
+            //Console.WriteLine(copy.Headers.Action.ToString());
+            return copy;
+        }
+
         public string SelectOperation(ref System.ServiceModel.Channels.Message message)
         {
             //!!!!can leak here (with buffer, message1, message2)!!!!!
@@ -35,14 +68,42 @@ namespace OnvifProxy
             {
                 List<XmlQualifiedName> methodList = new List<XmlQualifiedName>();
                 Usertype usertypefromfile = Usertype.wrongpass;
-                Message msgcopy1 = buffer.CreateMessage();// using
+                //Message msgcopy1 = buffer.CreateMessage();// using
+                
                 Message msgcopy2 = buffer.CreateMessage();//
                 XmlDictionaryReader bodyReader = msgcopy2.GetReaderAtBodyContents();
                 XmlQualifiedName lookupQName = new XmlQualifiedName(bodyReader.LocalName, bodyReader.NamespaceURI);
+                Message msgcopy1 = CreateMessageCopy(message, bodyReader);// using
+
+                //-----------------------------------------------------------------
+                //////////////////XPathNavigator navigator = buffer.CreateNavigator();
+                //////////////////using(MemoryStream memstream = new MemoryStream())
+                //////////////////{
+                //////////////////    XmlDocument xmldoc;
+                //////////////////    buffer.WriteMessage(memstream);
+                //////////////////}
+                //////////////////if (navigator.MoveToChild("Envelope", "http://www.w3.org/2003/05/soap-envelope"))
+                //////////////////{
+                //////////////////    if (navigator.MoveToChild("Header", "http://www.w3.org/2003/05/soap-envelope"))
+                //////////////////    {
+                //////////////////        if (navigator.MoveToChild("Security", "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"))
+                //////////////////        {
+                //////////////////            navigator.DeleteSelf();
+                //////////////////        };
+                //////////////////    };
+                    
+                //////////////////};
+                //XPathNodeIterator nodes = navigator.Select("/Header/Security");
+                ////navigator.MoveTo("/Header/Security");
+                //nodes.MoveNext();
+                //nodes.Current.DeleteSelf();
+                ////navigator.DeleteSelf();
+               
 
                 //message = msgcopy1;
                 //---------------------------------------
                 foreach (MessageHeaderInfo mheadinfo in message.Headers)
+                //foreach (MessageHeaderInfo mheadinfo in msgcopy2.Headers)
                 {
                     //check if security header exists
                     #region check security header
@@ -59,6 +120,7 @@ namespace OnvifProxy
                         // - select operation 
 
                         String msg = message.ToString();
+                        //String msg = msgcopy2.ToString();
                         int startindex = msg.IndexOf("<UsernameToken");// and if in lower case?
                         int endindex = msg.IndexOf("</UsernameToken");
                         String securityheaderstring = msg.Substring(startindex, (endindex - startindex + 16));

@@ -130,7 +130,7 @@ namespace Device
 
         // CODEGEN: Параметр "Scopes" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.SecurityOperationBehavoir("GetScopes", "http://www.onvif.org/ver10/device/wsdl", 3)]
+       OnvifProxy.SecurityOperationBehavoir("GetScopes", "http://www.onvif.org/ver10/device/wsdl", 2)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         //[return: System.ServiceModel.MessageParameterAttribute(Name = "Scopes")]
