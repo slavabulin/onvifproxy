@@ -76,38 +76,14 @@ namespace OnvifProxy
                 XmlQualifiedName lookupQName = new XmlQualifiedName(bodyReader.LocalName, bodyReader.NamespaceURI);
                 Message msgcopy1 = CreateMessageCopy(message, bodyReader);// using
 
-                //-----------------------------------------------------------------
-                //////////////////XPathNavigator navigator = buffer.CreateNavigator();
-                //////////////////using(MemoryStream memstream = new MemoryStream())
-                //////////////////{
-                //////////////////    XmlDocument xmldoc;
-                //////////////////    buffer.WriteMessage(memstream);
-                //////////////////}
-                //////////////////if (navigator.MoveToChild("Envelope", "http://www.w3.org/2003/05/soap-envelope"))
-                //////////////////{
-                //////////////////    if (navigator.MoveToChild("Header", "http://www.w3.org/2003/05/soap-envelope"))
-                //////////////////    {
-                //////////////////        if (navigator.MoveToChild("Security", "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"))
-                //////////////////        {
-                //////////////////            navigator.DeleteSelf();
-                //////////////////        };
-                //////////////////    };
-                    
-                //////////////////};
-                //XPathNodeIterator nodes = navigator.Select("/Header/Security");
-                ////navigator.MoveTo("/Header/Security");
-                //nodes.MoveNext();
-                //nodes.Current.DeleteSelf();
-                ////navigator.DeleteSelf();
-               
-
-                //message = msgcopy1;
                 //---------------------------------------
                 foreach (MessageHeaderInfo mheadinfo in message.Headers)
                 //foreach (MessageHeaderInfo mheadinfo in msgcopy2.Headers)
                 {
                     //check if security header exists
                     #region check security header
+
+                    //todo:try to make getting values over XPath or something like that
                     if (mheadinfo.Name == "Security" || mheadinfo.Name == "security")
                     {
                         Console.WriteLine("Security Header found!");
