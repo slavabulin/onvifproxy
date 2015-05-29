@@ -2759,8 +2759,8 @@ namespace Event
         // CODEGEN: Контракт генерации сообщений с операцией Renew не является ни RPC, ни упакованным документом.
         [System.ServiceModel.OperationContractAttribute(Action = "http://docs.oasis-open.org/wsn/bw-2/SubscriptionManager/RenewRequest", ReplyAction = "http://docs.oasis-open.org/wsn/bw-2/SubscriptionManager/RenewResponse")]
         //[System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        ////OnvifProxy.DispatchBodyElement("Renew", "http://www.onvif.org/ver10/event/wsdl")]
-        // OnvifProxy.DispatchBodyElement("Renew", "http://docs.oasis-open.org/wsn/b-2")]
+        ////OnvifProxy.SecurityOperationBehavoir("Renew", "http://www.onvif.org/ver10/event/wsdl")]
+        // OnvifProxy.SecurityOperationBehavoir("Renew", "http://docs.oasis-open.org/wsn/b-2")]
         [System.ServiceModel.FaultContractAttribute(typeof(docs.oasisopen.org.wsrf.r2.ResourceUnknownFaultType), Action = "http://docs.oasis-open.org/wsn/bw-2/SubscriptionManager/RenewRequest", Name = "ResourceUnknownFault", Namespace = "http://docs.oasis-open.org/wsrf/r-2")]
         [System.ServiceModel.FaultContractAttribute(typeof(docs.oasisopen.org.wsn.b2.UnacceptableTerminationTimeFaultType), Action = "http://docs.oasis-open.org/wsn/bw-2/SubscriptionManager/RenewRequest", Name = "UnacceptableTerminationTimeFault", Namespace = "http://docs.oasis-open.org/wsn/b-2")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
@@ -2770,8 +2770,8 @@ namespace Event
         // CODEGEN: Контракт генерации сообщений с операцией Unsubscribe не является ни RPC, ни упакованным документом.
         [System.ServiceModel.OperationContractAttribute(Action = "http://docs.oasis-open.org/wsn/bw-2/SubscriptionManager/UnsubscribeRequest", ReplyAction = "http://docs.oasis-open.org/wsn/bw-2/SubscriptionManager/UnsubscribeResponse")]
         //[System.ServiceModel.OperationContractAttribute(ReplyAction = "*", Action = "*"),
-         ////OnvifProxy.DispatchBodyElement("Unsubscribe", "http://www.onvif.org/ver10/event/wsdl")]
-         //OnvifProxy.DispatchBodyElement("Unsubscribe", "http://docs.oasis-open.org/wsn/b-2")]
+         ////OnvifProxy.SecurityOperationBehavoir("Unsubscribe", "http://www.onvif.org/ver10/event/wsdl")]
+         //OnvifProxy.SecurityOperationBehavoir("Unsubscribe", "http://docs.oasis-open.org/wsn/b-2")]
         [System.ServiceModel.FaultContractAttribute(typeof(docs.oasisopen.org.wsrf.r2.ResourceUnknownFaultType), Action = "http://docs.oasis-open.org/wsn/bw-2/SubscriptionManager/UnsubscribeRequest", Name = "ResourceUnknownFault", Namespace = "http://docs.oasis-open.org/wsrf/r-2")]
         [System.ServiceModel.FaultContractAttribute(typeof(docs.oasisopen.org.wsn.b2.UnableToDestroySubscriptionFaultType), Action = "http://docs.oasis-open.org/wsn/bw-2/SubscriptionManager/UnsubscribeRequest", Name = "UnableToDestroySubscriptionFault", Namespace = "http://docs.oasis-open.org/wsn/b-2")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]

@@ -21,7 +21,8 @@ namespace Media
     [System.ServiceModel.ServiceContractAttribute(Namespace = "http://www.onvif.org/ver10/media/wsdl",
         ConfigurationName = "Media"),
      XmlSerializerFormat,
-     OnvifProxy.DispatchByBodyElementBehavior] //my addition
+     //OnvifProxy.DispatchByBodyElementBehavior
+    OnvifProxy.SecurityContractBehavior] //my addition
 
     public interface IMedia
     {
@@ -30,7 +31,7 @@ namespace Media
         ////[System.ServiceModel.OperationContractAttribute(ReplyAction = "*"
         ////    ,Name = "MediaGetServiceCapabilities"//added by me, to avoid duplication in INVTService
         ////    ),
-        ////OnvifProxy.DispatchBodyElement("GetServiceCapabilities", "http://www.onvif.org/ver10/media/wsdl")]
+        ////OnvifProxy.SecurityOperationBehavoir("GetServiceCapabilities", "http://www.onvif.org/ver10/device/wsdl", 3)]
         ////[System.ServiceModel.XmlSerializerFormatAttribute()]
         ////[System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         ////[System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -38,7 +39,7 @@ namespace Media
 
         // CODEGEN: Параметр "VideoSources" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*", Action = "*"),
-        OnvifProxy.DispatchBodyElement("GetVideoSources", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetVideoSources", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -47,7 +48,7 @@ namespace Media
 
         // CODEGEN: Параметр "AudioSources" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetAudioSources", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetAudioSources", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -56,7 +57,7 @@ namespace Media
 
         // CODEGEN: Параметр "AudioOutputs" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetAudioOutputs", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetAudioOutputs", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -64,7 +65,7 @@ namespace Media
         GetAudioOutputsResponse GetAudioOutputs(GetAudioOutputsRequest request);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("CreateProfile", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("CreateProfile", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -72,7 +73,7 @@ namespace Media
         Profile CreateProfile(string Name, string Token);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetProfile", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetProfile", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -81,7 +82,7 @@ namespace Media
 
         // CODEGEN: Параметр "Profiles" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetProfiles", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetProfiles", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -89,133 +90,133 @@ namespace Media
         GetProfilesResponse GetProfiles(GetProfilesRequest request);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("AddVideoEncoderConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("AddVideoEncoderConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void AddVideoEncoderConfiguration(string ProfileToken, string ConfigurationToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("RemoveVideoEncoderConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("RemoveVideoEncoderConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void RemoveVideoEncoderConfiguration(string ProfileToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("AddVideoSourceConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("AddVideoSourceConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void AddVideoSourceConfiguration(string ProfileToken, string ConfigurationToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("RemoveVideoSourceConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("RemoveVideoSourceConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void RemoveVideoSourceConfiguration(string ProfileToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("AddAudioEncoderConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("AddAudioEncoderConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void AddAudioEncoderConfiguration(string ProfileToken, string ConfigurationToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("RemoveAudioEncoderConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("RemoveAudioEncoderConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void RemoveAudioEncoderConfiguration(string ProfileToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("AddAudioSourceConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("AddAudioSourceConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void AddAudioSourceConfiguration(string ProfileToken, string ConfigurationToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("RemoveAudioSourceConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("RemoveAudioSourceConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void RemoveAudioSourceConfiguration(string ProfileToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("AddPTZConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("AddPTZConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void AddPTZConfiguration(string ProfileToken, string ConfigurationToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("RemovePTZConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("RemovePTZConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void RemovePTZConfiguration(string ProfileToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("AddVideoAnalyticsConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("AddVideoAnalyticsConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void AddVideoAnalyticsConfiguration(string ProfileToken, string ConfigurationToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("RemoveVideoAnalyticsConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("RemoveVideoAnalyticsConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void RemoveVideoAnalyticsConfiguration(string ProfileToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("AddMetadataConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("AddMetadataConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void AddMetadataConfiguration(string ProfileToken, string ConfigurationToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("RemoveMetadataConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("RemoveMetadataConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void RemoveMetadataConfiguration(string ProfileToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("AddAudioOutputConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("AddAudioOutputConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void AddAudioOutputConfiguration(string ProfileToken, string ConfigurationToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("RemoveAudioOutputConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("RemoveAudioOutputConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void RemoveAudioOutputConfiguration(string ProfileToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("AddAudioDecoderConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("AddAudioDecoderConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void AddAudioDecoderConfiguration(string ProfileToken, string ConfigurationToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("RemoveAudioDecoderConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("RemoveAudioDecoderConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void RemoveAudioDecoderConfiguration(string ProfileToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("DeleteProfile", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("DeleteProfile", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -223,7 +224,7 @@ namespace Media
 
         // CODEGEN: Параметр "Configurations" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetVideoSourceConfigurations", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetVideoSourceConfigurations", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -232,7 +233,7 @@ namespace Media
 
         // CODEGEN: Параметр "Configurations" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetVideoEncoderConfigurations", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetVideoEncoderConfigurations", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -241,7 +242,7 @@ namespace Media
 
         // CODEGEN: Параметр "Configurations" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetAudioSourceConfigurations", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetAudioSourceConfigurations", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -250,7 +251,7 @@ namespace Media
 
         // CODEGEN: Параметр "Configurations" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetAudioEncoderConfigurations", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetAudioEncoderConfigurations", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -259,7 +260,7 @@ namespace Media
 
         // CODEGEN: Параметр "Configurations" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetVideoAnalyticsConfigurations", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetVideoAnalyticsConfigurations", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -268,7 +269,7 @@ namespace Media
 
         // CODEGEN: Параметр "Configurations" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetMetadataConfigurations", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetMetadataConfigurations", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -277,7 +278,7 @@ namespace Media
 
         // CODEGEN: Параметр "Configurations" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetAudioOutputConfigurations", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetAudioOutputConfigurations", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -286,7 +287,7 @@ namespace Media
 
         // CODEGEN: Параметр "Configurations" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetAudioDecoderConfigurations", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetAudioDecoderConfigurations", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -294,7 +295,7 @@ namespace Media
         GetAudioDecoderConfigurationsResponse GetAudioDecoderConfigurations(GetAudioDecoderConfigurationsRequest request);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetVideoSourceConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetVideoSourceConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -302,7 +303,7 @@ namespace Media
         VideoSourceConfiguration GetVideoSourceConfiguration(string ConfigurationToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetVideoEncoderConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetVideoEncoderConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -310,7 +311,7 @@ namespace Media
         VideoEncoderConfiguration GetVideoEncoderConfiguration(string ConfigurationToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetAudioSourceConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetAudioSourceConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -318,7 +319,7 @@ namespace Media
         AudioSourceConfiguration GetAudioSourceConfiguration(string ConfigurationToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetAudioEncoderConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetAudioEncoderConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -326,7 +327,7 @@ namespace Media
         AudioEncoderConfiguration GetAudioEncoderConfiguration(string ConfigurationToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetVideoAnalyticsConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetVideoAnalyticsConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -334,7 +335,7 @@ namespace Media
         VideoAnalyticsConfiguration GetVideoAnalyticsConfiguration(string ConfigurationToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetMetadataConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetMetadataConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -342,7 +343,7 @@ namespace Media
         MetadataConfiguration GetMetadataConfiguration(string ConfigurationToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetAudioOutputConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetAudioOutputConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -350,7 +351,7 @@ namespace Media
         AudioOutputConfiguration GetAudioOutputConfiguration(string ConfigurationToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetAudioDecoderConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetAudioDecoderConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -359,7 +360,7 @@ namespace Media
 
         // CODEGEN: Параметр "Configurations" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetCompatibleVideoEncoderConfigurations", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetCompatibleVideoEncoderConfigurations", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -368,7 +369,7 @@ namespace Media
 
         // CODEGEN: Параметр "Configurations" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetCompatibleVideoSourceConfigurations", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetCompatibleVideoSourceConfigurations", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -377,7 +378,7 @@ namespace Media
 
         // CODEGEN: Параметр "Configurations" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetCompatibleAudioEncoderConfigurations", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetCompatibleAudioEncoderConfigurations", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -386,7 +387,7 @@ namespace Media
 
         // CODEGEN: Параметр "Configurations" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetCompatibleAudioSourceConfigurations", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetCompatibleAudioSourceConfigurations", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -395,7 +396,7 @@ namespace Media
 
         // CODEGEN: Параметр "Configurations" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetCompatibleVideoAnalyticsConfigurations", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetCompatibleVideoAnalyticsConfigurations", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -404,7 +405,7 @@ namespace Media
 
         // CODEGEN: Параметр "Configurations" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetCompatibleMetadataConfigurations", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetCompatibleMetadataConfigurations", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -413,7 +414,7 @@ namespace Media
 
         // CODEGEN: Параметр "Configurations" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetCompatibleAudioOutputConfigurations", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetCompatibleAudioOutputConfigurations", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -422,7 +423,7 @@ namespace Media
 
         // CODEGEN: Параметр "Configurations" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetCompatibleAudioDecoderConfigurations", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetCompatibleAudioDecoderConfigurations", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -430,63 +431,63 @@ namespace Media
         GetCompatibleAudioDecoderConfigurationsResponse GetCompatibleAudioDecoderConfigurations(GetCompatibleAudioDecoderConfigurationsRequest request);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("SetVideoSourceConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("SetVideoSourceConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void SetVideoSourceConfiguration(VideoSourceConfiguration Configuration, bool ForcePersistence);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("SetVideoEncoderConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("SetVideoEncoderConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void SetVideoEncoderConfiguration(VideoEncoderConfiguration Configuration, bool ForcePersistence);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("SetAudioSourceConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("SetAudioSourceConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void SetAudioSourceConfiguration(AudioSourceConfiguration Configuration, bool ForcePersistence);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("SetAudioEncoderConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("SetAudioEncoderConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void SetAudioEncoderConfiguration(AudioEncoderConfiguration Configuration, bool ForcePersistence);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("SetVideoAnalyticsConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("SetVideoAnalyticsConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void SetVideoAnalyticsConfiguration(VideoAnalyticsConfiguration Configuration, bool ForcePersistence);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("SetMetadataConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("SetMetadataConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void SetMetadataConfiguration(MetadataConfiguration Configuration, bool ForcePersistence);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("SetAudioOutputConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("SetAudioOutputConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void SetAudioOutputConfiguration(AudioOutputConfiguration Configuration, bool ForcePersistence);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("SetAudioDecoderConfiguration", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("SetAudioDecoderConfiguration", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void SetAudioDecoderConfiguration(AudioDecoderConfiguration Configuration, bool ForcePersistence);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetVideoSourceConfigurationOptions", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetVideoSourceConfigurationOptions", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -494,7 +495,7 @@ namespace Media
         VideoSourceConfigurationOptions GetVideoSourceConfigurationOptions(string ConfigurationToken, string ProfileToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetVideoEncoderConfigurationOptions", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetVideoEncoderConfigurationOptions", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -502,7 +503,7 @@ namespace Media
         VideoEncoderConfigurationOptions GetVideoEncoderConfigurationOptions(string ConfigurationToken, string ProfileToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetAudioSourceConfigurationOptions", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetAudioSourceConfigurationOptions", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -510,7 +511,7 @@ namespace Media
         AudioSourceConfigurationOptions GetAudioSourceConfigurationOptions(string ConfigurationToken, string ProfileToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetAudioEncoderConfigurationOptions", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetAudioEncoderConfigurationOptions", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -518,7 +519,7 @@ namespace Media
         AudioEncoderConfigurationOptions GetAudioEncoderConfigurationOptions(string ConfigurationToken, string ProfileToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetMetadataConfigurationOptions", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetMetadataConfigurationOptions", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -526,7 +527,7 @@ namespace Media
         MetadataConfigurationOptions GetMetadataConfigurationOptions(string ConfigurationToken, string ProfileToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetAudioOutputConfigurationOptions", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetAudioOutputConfigurationOptions", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -534,7 +535,7 @@ namespace Media
         AudioOutputConfigurationOptions GetAudioOutputConfigurationOptions(string ConfigurationToken, string ProfileToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetAudioDecoderConfigurationOptions", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetAudioDecoderConfigurationOptions", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -542,7 +543,7 @@ namespace Media
         AudioDecoderConfigurationOptions GetAudioDecoderConfigurationOptions(string ConfigurationToken, string ProfileToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetGuaranteedNumberOfVideoEncoderInstances", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetGuaranteedNumberOfVideoEncoderInstances", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -550,7 +551,7 @@ namespace Media
         int GetGuaranteedNumberOfVideoEncoderInstances(out int JPEG, out int H264, out int MPEG4, string ConfigurationToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetStreamUri", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetStreamUri", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -558,28 +559,28 @@ namespace Media
         MediaUri GetStreamUri(StreamSetup StreamSetup, string ProfileToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("StartMulticastStreaming", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("StartMulticastStreaming", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void StartMulticastStreaming(string ProfileToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("StopMulticastStreaming", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("StopMulticastStreaming", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void StopMulticastStreaming(string ProfileToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("SetSynchronizationPoint", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("SetSynchronizationPoint", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void SetSynchronizationPoint(string ProfileToken);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-        OnvifProxy.DispatchBodyElement("GetSnapshotUri", "http://www.onvif.org/ver10/media/wsdl")]
+        OnvifProxy.SecurityOperationBehavoir("GetSnapshotUri", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]

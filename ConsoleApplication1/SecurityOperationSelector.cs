@@ -26,7 +26,8 @@ namespace OnvifProxy
             this.dispatchDictionary = dispatchDictionary;
             this.defaultOperationName = defaultOperationName;
         }
-
+        
+        //makes copy of message excluding security header
         private Message CreateMessageCopy(Message message, XmlDictionaryReader body)
         {
             Message copy;
