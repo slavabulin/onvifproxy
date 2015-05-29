@@ -36,7 +36,9 @@ namespace Event
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(Namespace = "http://www.onvif.org/ver10/events/wsdl", ConfigurationName = "EventPortType")]
-    [XmlSerializerFormat]
+    [XmlSerializerFormat,
+    OnvifProxy.SecurityContractBehavior]
+
     public interface IEventPortType
     {
 
@@ -46,8 +48,10 @@ namespace Event
             "t", ReplyAction = "http://www.onvif.org/ver10/events/wsdl/EventPortType/GetServiceCapabilitiesRespon" +
             "se")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented)),
+        OnvifProxy.SecurityOperationBehavoir("GetServiceCapabilities", "http://docs.oasis-open.org/wsn/b-2", 3)]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "Capabilities")]
+        //[OnvifProxy.SecurityOperationBehavoir("GetServiceCapabilities", "http://www.onvif.org/ver10/device/wsdl", 3)]
         Event.Capabilities GetServiceCapabilities();
 
         // CODEGEN: Параметр "InitialTerminationTime" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
@@ -79,14 +83,16 @@ namespace Event
         [System.ServiceModel.FaultContractAttribute(typeof(docs.oasisopen.org.wsn.b2.SubscribeCreationFailedFaultType), Action = "http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
             "equest", Name = "SubscribeCreationFailedFault", Namespace = "http://docs.oasis-open.org/wsn/b-2")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented)),
+        OnvifProxy.SecurityOperationBehavoir("CreatePullPointSubscription", "http://www.onvif.org/ver10/events/wsdl", 3)]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "SubscriptionReference")]
         CreatePullPointSubscriptionResponse CreatePullPointSubscription(CreatePullPointSubscriptionRequest request);
 
         // CODEGEN: Параметр "TopicNamespaceLocation" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(Action = "http://www.onvif.org/ver10/events/wsdl/EventPortType/GetEventPropertiesRequest", ReplyAction = "http://www.onvif.org/ver10/events/wsdl/EventPortType/GetEventPropertiesResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented)),
+        OnvifProxy.SecurityOperationBehavoir("GetEventProperties", "http://docs.oasis-open.org/wsn/b-2", 3)]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "TopicNamespaceLocation")]
         GetEventPropertiesResponse GetEventProperties(GetEventPropertiesRequest request);
     }
@@ -1327,7 +1333,8 @@ namespace Event
         [System.ServiceModel.FaultContractAttribute(typeof(www.onvif.org.ver10.events.wsdl.PullMessagesFaultResponse), Action = "http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/PullMessages/Fault/P" +
             "ullMessagesFaultResponse", Name = "PullMessagesFaultResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented)),
+        OnvifProxy.SecurityOperationBehavoir("PullMessages", "http://docs.oasis-open.org/wsn/b-2", 3)]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "CurrentTime")]
 
         [CustomServiceMessageFormat]
@@ -1336,7 +1343,8 @@ namespace Event
         // CODEGEN: Контракт генерации сообщений с пространством имен частей сообщения () не соответствует значению по умолчанию (http://www.onvif.org/ver10/events/wsdl).
         [System.ServiceModel.OperationContractAttribute(Action = "http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/SeekRequest", ReplyAction = "http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/SeekResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented)),
+        OnvifProxy.SecurityOperationBehavoir("Seek", "http://docs.oasis-open.org/wsn/b-2", 3)]
         SeekResponse Seek(SeekRequest request);
 
         [System.ServiceModel.OperationContractAttribute(
@@ -1344,7 +1352,8 @@ namespace Event
             ,ReplyAction = "http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/SetSynchronizationPointResponse"
             )]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented)),
+        OnvifProxy.SecurityOperationBehavoir("SetSynchronizationPoint", "http://docs.oasis-open.org/wsn/b-2", 3)]
         void SetSynchronizationPoint();
     }
 
@@ -1537,7 +1546,8 @@ namespace Event
         // CODEGEN: Контракт генерации сообщений с операцией Notify не является ни RPC, ни упакованным документом.
         [System.ServiceModel.OperationContractAttribute(IsOneWay = true, Action = "http://docs.oasis-open.org/wsn/bw-2/NotificationConsumer/Notify")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented)),
+        OnvifProxy.SecurityOperationBehavoir("Notify", "http://docs.oasis-open.org/wsn/b-2", 3)]
         //----
         //атрибут добавляющий в !клиентский! заголовок soap дополнительные namespaces
         [CustomClientMessageFormatAttribute]        
@@ -1703,7 +1713,8 @@ namespace Event
         [System.ServiceModel.FaultContractAttribute(typeof(docs.oasisopen.org.wsn.b2.NotifyMessageNotSupportedFaultType), Action = "http://docs.oasis-open.org/wsn/bw-2/NotificationProducer/SubscribeRequest", Name = "NotifyMessageNotSupportedFault", Namespace = "http://docs.oasis-open.org/wsn/b-2")]
         [System.ServiceModel.FaultContractAttribute(typeof(docs.oasisopen.org.wsn.b2.SubscribeCreationFailedFaultType), Action = "http://docs.oasis-open.org/wsn/bw-2/NotificationProducer/SubscribeRequest", Name = "SubscribeCreationFailedFault", Namespace = "http://docs.oasis-open.org/wsn/b-2")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented))]     
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented)),
+        OnvifProxy.SecurityOperationBehavoir("Subscribe", "http://docs.oasis-open.org/wsn/b-2", 3)]     
         [return: System.ServiceModel.MessageParameterAttribute(Name = "Subscribe")]
         SubscribeResponse1 Subscribe(SubscribeRequest request);
 
@@ -1724,7 +1735,8 @@ namespace Event
         [System.ServiceModel.FaultContractAttribute(typeof(docs.oasisopen.org.wsn.b2.MultipleTopicsSpecifiedFaultType), Action = "http://docs.oasis-open.org/wsn/bw-2/NotificationProducer/GetCurrentMessageRequest" +
             "", Name = "MultipleTopicsSpecifiedFault", Namespace = "http://docs.oasis-open.org/wsn/b-2")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented)),
+        OnvifProxy.SecurityOperationBehavoir("GetCurrentMessage", "http://docs.oasis-open.org/wsn/b-2", 3)]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "GetCurrentMessage")]
         GetCurrentMessageResponse1 GetCurrentMessage(GetCurrentMessageRequest request);
     }
@@ -2172,7 +2184,8 @@ namespace Event
         [System.ServiceModel.FaultContractAttribute(typeof(docs.oasisopen.org.wsrf.r2.ResourceUnknownFaultType), Action = "http://docs.oasis-open.org/wsn/bw-2/PullPoint/GetMessagesRequest", Name = "ResourceUnknownFault", Namespace = "http://docs.oasis-open.org/wsrf/r-2")]
         [System.ServiceModel.FaultContractAttribute(typeof(docs.oasisopen.org.wsn.b2.UnableToGetMessagesFaultType), Action = "http://docs.oasis-open.org/wsn/bw-2/PullPoint/GetMessagesRequest", Name = "UnableToGetMessagesFault", Namespace = "http://docs.oasis-open.org/wsn/b-2")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented)),
+        OnvifProxy.SecurityOperationBehavoir("GetMessages", "http://docs.oasis-open.org/wsn/b-2", 3)]
         GetMessagesResponse1 GetMessages(GetMessagesRequest request);
 
         // CODEGEN: Контракт генерации сообщений с операцией DestroyPullPoint не является ни RPC, ни упакованным документом.
@@ -2180,13 +2193,15 @@ namespace Event
         [System.ServiceModel.FaultContractAttribute(typeof(docs.oasisopen.org.wsrf.r2.ResourceUnknownFaultType), Action = "http://docs.oasis-open.org/wsn/bw-2/PullPoint/DestroyPullPointRequest", Name = "ResourceUnknownFault", Namespace = "http://docs.oasis-open.org/wsrf/r-2")]
         [System.ServiceModel.FaultContractAttribute(typeof(docs.oasisopen.org.wsn.b2.UnableToDestroyPullPointFaultType), Action = "http://docs.oasis-open.org/wsn/bw-2/PullPoint/DestroyPullPointRequest", Name = "UnableToDestroyPullPointFault", Namespace = "http://docs.oasis-open.org/wsn/b-2")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented)),
+        OnvifProxy.SecurityOperationBehavoir("DestroyPullPoint", "http://docs.oasis-open.org/wsn/b-2", 3)]
         DestroyPullPointResponse1 DestroyPullPoint(DestroyPullPointRequest request);
 
         // CODEGEN: Контракт генерации сообщений с операцией Notify не является ни RPC, ни упакованным документом.
         [System.ServiceModel.OperationContractAttribute(IsOneWay = true, Action = "http://docs.oasis-open.org/wsn/bw-2/PullPoint/Notify")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented)),
+        OnvifProxy.SecurityOperationBehavoir("Notify", "http://docs.oasis-open.org/wsn/b-2", 3)]
         void Notify(Notify1 request);
     }
 
@@ -2555,7 +2570,8 @@ namespace Event
         [System.ServiceModel.OperationContractAttribute(Action = "http://docs.oasis-open.org/wsn/bw-2/CreatePullPoint/CreatePullPointRequest", ReplyAction = "*")]
         [System.ServiceModel.FaultContractAttribute(typeof(docs.oasisopen.org.wsn.b2.UnableToCreatePullPointFaultType), Action = "http://docs.oasis-open.org/wsn/bw-2/CreatePullPoint/CreatePullPointRequest", Name = "UnableToCreatePullPointFault", Namespace = "http://docs.oasis-open.org/wsn/b-2")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented)),
+        OnvifProxy.SecurityOperationBehavoir("CreatePullPoint", "http://docs.oasis-open.org/wsn/b-2", 3)]
         CreatePullPointResponse1 CreatePullPoint(CreatePullPointRequest request);
     }
 
@@ -2764,7 +2780,8 @@ namespace Event
         [System.ServiceModel.FaultContractAttribute(typeof(docs.oasisopen.org.wsrf.r2.ResourceUnknownFaultType), Action = "http://docs.oasis-open.org/wsn/bw-2/SubscriptionManager/RenewRequest", Name = "ResourceUnknownFault", Namespace = "http://docs.oasis-open.org/wsrf/r-2")]
         [System.ServiceModel.FaultContractAttribute(typeof(docs.oasisopen.org.wsn.b2.UnacceptableTerminationTimeFaultType), Action = "http://docs.oasis-open.org/wsn/bw-2/SubscriptionManager/RenewRequest", Name = "UnacceptableTerminationTimeFault", Namespace = "http://docs.oasis-open.org/wsn/b-2")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented)),
+        OnvifProxy.SecurityOperationBehavoir("Renew", "http://docs.oasis-open.org/wsn/b-2", 3)]
         RenewResponse1 Renew(RenewRequest request);
 
         // CODEGEN: Контракт генерации сообщений с операцией Unsubscribe не является ни RPC, ни упакованным документом.
@@ -2775,7 +2792,8 @@ namespace Event
         [System.ServiceModel.FaultContractAttribute(typeof(docs.oasisopen.org.wsrf.r2.ResourceUnknownFaultType), Action = "http://docs.oasis-open.org/wsn/bw-2/SubscriptionManager/UnsubscribeRequest", Name = "ResourceUnknownFault", Namespace = "http://docs.oasis-open.org/wsrf/r-2")]
         [System.ServiceModel.FaultContractAttribute(typeof(docs.oasisopen.org.wsn.b2.UnableToDestroySubscriptionFaultType), Action = "http://docs.oasis-open.org/wsn/bw-2/SubscriptionManager/UnsubscribeRequest", Name = "UnableToDestroySubscriptionFault", Namespace = "http://docs.oasis-open.org/wsn/b-2")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented)),
+        OnvifProxy.SecurityOperationBehavoir("Unsubscribe", "http://docs.oasis-open.org/wsn/b-2", 3)]
         UnsubscribeResponse1 Unsubscribe(UnsubscribeRequest request);
     }
 
@@ -3098,7 +3116,8 @@ namespace Event
         [System.ServiceModel.FaultContractAttribute(typeof(docs.oasisopen.org.wsrf.r2.ResourceUnknownFaultType), Action = "http://docs.oasis-open.org/wsn/bw-2/PausableSubscriptionManager/RenewRequest", Name = "ResourceUnknownFault", Namespace = "http://docs.oasis-open.org/wsrf/r-2")]
         [System.ServiceModel.FaultContractAttribute(typeof(docs.oasisopen.org.wsn.b2.UnacceptableTerminationTimeFaultType), Action = "http://docs.oasis-open.org/wsn/bw-2/PausableSubscriptionManager/RenewRequest", Name = "UnacceptableTerminationTimeFault", Namespace = "http://docs.oasis-open.org/wsn/b-2")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented)),
+        OnvifProxy.SecurityOperationBehavoir("Renew", "http://docs.oasis-open.org/wsn/b-2", 3)]
         RenewResponse1 Renew(RenewRequest request);
 
         // CODEGEN: Контракт генерации сообщений с операцией Unsubscribe не является ни RPC, ни упакованным документом.
@@ -3109,7 +3128,8 @@ namespace Event
         [System.ServiceModel.FaultContractAttribute(typeof(docs.oasisopen.org.wsn.b2.UnableToDestroySubscriptionFaultType), Action = "http://docs.oasis-open.org/wsn/bw-2/PausableSubscriptionManager/UnsubscribeReques" +
             "t", Name = "UnableToDestroySubscriptionFault", Namespace = "http://docs.oasis-open.org/wsn/b-2")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented)),
+        OnvifProxy.SecurityOperationBehavoir("Unsubscribe", "http://docs.oasis-open.org/wsn/b-2", 3)]
         UnsubscribeResponse1 Unsubscribe(UnsubscribeRequest request);
 
         // CODEGEN: Контракт генерации сообщений с операцией PauseSubscription не является ни RPC, ни упакованным документом.
@@ -3120,7 +3140,8 @@ namespace Event
         [System.ServiceModel.FaultContractAttribute(typeof(docs.oasisopen.org.wsn.b2.PauseFailedFaultType), Action = "http://docs.oasis-open.org/wsn/bw-2/PausableSubscriptionManager/PauseSubscription" +
             "Request", Name = "PauseFailedFault", Namespace = "http://docs.oasis-open.org/wsn/b-2")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented)),
+        OnvifProxy.SecurityOperationBehavoir("PauseSubscription", "http://docs.oasis-open.org/wsn/b-2", 3)]
         PauseSubscriptionResponse1 PauseSubscription(PauseSubscriptionRequest request);
 
         // CODEGEN: Контракт генерации сообщений с операцией ResumeSubscription не является ни RPC, ни упакованным документом.
@@ -3131,7 +3152,8 @@ namespace Event
         [System.ServiceModel.FaultContractAttribute(typeof(docs.oasisopen.org.wsn.b2.ResumeFailedFaultType), Action = "http://docs.oasis-open.org/wsn/bw-2/PausableSubscriptionManager/ResumeSubscriptio" +
             "nRequest", Name = "ResumeFailedFault", Namespace = "http://docs.oasis-open.org/wsn/b-2")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented)),
+        OnvifProxy.SecurityOperationBehavoir("ResumeSubscription", "http://docs.oasis-open.org/wsn/b-2", 3)]
         ResumeSubscriptionResponse1 ResumeSubscription(ResumeSubscriptionRequest request);
     }
 
