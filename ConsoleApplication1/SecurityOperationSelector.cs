@@ -35,7 +35,6 @@ namespace OnvifProxy
             try
             {
                 copy = Message.CreateMessage(message.Version, message.Headers.Action, body);
-                //copy = Message.CreateMessage(message.Version, null, body);//19.08
             }
             catch (ArgumentNullException e)
             {
@@ -44,32 +43,63 @@ namespace OnvifProxy
             if (message.Headers.Action == null)
             {
                 message.Headers.Action = body.LocalName;
-                copy.Headers.CopyHeaderFrom(message, 0);///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                //
-                //copy.Headers.Action = "http://www.onvif.org/ver10/device/wsdl/" + body.LocalName;
+                copy.Headers.CopyHeaderFrom(message, 0);///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 copy.Headers.Action = body.NamespaceURI + "/" + body.LocalName;
 
                 copy.Properties.CopyProperties(message.Properties);
-                //Console.WriteLine(copy.Headers.Action.ToString());
-
-                //return copy;
             }
-            //return message;
-            //Console.WriteLine("------------");
-            //Console.WriteLine(copy.Headers.Action.ToString());
             return copy;
+        }
+
+        Security GetCredesFromMessageBuffer(MessageBuffer msgBuf)
+        {
+            XPathNavigator navigator = msgBuf.CreateNavigator();
+            Security secheader = new Security();
+            secheader.Token = new UsernameToken();
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(UsernameToken));
+
+            if (
+            navigator.MoveToChild("Envelope", "http://www.w3.org/2003/05/soap-envelope") &&
+            navigator.MoveToChild("Header", "http://www.w3.org/2003/05/soap-envelope") &&
+            navigator.MoveToChild("Security", "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"))
+            {
+                if (navigator.MoveToChild("UsernameToken", "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd") &&
+                    navigator.MoveToChild("Username", "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"))
+                {
+                    secheader.Token.Username = navigator.Value;
+                    navigator.MoveToParent();
+                }
+                else return null;
+                if (navigator.MoveToChild("Password", "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"))
+                {
+                    secheader.Token.Password = navigator.Value;
+                    navigator.MoveToParent();
+                }
+                else return null;
+                if (navigator.MoveToChild("Nonce", "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"))
+                {
+                    secheader.Token.Nonce = navigator.Value;
+                    navigator.MoveToParent();
+                }
+                else return null;
+                if (navigator.MoveToChild("Created", "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"))
+                {
+                    secheader.Token.Created = navigator.Value;
+                    navigator.MoveToParent();
+                }
+                else return null;
+                return secheader;
+            }
+            return null;
         }
 
         public string SelectOperation(ref System.ServiceModel.Channels.Message message)
         {
-            //!!!!can leak here (with buffer, message1, message2)!!!!!
-            //using (
-            MessageBuffer buffer = message.CreateBufferedCopy(Int32.MaxValue);
-            //)
+            //!!!!can leak here (in message1, message2)!!!!!
+            using (MessageBuffer buffer = message.CreateBufferedCopy(Int32.MaxValue))
             {
                 List<XmlQualifiedName> methodList = new List<XmlQualifiedName>();
                 Usertype usertypefromfile = Usertype.wrongpass;
-                //Message msgcopy1 = buffer.CreateMessage();// using
                 
                 Message msgcopy2 = buffer.CreateMessage();//
                 XmlDictionaryReader bodyReader = msgcopy2.GetReaderAtBodyContents();
@@ -77,160 +107,78 @@ namespace OnvifProxy
                 Message msgcopy1 = CreateMessageCopy(message, bodyReader);// using
 
                 //---------------------------------------
-                foreach (MessageHeaderInfo mheadinfo in message.Headers)
-                //foreach (MessageHeaderInfo mheadinfo in msgcopy2.Headers)
+                Security secheader = new Security();
+                secheader.Token = new UsernameToken();
+                secheader = GetCredesFromMessageBuffer(buffer);
+                #region check if there is security header
+                if (secheader != null)
                 {
-                    //check if security header exists
-                    #region check security header
-
-                    //todo:try to make getting values over XPath or something like that
-                    if (mheadinfo.Name == "Security" || mheadinfo.Name == "security")
-                    {
-                        Console.WriteLine("Security Header found!");
-
-                        // - check if method needs security
-                        //message.Action
-                        //         else select operation
-                        // - cut sec header
-                        // - deserialize sec header
-                        // - check if credentials are valid
-                        // - select operation 
-
-                        String msg = message.ToString();
-                        //String msg = msgcopy2.ToString();
-                        int startindex = msg.IndexOf("<UsernameToken");// and if in lower case?
-                        int endindex = msg.IndexOf("</UsernameToken");
-                        String securityheaderstring = msg.Substring(startindex, (endindex - startindex + 16));
-                        if (!securityheaderstring.EndsWith(">"))
-                            securityheaderstring.Insert(securityheaderstring.Length, ">");
-
-                        Security secheader = new Security();
-                        secheader.Token = new UsernameToken();
-                        XmlSerializer xmlSerializer = new XmlSerializer(typeof(UsernameToken));
-                        securityheaderstring = "<?xml version='1.0' encoding='utf-8' ?>" + securityheaderstring;
-                        int strtcutindexcreate;
-                        if (securityheaderstring.Contains("Created"))
-                        {
-                            strtcutindexcreate = securityheaderstring.IndexOf("<Created");
-                        }
-                        else
-                        {
-                            strtcutindexcreate = securityheaderstring.IndexOf("<created");
-                        }
-                        int endcutindexcreate = securityheaderstring.IndexOf(">", strtcutindexcreate);
-                        securityheaderstring = securityheaderstring.Remove(strtcutindexcreate + 9, (endcutindexcreate - strtcutindexcreate - 9));
-                        using (Stream ms = new MemoryStream(Encoding.UTF8.GetBytes(securityheaderstring)))
-                        {
-                            try
-                            {
-                                secheader.Token = (UsernameToken)xmlSerializer.Deserialize(ms);
-                                CheckPasswordDigest checkpass = new CheckPasswordDigest(secheader.Token.Password,
+                    SecurityHeader checkpass = new SecurityHeader(secheader.Token.Password,
                                     secheader.Token.Username,
                                     secheader.Token.Nonce,
                                     secheader.Token.Created
                                     );
-                                // get usertype from file
-                                usertypefromfile = checkpass.CheckPassword();
+                    usertypefromfile = checkpass.CheckPassword();
 
-                                #region check if creds are wright
-
-                                if (usertypefromfile != Usertype.wrongpass)
+                    #region check if creds are wright
+                    if (usertypefromfile != Usertype.wrongpass)
+                    {
+                        Console.WriteLine("Pass is valid!");
+                        //-------------------------------------------------                                    
+                        // check if it exists in dictionary
+                        // get list of apropriate usertype
+                        // and compare it with lookupQName
+                        //-------------------------------------------------
+                        #region get allowed methods list
+                        foreach (string usrtype in dispatchDictionary.Keys)
+                        {
+                            if (usrtype == usertypefromfile.ToString())
+                            {
+                                try
                                 {
-                                    Console.WriteLine("Pass is valid!");
-                                    //-------------------------------------------------                                    
-                                    // check if it exists in dictionary
-                                    // get list of apropriate usertype
-                                    // and compare it with lookupQName
-                                    //-------------------------------------------------
-
-                                    #region get allowed methods list
-
-                                    foreach (string usrtype in dispatchDictionary.Keys)
+                                    dispatchDictionary.TryGetValue(usrtype, out methodList);
+                                    //check if allowed method requested
+                                    foreach (XmlQualifiedName methodname in methodList)
                                     {
-                                        if (usrtype == usertypefromfile.ToString())
+                                        //string tmpstring = methodname.Namespace + "/" + methodname.Name;
+                                        if (methodname == lookupQName)
                                         {
-                                            try
-                                            {
-                                                dispatchDictionary.TryGetValue(usrtype, out methodList);
-                                                //check if allowed method requested
-                                                foreach (XmlQualifiedName methodname in methodList)
-                                                {
-                                                    //string tmpstring = methodname.Namespace + "/" + methodname.Name;
-                                                    if (methodname == lookupQName)
-                                                    {
-                                                        message = msgcopy1;
-                                                        return methodname.Name;
-                                                    }
-                                                }
-                                            }
-                                            catch (ArgumentNullException ane)
-                                            {
-                                                throw ane;
-                                            }
-
-
+                                            message = msgcopy1;
+                                            return methodname.Name;
                                         }
                                     }
-                                    message = msgcopy1;
-                                    return defaultOperationName;
-
-                                    #endregion get allowed methods list
                                 }
-                                else
+                                catch (ArgumentNullException ane)
                                 {
-                                    Console.WriteLine("Invalid password!");
-                                    message = msgcopy1;
-                                    return defaultOperationName;
-                                }
-
-                                #endregion check if creds are wright
-                            }
-                            catch (SerializationException g)
-                            {
-                                Console.WriteLine("Не могу десериализовать файл конфигурации; " + g.Message);
-                                return defaultOperationName;
-                            }
-                            finally
-                            {
-                                ms.Close();
-                            }
-                        }
-                    }
-                    //if security header doesnt exists
-                    //check anon user branch for called method
-                    else
-                    {
-                        //case if no security header
-                        try
-                        {
-                            // - check if desired method is in the allowed without auth method list
-                            dispatchDictionary.TryGetValue("anon", out methodList);
-                            foreach (XmlQualifiedName methodname in methodList)
-                            {
-                                string tmpstring = methodname.Namespace + "/" + methodname.Name;
-                                //   if true - return methodname
-                                //   else defaultOpertionname
-                                if (methodname == lookupQName)
-                                {
-                                    message = msgcopy1;
-                                    return methodname.Name;
+                                    throw ane;
                                 }
                             }
-                        }
-                        catch (ArgumentNullException ane)
-                        {
-                            throw ane;
                         }
                         message = msgcopy1;
                         return defaultOperationName;
+                        #endregion get allowed methods list
                     }
-                    #endregion check security header
+                    else
+                    {
+                        //credentials are wrong
+                        message = msgcopy1;
+                        //return defaultOperationName;
+                        return null;
+                    }
+                    #endregion check if creds are wright
                 }
-                message = msgcopy1;
-                return defaultOperationName;
+                else
+                {
+                    //no security header
+                    message = msgcopy1;
+                    return defaultOperationName;
+                }
+                #endregion check if there is security header
+
             }
         }
     }
+        
 
     public enum Usertype
     {
@@ -326,7 +274,7 @@ namespace OnvifProxy
     {
     }
 
-    public class CheckPasswordDigest
+    public class SecurityHeader
     {
         public string RecievedPasswordDigest;// = "admin";
         public string Name;// = "admin";
@@ -336,7 +284,7 @@ namespace OnvifProxy
         static UserList userlist;
         int UsertypeFromFile;
 
-        public CheckPasswordDigest(string Pass, string Name, string Nonce, string Created)
+        public SecurityHeader(string Pass, string Name, string Nonce, string Created)
         {
             this.RecievedPasswordDigest = Pass;
             this.Name = Name;
