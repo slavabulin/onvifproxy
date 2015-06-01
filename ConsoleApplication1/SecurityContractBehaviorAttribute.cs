@@ -36,7 +36,6 @@ namespace OnvifProxy
             if (securityOperationBehavoirAttribute != null && securityOperationBehavoirAttribute.QName != null)
             {
                 dispatchDictionary = securityOperationBehavoirAttribute.QName;
-
                 dispatchRuntime.OperationSelector =
                    new SecurityOperationSelector(
                       dispatchDictionary,

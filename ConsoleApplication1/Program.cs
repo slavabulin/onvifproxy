@@ -84,10 +84,7 @@ namespace OnvifProxy
             Thread thr_MainThr = new Thread(new ThreadStart(MainThread));
             thr_MainThr.Priority = ThreadPriority.Normal;
             thr_MainThr.Start();
-            Thread.Sleep(1);
-            //TyphoonCom.log.Debug("Press <ENTER> to terminate the service.\n");
-            //Console.ReadLine();
-             
+            Thread.Sleep(1);             
         }
                 
         public static void MainThread()

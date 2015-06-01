@@ -13,6 +13,8 @@ using System.Runtime.Serialization;
 using System.Security.Cryptography;
 using System.Collections.ObjectModel;
 using System.Xml.XPath;
+using System.ServiceModel.Web;
+
 
 namespace OnvifProxy
 {
@@ -51,7 +53,7 @@ namespace OnvifProxy
             return copy;
         }
 
-        Security GetCredesFromMessageBuffer(MessageBuffer msgBuf)
+        Security GetCredsFromMessageBuffer(MessageBuffer msgBuf)
         {
             XPathNavigator navigator = msgBuf.CreateNavigator();
             Security secheader = new Security();
@@ -106,10 +108,9 @@ namespace OnvifProxy
                 XmlQualifiedName lookupQName = new XmlQualifiedName(bodyReader.LocalName, bodyReader.NamespaceURI);
                 Message msgcopy1 = CreateMessageCopy(message, bodyReader);// using
 
-                //---------------------------------------
                 Security secheader = new Security();
                 secheader.Token = new UsernameToken();
-                secheader = GetCredesFromMessageBuffer(buffer);
+                secheader = GetCredsFromMessageBuffer(buffer);
                 #region check if there is security header
                 if (secheader != null)
                 {
@@ -123,10 +124,10 @@ namespace OnvifProxy
                     #region check if creds are wright
                     if (usertypefromfile != Usertype.wrongpass)
                     {
-                        Console.WriteLine("Pass is valid!");
+                        //Console.WriteLine("Pass is valid!");
                         //-------------------------------------------------                                    
                         // check if it exists in dictionary
-                        // get list of apropriate usertype
+                        // get methodlist of apropriate usertype
                         // and compare it with lookupQName
                         //-------------------------------------------------
                         #region get allowed methods list
@@ -163,15 +164,45 @@ namespace OnvifProxy
                         //credentials are wrong
                         message = msgcopy1;
                         //return defaultOperationName;
-                        return null;
+                        //return null;
+                        //------------------------
+                        throw new WebFaultException(System.Net.HttpStatusCode.Unauthorized);
                     }
                     #endregion check if creds are wright
                 }
                 else
                 {
                     //no security header
+                    //check if methodname is available for anon
+                    //if true return methodname
+                    //else defaultmethodname
+                    //--------------------------------
+                    try
+                    {
+                        dispatchDictionary.TryGetValue("anon", out methodList);
+                        //check if allowed method requested
+                        foreach (XmlQualifiedName methodname in methodList)
+                        {
+                            //string tmpstring = methodname.Namespace + "/" + methodname.Name;
+                            if (methodname == lookupQName)
+                            {
+                                message = msgcopy1;
+                                return methodname.Name;
+                            }
+                        }
+                    }
+                    catch (ArgumentNullException ane)
+                    {
+                        //throw ane;
+                        throw new WebFaultException(System.Net.HttpStatusCode.Unauthorized);
+                    }
+
+                    //---------------------------------
+
+
                     message = msgcopy1;
-                    return defaultOperationName;
+                    throw new WebFaultException(System.Net.HttpStatusCode.Unauthorized);
+                    //return defaultOperationName;
                 }
                 #endregion check if there is security header
 
