@@ -194,15 +194,25 @@ namespace OnvifProxy
                     catch (ArgumentNullException ane)
                     {
                         //throw ane;
-                        throw new WebFaultException(System.Net.HttpStatusCode.Unauthorized);
+                        //throw new WebFaultException(System.Net.HttpStatusCode.Unauthorized);
+                        throw new System.Web.HttpException(401, "Unauthorized");
+                        //throw new FaultException<HttpErrorFault>(
+                            //new HttpErrorFault() { FaultMessage = "Unauthorized", ErrorCode = 401, Location = "111" }
+                            //);
+                        OperationContext context = OperationContext.Current;
+                        //context.EndpointDispatcher.ChannelDispatcher.Host.Authorization.
                     }
 
                     //---------------------------------
 
 
                     message = msgcopy1;
-                    throw new WebFaultException(System.Net.HttpStatusCode.Unauthorized);
+                    //throw new WebFaultException(System.Net.HttpStatusCode.Unauthorized);
+                    throw new System.Web.HttpException(401, "Unauthorized");
                     //return defaultOperationName;
+                    //throw new FaultException<HttpErrorFault>(
+                    //        new HttpErrorFault() { FaultMessage = "Unauthorized", ErrorCode = 401, Location = "111" }
+                    //        );
                 }
                 #endregion check if there is security header
 
@@ -410,5 +420,16 @@ namespace OnvifProxy
                 return Usertype.wrongpass;
             }
         }
+    }
+
+    [DataContract]
+    public class HttpErrorFault
+    {
+        [DataMember]
+        public string FaultMessage { get; set; }
+        [DataMember]
+        public int ErrorCode { get; set; }
+        [DataMember]
+        public string Location { get; set; }
     }
 }

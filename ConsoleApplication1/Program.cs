@@ -285,6 +285,7 @@ namespace OnvifProxy
             //--------------------------
             HttpTransportBindingElement httpTransportBindingElement = new HttpTransportBindingElement();
             httpTransportBindingElement.KeepAliveEnabled = false;
+            //httpTransportBindingElement.AuthenticationScheme = AuthenticationSchemes.Basic;//RFC2617
 
             CustomBinding binding = new CustomBinding(
                     //new TextMessageEncodingBindingElement(MessageVersion.Soap12WSAddressing10, Encoding.UTF8),
@@ -316,6 +317,12 @@ namespace OnvifProxy
             EndpointDiscoveryBehavior SubscriptionManagerServiceBehavior = new EndpointDiscoveryBehavior();
             EndpointDiscoveryBehavior PullPointSubscriptionServiceBehavior = new EndpointDiscoveryBehavior();
             EndpointDiscoveryBehavior udpAnnouncementEndpointBehavior = new EndpointDiscoveryBehavior();
+            //---------------------------------
+            //HttpErrorsAttribute HttpErrorBehavior = new HttpErrorsAttribute();
+            //---------------------------------
+
+
+
 
             UdpAnnouncementEndpoint udpAnnouncementEndpoint;
             UdpDiscoveryEndpoint udpDiscoveryEndpoint;
@@ -369,6 +376,9 @@ namespace OnvifProxy
                     typeof(Device.IDevice),
                     binding,
                     "/onvif/device_service");
+                    //---------------------------------------
+                    //DeviceServiceEndpoint.Behaviors.Add(HttpErrorBehavior);
+                    //---------------------------------------
 
                     MediaServiceEndpoint = host.AddServiceEndpoint(
                     typeof(Media.IMedia),
