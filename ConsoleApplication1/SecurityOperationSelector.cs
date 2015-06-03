@@ -28,7 +28,7 @@ namespace OnvifProxy
             this.dispatchDictionary = dispatchDictionary;
             this.defaultOperationName = defaultOperationName;
         }
-        
+
         //makes copy of message excluding security header
         private Message CreateMessageCopy(Message message, XmlDictionaryReader body)
         {
@@ -75,6 +75,12 @@ namespace OnvifProxy
                 if (navigator.MoveToChild("Password", "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"))
                 {
                     secheader.Token.Password = navigator.Value;
+                    
+                    if(navigator.HasAttributes &&
+                        navigator.MoveToAttribute("Type",""))
+                    {
+                        secheader.Token.Passwordtype = navigator.Value;
+                    }
                     navigator.MoveToParent();
                 }
                 else return null;
@@ -102,7 +108,7 @@ namespace OnvifProxy
             {
                 List<XmlQualifiedName> methodList = new List<XmlQualifiedName>();
                 Usertype usertypefromfile = Usertype.wrongpass;
-                
+
                 Message msgcopy2 = buffer.CreateMessage();//
                 XmlDictionaryReader bodyReader = msgcopy2.GetReaderAtBodyContents();
                 XmlQualifiedName lookupQName = new XmlQualifiedName(bodyReader.LocalName, bodyReader.NamespaceURI);
@@ -115,10 +121,11 @@ namespace OnvifProxy
                 if (secheader != null)
                 {
                     SecurityHeader checkpass = new SecurityHeader(secheader.Token.Password,
-                                    secheader.Token.Username,
-                                    secheader.Token.Nonce,
-                                    secheader.Token.Created
-                                    );
+                        secheader.Token.Passwordtype,
+                        secheader.Token.Username,
+                        secheader.Token.Nonce,
+                        secheader.Token.Created
+                        );
                     usertypefromfile = checkpass.CheckPassword();
 
                     #region check if creds are wright
@@ -164,9 +171,9 @@ namespace OnvifProxy
                         //credentials are wrong
                         message = msgcopy1;
                         //return defaultOperationName;
-                        //return null;
+                        return null;
                         //------------------------
-                        throw new WebFaultException(System.Net.HttpStatusCode.Unauthorized);
+                        //throw new WebFaultException(System.Net.HttpStatusCode.Unauthorized);
                     }
                     #endregion check if creds are wright
                 }
@@ -195,31 +202,22 @@ namespace OnvifProxy
                     {
                         //throw ane;
                         //throw new WebFaultException(System.Net.HttpStatusCode.Unauthorized);
-                        throw new System.Web.HttpException(401, "Unauthorized");
-                        //throw new FaultException<HttpErrorFault>(
-                            //new HttpErrorFault() { FaultMessage = "Unauthorized", ErrorCode = 401, Location = "111" }
-                            //);
-                        OperationContext context = OperationContext.Current;
-                        //context.EndpointDispatcher.ChannelDispatcher.Host.Authorization.
+                        //throw new System.Web.HttpException(401, "Unauthorized");
+                        return null;
                     }
 
                     //---------------------------------
 
-
                     message = msgcopy1;
-                    //throw new WebFaultException(System.Net.HttpStatusCode.Unauthorized);
-                    throw new System.Web.HttpException(401, "Unauthorized");
-                    //return defaultOperationName;
-                    //throw new FaultException<HttpErrorFault>(
-                    //        new HttpErrorFault() { FaultMessage = "Unauthorized", ErrorCode = 401, Location = "111" }
-                    //        );
-                }
+                    //throw new System.Web.HttpException(401, "Unauthorized");
+                    return null;
+
                 #endregion check if there is security header
 
+                }
             }
         }
     }
-        
 
     public enum Usertype
     {
@@ -254,6 +252,7 @@ namespace OnvifProxy
         private string _pass;
         private string _nonce;
         private string _created;
+        private string _passwordtype;
 
         public string Username
         {
@@ -302,6 +301,18 @@ namespace OnvifProxy
                 this._created = value;
             }
         }
+
+        public string Passwordtype
+        {
+            get
+            {
+                return this._passwordtype;
+            }
+            set
+            {
+                this._passwordtype = value;
+            }
+        }
     }
 
     public class User
@@ -324,8 +335,9 @@ namespace OnvifProxy
         string PasswordFromFile;// = "admin";//read from file
         static UserList userlist;
         int UsertypeFromFile;
+        string PasswordType;
 
-        public SecurityHeader(string Pass, string Name, string Nonce, string Created)
+        public SecurityHeader(string Pass, string PassType,string Name, string Nonce, string Created)
         {
             this.RecievedPasswordDigest = Pass;
             this.Name = Name;
@@ -358,6 +370,10 @@ namespace OnvifProxy
                     Console.WriteLine("Не могу десериализовать файл конфигурации; " + g.Message);
                     throw g;
                 }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
                 finally
                 {
                     fs.Close();
@@ -371,7 +387,10 @@ namespace OnvifProxy
             byte[] bytearrnonce;
             byte[] bytearrcreated;
             //choose password by username from dictionary and put in PasswordFromFile
-            if (PasswordFromFile != null && Nonce != null && Created != null)
+            if (PasswordFromFile != null &&
+                Nonce != null &&
+                Created != null &&
+                PasswordType =="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest")
             {
                 bytearrnonce = System.Convert.FromBase64String(Nonce);
                 bytearrcreated = Encoding.UTF8.GetBytes(Created);

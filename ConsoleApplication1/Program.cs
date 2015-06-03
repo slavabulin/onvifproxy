@@ -318,7 +318,7 @@ namespace OnvifProxy
             EndpointDiscoveryBehavior PullPointSubscriptionServiceBehavior = new EndpointDiscoveryBehavior();
             EndpointDiscoveryBehavior udpAnnouncementEndpointBehavior = new EndpointDiscoveryBehavior();
             //---------------------------------
-            //HttpErrorsAttribute HttpErrorBehavior = new HttpErrorsAttribute();
+            HttpErrorsAttribute HttpErrorBehavior = new HttpErrorsAttribute();
             //---------------------------------
 
 

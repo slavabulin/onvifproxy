@@ -2072,6 +2072,7 @@ namespace OnvifProxy
 
         public DiscoveryMode GetDiscoveryMode()
         {
+
             if (FlagHostThreadReboot.Start == true) Program.ev_RebootEnded.WaitOne();
 
             Console.WriteLine("GetDiscoveryMode entered");
@@ -2088,6 +2089,11 @@ namespace OnvifProxy
                 return (FlagServiceDiscoverable.Mode);
             };
             
+
+            //-----------------------------------------------
+            //OperationContext context = OperationContext.Current;
+            ////context.Channel.Extensions;
+            //return DiscoveryMode.NonDiscoverable;
         }
 
         public SupportInformation GetSystemSupportInformation()
