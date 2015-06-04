@@ -80,6 +80,7 @@ namespace OnvifProxy
                         navigator.MoveToAttribute("Type",""))
                     {
                         secheader.Token.Passwordtype = navigator.Value;
+                        navigator.MoveToParent();
                     }
                     navigator.MoveToParent();
                 }
@@ -343,6 +344,7 @@ namespace OnvifProxy
             this.Name = Name;
             this.Nonce = Nonce;
             this.Created = Created;
+            this.PasswordType = PassType;
             UsertypeFromFile = -1;
 
             //open file and read passwords and usernames
