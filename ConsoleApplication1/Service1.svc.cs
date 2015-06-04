@@ -216,7 +216,8 @@ namespace OnvifProxy
                 }
 
                 getServicesResponse.Service[1] = new Device.Service();
-                getServicesResponse.Service[1].XAddr = "http://" + confstr.IPAddr + "/onvif/event_service";
+                //getServicesResponse.Service[1].XAddr = "http://" + confstr.IPAddr + "/onvif/event_service";
+                getServicesResponse.Service[1].XAddr = confstr.Capabilities.Events.XAddr;
                 getServicesResponse.Service[1].Namespace = "http://www.onvif.org/ver10/event/wsdl";
                 getServicesResponse.Service[1].Version = new OnvifVersion();
                 getServicesResponse.Service[1].Version.Major = 0;
