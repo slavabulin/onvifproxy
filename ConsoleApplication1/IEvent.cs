@@ -84,7 +84,7 @@ namespace Event
             "equest", Name = "SubscribeCreationFailedFault", Namespace = "http://docs.oasis-open.org/wsn/b-2")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented)),
-        OnvifProxy.SecurityOperationBehavoir("CreatePullPointSubscription", "http://www.onvif.org/ver10/events/wsdl", 3)]
+        OnvifProxy.SecurityOperationBehavoir("CreatePullPointSubscription", "http://www.onvif.org/ver10/events/wsdl", 2)]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "SubscriptionReference")]
         CreatePullPointSubscriptionResponse CreatePullPointSubscription(CreatePullPointSubscriptionRequest request);
 
@@ -92,7 +92,7 @@ namespace Event
         [System.ServiceModel.OperationContractAttribute(Action = "http://www.onvif.org/ver10/events/wsdl/EventPortType/GetEventPropertiesRequest", ReplyAction = "http://www.onvif.org/ver10/events/wsdl/EventPortType/GetEventPropertiesResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented)),
-        OnvifProxy.SecurityOperationBehavoir("GetEventProperties", "http://docs.oasis-open.org/wsn/b-2", 3)]
+        OnvifProxy.SecurityOperationBehavoir("GetEventProperties", "http://docs.oasis-open.org/wsn/b-2", 2)]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "TopicNamespaceLocation")]
         GetEventPropertiesResponse GetEventProperties(GetEventPropertiesRequest request);
     }
@@ -1334,7 +1334,7 @@ namespace Event
             "ullMessagesFaultResponse", Name = "PullMessagesFaultResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented)),
-        OnvifProxy.SecurityOperationBehavoir("PullMessages", "http://docs.oasis-open.org/wsn/b-2", 3)]
+        OnvifProxy.SecurityOperationBehavoir("PullMessages", "http://docs.oasis-open.org/wsn/b-2", 2)]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "CurrentTime")]
 
         [CustomServiceMessageFormat]
@@ -1344,7 +1344,7 @@ namespace Event
         [System.ServiceModel.OperationContractAttribute(Action = "http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/SeekRequest", ReplyAction = "http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/SeekResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented)),
-        OnvifProxy.SecurityOperationBehavoir("Seek", "http://docs.oasis-open.org/wsn/b-2", 3)]
+        OnvifProxy.SecurityOperationBehavoir("Seek", "http://docs.oasis-open.org/wsn/b-2", 2)]
         SeekResponse Seek(SeekRequest request);
 
         [System.ServiceModel.OperationContractAttribute(
@@ -1353,7 +1353,7 @@ namespace Event
             )]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented)),
-        OnvifProxy.SecurityOperationBehavoir("SetSynchronizationPoint", "http://docs.oasis-open.org/wsn/b-2", 3)]
+        OnvifProxy.SecurityOperationBehavoir("SetSynchronizationPoint", "http://docs.oasis-open.org/wsn/b-2", 2)]
         void SetSynchronizationPoint();
     }
 

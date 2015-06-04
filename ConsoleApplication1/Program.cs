@@ -293,6 +293,7 @@ namespace OnvifProxy
                     httpTransportBindingElement);
             CustomBinding binding1 = new CustomBinding(
                     new TextMessageEncodingBindingElement(MessageVersion.Soap12WSAddressing10, Encoding.UTF8),
+                    //new TextMessageEncodingBindingElement(MessageVersion.Soap12, Encoding.UTF8),
                     httpTransportBindingElement);
             WSDualHttpBinding binding2 = new WSDualHttpBinding(WSDualHttpSecurityMode.None);
             //--------------------------
@@ -318,12 +319,9 @@ namespace OnvifProxy
             EndpointDiscoveryBehavior PullPointSubscriptionServiceBehavior = new EndpointDiscoveryBehavior();
             EndpointDiscoveryBehavior udpAnnouncementEndpointBehavior = new EndpointDiscoveryBehavior();
             //---------------------------------
-            HttpErrorsAttribute HttpErrorBehavior = new HttpErrorsAttribute();
+            //HttpErrorsAttribute HttpErrorBehavior = new HttpErrorsAttribute();
             //---------------------------------
-
-
-
-
+            
             UdpAnnouncementEndpoint udpAnnouncementEndpoint;
             UdpDiscoveryEndpoint udpDiscoveryEndpoint;
             EndpointDiscoveryBehavior discoverableEndpointBehavior = new EndpointDiscoveryBehavior();

@@ -242,24 +242,32 @@ namespace OnvifProxy
                 log.Debug("Done.\n");
                 Process();
             }
+            catch (ArgumentNullException ane)
+            {
+                log.DebugFormat("Connect() - client.Connect ArgumentNullException {0}", ane.Message);
+            }
+            catch (ArgumentOutOfRangeException aor)
+            {
+                log.DebugFormat("Connect() - client.Connect ArgumentOutOfRangeException {0}", aor.Message);
+            }
             catch (ArgumentException ex)
             {
-                log.DebugFormat("ArgumentException {0}", ex.Message);
-                if(!flg_ConnectionFailedActive)OnTyphoonDisconnect();
+                log.DebugFormat("Connect() - ArgumentException {0}", ex.Message);
+                if (!flg_ConnectionFailedActive) OnTyphoonDisconnect();
             }
             catch (SocketException es)
             {
-                log.DebugFormat("SocketException {0}", es.Message);
+                log.DebugFormat("Connect() - SocketException {0}", es.Message);
                 if (!flg_ConnectionFailedActive) OnTyphoonDisconnect();
             }
             catch (ObjectDisposedException ed)
             {
-                log.DebugFormat("ObjectDisposedException {0}", ed.Message);
+                log.DebugFormat("Connect() - ObjectDisposedException {0}", ed.Message);
                 if (!flg_ConnectionFailedActive) OnTyphoonDisconnect();
             }
             catch (InvalidOperationException ei)
             {
-                log.DebugFormat("InvalidOperationException {0}", ei.Message);
+                log.DebugFormat("Connect() - client.GetStream() - InvalidOperationException {0}", ei.Message);
                 if (!flg_ConnectionFailedActive) OnTyphoonDisconnect();
             }
         }

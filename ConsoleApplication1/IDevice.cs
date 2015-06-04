@@ -70,7 +70,7 @@ namespace Device
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void SetSystemDateAndTime(SetDateTimeType DateTimeType, bool DaylightSavings, TimeZone TimeZone, DateTime UTCDateTime);
 
-        [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
+        [System.ServiceModel.OperationContractAttribute(Action = "*",ReplyAction = "*"),
        OnvifProxy.SecurityOperationBehavoir("GetSystemDateAndTime", "http://www.onvif.org/ver10/device/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
@@ -83,9 +83,9 @@ namespace Device
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void SetSystemFactoryDefault(FactoryDefaultType FactoryDefault);
 
-        [System.ServiceModel.OperationContractAttribute(ReplyAction = "*", Action = "*"),
-        //[System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.SecurityOperationBehavoir("UpgradeSystemFirmware", "http://www.onvif.org/ver10/device/wsdl", 3)]
+        //[System.ServiceModel.OperationContractAttribute(ReplyAction = "*", Action = "*"),
+        [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
+       OnvifProxy.SecurityOperationBehavoir("UpgradeSystemFirmware", "http://www.onvif.org/ver10/device/wsdl", 0)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [System.ServiceModel.FaultContract(typeof(AttachmentData))]
@@ -93,7 +93,7 @@ namespace Device
         string UpgradeSystemFirmware(AttachmentData Firmware);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.SecurityOperationBehavoir("SystemReboot", "http://www.onvif.org/ver10/device/wsdl", 0)]
+       OnvifProxy.SecurityOperationBehavoir("SystemReboot", "http://www.onvif.org/ver10/device/wsdl", 1)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "Message")]
@@ -108,14 +108,14 @@ namespace Device
 
         // CODEGEN: Параметр "BackupFiles" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.SecurityOperationBehavoir("GetSystemBackup", "http://www.onvif.org/ver10/device/wsdl", 2)]
+       OnvifProxy.SecurityOperationBehavoir("GetSystemBackup", "http://www.onvif.org/ver10/device/wsdl", 0)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "BackupFiles")]
         GetSystemBackupResponse GetSystemBackup(GetSystemBackupRequest request);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.SecurityOperationBehavoir("GetSystemLog", "http://www.onvif.org/ver10/device/wsdl", 2)]
+       OnvifProxy.SecurityOperationBehavoir("GetSystemLog", "http://www.onvif.org/ver10/device/wsdl", 0)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "SystemLog")]
@@ -411,7 +411,7 @@ namespace Device
         void RemoveIPAddressFilter(IPAddressFilter IPAddressFilter);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.SecurityOperationBehavoir("GetAccessPolicy", "http://www.onvif.org/ver10/device/wsdl", 2)]
+       OnvifProxy.SecurityOperationBehavoir("GetAccessPolicy", "http://www.onvif.org/ver10/device/wsdl", 0)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "PolicyFile")]
@@ -498,19 +498,19 @@ namespace Device
         GetRelayOutputsResponse GetRelayOutputs(GetRelayOutputsRequest request);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.SecurityOperationBehavoir("SetRelayOutputSettings", "http://www.onvif.org/ver10/device/wsdl", 0)]
+       OnvifProxy.SecurityOperationBehavoir("SetRelayOutputSettings", "http://www.onvif.org/ver10/device/wsdl", 1)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void SetRelayOutputSettings(string RelayOutputToken, RelayOutputSettings Properties);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.SecurityOperationBehavoir("SetRelayOutputState", "http://www.onvif.org/ver10/device/wsdl", 0)]
+       OnvifProxy.SecurityOperationBehavoir("SetRelayOutputState", "http://www.onvif.org/ver10/device/wsdl", 1)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         void SetRelayOutputState(string RelayOutputToken, RelayLogicalState LogicalState);
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
-       OnvifProxy.SecurityOperationBehavoir("SendAuxiliaryCommand", "http://www.onvif.org/ver10/device/wsdl", 0)]
+       OnvifProxy.SecurityOperationBehavoir("SendAuxiliaryCommand", "http://www.onvif.org/ver10/device/wsdl", 1)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "AuxiliaryCommandResponse")]

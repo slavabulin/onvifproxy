@@ -207,7 +207,7 @@ namespace OnvifProxy
                 getServicesResponse.Service[0].XAddr = "http://" + confstr.IPAddr + "/onvif/device_service";
                 getServicesResponse.Service[0].Namespace = "http://www.onvif.org/ver10/device/wsdl";
                 getServicesResponse.Service[0].Version = new OnvifVersion();
-                getServicesResponse.Service[0].Version.Major = 2;
+                getServicesResponse.Service[0].Version.Major = 0;
                 getServicesResponse.Service[0].Version.Minor = 1;
 
                 if (request.IncludeCapability == true)
@@ -219,14 +219,14 @@ namespace OnvifProxy
                 getServicesResponse.Service[1].XAddr = "http://" + confstr.IPAddr + "/onvif/event_service";
                 getServicesResponse.Service[1].Namespace = "http://www.onvif.org/ver10/event/wsdl";
                 getServicesResponse.Service[1].Version = new OnvifVersion();
-                getServicesResponse.Service[1].Version.Major = 2;
+                getServicesResponse.Service[1].Version.Major = 0;
                 getServicesResponse.Service[1].Version.Minor = 1;
 
                 getServicesResponse.Service[2] = new Device.Service();
                 getServicesResponse.Service[2].XAddr = "http://" + confstr.IPAddr + "/onvif/media_service";
                 getServicesResponse.Service[2].Namespace = "http://www.onvif.org/ver10/media/wsdl";
                 getServicesResponse.Service[2].Version = new OnvifVersion();
-                getServicesResponse.Service[2].Version.Major = 2;
+                getServicesResponse.Service[2].Version.Major = 0;
                 getServicesResponse.Service[2].Version.Minor = 1;
 
                 return getServicesResponse;
