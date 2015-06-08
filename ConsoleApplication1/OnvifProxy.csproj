@@ -83,6 +83,8 @@
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Activation" />
     <Reference Include="System.ServiceModel.Discovery" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -94,6 +96,7 @@
     <Compile Include="AdaptersInfo.cs" />
     <Compile Include="AsyncResult.cs" />
     <Compile Include="CustomMessageFormatter.cs" />
+    <Compile Include="HttpErrorsAttirbute.cs" />
     <Compile Include="IEvent.cs" />
     <Compile Include="NVTClient.cs" />
     <Compile Include="NVTDiscoveryClient.cs" />

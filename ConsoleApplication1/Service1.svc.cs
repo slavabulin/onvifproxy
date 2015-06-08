@@ -218,7 +218,7 @@ namespace OnvifProxy
                 getServicesResponse.Service[1] = new Device.Service();
                 //getServicesResponse.Service[1].XAddr = "http://" + confstr.IPAddr + "/onvif/event_service";
                 getServicesResponse.Service[1].XAddr = confstr.Capabilities.Events.XAddr;
-                getServicesResponse.Service[1].Namespace = "http://www.onvif.org/ver10/event/wsdl";
+                getServicesResponse.Service[1].Namespace = "http://www.onvif.org/ver10/events/wsdl";
                 getServicesResponse.Service[1].Version = new OnvifVersion();
                 getServicesResponse.Service[1].Version.Major = 0;
                 getServicesResponse.Service[1].Version.Minor = 1;
@@ -3140,7 +3140,7 @@ namespace OnvifProxy
             geteventprop.TopicExpressionDialect = new string[2];
             geteventprop.TopicExpressionDialect[0] = "http://www.onvif.org/ver10/tev/topicExpression/ConcreteSet";
             //geteventprop.TopicExpressionDialect[0] = "http://www.onvif.org/ver10/tev/topicExpression/SimpleSet";
-            geteventprop.TopicExpressionDialect[1] = "http://docs.oasis-open.org/wsn/t-1/TopicExpression/Concrete";
+            //geteventprop.TopicExpressionDialect[1] = "http://docs.oasis-open.org/wsn/t-1/TopicExpression/Concrete";
             geteventprop.TopicExpressionDialect[1] = "http://docs.oasis-open.org/wsn/t-1/TopicExpression/Simple";
 
             geteventprop.MessageContentFilterDialect = new string[1];
@@ -3410,7 +3410,6 @@ namespace OnvifProxy
             RemoteEndpointMessageProperty endpoint =
                prop[RemoteEndpointMessageProperty.Name] as RemoteEndpointMessageProperty;
 
-            //string up2 = context.EndpointDispatcher.EndpointAddress.Uri.ToString();
             string ip = endpoint.Address;
 
             return ip;

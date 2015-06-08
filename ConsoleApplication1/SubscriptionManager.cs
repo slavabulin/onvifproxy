@@ -22,16 +22,6 @@ using System.IO;
 using System.Runtime.Serialization;
 //-----------------------------------
 
-
-
-
-
-
-
-
-
-
-
 namespace OnvifProxy
 {
     public static class bnSubscriptionManager
@@ -388,11 +378,15 @@ namespace OnvifProxy
 
             OperationContext context = OperationContext.Current;
             int a = context.Channel.LocalAddress.Uri.Port;
-            string addr = "http://" + confstr.IPAddr + ":" + a.ToString() + "/pp_subscription_manager";
+            //string addr = "http://" + confstr.IPAddr + ":" + a.ToString() + "/pp_subscription_manager";
+            string addr = "http://" + confstr.IPAddr + ":" + a.ToString() +
+                "/pp_subscription_manager/" + context.Channel.LocalAddress.Uri.ToString();
 
-            foreach (System.Collections.Generic.KeyValuePair<Event.FilterType, ppSubscriber> subs in ppSubscriptionManager.SubscribersCollection)
+            foreach (System.Collections.Generic.KeyValuePair<Event.FilterType, ppSubscriber> subs
+                in ppSubscriptionManager.SubscribersCollection)
             {
-                if (subs.Value.Addr == addr)
+                //if (subs.Value.Addr == addr)
+                if (subs.Value.Addr == context.Channel.LocalAddress.Uri.ToString())
                 {
                     subs.Value.SubscriberTimeoutTimer.Interval = hlp.ParseTermTime(request.Renew.TerminationTime);
                     Console.WriteLine("timeout added");
@@ -412,6 +406,8 @@ namespace OnvifProxy
     {
         public double ParseTermTime(string termtime)
         {
+            if (termtime == null)
+                return 0;
             //возвращает в время миллисекундах
             #region //xsd:duration time format description
             // Constructor which takes a relative time value. The time value is expressed as String with

@@ -49,9 +49,9 @@ namespace Event
             "se")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented)),
-        OnvifProxy.SecurityOperationBehavoir("GetServiceCapabilities", "http://docs.oasis-open.org/wsn/b-2", 3)]
+        //OnvifProxy.SecurityOperationBehavoir("GetServiceCapabilities", "http://docs.oasis-open.org/wsn/b-2", 3)]
+        OnvifProxy.SecurityOperationBehavoir("GetServiceCapabilities", "http://www.onvif.org/ver10/events/wsdl", 3)]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "Capabilities")]
-        //[OnvifProxy.SecurityOperationBehavoir("GetServiceCapabilities", "http://www.onvif.org/ver10/device/wsdl", 3)]
         Event.Capabilities GetServiceCapabilities();
 
         // CODEGEN: Параметр "InitialTerminationTime" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
@@ -92,7 +92,8 @@ namespace Event
         [System.ServiceModel.OperationContractAttribute(Action = "http://www.onvif.org/ver10/events/wsdl/EventPortType/GetEventPropertiesRequest", ReplyAction = "http://www.onvif.org/ver10/events/wsdl/EventPortType/GetEventPropertiesResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented)),
-        OnvifProxy.SecurityOperationBehavoir("GetEventProperties", "http://docs.oasis-open.org/wsn/b-2", 2)]
+        //OnvifProxy.SecurityOperationBehavoir("GetEventProperties", "http://docs.oasis-open.org/wsn/b-2", 2)]
+        OnvifProxy.SecurityOperationBehavoir("GetEventProperties", "http://www.onvif.org/ver10/events/wsdl", 2)]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "TopicNamespaceLocation")]
         GetEventPropertiesResponse GetEventProperties(GetEventPropertiesRequest request);
     }
@@ -1334,7 +1335,8 @@ namespace Event
             "ullMessagesFaultResponse", Name = "PullMessagesFaultResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented)),
-        OnvifProxy.SecurityOperationBehavoir("PullMessages", "http://docs.oasis-open.org/wsn/b-2", 2)]
+        //OnvifProxy.SecurityOperationBehavoir("PullMessages", "http://docs.oasis-open.org/wsn/b-2", 2)]
+        OnvifProxy.SecurityOperationBehavoir("PullMessages", "http://www.onvif.org/ver10/events/wsdl", 2)]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "CurrentTime")]
 
         [CustomServiceMessageFormat]
@@ -1344,7 +1346,9 @@ namespace Event
         [System.ServiceModel.OperationContractAttribute(Action = "http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/SeekRequest", ReplyAction = "http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/SeekResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented)),
-        OnvifProxy.SecurityOperationBehavoir("Seek", "http://docs.oasis-open.org/wsn/b-2", 2)]
+        //OnvifProxy.SecurityOperationBehavoir("Seek", "http://docs.oasis-open.org/wsn/b-2", 2)]
+        OnvifProxy.SecurityOperationBehavoir("Seek", "http://www.onvif.org/ver10/events/wsdl", 2)]
+
         SeekResponse Seek(SeekRequest request);
 
         [System.ServiceModel.OperationContractAttribute(
@@ -1353,7 +1357,8 @@ namespace Event
             )]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ExtensibleDocumented)),
-        OnvifProxy.SecurityOperationBehavoir("SetSynchronizationPoint", "http://docs.oasis-open.org/wsn/b-2", 2)]
+        //OnvifProxy.SecurityOperationBehavoir("SetSynchronizationPoint", "http://docs.oasis-open.org/wsn/b-2", 2)]
+        OnvifProxy.SecurityOperationBehavoir("SetSynchronizationPoint", "http://www.onvif.org/ver10/events/wsdl", 2)]
         void SetSynchronizationPoint();
     }
 
