@@ -10,5 +10,10 @@
     <password>pass</password>
     <usertype>2</usertype>
   </User>
+  <User>
+    <username>oper</username>
+    <password>oper</password>
+    <usertype>1</usertype>
+  </User>
 </ArrayOfUser>
 

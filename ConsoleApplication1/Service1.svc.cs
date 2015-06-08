@@ -440,10 +440,99 @@ namespace OnvifProxy
         }
         public GetUsersResponse GetUsers(GetUsersRequest request)
         {
-            return (new GetUsersResponse());
+            UserList userlist;
+
+            using (FileStream fs = new FileStream("pwd.xml", FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(UserList));
+                try
+                {
+                    userlist = (UserList)xmlSerializer.Deserialize(fs);
+                    Device.User[] usrarr = new Device.User[userlist.Count];
+                    for (int i = 0; i < userlist.Count; i++)
+                    {
+                        usrarr[i] = new Device.User();
+                        usrarr[i].Username = userlist.ElementAt(i).username;
+
+                        switch (userlist.ElementAt(i).usertype)
+                        {
+                            case 0:
+                                usrarr[i].UserLevel = UserLevel.Administrator;
+                                break;
+                            case 1:
+                                usrarr[i].UserLevel = UserLevel.Operator;
+                                break;
+                            case 2:
+                                usrarr[i].UserLevel = UserLevel.User;
+                                break;
+                            case 3:
+                                usrarr[i].UserLevel = UserLevel.Anonymous;
+                                break;
+                            default:
+                                usrarr[i].UserLevel = UserLevel.Anonymous;
+                                break;
+                        }
+                    }
+                    return (new GetUsersResponse(usrarr));
+                }
+                catch (SerializationException g)
+                {
+                    Console.WriteLine("Не могу десериализовать файл конфигурации; " + g.Message);
+                    throw g;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    fs.Close();
+                }
+            }
         }
+
         public CreateUsersResponse CreateUsers(CreateUsersRequest request)
         {
+            if (request == null)
+                return null;
+            UserList userlist;
+
+            using (FileStream fs = new FileStream("pwd.xml", FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(UserList));
+                 try
+                 {
+                     userlist = (UserList)xmlSerializer.Deserialize(fs);
+                     foreach (User usr in userlist)
+                     {
+                         //if (request.User.Contains<User>(usr))
+                         //{ }
+                     }
+                     //Device.User[] usrarr = new Device.User[userlist.Count];
+                     //for (int i = 0; i < userlist.Count; i++)
+                     //{
+                     //    //
+                     //}
+                 }
+                catch(Exception ex)
+                 {}
+                finally
+                 {}
+                //check if username already exists
+
+                //check if pass is too long
+
+                //check if username is too long
+
+                //check if password is too weak
+
+                //check if maximum number of supported users exceeds
+
+                //check if userlevel is anon
+
+                //check if username is too short
+                
+            }
             return (new CreateUsersResponse());
         }
         public DeleteUsersResponse DeleteUsers(DeleteUsersRequest request)
