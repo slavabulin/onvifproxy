@@ -551,8 +551,81 @@ namespace OnvifProxy
         }
         public DeleteUsersResponse DeleteUsers(DeleteUsersRequest request)
         {
+            if (request == null)
+                return null;
+            UserList userlistfromfile, tmpuserlistfromfile;
+
+            using (FileStream fs = new FileStream("pwd.xml", FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read))
+            {
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(UserList));
+                tmpuserlistfromfile = new UserList();
+                try
+                {
+                    userlistfromfile = (UserList)xmlSerializer.Deserialize(fs);
+
+                    userlistfromfile = DeleteElements(request.Username, userlistfromfile);
+
+                    if(userlistfromfile==null)
+                    {
+                        throw new FaultException(new FaultReason("Username not recognized"),
+                                    new FaultCode("Sender",
+                                        new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                            new FaultCode("UsernameMissing", "http://www.onvif.org/ver10/error"))));
+                    }
+                    //fs.Flush();
+                    fs.Position = 0;
+                    using (TextWriter writer = new StreamWriter("pwd.xml"))
+                    {
+                        try
+                        {
+                            xmlSerializer.Serialize(writer, userlistfromfile);
+                        }
+                        catch(Exception ex)
+                        {
+                            throw new Exception();
+                        }
+                        finally
+                        {
+                            writer.Close();
+                        }
+                    }
+                    
+                }
+                catch (FaultException fe)
+                {
+                    throw fe;
+                }
+                catch (Exception ex)
+                {
+                    TyphoonCom.log.Debug("DeleteUsers threw exception - {0}", ex);
+                }
+            }
+            using (FileStream fs = new FileStream("pwd.xml", FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read))
+            {
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(UserList));
+                
+            }
+            
             return (new DeleteUsersResponse());
         }
+
+        UserList DeleteElements(string[] strarr, UserList list)
+        {
+            if (strarr == null || list == null) return null;
+            foreach(Device.User user in list)
+            {
+                for(int t=0;t<strarr.Length;t++)
+                {
+                    if(strarr[t]==user.Username)
+                    {
+                        list.Remove(user);
+                        return DeleteElements(strarr, list);
+                    }
+                }
+            }
+            return list;
+        }
+
         public SetUserResponse SetUser(SetUserRequest request)
         {
             return (new SetUserResponse());
