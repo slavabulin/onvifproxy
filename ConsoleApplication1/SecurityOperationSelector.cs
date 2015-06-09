@@ -149,7 +149,6 @@ namespace OnvifProxy
                                     //check if allowed method requested
                                     foreach (XmlQualifiedName methodname in methodList)
                                     {
-                                        //string tmpstring = methodname.Namespace + "/" + methodname.Name;
                                         if (methodname == lookupQName)
                                         {
                                             message = msgcopy1;
@@ -201,16 +200,12 @@ namespace OnvifProxy
                     }
                     catch (ArgumentNullException ane)
                     {
-                        //throw ane;
-                        //throw new WebFaultException(System.Net.HttpStatusCode.Unauthorized);
-                        //throw new System.Web.HttpException(401, "Unauthorized");
                         return null;
                     }
 
                     //---------------------------------
 
                     message = msgcopy1;
-                    //throw new System.Web.HttpException(401, "Unauthorized");
                     return null;
 
                 #endregion check if there is security header
@@ -323,7 +318,7 @@ namespace OnvifProxy
         public int usertype;
     }
 
-    public class UserList : Collection<User>
+    public class UserList : Collection<Device.User>
     {
     }
 
@@ -349,7 +344,7 @@ namespace OnvifProxy
 
             //open file and read passwords and usernames
             //put them in a dictionary
-            using (FileStream fs = new FileStream("pwd.xml", FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (FileStream fs = new FileStream("pwd.xml", FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
             {
 
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(UserList));
@@ -357,12 +352,12 @@ namespace OnvifProxy
                 try
                 {
                     userlist = (UserList)xmlSerializer.Deserialize(fs);
-                    foreach (User usr in userlist)
+                    foreach (Device.User usr in userlist)
                     {
-                        if (usr.username == Name)
+                        if (usr.Username == Name)
                         {
-                            PasswordFromFile = usr.password;
-                            UsertypeFromFile = usr.usertype;
+                            PasswordFromFile = usr.Password;
+                            UsertypeFromFile = UserLevel2Int(usr.UserLevel);
                             break;
                         }
                     }
@@ -381,6 +376,31 @@ namespace OnvifProxy
                     fs.Close();
                 }
             }
+        }
+
+        int UserLevel2Int(Device.UserLevel userlevel)
+        {
+            //if (userlevel == Device.UserLevel.Extended) return 3;
+            int usertype;
+            switch(userlevel)
+            {
+                case Device.UserLevel.Administrator:
+                    usertype = 0;
+                    break;
+                case Device.UserLevel.Operator:
+                    usertype = 1;
+                    break;
+                case Device.UserLevel.User:
+                    usertype = 2;
+                    break;
+                case Device.UserLevel.Anonymous:
+                    usertype = 3;
+                    break;
+                default:
+                    usertype = 3;
+                    break;
+            }
+            return usertype;
         }
 
         public Usertype CheckPassword()
@@ -441,16 +461,5 @@ namespace OnvifProxy
                 return Usertype.wrongpass;
             }
         }
-    }
-
-    [DataContract]
-    public class HttpErrorFault
-    {
-        [DataMember]
-        public string FaultMessage { get; set; }
-        [DataMember]
-        public int ErrorCode { get; set; }
-        [DataMember]
-        public string Location { get; set; }
     }
 }

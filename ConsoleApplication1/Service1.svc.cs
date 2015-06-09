@@ -452,26 +452,8 @@ namespace OnvifProxy
                     for (int i = 0; i < userlist.Count; i++)
                     {
                         usrarr[i] = new Device.User();
-                        usrarr[i].Username = userlist.ElementAt(i).username;
-
-                        switch (userlist.ElementAt(i).usertype)
-                        {
-                            case 0:
-                                usrarr[i].UserLevel = UserLevel.Administrator;
-                                break;
-                            case 1:
-                                usrarr[i].UserLevel = UserLevel.Operator;
-                                break;
-                            case 2:
-                                usrarr[i].UserLevel = UserLevel.User;
-                                break;
-                            case 3:
-                                usrarr[i].UserLevel = UserLevel.Anonymous;
-                                break;
-                            default:
-                                usrarr[i].UserLevel = UserLevel.Anonymous;
-                                break;
-                        }
+                        usrarr[i].Username = userlist.ElementAt(i).Username;
+                        usrarr[i].UserLevel = userlist.ElementAt(i).UserLevel;
                     }
                     return (new GetUsersResponse(usrarr));
                 }
@@ -500,94 +482,73 @@ namespace OnvifProxy
             using (FileStream fs = new FileStream("pwd.xml", FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
             {
                  XmlSerializer xmlSerializer = new XmlSerializer(typeof(UserList));
-                 //check if username already exists
+
                  try
                  {
                      userlistfromfile = (UserList)xmlSerializer.Deserialize(fs);
-                     
-                     foreach(Device.User usr in request.User)
+
+                     foreach (Device.User usr in request.User)
                      {
-
-                         OnvifProxy.User user = new User();
-                         user.username = usr.Username;
-                         user.password = usr.Password;
-
-                         if (usr.Username == null || usr.UserLevel == null)
+                         if (usr.Username == null)
                              return null;
-                         //foreach (User usr in userlistfromfile)
-                         if (userlistfromfile.Contains(user))
+
+                         //check if username already exists
+                         foreach (Device.User username in userlistfromfile)
                          {
-                             //return appropriate FaultException
-                             return null;
+                             if (usr.Username == username.Username)
+                                 //return appropriate FaultException
+                                 throw new FaultException(new FaultReason("Username already exists"),
+                                     new FaultCode("Sender",
+                                         new FaultCode("OperationProhibited", "http://www.onvif.org/ver10/error",
+                                             new FaultCode("UsernameClash", "http://www.onvif.org/ver10/error"))));
                          }
                          //check if username is too long
-                         if (user.username.ToString().Length > 20)
+                         if (usr.Username.ToString().Length > 20)
                          {
                              //return appropriate FaultException
-                             return null;
+                             throw new FaultException(new FaultReason("The username is too long"),
+                                     new FaultCode("Sender",
+                                         new FaultCode("OperationProhibited", "http://www.onvif.org/ver10/error",
+                                             new FaultCode("UsernameTooLong", "http://www.onvif.org/ver10/error"))));
                          }
                          //check if pass is too long
-                         if (user.password.ToString().Length > 20)
+                         if (usr.Password.ToString().Length > 20)
                          {
                              //return appropriate FaultException
-                             return null;
+                             throw new FaultException(new FaultReason("The password is too long"),
+                                     new FaultCode("Sender",
+                                         new FaultCode("OperationProhibited", "http://www.onvif.org/ver10/error",
+                                             new FaultCode("PasswordTooLong", "http://www.onvif.org/ver10/error"))));
                          }
                          //check if userlevel is anon
                          if (usr.UserLevel == UserLevel.Anonymous)
                          {
                              //return appropriate FaultException
-                             return null;
+                             throw new FaultException(new FaultReason("User level anonymous is not allowed"),
+                                     new FaultCode("Sender",
+                                         new FaultCode("OperationProhibited", "http://www.onvif.org/ver10/error",
+                                             new FaultCode("AnonymousNotAllowed", "http://www.onvif.org/ver10/error"))));
                          }
-                         userlistfromfile.Add(TransformUser2User(usr));
-                         //TextWriter writer = new StreamWriter("pwd.xml");
-                         
+                         //check if password is too weak
+                         //check if maximum number of supported users exceeds
+                         //check if username is too short  
+                         userlistfromfile.Add(usr);
+
                      }
                      fs.Position = 0;
                      xmlSerializer.Serialize(fs, userlistfromfile);
                  }
-                catch(Exception ex)
-                 {}
-                finally
-                 {}
-
-                //check if password is too weak
-
-                //check if maximum number of supported users exceeds
-
-                //check if username is too short
-                
+                     catch(FaultException fe)
+                 {
+                     throw fe;
+                 }
+                 catch (Exception ex)
+                 {
+                     TyphoonCom.log.Debug("CreateUsers threw exception - {0}", ex);
+                 } 
             }
             return (new CreateUsersResponse());
         }
-
-        OnvifProxy.User TransformUser2User(Device.User devuser)
-        {
-            if(devuser==null||devuser.Username==null||devuser.UserLevel==UserLevel.Anonymous)
-            return null;
-            OnvifProxy.User user = new User();
-            user.username = devuser.Username;
-            user.password = devuser.Password;
-            switch(devuser.UserLevel)
-            {
-                case UserLevel.Administrator:
-                    user.usertype = 0;
-                    break;
-                case UserLevel.Operator:
-                    user.usertype = 1;
-                    break;
-                case UserLevel.User:
-                    user.usertype = 2;
-                    break;
-                case UserLevel.Anonymous:
-                    user.usertype = 3;
-                    break;
-                default:
-                    user.usertype = 3;
-                    break;
-            }
-            return user;
-        }
-
         public DeleteUsersResponse DeleteUsers(DeleteUsersRequest request)
         {
             return (new DeleteUsersResponse());

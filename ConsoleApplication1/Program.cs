@@ -34,7 +34,6 @@ namespace OnvifProxy
 
         public static void Main(string[] args)
         {
-
             uuid = Guid.NewGuid();
             
             ev_RebootEnded = new AutoResetEvent(false);
