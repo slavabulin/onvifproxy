@@ -1,1 +1,0 @@
-!udp.port==1900&&!nbns&&!icmpv6&&!arp&&!ipx&&!gvrp&&!stp&&!cdp&&!browser&&!loop&&!smb&&!dns&&!hip&&!http

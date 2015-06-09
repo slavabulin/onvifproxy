@@ -164,6 +164,7 @@ namespace OnvifProxy
             catch (CommunicationException e)
             {
                 Console.WriteLine(e.Message);
+                throw e;
             }
             catch (TimeoutException e)
             {
