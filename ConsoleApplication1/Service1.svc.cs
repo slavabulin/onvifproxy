@@ -495,46 +495,99 @@ namespace OnvifProxy
         {
             if (request == null)
                 return null;
-            UserList userlist;
+            UserList userlistfromfile;
 
-            using (FileStream fs = new FileStream("pwd.xml", FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (FileStream fs = new FileStream("pwd.xml", FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
             {
                  XmlSerializer xmlSerializer = new XmlSerializer(typeof(UserList));
+                 //check if username already exists
                  try
                  {
-                     userlist = (UserList)xmlSerializer.Deserialize(fs);
-                     foreach (User usr in userlist)
+                     userlistfromfile = (UserList)xmlSerializer.Deserialize(fs);
+                     
+                     foreach(Device.User usr in request.User)
                      {
-                         //if (request.User.Contains<User>(usr))
-                         //{ }
+
+                         OnvifProxy.User user = new User();
+                         user.username = usr.Username;
+                         user.password = usr.Password;
+
+                         if (usr.Username == null || usr.UserLevel == null)
+                             return null;
+                         //foreach (User usr in userlistfromfile)
+                         if (userlistfromfile.Contains(user))
+                         {
+                             //return appropriate FaultException
+                             return null;
+                         }
+                         //check if username is too long
+                         if (user.username.ToString().Length > 20)
+                         {
+                             //return appropriate FaultException
+                             return null;
+                         }
+                         //check if pass is too long
+                         if (user.password.ToString().Length > 20)
+                         {
+                             //return appropriate FaultException
+                             return null;
+                         }
+                         //check if userlevel is anon
+                         if (usr.UserLevel == UserLevel.Anonymous)
+                         {
+                             //return appropriate FaultException
+                             return null;
+                         }
+                         userlistfromfile.Add(TransformUser2User(usr));
+                         //TextWriter writer = new StreamWriter("pwd.xml");
+                         
                      }
-                     //Device.User[] usrarr = new Device.User[userlist.Count];
-                     //for (int i = 0; i < userlist.Count; i++)
-                     //{
-                     //    //
-                     //}
+                     fs.Position = 0;
+                     xmlSerializer.Serialize(fs, userlistfromfile);
                  }
                 catch(Exception ex)
                  {}
                 finally
                  {}
-                //check if username already exists
-
-                //check if pass is too long
-
-                //check if username is too long
 
                 //check if password is too weak
 
                 //check if maximum number of supported users exceeds
-
-                //check if userlevel is anon
 
                 //check if username is too short
                 
             }
             return (new CreateUsersResponse());
         }
+
+        OnvifProxy.User TransformUser2User(Device.User devuser)
+        {
+            if(devuser==null||devuser.Username==null||devuser.UserLevel==UserLevel.Anonymous)
+            return null;
+            OnvifProxy.User user = new User();
+            user.username = devuser.Username;
+            user.password = devuser.Password;
+            switch(devuser.UserLevel)
+            {
+                case UserLevel.Administrator:
+                    user.usertype = 0;
+                    break;
+                case UserLevel.Operator:
+                    user.usertype = 1;
+                    break;
+                case UserLevel.User:
+                    user.usertype = 2;
+                    break;
+                case UserLevel.Anonymous:
+                    user.usertype = 3;
+                    break;
+                default:
+                    user.usertype = 3;
+                    break;
+            }
+            return user;
+        }
+
         public DeleteUsersResponse DeleteUsers(DeleteUsersRequest request)
         {
             return (new DeleteUsersResponse());
@@ -549,7 +602,6 @@ namespace OnvifProxy
             Uri wsdluri = new Uri(baseuri.ToString() + "onvif/mex");
 
             return (new GetWsdlUrlResponse(wsdluri.ToString()));
-            //return new GetWsdlUrlResponse();
         }
         public GetCapabilitiesResponse GetCapabilities(GetCapabilitiesRequest request)
         {

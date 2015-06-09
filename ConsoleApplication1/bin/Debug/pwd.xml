@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <ArrayOfUser xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <User>
     <username>admin</username>
@@ -15,5 +15,19 @@
     <password>oper</password>
     <usertype>1</usertype>
   </User>
+  <User>
+    <username>OnvifTest1</username>
+    <password>admin</password>
+    <usertype>1</usertype>
+  </User>
+  <User>
+    <username>OnvifTest2</username>
+    <password>admin</password>
+    <usertype>2</usertype>
+  </User>
+  <User>
+    <username>OnvifTest3</username>
+    <password>admin</password>
+    <usertype>0</usertype>
+  </User>
 </ArrayOfUser>
-
