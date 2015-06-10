@@ -18,6 +18,21 @@ using System.ServiceModel.Dispatcher;
 
 
 
+//----------------------------
+using System.Collections.Generic;
+using System.Runtime.Serialization;
+using System.Xml.Serialization;
+using System.IO;
+using System.Text;
+using System.Xml;
+using System.Web.Services.Protocols; //ддя соап-документс-сеттингс
+using System.Runtime.InteropServices; // added to set system time&date
+using Microsoft.Win32;
+using System.Management; 
+using System.Text.RegularExpressions;
+//----------------------------
+
+
 namespace OnvifProxy
 {    
     public class Program
@@ -34,6 +49,8 @@ namespace OnvifProxy
 
         public static void Main(string[] args)
         {
+            //makexml();//make template for pwd.xml
+
             uuid = Guid.NewGuid();
             
             ev_RebootEnded = new AutoResetEvent(false);
@@ -224,6 +241,35 @@ namespace OnvifProxy
             
         }
 
+        static void makexml()
+        {
+            UserList userlistfromfile;
+
+            using (FileStream fs = new FileStream("pwd.xml", FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
+            {
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(UserList));
+                try
+                {
+                    userlistfromfile = new UserList();
+                    Device.User user = new Device.User();
+                    user.Username = "admin";
+                    user.UserLevel = Device.UserLevel.Administrator;
+                    user.Password = "admin";
+                    userlistfromfile.Add(user);
+                    
+
+                    xmlSerializer.Serialize(fs, userlistfromfile);
+                }
+                catch (FaultException fe)
+                {
+                    throw fe;
+                }
+                catch (Exception ex)
+                {
+                    TyphoonCom.log.Debug("CreateUsers threw exception - {0}", ex);
+                }
+            }
+        }
         public static ServiceHost CreateServiceHost()
         {
             //---------------------------------------------- 

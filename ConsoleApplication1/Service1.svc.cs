@@ -442,7 +442,7 @@ namespace OnvifProxy
         {
             UserList userlist;
 
-            using (FileStream fs = new FileStream("pwd.xml", FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (FileStream fs = new FileStream("pwd.xml", FileMode.Open, FileAccess.Read, FileShare.Read))
             {
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(UserList));
                 try
@@ -479,7 +479,7 @@ namespace OnvifProxy
                 return null;
             UserList userlistfromfile;
 
-            using (FileStream fs = new FileStream("pwd.xml", FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
+            using (FileStream fs = new FileStream("pwd.xml", FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
             {
                  XmlSerializer xmlSerializer = new XmlSerializer(typeof(UserList));
 
@@ -579,35 +579,6 @@ namespace OnvifProxy
                     }
 
                     userlistfromfile = DeleteElements(request.Username, userlistfromfile);
-
-                    //if(userlistfromfile==null)
-                    //{//huinya
-                    //    throw new FaultException(new FaultReason("Username not recognized"),
-                    //                new FaultCode("Sender",
-                    //                    new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
-                    //                        new FaultCode("UsernameMissing", "http://www.onvif.org/ver10/error"))));
-                    //}
-                    #region
-                    //fs.Flush();
-                    //fs.Position = 0;
-                    //xmlSerializer.Serialize(fs, userlistfromfile);
-                    //using (TextWriter writer = new StreamWriter("pwd.xml"))
-                    //{
-                    //    try
-                    //    {
-                    //        xmlSerializer.Serialize(writer, userlistfromfile);
-                    //    }
-                    //    catch(Exception ex)
-                    //    {
-                    //        throw new Exception();
-                    //    }
-                    //    finally
-                    //    {
-                    //        writer.Close();
-                    //    }
-                    //}
-                    #endregion
-
                 }
                 catch (FaultException fe)
                 {
@@ -654,6 +625,71 @@ namespace OnvifProxy
 
         public SetUserResponse SetUser(SetUserRequest request)
         {
+            foreach(Device.User user in request.User)
+            {
+                if (user.Username == null)
+                    throw new FaultException(new FaultReason("Username not recognized"),
+                                     new FaultCode("Sender",
+                                         new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                             new FaultCode("UsernameMissing", "http://www.onvif.org/ver10/error"))));
+                if (user.UserLevel == UserLevel.Anonymous)
+                    throw new FaultException(new FaultReason("User level anonymous is not allowed"),
+                                     new FaultCode("Sender",
+                                         new FaultCode("OperationProhibited", "http://www.onvif.org/ver10/error",
+                                             new FaultCode("AnonymousNotAllowed", "http://www.onvif.org/ver10/error"))));
+                if (user.Password.ToString().Count() > 20)
+                    throw new FaultException(new FaultReason("The password is too long"),
+                                     new FaultCode("Sender",
+                                         new FaultCode("OperationProhibited", "http://www.onvif.org/ver10/error",
+                                             new FaultCode("PasswordTooLong", "http://www.onvif.org/ver10/error"))));
+            }
+            UserList userlistfromfile, tmpuserlist;
+            using (FileStream fs = new FileStream("pwd.xml", FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
+            {
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(UserList));
+                tmpuserlist = new UserList();
+                try
+                {
+                    userlistfromfile = (UserList)xmlSerializer.Deserialize(fs);
+                    string[] arr_req_username = new string[request.User.Count()];
+                    for (int t = 0; t < request.User.Count();t++ )
+                    {
+                        arr_req_username[t] = request.User.ElementAt(t).Username;
+                    }
+                    foreach (Device.User file_user in userlistfromfile)
+                    {
+                        if (!arr_req_username.Contains(file_user.Username))
+                        {
+                            tmpuserlist.Add(file_user);
+                        }                        
+                    }
+                    foreach (Device.User user in request.User)
+                    {
+                        tmpuserlist.Add(user);
+                    }
+                }
+                catch (SerializationException ex)
+                {
+                    TyphoonCom.log.DebugFormat("SetUser - serialization exception - {0}", ex.Message);
+                }
+                catch (Exception exc)
+                {
+                    TyphoonCom.log.DebugFormat("SetUser - nonserialization exception - {0}", exc.Message);
+                }
+                
+                fs.Dispose();
+                using (TextWriter writer = new StreamWriter("pwd.xml"))
+                {
+                    try
+                    {
+                        xmlSerializer.Serialize(writer, tmpuserlist);
+                    }
+                    catch (Exception ex)
+                    {
+                        TyphoonCom.log.Debug("SetUser threw exception while serializing pwd.xml - {0}", ex);
+                    }                    
+                }
+            }
             return (new SetUserResponse());
         }
         public GetWsdlUrlResponse GetWsdlUrl(GetWsdlUrlRequest request)
