@@ -442,7 +442,7 @@ namespace OnvifProxy
         {
             UserList userlist;
 
-            using (FileStream fs = new FileStream("pwd.xml", FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (FileStream fs = new FileStream("pwd.xml", FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(UserList));
                 try
@@ -479,7 +479,7 @@ namespace OnvifProxy
                 return null;
             UserList userlistfromfile;
 
-            using (FileStream fs = new FileStream("pwd.xml", FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
+            using (FileStream fs = new FileStream("pwd.xml", FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
             {
                  XmlSerializer xmlSerializer = new XmlSerializer(typeof(UserList));
 
@@ -553,43 +553,61 @@ namespace OnvifProxy
         {
             if (request == null)
                 return null;
-            UserList userlistfromfile, tmpuserlistfromfile;
-
-            using (FileStream fs = new FileStream("pwd.xml", FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read))
+            UserList userlistfromfile = new UserList();
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(UserList));
+            string[] tmpuserlist;
+            using (FileStream fs = new FileStream("pwd.xml", FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
             {
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(UserList));
-                tmpuserlistfromfile = new UserList();
                 try
                 {
                     userlistfromfile = (UserList)xmlSerializer.Deserialize(fs);
 
-                    userlistfromfile = DeleteElements(request.Username, userlistfromfile);
-
-                    if(userlistfromfile==null)
+                    tmpuserlist = new string[userlistfromfile.Count];
+                    for (int y = 0; y < userlistfromfile.Count; y++)
                     {
-                        throw new FaultException(new FaultReason("Username not recognized"),
+                        tmpuserlist[y] = userlistfromfile.ElementAt(y).Username;
+                    }
+                    foreach (string name in request.Username)
+                    {
+                        if(!tmpuserlist.Contains(name))
+                        {
+                            throw new FaultException(new FaultReason("Username not recognized"),
                                     new FaultCode("Sender",
                                         new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
                                             new FaultCode("UsernameMissing", "http://www.onvif.org/ver10/error"))));
+                        }
                     }
+
+                    userlistfromfile = DeleteElements(request.Username, userlistfromfile);
+
+                    //if(userlistfromfile==null)
+                    //{//huinya
+                    //    throw new FaultException(new FaultReason("Username not recognized"),
+                    //                new FaultCode("Sender",
+                    //                    new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                    //                        new FaultCode("UsernameMissing", "http://www.onvif.org/ver10/error"))));
+                    //}
+                    #region
                     //fs.Flush();
-                    fs.Position = 0;
-                    using (TextWriter writer = new StreamWriter("pwd.xml"))
-                    {
-                        try
-                        {
-                            xmlSerializer.Serialize(writer, userlistfromfile);
-                        }
-                        catch(Exception ex)
-                        {
-                            throw new Exception();
-                        }
-                        finally
-                        {
-                            writer.Close();
-                        }
-                    }
-                    
+                    //fs.Position = 0;
+                    //xmlSerializer.Serialize(fs, userlistfromfile);
+                    //using (TextWriter writer = new StreamWriter("pwd.xml"))
+                    //{
+                    //    try
+                    //    {
+                    //        xmlSerializer.Serialize(writer, userlistfromfile);
+                    //    }
+                    //    catch(Exception ex)
+                    //    {
+                    //        throw new Exception();
+                    //    }
+                    //    finally
+                    //    {
+                    //        writer.Close();
+                    //    }
+                    //}
+                    #endregion
+
                 }
                 catch (FaultException fe)
                 {
@@ -597,15 +615,23 @@ namespace OnvifProxy
                 }
                 catch (Exception ex)
                 {
-                    TyphoonCom.log.Debug("DeleteUsers threw exception - {0}", ex);
+                    TyphoonCom.log.Debug("DeleteUsers threw exception while deserializing pwd.xml - {0}", ex);
+                }
+                fs.Dispose();
+
+                using (TextWriter writer = new StreamWriter("pwd.xml"))
+                {
+                    try
+                    {
+                        xmlSerializer.Serialize(writer, userlistfromfile);
+                    }
+                    catch (Exception ex)
+                    {
+                        TyphoonCom.log.Debug("DeleteUsers threw exception while serializing pwd.xml - {0}", ex);
+                    }
+                    
                 }
             }
-            using (FileStream fs = new FileStream("pwd.xml", FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read))
-            {
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(UserList));
-                
-            }
-            
             return (new DeleteUsersResponse());
         }
 

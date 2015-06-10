@@ -417,40 +417,46 @@ namespace OnvifProxy
 
             #endregion
 
-
-            XmlSerializer bf = new XmlSerializer(typeof(ConfigStruct));
-            using (TextWriter writer = new StreamWriter("config.xml"))
+            if (config != null)
             {
-                config.Capabilities.Analytics.XAddr = "http://" + config.IPAddr 
-                    + config.Capabilities.Analytics.XAddr.Remove(0, 7 + TrimIP(config.Capabilities.Analytics.XAddr).Length);
-                config.Capabilities.Device.XAddr = "http://" + config.IPAddr 
-                    + config.Capabilities.Device.XAddr.Remove(0, 7 + TrimIP(config.Capabilities.Device.XAddr).Length);
-                config.Capabilities.Events.XAddr = "http://" + config.IPAddr 
-                    + config.Capabilities.Events.XAddr.Remove(0, 7 + TrimIP(config.Capabilities.Events.XAddr).Length);
-                config.Capabilities.Imaging.XAddr = "http://" + config.IPAddr 
-                    + config.Capabilities.Imaging.XAddr.Remove(0, 7 + TrimIP(config.Capabilities.Imaging.XAddr).Length);
-                config.Capabilities.Media.XAddr = "http://" + config.IPAddr 
-                    + config.Capabilities.Media.XAddr.Remove(0, 7 + TrimIP(config.Capabilities.Media.XAddr).Length);
-                config.Capabilities.PTZ.XAddr = "http://" + config.IPAddr 
-                    + config.Capabilities.PTZ.XAddr.Remove(0, 7 + TrimIP(config.Capabilities.PTZ.XAddr).Length);
+                XmlSerializer bf = new XmlSerializer(typeof(ConfigStruct));
+                using (TextWriter writer = new StreamWriter("config.xml"))
+                {
+                    config.Capabilities.Analytics.XAddr = "http://" + config.IPAddr
+                        + config.Capabilities.Analytics.XAddr.Remove(0, 7 + TrimIP(config.Capabilities.Analytics.XAddr).Length);
+                    config.Capabilities.Device.XAddr = "http://" + config.IPAddr
+                        + config.Capabilities.Device.XAddr.Remove(0, 7 + TrimIP(config.Capabilities.Device.XAddr).Length);
+                    config.Capabilities.Events.XAddr = "http://" + config.IPAddr
+                        + config.Capabilities.Events.XAddr.Remove(0, 7 + TrimIP(config.Capabilities.Events.XAddr).Length);
+                    config.Capabilities.Imaging.XAddr = "http://" + config.IPAddr
+                        + config.Capabilities.Imaging.XAddr.Remove(0, 7 + TrimIP(config.Capabilities.Imaging.XAddr).Length);
+                    config.Capabilities.Media.XAddr = "http://" + config.IPAddr
+                        + config.Capabilities.Media.XAddr.Remove(0, 7 + TrimIP(config.Capabilities.Media.XAddr).Length);
+                    config.Capabilities.PTZ.XAddr = "http://" + config.IPAddr
+                        + config.Capabilities.PTZ.XAddr.Remove(0, 7 + TrimIP(config.Capabilities.PTZ.XAddr).Length);
 
-                //сериализация
-                try
-                {
-                    bf.Serialize(writer, config);
+                    //сериализация
+                    try
+                    {
+                        bf.Serialize(writer, config);
+                    }
+                    catch (SerializationException e)
+                    {
+                        Console.WriteLine("Не могу сериализовать файл конфигурации; " + e.Message);
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Не могу сериализовать файл конфигурации; ");
+                    }
+                    finally
+                    {
+                        writer.Close();
+                    }
                 }
-                catch (SerializationException e)
-                {
-                    Console.WriteLine("Не могу сериализовать файл конфигурации; " + e.Message);
-                }
-                catch
-                {
-                    Console.WriteLine("Не могу сериализовать файл конфигурации; ");
-                }
-                finally
-                {
-                    writer.Close();
-                }
+            }
+            else
+            {
+                TyphoonCom.log.Debug("XmlConfig.Write got null as input");
             }
         }
 
