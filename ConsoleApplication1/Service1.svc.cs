@@ -625,24 +625,6 @@ namespace OnvifProxy
 
         public SetUserResponse SetUser(SetUserRequest request)
         {
-            foreach(Device.User user in request.User)
-            {
-                if (user.Username == null)
-                    throw new FaultException(new FaultReason("Username not recognized"),
-                                     new FaultCode("Sender",
-                                         new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
-                                             new FaultCode("UsernameMissing", "http://www.onvif.org/ver10/error"))));
-                if (user.UserLevel == UserLevel.Anonymous)
-                    throw new FaultException(new FaultReason("User level anonymous is not allowed"),
-                                     new FaultCode("Sender",
-                                         new FaultCode("OperationProhibited", "http://www.onvif.org/ver10/error",
-                                             new FaultCode("AnonymousNotAllowed", "http://www.onvif.org/ver10/error"))));
-                if (user.Password.ToString().Count() > 20)
-                    throw new FaultException(new FaultReason("The password is too long"),
-                                     new FaultCode("Sender",
-                                         new FaultCode("OperationProhibited", "http://www.onvif.org/ver10/error",
-                                             new FaultCode("PasswordTooLong", "http://www.onvif.org/ver10/error"))));
-            }
             UserList userlistfromfile, tmpuserlist;
             using (FileStream fs = new FileStream("pwd.xml", FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
             {
@@ -650,48 +632,78 @@ namespace OnvifProxy
                 tmpuserlist = new UserList();
                 try
                 {
+                    //now we should update data from existing file with data from request
                     userlistfromfile = (UserList)xmlSerializer.Deserialize(fs);
-                    string[] arr_req_username = new string[request.User.Count()];
-                    for (int t = 0; t < request.User.Count();t++ )
+                    string[] arr_file_username = new string[userlistfromfile.Count()];
+
+                    for (int u = 0; u < userlistfromfile.Count(); u++)
                     {
-                        arr_req_username[t] = request.User.ElementAt(t).Username;
+                        arr_file_username[u] = userlistfromfile.ElementAt(u).Username;
                     }
-                    foreach (Device.User file_user in userlistfromfile)
+
+                    foreach(Device.User req_user in request.User)
                     {
-                        if (!arr_req_username.Contains(file_user.Username))
+                        if (req_user.UserLevel == UserLevel.Anonymous)
+                            throw new FaultException(new FaultReason("User level anonymous is not allowed"),
+                                             new FaultCode("Sender",
+                                                 new FaultCode("OperationProhibited", "http://www.onvif.org/ver10/error",
+                                                     new FaultCode("AnonymousNotAllowed", "http://www.onvif.org/ver10/error"))));
+
+                        if (req_user.Password.ToString().Count() > 20)
+                            throw new FaultException(new FaultReason("The password is too long"),
+                                             new FaultCode("Sender",
+                                                 new FaultCode("OperationProhibited", "http://www.onvif.org/ver10/error",
+                                                     new FaultCode("PasswordTooLong", "http://www.onvif.org/ver10/error"))));
+
+                        if ((!arr_file_username.Contains(req_user.Username)) || req_user.Username == null)
                         {
-                            tmpuserlist.Add(file_user);
-                        }                        
+                            throw new FaultException(new FaultReason("Username not recognized"),
+                                      new FaultCode("Sender",
+                                          new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                              new FaultCode("UsernameMissing", "http://www.onvif.org/ver10/error"))));
+                        }
+                        else
+                        {
+                            for (int y = 0; y < userlistfromfile.Count(); y++)
+                            {
+                                if (req_user.Username == userlistfromfile.ElementAt(y).Username)
+                                {
+                                    userlistfromfile.Remove(userlistfromfile.ElementAt(y));
+                                    userlistfromfile.Add(req_user);
+                                }
+                            }
+                        }
                     }
-                    foreach (Device.User user in request.User)
+                    fs.Dispose();
+                    using (TextWriter writer = new StreamWriter("pwd.xml"))
                     {
-                        tmpuserlist.Add(user);
+                        try
+                        {
+                            if (userlistfromfile == null) throw new Exception();//not to erase pwd.xml
+                            xmlSerializer.Serialize(writer, userlistfromfile);
+                        }
+                        catch (Exception ex)
+                        {
+                            TyphoonCom.log.Debug("SetUser threw exception while serializing pwd.xml - {0}", ex);
+                        }
                     }
                 }
                 catch (SerializationException ex)
                 {
                     TyphoonCom.log.DebugFormat("SetUser - serialization exception - {0}", ex.Message);
                 }
+                catch(FaultException fe)
+                {
+                    throw fe;
+                }
                 catch (Exception exc)
                 {
                     TyphoonCom.log.DebugFormat("SetUser - nonserialization exception - {0}", exc.Message);
                 }
-                
-                fs.Dispose();
-                using (TextWriter writer = new StreamWriter("pwd.xml"))
-                {
-                    try
-                    {
-                        xmlSerializer.Serialize(writer, tmpuserlist);
-                    }
-                    catch (Exception ex)
-                    {
-                        TyphoonCom.log.Debug("SetUser threw exception while serializing pwd.xml - {0}", ex);
-                    }                    
-                }
             }
             return (new SetUserResponse());
         }
+
         public GetWsdlUrlResponse GetWsdlUrl(GetWsdlUrlRequest request)
         {
             Uri baseuri = new Uri(Program.host.BaseAddresses.ElementAt(0).AbsoluteUri.ToString());
