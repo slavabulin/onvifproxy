@@ -2617,6 +2617,12 @@ namespace OnvifProxy
                         //Stream fs = new FileStream("tmpFile.xml", FileMode.CreateNew);
                         //xmlSerializer.Serialize(fs, getVideoSourcesResponse);
                         getVideoSourcesResponse = (GetVideoSourcesResponse)xmlSerializer.Deserialize(ms);
+                        for(int y=0 ;y<getVideoSourcesResponse.VideoSources.Count();y++)
+                        {
+                            getVideoSourcesResponse.VideoSources[y].Resolution = new Media.VideoResolution();
+                            getVideoSourcesResponse.VideoSources[y].Resolution.Height = -1;
+                            getVideoSourcesResponse.VideoSources[y].Resolution.Width = -1;
+                        }
                     }
                     catch (SerializationException g)
                     {

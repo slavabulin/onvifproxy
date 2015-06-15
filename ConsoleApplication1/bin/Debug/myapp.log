@@ -1,206 +1,350 @@
-2015-06-10 11:14:55,156 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
-2015-06-10 11:14:56,434 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-11 12:22:57,056 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-06-11 12:22:58,112 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-10 11:14:56,434 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-10 11:14:56,510 [DEBUG] OnvifProxy.TyphoonCom - Done.
+2015-06-11 12:22:58,112 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-11 12:22:58,176 [DEBUG] OnvifProxy.TyphoonCom - Done.
 
-2015-06-10 11:14:56,546 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
-2015-06-10 11:14:57,069 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
-2015-06-10 11:14:57,117 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
-2015-06-10 11:14:57,117 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
-2015-06-10 11:15:01,624 [DEBUG] OnvifProxy.TyphoonCom - Host opened
-2015-06-10 11:15:01,624 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
-2015-06-10 11:15:43,419 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
-2015-06-10 11:15:44,067 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
-2015-06-10 11:15:44,611 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
-2015-06-10 11:15:45,149 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
-2015-06-10 11:15:45,681 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
-2015-06-10 11:16:19,078 [DEBUG] OnvifProxy.TyphoonCom - DeleteUsers threw exception - {0}
-System.IO.IOException: Процесс не может получить доступ к файлу "d:\work\!Prog\repo\OnvifProxy\ConsoleApplication1\bin\Debug\pwd.xml", так как этот файл используется другим процессом.
-   в System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
-   в System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
-   в System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
-   в System.IO.StreamWriter.CreateFile(String path, Boolean append, Boolean checkHost)
-   в System.IO.StreamWriter..ctor(String path, Boolean append, Encoding encoding, Int32 bufferSize, Boolean checkHost)
-   в System.IO.StreamWriter..ctor(String path)
-   в OnvifProxy.Service1.DeleteUsers(DeleteUsersRequest request) в d:\work\!Prog\repo\OnvifProxy\ConsoleApplication1\Service1.svc.cs:строка 577
-2015-06-10 11:16:19,254 [DEBUG] OnvifProxy.TyphoonCom - DeleteUsers threw exception - {0}
-System.IO.IOException: Процесс не может получить доступ к файлу "d:\work\!Prog\repo\OnvifProxy\ConsoleApplication1\bin\Debug\pwd.xml", так как этот файл используется другим процессом.
-   в System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
-   в System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
-   в System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
-   в System.IO.StreamWriter.CreateFile(String path, Boolean append, Boolean checkHost)
-   в System.IO.StreamWriter..ctor(String path, Boolean append, Encoding encoding, Int32 bufferSize, Boolean checkHost)
-   в System.IO.StreamWriter..ctor(String path)
-   в OnvifProxy.Service1.DeleteUsers(DeleteUsersRequest request) в d:\work\!Prog\repo\OnvifProxy\ConsoleApplication1\Service1.svc.cs:строка 577
-2015-06-10 11:17:54,490 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
-2015-06-10 11:17:55,082 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-11 12:22:58,200 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-06-11 12:22:58,650 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-06-11 12:22:58,690 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-06-11 12:22:58,690 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-06-11 12:23:00,554 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-06-11 12:23:00,554 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-06-11 12:23:29,689 [DEBUG] OnvifProxy.TyphoonCom - SetUser - nonserialization exception - Username not recognized
+2015-06-11 12:24:03,542 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-06-11 12:24:04,102 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-10 11:17:55,082 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-10 11:17:55,106 [DEBUG] OnvifProxy.TyphoonCom - Done.
+2015-06-11 12:24:04,102 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-11 12:24:04,150 [DEBUG] OnvifProxy.TyphoonCom - Done.
 
-2015-06-10 11:17:55,146 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
-2015-06-10 11:17:55,626 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
-2015-06-10 11:17:55,682 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
-2015-06-10 11:17:55,682 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
-2015-06-10 11:17:57,608 [DEBUG] OnvifProxy.TyphoonCom - Host opened
-2015-06-10 11:17:57,608 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
-2015-06-10 11:18:04,983 [DEBUG] OnvifProxy.TyphoonCom - IOException - Не удается прочитать данные из транспортного соединения: EndReceive может вызываться только один раз для каждой асинхронной операции..
-2015-06-10 11:18:07,285 [DEBUG] OnvifProxy.TyphoonCom - DeleteUsers threw exception - {0}
-System.IO.IOException: Процесс не может получить доступ к файлу "d:\work\!Prog\repo\OnvifProxy\ConsoleApplication1\bin\Debug\pwd.xml", так как этот файл используется другим процессом.
-   в System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
-   в System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
-   в System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
-   в System.IO.StreamWriter.CreateFile(String path, Boolean append, Boolean checkHost)
-   в System.IO.StreamWriter..ctor(String path, Boolean append, Encoding encoding, Int32 bufferSize, Boolean checkHost)
-   в System.IO.StreamWriter..ctor(String path)
-   в OnvifProxy.Service1.DeleteUsers(DeleteUsersRequest request) в d:\work\!Prog\repo\OnvifProxy\ConsoleApplication1\Service1.svc.cs:строка 577
-2015-06-10 11:19:06,983 [DEBUG] OnvifProxy.TyphoonCom - DeleteUsers threw exception - {0}
-System.IO.IOException: Процесс не может получить доступ к файлу "d:\work\!Prog\repo\OnvifProxy\ConsoleApplication1\bin\Debug\pwd.xml", так как этот файл используется другим процессом.
-   в System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
-   в System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
-   в System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
-   в System.IO.StreamWriter.CreateFile(String path, Boolean append, Boolean checkHost)
-   в System.IO.StreamWriter..ctor(String path, Boolean append, Encoding encoding, Int32 bufferSize, Boolean checkHost)
-   в System.IO.StreamWriter..ctor(String path)
-   в OnvifProxy.Service1.DeleteUsers(DeleteUsersRequest request) в d:\work\!Prog\repo\OnvifProxy\ConsoleApplication1\Service1.svc.cs:строка 577
-2015-06-10 11:19:07,119 [DEBUG] OnvifProxy.TyphoonCom - DeleteUsers threw exception - {0}
-System.IO.IOException: Процесс не может получить доступ к файлу "d:\work\!Prog\repo\OnvifProxy\ConsoleApplication1\bin\Debug\pwd.xml", так как этот файл используется другим процессом.
-   в System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
-   в System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
-   в System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
-   в System.IO.StreamWriter.CreateFile(String path, Boolean append, Boolean checkHost)
-   в System.IO.StreamWriter..ctor(String path, Boolean append, Encoding encoding, Int32 bufferSize, Boolean checkHost)
-   в System.IO.StreamWriter..ctor(String path)
-   в OnvifProxy.Service1.DeleteUsers(DeleteUsersRequest request) в d:\work\!Prog\repo\OnvifProxy\ConsoleApplication1\Service1.svc.cs:строка 577
-2015-06-10 11:22:35,866 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
-2015-06-10 11:22:36,154 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-11 12:24:04,190 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-06-11 12:24:04,614 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-06-11 12:24:04,654 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-06-11 12:24:04,654 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-06-11 12:24:06,334 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-06-11 12:24:06,334 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-06-11 12:24:55,781 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-06-11 12:24:56,333 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-10 11:22:36,154 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-10 11:22:36,170 [DEBUG] OnvifProxy.TyphoonCom - Done.
+2015-06-11 12:24:56,333 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-11 12:24:56,389 [DEBUG] OnvifProxy.TyphoonCom - Done.
 
-2015-06-10 11:22:36,210 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
-2015-06-10 11:22:36,538 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
-2015-06-10 11:22:36,570 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
-2015-06-10 11:22:36,570 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
-2015-06-10 11:22:38,202 [DEBUG] OnvifProxy.TyphoonCom - Host opened
-2015-06-10 11:22:38,202 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
-2015-06-10 13:08:41,643 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
-2015-06-10 13:08:53,938 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-11 12:24:56,429 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-06-11 12:24:56,829 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-06-11 12:24:56,869 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-06-11 12:24:56,869 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-06-11 12:24:58,580 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-06-11 12:24:58,580 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-06-11 12:26:17,070 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-06-11 12:26:17,686 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-10 13:08:53,938 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-10 13:08:53,962 [DEBUG] OnvifProxy.TyphoonCom - Done.
+2015-06-11 12:26:17,686 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-11 12:26:17,734 [DEBUG] OnvifProxy.TyphoonCom - Done.
 
-2015-06-10 13:08:54,922 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
-2015-06-10 13:08:55,337 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
-2015-06-10 13:08:55,369 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
-2015-06-10 13:08:55,369 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
-2015-06-10 13:08:57,121 [DEBUG] OnvifProxy.TyphoonCom - Host opened
-2015-06-10 13:08:57,129 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
-2015-06-10 13:09:16,997 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-10 13:09:16,997 [DEBUG] OnvifProxy.TyphoonCom - Opened
-2015-06-10 13:09:18,541 [DEBUG] OnvifProxy.TyphoonCom - IOException - Не удается прочитать данные из транспортного соединения: EndReceive может вызываться только один раз для каждой асинхронной операции..
-2015-06-10 13:09:18,541 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-11 12:26:17,766 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-06-11 12:26:18,158 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-06-11 12:26:18,198 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-06-11 12:26:18,198 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-06-11 12:26:19,638 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-06-11 12:26:19,638 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-06-11 12:27:17,454 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-06-11 12:27:18,014 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-10 13:09:18,549 [DEBUG] OnvifProxy.TyphoonCom - stream.DataAvailable - Exception Ссылка на объект не указывает на экземпляр объекта.
-2015-06-10 13:09:18,549 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-10 13:09:19,156 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-10 13:09:19,164 [DEBUG] OnvifProxy.TyphoonCom - Done.
+2015-06-11 12:27:18,014 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-11 12:27:18,062 [DEBUG] OnvifProxy.TyphoonCom - Done.
 
-2015-06-10 13:09:21,774 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-11 12:27:18,102 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-06-11 12:27:18,508 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-06-11 12:27:18,548 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-06-11 12:27:18,548 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-06-11 12:27:20,777 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-06-11 12:27:20,777 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-06-11 12:29:13,502 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-06-11 12:29:14,118 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-10 13:09:21,774 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-10 13:09:21,798 [DEBUG] OnvifProxy.TyphoonCom - Done.
+2015-06-11 12:29:14,118 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-11 12:29:14,158 [DEBUG] OnvifProxy.TyphoonCom - Done.
 
-2015-06-10 13:09:22,686 [DEBUG] OnvifProxy.TyphoonCom - Host closed
-2015-06-10 13:10:02,501 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
-2015-06-10 13:10:02,773 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-11 12:29:14,190 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-06-11 12:29:14,582 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-06-11 12:29:14,622 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-06-11 12:29:14,622 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-06-11 12:29:16,399 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-06-11 12:29:16,407 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-06-11 12:29:29,328 [DEBUG] OnvifProxy.TyphoonCom - SetUser - nonserialization exception - Username not recognized
+2015-06-11 12:34:39,355 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-06-11 12:34:39,955 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-10 13:10:02,773 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-10 13:10:02,789 [DEBUG] OnvifProxy.TyphoonCom - Done.
+2015-06-11 12:34:39,955 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-11 12:34:40,019 [DEBUG] OnvifProxy.TyphoonCom - Done.
 
-2015-06-10 13:10:02,829 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
-2015-06-10 13:10:03,173 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
-2015-06-10 13:10:03,205 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
-2015-06-10 13:10:03,205 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
-2015-06-10 13:10:04,829 [DEBUG] OnvifProxy.TyphoonCom - Host opened
-2015-06-10 13:10:04,829 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
-2015-06-10 13:12:59,535 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
-2015-06-10 13:12:59,823 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-11 12:34:40,051 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-06-11 12:34:40,451 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-06-11 12:34:40,491 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-06-11 12:34:40,491 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-06-11 12:34:42,203 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-06-11 12:34:42,203 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-06-11 12:35:19,315 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-06-11 12:35:19,331 [DEBUG] OnvifProxy.TyphoonCom - Opened
+2015-06-11 12:35:28,276 [DEBUG] OnvifProxy.TyphoonCom - IOException - Не удается прочитать данные из транспортного соединения: EndReceive может вызываться только один раз для каждой асинхронной операции..
+2015-06-11 12:35:28,284 [DEBUG] OnvifProxy.TyphoonCom - IOException - Не удается прочитать данные из транспортного соединения: EndReceive может вызываться только один раз для каждой асинхронной операции..
+2015-06-11 12:35:28,300 [DEBUG] OnvifProxy.TyphoonCom - stream.DataAvailable - Exception Ссылка на объект не указывает на экземпляр объекта.
+2015-06-11 12:35:32,442 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-10 13:12:59,823 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-10 13:12:59,839 [DEBUG] OnvifProxy.TyphoonCom - Done.
+2015-06-11 12:35:39,125 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-11 12:35:39,149 [DEBUG] OnvifProxy.TyphoonCom - Done.
 
-2015-06-10 13:12:59,871 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
-2015-06-10 13:13:00,208 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
-2015-06-10 13:13:00,236 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
-2015-06-10 13:13:00,236 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
-2015-06-10 13:13:01,814 [DEBUG] OnvifProxy.TyphoonCom - Host opened
-2015-06-10 13:13:01,814 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
-2015-06-10 14:03:04,739 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
-2015-06-10 14:03:05,041 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-11 12:35:39,173 [DEBUG] OnvifProxy.TyphoonCom - SetUser - nonserialization exception - Username not recognized
+2015-06-11 12:37:46,352 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-06-11 12:37:46,921 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-10 14:03:05,042 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-10 14:03:05,055 [DEBUG] OnvifProxy.TyphoonCom - Done.
+2015-06-11 12:37:46,921 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-11 12:37:46,969 [DEBUG] OnvifProxy.TyphoonCom - Done.
 
-2015-06-10 14:03:05,086 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
-2015-06-10 14:03:05,433 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
-2015-06-10 14:03:05,471 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
-2015-06-10 14:03:05,472 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
-2015-06-10 14:03:07,138 [DEBUG] OnvifProxy.TyphoonCom - Host opened
-2015-06-10 14:03:07,139 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
-2015-06-10 14:05:28,569 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-10 14:05:28,570 [DEBUG] OnvifProxy.TyphoonCom - Opened
-2015-06-10 14:05:29,615 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-11 12:37:47,009 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-06-11 12:37:47,417 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-06-11 12:37:47,457 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-06-11 12:37:47,457 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-06-11 12:37:49,162 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-06-11 12:37:49,162 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-06-11 13:39:59,666 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-06-11 13:40:00,274 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-10 14:05:30,754 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-10 14:05:30,769 [DEBUG] OnvifProxy.TyphoonCom - stream.DataAvailable - Exception Доступ к ликвидированному объекту невозможен.
-Имя объекта: "System.Net.Sockets.NetworkStream".
-2015-06-10 14:05:30,769 [DEBUG] OnvifProxy.TyphoonCom - Done.
+2015-06-11 13:40:00,274 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-11 13:40:00,330 [DEBUG] OnvifProxy.TyphoonCom - Done.
 
-2015-06-10 14:05:30,770 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-10 14:05:32,180 [DEBUG] OnvifProxy.TyphoonCom - stream.DataAvailable - Exception Доступ к ликвидированному объекту невозможен.
-Имя объекта: "System.Net.Sockets.NetworkStream".
-2015-06-10 14:05:33,398 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-11 13:40:00,370 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-06-11 13:40:00,762 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-06-11 13:40:00,802 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-06-11 13:40:00,802 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-06-11 13:40:02,802 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-06-11 13:40:02,802 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-06-11 13:40:13,549 [DEBUG] OnvifProxy.TyphoonCom - IOException - Не удается прочитать данные из транспортного соединения: EndReceive может вызываться только один раз для каждой асинхронной операции..
+2015-06-11 13:41:41,786 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-06-11 13:41:42,378 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-10 14:05:34,185 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-10 14:05:34,193 [DEBUG] OnvifProxy.TyphoonCom - Done.
+2015-06-11 13:41:42,378 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-11 13:41:42,426 [DEBUG] OnvifProxy.TyphoonCom - Done.
 
-2015-06-10 14:05:39,172 [DEBUG] OnvifProxy.TyphoonCom - IOException - Не удается прочитать данные из транспортного соединения: Объект IAsyncResult не был возвращен соответствующим асинхронным методом данного класса.
-Имя параметра: asyncResult.
-2015-06-10 14:06:44,376 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
-2015-06-10 14:06:44,663 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-11 13:41:42,458 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-06-11 13:41:42,882 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-06-11 13:41:42,922 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-06-11 13:41:42,922 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-06-11 13:41:44,898 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-06-11 13:41:44,898 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-06-11 13:46:03,986 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-06-11 13:46:04,570 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-10 14:06:44,664 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-10 14:06:44,677 [DEBUG] OnvifProxy.TyphoonCom - Done.
+2015-06-11 13:46:04,570 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-11 13:46:04,626 [DEBUG] OnvifProxy.TyphoonCom - Done.
 
-2015-06-10 14:06:44,714 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
-2015-06-10 14:06:45,054 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
-2015-06-10 14:06:45,087 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
-2015-06-10 14:06:45,087 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
-2015-06-10 14:06:46,679 [DEBUG] OnvifProxy.TyphoonCom - Host opened
-2015-06-10 14:06:46,680 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
-2015-06-10 14:09:24,978 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
-2015-06-10 14:09:25,289 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-11 13:46:04,666 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-06-11 13:46:05,066 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-06-11 13:46:05,114 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-06-11 13:46:05,114 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-06-11 13:46:06,699 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-06-11 13:46:06,699 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-06-11 13:46:22,146 [DEBUG] OnvifProxy.TyphoonCom - Opened
+2015-06-11 13:46:22,146 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-06-11 13:46:22,194 [DEBUG] OnvifProxy.TyphoonCom - stream.DataAvailable - Exception Ссылка на объект не указывает на экземпляр объекта.
+2015-06-11 13:46:22,242 [DEBUG] OnvifProxy.TyphoonCom - IOException - Не удается прочитать данные из транспортного соединения: EndReceive может вызываться только один раз для каждой асинхронной операции..
+2015-06-11 13:46:23,170 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-10 14:09:25,289 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-10 14:09:25,303 [DEBUG] OnvifProxy.TyphoonCom - Done.
+2015-06-11 13:46:23,170 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-11 13:46:23,178 [DEBUG] OnvifProxy.TyphoonCom - Done.
 
-2015-06-10 14:09:25,335 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
-2015-06-10 14:09:25,674 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
-2015-06-10 14:09:25,708 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
-2015-06-10 14:09:25,708 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
-2015-06-10 14:09:27,318 [DEBUG] OnvifProxy.TyphoonCom - Host opened
-2015-06-10 14:09:27,318 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
-2015-06-10 14:32:58,936 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
-2015-06-10 14:32:59,230 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-11 13:46:23,418 [DEBUG] OnvifProxy.TyphoonCom - Host closed
+2015-06-11 13:46:28,469 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-06-11 13:46:28,573 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-06-11 13:46:28,573 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-06-11 13:46:28,573 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-06-11 13:46:29,109 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-06-11 13:46:29,109 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-06-11 13:47:01,768 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-06-11 13:47:02,328 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-10 14:32:59,230 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-10 14:32:59,242 [DEBUG] OnvifProxy.TyphoonCom - Done.
+2015-06-11 13:47:02,328 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-11 13:47:02,376 [DEBUG] OnvifProxy.TyphoonCom - Done.
 
-2015-06-10 14:32:59,274 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
-2015-06-10 14:32:59,630 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
-2015-06-10 14:32:59,667 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
-2015-06-10 14:32:59,667 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
-2015-06-10 14:33:01,556 [DEBUG] OnvifProxy.TyphoonCom - Host opened
-2015-06-10 14:33:01,557 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-06-11 13:47:02,416 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-06-11 13:47:02,816 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-06-11 13:47:02,856 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-06-11 13:47:02,856 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-06-11 13:47:04,504 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-06-11 13:47:04,504 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-06-11 13:56:27,403 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-06-11 13:56:27,987 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-06-11 13:56:27,995 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-11 13:56:28,043 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-06-11 13:56:28,083 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-06-11 13:56:28,475 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-06-11 13:56:28,515 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-06-11 13:56:28,515 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-06-11 13:56:30,613 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-06-11 13:56:30,613 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-06-11 13:59:58,854 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-06-11 13:59:59,478 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-06-11 13:59:59,478 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-11 13:59:59,534 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-06-11 13:59:59,566 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-06-11 13:59:59,966 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-06-11 14:00:00,006 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-06-11 14:00:00,006 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-06-11 14:00:01,649 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-06-11 14:00:01,649 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-06-11 14:01:32,907 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-06-11 14:01:33,475 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-06-11 14:01:33,475 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-11 14:01:33,531 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-06-11 14:01:33,563 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-06-11 14:01:33,963 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-06-11 14:01:34,003 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-06-11 14:01:34,003 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-06-11 14:01:35,577 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-06-11 14:01:35,577 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-06-11 14:18:19,294 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-06-11 14:18:19,886 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-06-11 14:18:19,894 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-11 14:18:19,934 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-06-11 14:18:19,974 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-06-11 14:18:20,398 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-06-11 14:18:20,454 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-06-11 14:18:20,454 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-06-11 14:18:22,510 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-06-11 14:18:22,510 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-06-11 15:43:48,487 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-06-11 15:43:49,233 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-06-11 15:43:49,233 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-11 15:43:49,297 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-06-11 15:43:49,553 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-06-11 15:43:50,337 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-06-11 15:43:50,377 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-06-11 15:43:50,377 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-06-11 15:43:52,393 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-06-11 15:43:52,393 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-06-11 15:44:35,810 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-06-11 15:44:36,098 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-06-11 15:44:36,098 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-11 15:44:36,114 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-06-11 15:44:36,138 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-06-11 15:44:36,498 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-06-11 15:44:36,530 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-06-11 15:44:36,530 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-06-11 15:44:38,322 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-06-11 15:44:38,322 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-06-11 16:28:53,600 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-06-11 16:28:53,928 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-06-11 16:28:53,928 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-11 16:28:53,944 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-06-11 16:28:53,976 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-06-11 16:28:54,328 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-06-11 16:28:54,368 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-06-11 16:28:54,368 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-06-11 16:28:55,982 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-06-11 16:28:55,982 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-06-11 16:29:28,928 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
+2015-06-11 16:29:30,403 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
+2015-06-11 16:29:31,619 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
+2015-06-11 16:35:16,974 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-06-11 16:35:17,270 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-06-11 16:35:17,270 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-11 16:35:17,286 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-06-11 16:35:17,334 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-06-11 16:35:17,670 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-06-11 16:35:17,710 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-06-11 16:35:17,710 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-06-11 16:35:19,430 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-06-11 16:35:19,430 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-06-11 16:35:23,206 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
+2015-06-11 16:35:24,542 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
+2015-06-11 16:35:25,788 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
+2015-06-11 16:38:15,157 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-06-11 16:38:15,477 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-06-11 16:38:15,477 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-11 16:38:15,493 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-06-11 16:38:15,525 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-06-11 16:38:15,852 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-06-11 16:38:15,884 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-06-11 16:38:15,884 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-06-11 16:38:17,514 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-06-11 16:38:17,514 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-06-11 16:38:21,644 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
+2015-06-11 16:38:23,010 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
+2015-06-11 16:38:24,210 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
+2015-06-11 16:41:26,884 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-06-11 16:41:27,251 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-06-11 16:41:27,251 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-11 16:41:27,265 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-06-11 16:41:27,313 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-06-11 16:41:27,706 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-06-11 16:41:27,739 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-06-11 16:41:27,740 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-06-11 16:41:29,087 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-06-11 16:41:29,087 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-06-11 16:41:34,632 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-06-11 16:41:37,331 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-06-11 16:41:38,365 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
+2015-06-11 16:41:39,765 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-06-11 16:41:40,798 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
+2015-06-11 16:42:33,510 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-06-11 16:42:33,791 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-06-11 16:42:33,792 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-11 16:42:33,804 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-06-11 16:42:33,837 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-06-11 16:42:34,200 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-06-11 16:42:34,233 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-06-11 16:42:34,233 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-06-11 16:42:35,878 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-06-11 16:42:35,878 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-06-11 16:42:44,981 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-06-11 16:42:48,227 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-06-11 16:42:49,254 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
+2015-06-11 16:43:32,013 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-06-11 16:43:32,296 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-06-11 16:43:32,296 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-11 16:43:32,309 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-06-11 16:43:32,347 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-06-11 16:43:32,733 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-06-11 16:43:32,766 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-06-11 16:43:32,766 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-06-11 16:43:34,003 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-06-11 16:43:34,004 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-06-11 16:43:45,062 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-06-11 16:49:47,106 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-06-11 16:49:47,425 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-06-11 16:49:47,426 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-11 16:49:47,438 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-06-11 16:49:47,476 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-06-11 16:49:47,835 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-06-11 16:49:47,869 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-06-11 16:49:47,869 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-06-11 16:49:49,293 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-06-11 16:49:49,293 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-06-11 16:50:03,837 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-06-11 16:50:25,306 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
