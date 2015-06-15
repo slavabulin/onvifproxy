@@ -2653,10 +2653,9 @@ namespace OnvifProxy
         public Media.Profile CreateProfile(string Name, string Token)
         {
             throw new FaultException(new FaultReason("MaxNVTProfiles"),
-                           new FaultCode("Sender",
+                           new FaultCode("Receiver",
                                new FaultCode("Action", "http://www.onvif.org/ver10/error",
                                    new FaultCode("MaxNVTProfiles", "http://www.onvif.org/ver10/error"))));
-
             //Media.Profile prof = new Media.Profile();
             
         }
@@ -2674,7 +2673,7 @@ namespace OnvifProxy
 
             ///создаем структуру под конфиг
             XmlConfig config = new XmlConfig();
-            Media.GetProfilesResponse profile = new Media.GetProfilesResponse();
+            Media.GetProfilesResponse mediaprofile = new Media.GetProfilesResponse();
 
             do
             {
@@ -2702,20 +2701,16 @@ namespace OnvifProxy
                     TyphoonCom.log.Error(ex.Message);
                 }
                 string tmpStr = TyphoonCom.ParseMem(0, TyphMsg.MessageData);
-                profile = config.ParseGetProfiles(tmpStr);
+                mediaprofile = config.ParseGetProfiles(tmpStr);
                 //----------
                 int tokennum = Convert.ToInt32(ProfileToken);
-                if (tokennum > profile.Profiles.Length || tokennum < 1)
+                if (tokennum > mediaprofile.Profiles.Length || tokennum < 1)
                     throw new FaultException(new FaultReason("NoProfile"),
                            new FaultCode("Sender",
                                new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
                                    new FaultCode("NoProfile", "http://www.onvif.org/ver10/error"))));
-
-                //profile.Profiles[tokennum - 1].VideoEncoderConfiguration.Multicast = new Media.MulticastConfiguration();
-                //profile.Profiles[tokennum - 1].VideoEncoderConfiguration.Multicast.Address = new Media.IPAddress();
-                //profile.Profiles[tokennum - 1].VideoEncoderConfiguration.Multicast.Port = 0;
                 //----------
-                return profile.Profiles[tokennum - 1];
+                return mediaprofile.Profiles[tokennum - 1];
             }
             TyphoonCom.log.DebugFormat("GetProfile - TyphoonCom.queueResponce.Count = {0}", TyphoonCom.queueResponce.Count);
             return null;
@@ -2761,11 +2756,6 @@ namespace OnvifProxy
                 }
                 string tmpStr = TyphoonCom.ParseMem(0, TyphMsg.MessageData);
                 profile = config.ParseGetProfiles(tmpStr);
-                //----------
-                //profile.Profiles[0].VideoEncoderConfiguration.Multicast = new Media.MulticastConfiguration();
-                //profile.Profiles[0].VideoEncoderConfiguration.Multicast.Address = new Media.IPAddress();
-                //----------
-                //Console.WriteLine(profile.ToString());
                 return profile;
             }
             TyphoonCom.log.DebugFormat("GetProfiles - TyphoonCom.queueResponce.Count = {0}", TyphoonCom.queueResponce.Count);

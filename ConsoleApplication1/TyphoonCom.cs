@@ -615,8 +615,6 @@ namespace OnvifProxy
             }
             
             binding = new WSHttpBinding(SecurityMode.None);
-            //binding = new BasicHttpBinding();
-
 
             switch (typhMsg.MessageSubComNum)
             { 
@@ -702,7 +700,6 @@ namespace OnvifProxy
 
                     break;
                     #endregion
-
                 case 3:
                     #region
                     ///дернуть GetMediaCapabilities()
@@ -783,7 +780,6 @@ namespace OnvifProxy
                     
                     break;
                     #endregion
-
                 case 4:
                     #region
                     ///дернуть GetMediaProfiles()
@@ -850,7 +846,6 @@ namespace OnvifProxy
 
                     break;
                     #endregion
-
                 case 5:
                     #region
                     ///дернуть SetVideoEncoderConfiguration и StreamUri()
@@ -927,7 +922,6 @@ namespace OnvifProxy
                     AddCommand(FormPacket(FormCommand(201, 5, b_streamUri, typhMsg.MessageID)));
                     break;
                     #endregion
-
                 case 6:
                     #region
                     //пришло событие от тайфуна
@@ -1027,7 +1021,6 @@ namespace OnvifProxy
                                     }
                                     //break;
                                 }
-                    #endregion
                             }
                         }
                         catch (InvalidOperationException ioe)
@@ -1043,7 +1036,6 @@ namespace OnvifProxy
                     }
                     break;
                     #endregion
-
                 default:
                     ///сообщить о неизвестном номере субкоманды
                     log.ErrorFormat("В очередь команд от тайфуна (queueCmd) пришла команда с неизвестным номером субкоманды - {0}", typhMsg.MessageSubComNum);
@@ -1094,6 +1086,8 @@ namespace OnvifProxy
             }
             else return null;
         }
+
+
 
         private static void PacketParseEx(IAsyncResult ar)
         {
@@ -1278,9 +1272,8 @@ namespace OnvifProxy
 
             return Data_Command_Block;
         }
-
-
         
+   
 
         //---------------------------------------------------------------------------------------
         //формирование пакета содержащего команду для отправки его тайфуну
@@ -1490,9 +1483,8 @@ namespace OnvifProxy
 
             return outString;
         }
-
-
-        //#endregion
+        
+        #endregion
     }
 
     public class TyphoonMessage

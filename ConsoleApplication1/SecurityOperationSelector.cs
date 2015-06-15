@@ -170,10 +170,7 @@ namespace OnvifProxy
                     {
                         //credentials are wrong
                         message = msgcopy1;
-                        //return defaultOperationName;
                         return null;
-                        //------------------------
-                        //throw new WebFaultException(System.Net.HttpStatusCode.Unauthorized);
                     }
                     #endregion check if creds are wright
                 }
