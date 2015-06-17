@@ -2710,6 +2710,7 @@ namespace OnvifProxy
                                new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
                                    new FaultCode("NoProfile", "http://www.onvif.org/ver10/error"))));
                 //----------
+                
                 return mediaprofile.Profiles[tokennum - 1];
             }
             TyphoonCom.log.DebugFormat("GetProfile - TyphoonCom.queueResponce.Count = {0}", TyphoonCom.queueResponce.Count);
@@ -2727,7 +2728,7 @@ namespace OnvifProxy
 
             ///создаем структуру под конфиг
             XmlConfig config = new XmlConfig();
-            Media.GetProfilesResponse profile = new Media.GetProfilesResponse();
+            Media.GetProfilesResponse mediaprofile = new Media.GetProfilesResponse();
 
             do
             {
@@ -2755,8 +2756,9 @@ namespace OnvifProxy
                     TyphoonCom.log.Error(ex.Message);
                 }
                 string tmpStr = TyphoonCom.ParseMem(0, TyphMsg.MessageData);
-                profile = config.ParseGetProfiles(tmpStr);
-                return profile;
+                mediaprofile = config.ParseGetProfiles(tmpStr);
+        
+                return mediaprofile;
             }
             TyphoonCom.log.DebugFormat("GetProfiles - TyphoonCom.queueResponce.Count = {0}", TyphoonCom.queueResponce.Count);
             return null;
