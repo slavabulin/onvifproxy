@@ -422,18 +422,18 @@ namespace OnvifProxy
                 XmlSerializer bf = new XmlSerializer(typeof(ConfigStruct));
                 using (TextWriter writer = new StreamWriter("config.xml"))
                 {
-                    config.Capabilities.Analytics.XAddr = "http://" + config.IPAddr
-                        + config.Capabilities.Analytics.XAddr.Remove(0, 7 + TrimIP(config.Capabilities.Analytics.XAddr).Length);
+                    //config.Capabilities.Analytics.XAddr = "http://" + config.IPAddr
+                    //    + config.Capabilities.Analytics.XAddr.Remove(0, 7 + TrimIP(config.Capabilities.Analytics.XAddr).Length);
                     config.Capabilities.Device.XAddr = "http://" + config.IPAddr
                         + config.Capabilities.Device.XAddr.Remove(0, 7 + TrimIP(config.Capabilities.Device.XAddr).Length);
                     config.Capabilities.Events.XAddr = "http://" + config.IPAddr
                         + config.Capabilities.Events.XAddr.Remove(0, 7 + TrimIP(config.Capabilities.Events.XAddr).Length);
-                    config.Capabilities.Imaging.XAddr = "http://" + config.IPAddr
-                        + config.Capabilities.Imaging.XAddr.Remove(0, 7 + TrimIP(config.Capabilities.Imaging.XAddr).Length);
+                    //config.Capabilities.Imaging.XAddr = "http://" + config.IPAddr
+                    //    + config.Capabilities.Imaging.XAddr.Remove(0, 7 + TrimIP(config.Capabilities.Imaging.XAddr).Length);
                     config.Capabilities.Media.XAddr = "http://" + config.IPAddr
                         + config.Capabilities.Media.XAddr.Remove(0, 7 + TrimIP(config.Capabilities.Media.XAddr).Length);
-                    config.Capabilities.PTZ.XAddr = "http://" + config.IPAddr
-                        + config.Capabilities.PTZ.XAddr.Remove(0, 7 + TrimIP(config.Capabilities.PTZ.XAddr).Length);
+                    //config.Capabilities.PTZ.XAddr = "http://" + config.IPAddr
+                    //    + config.Capabilities.PTZ.XAddr.Remove(0, 7 + TrimIP(config.Capabilities.PTZ.XAddr).Length);
 
                     //сериализация
                     try
@@ -465,25 +465,33 @@ namespace OnvifProxy
             ConfigStruct config = new ConfigStruct();
             config.Scopes = new Collection<OnvifScope>();
 
-            using (FileStream fs = new FileStream("config.xml", FileMode.Open, FileAccess.Read, FileShare.Read))
+            try
             {
+                using (FileStream fs = new FileStream("config.xml", FileMode.Open, FileAccess.Read, FileShare.Read))
+                {
 
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(ConfigStruct));
+                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(ConfigStruct));
 
-                try
-                {
-                    config = (ConfigStruct)xmlSerializer.Deserialize(fs);
+                    try
+                    {
+                        config = (ConfigStruct)xmlSerializer.Deserialize(fs);
+                    }
+                    catch (SerializationException g)
+                    {
+                        Console.WriteLine("Не могу десериализовать файл конфигурации; " + g.Message);
+                        //return null;
+                        throw g;
+                    }
+                    
+                    finally
+                    {
+                        fs.Close();
+                    }
                 }
-                catch (SerializationException g)
-                {
-                    Console.WriteLine("Не могу десериализовать файл конфигурации; " + g.Message);
-                    //return null;
-                    throw g;
-                }
-                finally
-                {
-                    fs.Close();
-                }
+            }
+            catch (FileNotFoundException fnf)
+            {
+                Console.WriteLine("Не найден файл конфигурации - config.xml");
             }
             
             return config;

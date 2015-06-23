@@ -24,17 +24,12 @@
     <OnvifScope>
       <ScopeType>Fixed</ScopeType>
       <Data>onvif://www.onvif.org/Profile/Streaming</Data>
-    </OnvifScope> 
+    </OnvifScope>
   </Scopes>
   <ServiceDiscoveryStatus>Discoverable</ServiceDiscoveryStatus>
   <IPAddr>192.168.1.170</IPAddr>
   <TyphoonIP>127.0.0.1</TyphoonIP>
   <Capabilities>
-    <Analytics xmlns="http://www.onvif.org/ver10/schema">
-      <XAddr>http://192.168.1.170/onvif/device_service</XAddr>
-      <RuleSupport>false</RuleSupport>
-      <AnalyticsModuleSupport>false</AnalyticsModuleSupport>
-    </Analytics>
     <Device xmlns="http://www.onvif.org/ver10/schema">
       <XAddr>http://192.168.1.170/onvif/device_service</XAddr>
       <Network>
@@ -42,9 +37,6 @@
         <ZeroConfiguration>false</ZeroConfiguration>
         <IPVersion6>false</IPVersion6>
         <DynDNS>false</DynDNS>
-        <Extension>
-          <Dot11Configuration>false</Dot11Configuration>
-        </Extension>
       </Network>
       <System>
         <DiscoveryResolve>true</DiscoveryResolve>
@@ -61,12 +53,6 @@
       <IO>
         <InputConnectors>0</InputConnectors>
         <RelayOutputs>0</RelayOutputs>
-        <Extension>
-          <Auxiliary>false</Auxiliary>
-          <AuxiliaryCommands>AuxiliaryCommands1</AuxiliaryCommands>
-          <AuxiliaryCommands>AuxiliaryCommands2</AuxiliaryCommands>
-          <Extension />
-        </Extension>
       </IO>
       <Security>
         <TLS1.1>false</TLS1.1>
@@ -77,18 +63,7 @@
         <SAMLToken>false</SAMLToken>
         <KerberosToken>false</KerberosToken>
         <RELToken>false</RELToken>
-        <Extension>
-          <TLS1.0>false</TLS1.0>
-          <Extension>
-            <Dot1X>false</Dot1X>
-            <SupportedEAPMethod>0</SupportedEAPMethod>
-            <SupportedEAPMethod>1</SupportedEAPMethod>
-            <SupportedEAPMethod>2</SupportedEAPMethod>
-            <RemoteUserHandling>false</RemoteUserHandling>
-          </Extension>
-        </Extension>
       </Security>
-      <Extension />
     </Device>
     <Events xmlns="http://www.onvif.org/ver10/schema">
       <XAddr>http://192.168.1.170/onvif/event_service</XAddr>
@@ -96,9 +71,6 @@
       <WSPullPointSupport>false</WSPullPointSupport>
       <WSPausableSubscriptionManagerInterfaceSupport>false</WSPausableSubscriptionManagerInterfaceSupport>
     </Events>
-    <Imaging xmlns="http://www.onvif.org/ver10/schema">
-      <XAddr>http://192.168.1.170/onvif/device_service</XAddr>
-    </Imaging>
     <Media xmlns="http://www.onvif.org/ver10/schema">
       <XAddr>http://192.168.1.170/onvif/media_service</XAddr>
       <StreamingCapabilities>
@@ -106,56 +78,6 @@
         <RTP_TCP>false</RTP_TCP>
         <RTP_RTSP_TCP>false</RTP_RTSP_TCP>
       </StreamingCapabilities>
-      <Extension>
-        <ProfileCapabilities>
-          <MaximumNumberOfProfiles>0</MaximumNumberOfProfiles>
-        </ProfileCapabilities>
-      </Extension>
     </Media>
-    <PTZ xmlns="http://www.onvif.org/ver10/schema">
-      <XAddr>http://192.168.1.170/onvif/device_service</XAddr>
-    </PTZ>
-    <Extension xmlns="http://www.onvif.org/ver10/schema">
-      <DeviceIO>
-        <XAddr>/onvif/device_service</XAddr>
-        <VideoSources>0</VideoSources>
-        <VideoOutputs>0</VideoOutputs>
-        <AudioSources>0</AudioSources>
-        <AudioOutputs>0</AudioOutputs>
-        <RelayOutputs>0</RelayOutputs>
-      </DeviceIO>
-      <Display>
-        <XAddr>/onvif/device_service</XAddr>
-        <FixedLayout>false</FixedLayout>
-      </Display>
-      <Recording>
-        <XAddr>/onvif/device_service</XAddr>
-        <ReceiverSource>false</ReceiverSource>
-        <MediaProfileSource>false</MediaProfileSource>
-        <DynamicRecordings>false</DynamicRecordings>
-        <DynamicTracks>false</DynamicTracks>
-        <MaxStringLength>0</MaxStringLength>
-      </Recording>
-      <Search>
-        <XAddr>/onvif/device_service</XAddr>
-        <MetadataSearch>false</MetadataSearch>
-      </Search>
-      <Replay>
-        <XAddr>/onvif/device_service</XAddr>
-      </Replay>
-      <Receiver>
-        <XAddr>/onvif/device_service</XAddr>
-        <RTP_Multicast>false</RTP_Multicast>
-        <RTP_TCP>false</RTP_TCP>
-        <RTP_RTSP_TCP>false</RTP_RTSP_TCP>
-        <SupportedReceivers>0</SupportedReceivers>
-        <MaximumRTSPURILength>0</MaximumRTSPURILength>
-      </Receiver>
-      <AnalyticsDevice>
-        <XAddr>/onvif/device_service</XAddr>
-        <RuleSupport>false</RuleSupport>
-        <Extension />
-      </AnalyticsDevice>
-    </Extension>
   </Capabilities>
 </ConfigStruct>

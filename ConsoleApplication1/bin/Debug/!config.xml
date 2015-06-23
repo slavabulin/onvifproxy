@@ -25,14 +25,6 @@
       <ScopeType>Fixed</ScopeType>
       <Data>onvif://www.onvif.org/Profile/Streaming</Data>
     </OnvifScope>
-    <OnvifScope>
-      <ScopeType>Configurable</ScopeType>
-      <Data>onvif://www.onvif.org/a21f17d9-db1e-42ce-8f86-596d5be958d4</Data>
-    </OnvifScope>
-    <OnvifScope>
-      <ScopeType>Configurable</ScopeType>
-      <Data>onvif://www.onvif.org/ddaf6da5-5d45-46be-b643-d38315a2b385</Data>
-    </OnvifScope>
   </Scopes>
   <ServiceDiscoveryStatus>Discoverable</ServiceDiscoveryStatus>
   <IPAddr>192.168.1.170</IPAddr>

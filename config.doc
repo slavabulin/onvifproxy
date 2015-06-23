@@ -1,0 +1,205 @@
+1. назначение программы  Onvifproxy
+Программа Onvifproxy предназначена для обеспечения совместимости программного обеспечения «Тайфун» с программным обеспечением других производителей посредством межотраслевого стандарта ONVIF. 
+
+2.  функциональные возможности программы
+Посредством программы осуществляется поиск ONVIF-совместимых устройств типа NVT для 
+Ответ на широковещательный запрос для устройств типа NVT
+изменение настроек сетевого адаптера 
+установки системной даты и времени
+создание-изменение-удаление пользователей программы Onvifproxy
+авторизацию пользователей программы Onvifproxy
+передачу данных о событиях от программного обеспечения «Тайфун» программе-клиенту подключенному по стандарту ONVIF
+передачу потоковых видеоданных  программе-клиенту подключенному по стандарту ONVIF
+
+3. настройки операционной системы при использовании программы
+
+4.  настройки программы
+Файл настроек программы называется config.xml и должен находится в одном каталоге с файлом программы onvifproxy.exe. Настройки представлены в формате Xml. Содержимое файла имеет следующий вид:
+
+    <?xml version="1.0" encoding="utf-8" ?> 
+- <ConfigStruct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+- <Scopes>
+- <OnvifScope>
+  <ScopeType>Fixed</ScopeType> 
+  <Data>onvif://www.onvif.org/type/NetworkVideoTransmitter</Data> 
+  </OnvifScope>
+- <OnvifScope>
+  <ScopeType>Fixed</ScopeType> 
+  <Data>onvif://www.onvif.org/type/video_encoder</Data> 
+  </OnvifScope>
+- <OnvifScope>
+  <ScopeType>Fixed</ScopeType> 
+  <Data>onvif://www.onvif.org/hardware/TyphoonPC</Data> 
+  </OnvifScope>
+- <OnvifScope>
+  <ScopeType>Fixed</ScopeType> 
+  <Data>onvif://www.onvif.org/name/EvsTyphoon</Data> 
+  </OnvifScope>
+- <OnvifScope>
+  <ScopeType>Fixed</ScopeType> 
+  <Data>onvif://www.onvif.org/location/</Data> 
+  </OnvifScope>
+- <OnvifScope>
+  <ScopeType>Fixed</ScopeType> 
+  <Data>onvif://www.onvif.org/Profile/Streaming</Data> 
+  </OnvifScope>
+  </Scopes>
+  <ServiceDiscoveryStatus>Discoverable</ServiceDiscoveryStatus> 
+  <IPAddr>192.168.1.170</IPAddr> 
+  <TyphoonIP>127.0.0.1</TyphoonIP> 
+- <Capabilities>
+- <Analytics xmlns="http://www.onvif.org/ver10/schema">
+  <XAddr>http://192.168.1.170/onvif/device_service</XAddr> 
+  <RuleSupport>false</RuleSupport> 
+  <AnalyticsModuleSupport>false</AnalyticsModuleSupport> 
+  </Analytics>
++ <Device xmlns="http://www.onvif.org/ver10/schema">
+  <XAddr>http://192.168.1.170/onvif/device_service</XAddr> 
+- <Network>
+  <IPFilter>false</IPFilter> 
+  <ZeroConfiguration>false</ZeroConfiguration> 
+  <IPVersion6>false</IPVersion6> 
+  <DynDNS>false</DynDNS> 
+- <Extension>
+  <Dot11Configuration>false</Dot11Configuration> 
+  </Extension>
+  </Network>
+- <System>
+  <DiscoveryResolve>true</DiscoveryResolve> 
+  <DiscoveryBye>true</DiscoveryBye> 
+  <RemoteDiscovery>true</RemoteDiscovery> 
+  <SystemBackup>false</SystemBackup> 
+  <SystemLogging>false</SystemLogging> 
+  <FirmwareUpgrade>false</FirmwareUpgrade> 
+- <SupportedVersions>
+  <Major>1</Major> 
+  <Minor>0</Minor> 
+  </SupportedVersions>
+  </System>
+- <IO>
+  <InputConnectors>0</InputConnectors> 
+  <RelayOutputs>0</RelayOutputs> 
+- <Extension>
+  <Auxiliary>false</Auxiliary> 
+  <AuxiliaryCommands>AuxiliaryCommands1</AuxiliaryCommands> 
+  <AuxiliaryCommands>AuxiliaryCommands2</AuxiliaryCommands> 
+  <Extension /> 
+  </Extension>
+  </IO>
+- <Security>
+  <TLS1.1>false</TLS1.1> 
+  <TLS1.2>false</TLS1.2> 
+  <OnboardKeyGeneration>false</OnboardKeyGeneration> 
+  <AccessPolicyConfig>false</AccessPolicyConfig> 
+  <X.509Token>false</X.509Token> 
+  <SAMLToken>false</SAMLToken> 
+  <KerberosToken>false</KerberosToken> 
+  <RELToken>false</RELToken> 
+- <Extension>
+  <TLS1.0>false</TLS1.0> 
+- <Extension>
+  <Dot1X>false</Dot1X> 
+  <SupportedEAPMethod>0</SupportedEAPMethod> 
+  <SupportedEAPMethod>1</SupportedEAPMethod> 
+  <SupportedEAPMethod>2</SupportedEAPMethod> 
+  <RemoteUserHandling>false</RemoteUserHandling> 
+  </Extension>
+  </Extension>
+  </Security>
+  <Extension /> 
+  </Device>
+- <Events xmlns="http://www.onvif.org/ver10/schema">
+  <XAddr>http://192.168.1.170/onvif/event_service</XAddr> 
+  <WSSubscriptionPolicySupport>false</WSSubscriptionPolicySupport> 
+  <WSPullPointSupport>false</WSPullPointSupport> 
+  <WSPausableSubscriptionManagerInterfaceSupport>false</WSPausableSubscriptionManagerInterfaceSupport> 
+  </Events>
+- <Imaging xmlns="http://www.onvif.org/ver10/schema">
+  <XAddr>http://192.168.1.170/onvif/device_service</XAddr> 
+  </Imaging>
+- <Media xmlns="http://www.onvif.org/ver10/schema">
+  <XAddr>http://192.168.1.170/onvif/media_service</XAddr> 
+- <StreamingCapabilities>
+  <RTPMulticast>false</RTPMulticast> 
+  <RTP_TCP>false</RTP_TCP> 
+  <RTP_RTSP_TCP>false</RTP_RTSP_TCP> 
+  </StreamingCapabilities>
+- <Extension>
+- <ProfileCapabilities>
+  <MaximumNumberOfProfiles>0</MaximumNumberOfProfiles> 
+  </ProfileCapabilities>
+  </Extension>
+  </Media>
+- <PTZ xmlns="http://www.onvif.org/ver10/schema">
+  <XAddr>http://192.168.1.170/onvif/device_service</XAddr> 
+  </PTZ>
+- <Extension xmlns="http://www.onvif.org/ver10/schema">
+- <DeviceIO>
+  <XAddr>/onvif/device_service</XAddr> 
+  <VideoSources>0</VideoSources> 
+  <VideoOutputs>0</VideoOutputs> 
+  <AudioSources>0</AudioSources> 
+  <AudioOutputs>0</AudioOutputs> 
+  <RelayOutputs>0</RelayOutputs> 
+  </DeviceIO>
+- <Display>
+  <XAddr>/onvif/device_service</XAddr> 
+  <FixedLayout>false</FixedLayout> 
+  </Display>
+- <Recording>
+  <XAddr>/onvif/device_service</XAddr> 
+  <ReceiverSource>false</ReceiverSource> 
+  <MediaProfileSource>false</MediaProfileSource> 
+  <DynamicRecordings>false</DynamicRecordings> 
+  <DynamicTracks>false</DynamicTracks> 
+  <MaxStringLength>0</MaxStringLength> 
+  </Recording>
+- <Search>
+  <XAddr>/onvif/device_service</XAddr> 
+  <MetadataSearch>false</MetadataSearch> 
+  </Search>
+- <Replay>
+  <XAddr>/onvif/device_service</XAddr> 
+  </Replay>
+- <Receiver>
+  <XAddr>/onvif/device_service</XAddr> 
+  <RTP_Multicast>false</RTP_Multicast> 
+  <RTP_TCP>false</RTP_TCP> 
+  <RTP_RTSP_TCP>false</RTP_RTSP_TCP> 
+  <SupportedReceivers>0</SupportedReceivers> 
+  <MaximumRTSPURILength>0</MaximumRTSPURILength> 
+  </Receiver>
+- <AnalyticsDevice>
+  <XAddr>/onvif/device_service</XAddr> 
+  <RuleSupport>false</RuleSupport> 
+  <Extension /> 
+  </AnalyticsDevice>
+  </Extension>
+  </Capabilities>
+  </ConfigStruct>
+
+
+В разделе <IPAddr>  -  значение 192.168.1.170 - IP-адрес сетевого интерфейса, который поключен к сети содержащей ONVIF устройства.
+В разделе <TyphoonIP>  - указывается IP-адрес компьютера, на котором запущено ПО «Тайфун». Если ПО «Тайфун» и ПО Onvifproxy запущены на одном и том же компьютере — IP-адрес указывать 127.0.0.1
+В разделе <ServiceDiscoveryStatus> - значение Discoverable указывает, что ПО отвечает на широковещательные запросы и тем самым обнаруживается  средствами ONVIF как NVT устройство, значение   NonDiscoverable – указывает, что ПО не будет отвечать на запросы и не будет обнаруживаться как NVT устройство.
+
+
+
+
+
+
+Имена пользователей, их пароли и уровень их доступа хранятся в файле pwd.xml. Файл pwd.xml имеет следующий вид:
+
+<?xml version="1.0" encoding="utf-8" ?> 
+<ArrayOfUser xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<User>
+<Username xmlns="http://www.onvif.org/ver10/schema">admin</Username> 
+<Password xmlns="http://www.onvif.org/ver10/schema">admin</Password> 
+<UserLevel xmlns="http://www.onvif.org/ver10/schema">Administrator</UserLevel> 
+</User>
+  </ArrayOfUser>
+
+В разделе <Username> в обычном текстовом виде указывается имя пользователя.
+В разделе <Password>  в обычном текстовом виде указывается пароль пользователя.
+В разделе <UserLevel> значения могут быть Administrator, Operator и User, в зависимости от уровня привелегий пользователя.
+
