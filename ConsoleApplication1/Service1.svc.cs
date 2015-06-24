@@ -725,15 +725,12 @@ namespace OnvifProxy
                 confstr.Scopes = new System.Collections.ObjectModel.Collection<OnvifScope>();
                 confstr = conf.Read();
 
-                //Console.WriteLine("have read Config");
-
                 GetCapabilitiesResponse getCapabilitiesResponse = new GetCapabilitiesResponse();
                 getCapabilitiesResponse.Capabilities = new Device.Capabilities();
 
                 if (request.Category.Length == 0)
                 {
                     getCapabilitiesResponse.Capabilities = confstr.Capabilities;
-                    //Console.WriteLine("point 1");
                     return getCapabilitiesResponse;
                 }
 
@@ -746,7 +743,6 @@ namespace OnvifProxy
                     // обязательные разделы - Device, Media, Events
                     //--------------------------------------------------
                     case CapabilityCategory.Device:
-                        //Console.WriteLine("point 2");
                         if (confstr.Capabilities.Device != null)
                         {
                             //--------------------------------------------------
@@ -833,7 +829,6 @@ namespace OnvifProxy
                         //запросить раздел медиа у тайфуна
                         //разобрать ответ
                         //сформировать структуру на отдачу
-                        //Console.WriteLine("point 3");
                         if (confstr.Capabilities.Device != null)
                         {
                             byte[] tmp = TyphoonCom.FormCommand(200, 4, null, 0);
@@ -847,7 +842,7 @@ namespace OnvifProxy
                             {
                                 do
                                 {
-                                    Thread.Sleep(1);
+                                    Thread.Sleep(1);////
                                 } while (TyphoonCom.queueResponce.Count == 0);
 
                                 if (TyphoonCom.queueResponce.Count > 0)

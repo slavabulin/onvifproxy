@@ -469,9 +469,7 @@ namespace OnvifProxy
             {
                 using (FileStream fs = new FileStream("config.xml", FileMode.Open, FileAccess.Read, FileShare.Read))
                 {
-
                     XmlSerializer xmlSerializer = new XmlSerializer(typeof(ConfigStruct));
-
                     try
                     {
                         config = (ConfigStruct)xmlSerializer.Deserialize(fs);
@@ -492,8 +490,7 @@ namespace OnvifProxy
             catch (FileNotFoundException fnf)
             {
                 Console.WriteLine("Не найден файл конфигурации - config.xml");
-            }
-            
+            }            
             return config;
         }
 

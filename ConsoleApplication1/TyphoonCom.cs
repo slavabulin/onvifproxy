@@ -108,9 +108,7 @@ namespace OnvifProxy
 
             commandBuffer = new byte[10240];
 
-            //Program.ev_RebootHost.Reset();//???????????????????????????????????нахуй он тут?
-
-            //зарегестрировать только один обработчик на событие TyphoonDisconnect
+            //зарегистрировать только один обработчик на событие TyphoonDisconnect
             if (!flg_OnConnectionFailed)
             {
                 TyphoonCom.TyphoonDisconnect += OnConnectionFailed;
@@ -1043,49 +1041,49 @@ namespace OnvifProxy
             }            
         }
 
-        private static Event.Notify1 FormNotify(EventData eventdata, bnSubscriber subscriber)
-        {
-            if (eventdata != null && subscriber != null)
-            {
-                Event.Notify1 notify = new Event.Notify1(new Event.Notify());
-                if (subscriber.Eventtype == eventdata.Eventtype)
-                {                    
-                    notify.Notify.NotificationMessage = new Event.NotificationMessageHolderType[1];
-                    notify.Notify.NotificationMessage[0] = new Event.NotificationMessageHolderType();
+        //private static Event.Notify1 FormNotify(EventData eventdata, bnSubscriber subscriber)
+        //{
+        //    if (eventdata != null && subscriber != null)
+        //    {
+        //        Event.Notify1 notify = new Event.Notify1(new Event.Notify());
+        //        if (subscriber.Eventtype == eventdata.Eventtype)
+        //        {                    
+        //            notify.Notify.NotificationMessage = new Event.NotificationMessageHolderType[1];
+        //            notify.Notify.NotificationMessage[0] = new Event.NotificationMessageHolderType();
 
-                    XmlDocument doc = new XmlDocument();
-                    doc.LoadXml("<Notify><NotificationMessage xmlns = 'http://docs.oasis-open.org/wsn/b-2' >"
-                    + "<Topic  Dialect='http://docs.oasis-open.org/wsn/t-1/TopicExpression/ConcreteTopic'>"
-                    + "tns1:VideoSource</Topic>"
-                    + "<Message><tt:Message UtcTime='" + (System.DateTime.UtcNow).ToString("s") + "' "
-                    + "PropertyOperation='Initialized' xmlns:tt='http://www.onvif.org/ver10/schema'><tt:Source>"
-                    + "<tt:SimpleItem Name='app' Value='changed' /></tt:Source><tt:Key>"
-                    + "<tt:SimpleItem Name='channel' Value='0' /></tt:Key><tt:Data><tt:SimpleItem Name='tampering' Value='0' />"
-                    + "</tt:Data></tt:Message></Message>"
-                    + "</NotificationMessage></Notify>"
-                    );
+        //            XmlDocument doc = new XmlDocument();
+        //            doc.LoadXml("<Notify><NotificationMessage xmlns = 'http://docs.oasis-open.org/wsn/b-2' >"
+        //            + "<Topic  Dialect='http://docs.oasis-open.org/wsn/t-1/TopicExpression/ConcreteTopic'>"
+        //            + "tns1:VideoSource</Topic>"
+        //            + "<Message><tt:Message UtcTime='" + (System.DateTime.UtcNow).ToString("s") + "' "
+        //            + "PropertyOperation='Initialized' xmlns:tt='http://www.onvif.org/ver10/schema'><tt:Source>"
+        //            + "<tt:SimpleItem Name='app' Value='changed' /></tt:Source><tt:Key>"
+        //            + "<tt:SimpleItem Name='channel' Value='0' /></tt:Key><tt:Data><tt:SimpleItem Name='tampering' Value='0' />"
+        //            + "</tt:Data></tt:Message></Message>"
+        //            + "</NotificationMessage></Notify>"
+        //            );
 
-                    string strs = "<?xml version='1.0' encoding='utf-8' ?>" + doc.InnerXml.ToString();
-                    using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(strs)))
-                    {
-                        XmlSerializer serializer = new XmlSerializer(typeof(Event.Notify));
+        //            string strs = "<?xml version='1.0' encoding='utf-8' ?>" + doc.InnerXml.ToString();
+        //            using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(strs)))
+        //            {
+        //                XmlSerializer serializer = new XmlSerializer(typeof(Event.Notify));
 
-                        try
-                        {
-                            notify.Notify = (Event.Notify)serializer.Deserialize(ms);  //                                          
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine("TyphoonCom: Event: Не могу сериализовать " + ex.Message);
-                        }
+        //                try
+        //                {
+        //                    notify.Notify = (Event.Notify)serializer.Deserialize(ms);  //                                          
+        //                }
+        //                catch (Exception ex)
+        //                {
+        //                    Console.WriteLine("TyphoonCom: Event: Не могу сериализовать " + ex.Message);
+        //                }
 
-                    }
-                }
+        //            }
+        //        }
 
-                return notify;
-            }
-            else return null;
-        }
+        //        return notify;
+        //    }
+        //    else return null;
+        //}
 
 
 

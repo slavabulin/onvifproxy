@@ -96,13 +96,9 @@
     <Compile Include="AdaptersInfo.cs" />
     <Compile Include="AsyncResult.cs" />
     <Compile Include="CustomMessageFormatter.cs" />
-    <Compile Include="HttpErrorsAttirbute.cs" />
     <Compile Include="IEvent.cs" />
     <Compile Include="NVTClient.cs" />
     <Compile Include="NVTDiscoveryClient.cs" />
-    <Compile Include="DispatchByBodyElementOperationSelector.cs" />
-    <Compile Include="DispatchByBodyElementBehaviorAttribute.cs" />
-    <Compile Include="DispatchBodyElementAttribute.cs" />
     <Compile Include="IDevice.cs" />
     <Compile Include="IDeviceIO.cs" />
     <Compile Include="IDisplay.cs" />
