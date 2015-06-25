@@ -22,7 +22,7 @@ using Media;
 using System.Globalization;
 
 using System.Text.RegularExpressions;
-using System.Timers;
+//using System.Net.Security;
 
 
 namespace OnvifProxy
@@ -711,41 +711,8 @@ namespace OnvifProxy
 
             return (new GetWsdlUrlResponse(wsdluri.ToString()));
         }
-
-        //--------------------------------------------------------------------
-        //bool flg_timeout = false;
-        //public void mytestmethod()
-        //{
-        //    flg_timeout = true;
-
-        //    using(System.Timers.Timer tmr_requesttimeout  = new System.Timers.Timer())
-        //    {
-        //        tmr_requesttimeout.AutoReset = false;
-        //        tmr_requesttimeout.Interval = 3000;
-        //        tmr_requesttimeout.Elapsed += new ElapsedEventHandler(flgTimeout);
-
-        //        do {
-        //            tmr_requesttimeout.Enabled = true;
-        //            //----------------------
-        //            //
-        //            //----------------------
-        //            Thread.Sleep(1);
-        //            Console.WriteLine(tmr_requesttimeout.Interval.ToString());
-        //            //while (true) { };
-        //        }
-        //        while (flg_timeout);
-        //    }
-        //}
-        //private void flgTimeout(object source, ElapsedEventArgs e)
-        //{
-        //    flg_timeout = false;
-        //}
-        //--------------------------------------------------------------------
-
         public GetCapabilitiesResponse GetCapabilities(GetCapabilitiesRequest request)
         {
-            //mytestmethod();
-
             if (request != null)
             {
                 Console.WriteLine("entering GetCapabilities");
@@ -779,10 +746,13 @@ namespace OnvifProxy
                         if (confstr.Capabilities.Device != null)
                         {
                             //--------------------------------------------------
+
                             string ComStr = "<Capabilities><Device  xmlns=\u0022http://www.onvif.org/ver10/schema\u0022><IO><InputConnectors>0</InputConnectors></IO></Device></Capabilities>";
                             TyphoonCom.log.Debug("Service1: GetCapabilities added to commandQueue");
+                            //TyphoonCom.AddCommand(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 1, ComStr.ToCharArray())));
 
                             TyphMsg.MessageData = ComStr;
+                            //byte[] tmp = TyphoonCom.FormCommand(200, 1, System.Text.Encoding.Unicode.GetBytes(TyphMsg.MessageData),0);
                             byte[] tmp = TyphoonCom.FormCommand(200, 1, (TyphoonCom.MakeMem(TyphMsg.MessageData)), 0);
 
                             for (int a = 0; a < 4; a++)
@@ -819,6 +789,7 @@ namespace OnvifProxy
                                         {
                                             DataString = String.Concat(DataString, "<IPAddr>", confstr.IPAddr, "</IPAddr>");
                                             Buf = Buf.Replace("<Device>", "<Device  xmlns=\u0022http://www.onvif.org/ver10/schema\u0022>");
+                                            //DataString = String.Concat(DataString, Buf.Remove(0,4));
                                             DataString = String.Concat(DataString, Buf);
                                             DataString = String.Concat(DataString, "</ConfigStruct>");
                                             tmpconfstr = conf.DeserializeString(confstr, DataString);
