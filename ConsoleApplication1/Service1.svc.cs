@@ -737,7 +737,6 @@ namespace OnvifProxy
                 switch (request.Category[0])
                 {
                     case CapabilityCategory.All: getCapabilitiesResponse.Capabilities = confstr.Capabilities;
-                        //Console.WriteLine("case CapabilityCategory.All: getCapabilitiesResponse.Capabilities = confstr.Capabilities;");
                         return getCapabilitiesResponse;
                     //--------------------------------------------------
                     // обязательные разделы - Device, Media, Events
@@ -749,10 +748,8 @@ namespace OnvifProxy
 
                             string ComStr = "<Capabilities><Device  xmlns=\u0022http://www.onvif.org/ver10/schema\u0022><IO><InputConnectors>0</InputConnectors></IO></Device></Capabilities>";
                             TyphoonCom.log.Debug("Service1: GetCapabilities added to commandQueue");
-                            //TyphoonCom.AddCommand(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 1, ComStr.ToCharArray())));
 
                             TyphMsg.MessageData = ComStr;
-                            //byte[] tmp = TyphoonCom.FormCommand(200, 1, System.Text.Encoding.Unicode.GetBytes(TyphMsg.MessageData),0);
                             byte[] tmp = TyphoonCom.FormCommand(200, 1, (TyphoonCom.MakeMem(TyphMsg.MessageData)), 0);
 
                             for (int a = 0; a < 4; a++)
