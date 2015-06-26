@@ -786,7 +786,6 @@ namespace OnvifProxy
                                         {
                                             DataString = String.Concat(DataString, "<IPAddr>", confstr.IPAddr, "</IPAddr>");
                                             Buf = Buf.Replace("<Device>", "<Device  xmlns=\u0022http://www.onvif.org/ver10/schema\u0022>");
-                                            //DataString = String.Concat(DataString, Buf.Remove(0,4));
                                             DataString = String.Concat(DataString, Buf);
                                             DataString = String.Concat(DataString, "</ConfigStruct>");
                                             tmpconfstr = conf.DeserializeString(confstr, DataString);

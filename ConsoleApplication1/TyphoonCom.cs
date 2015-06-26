@@ -38,6 +38,13 @@ namespace OnvifProxy
         public static Collection<TyphoonMessage> queueResponce = null;
         //очередь команд от тайфуна
         public static Queue queueCmd = null;
+        //------------------------------------------------------
+        private static Dictionary<UInt32, TyphoonMessage> queueRequest_ex = new Dictionary<uint, TyphoonMessage>();
+        private static Dictionary<UInt32, TyphoonMessage> queueResponce_ex = new Dictionary<uint, TyphoonMessage>();
+        private static Dictionary<UInt32, TyphoonMessage> queueCmd_ex = new Dictionary<uint, TyphoonMessage>();
+
+
+        //------------------------------------------------------
 
 
         private static TcpClient client = null;
@@ -1513,4 +1520,19 @@ namespace OnvifProxy
         }
     }
 
+    class TyphoonMessage_Ex
+    {
+        System.Timers.Timer MessageTimeoutTimer;
+
+        TyphoonMessage_Ex()
+        {
+            if (MessageTimeoutTimer == null)
+            {
+                MessageTimeoutTimer = new System.Timers.Timer(5000);
+                //MessageTimeoutTimer.Elapsed += new ElapsedEventHandler(OnSubscriptionTimeoutEvent);
+                MessageTimeoutTimer.Enabled = true;
+                MessageTimeoutTimer.AutoReset = false;
+            }
+        }
+    }
 }
