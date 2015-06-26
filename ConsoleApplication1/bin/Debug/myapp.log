@@ -1,168 +1,96 @@
-2015-06-24 10:11:47,293 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
-2015-06-24 10:11:47,777 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-26 11:45:25,683 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-06-26 11:45:26,520 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-24 10:11:47,777 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:11:48,902 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:11:48,918 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 10:11:49,996 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-26 11:45:26,520 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-26 11:45:27,629 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-06-26 11:45:27,645 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-06-26 11:45:28,692 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-24 10:11:49,996 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:11:50,996 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:11:50,996 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 10:11:52,012 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-26 11:45:28,692 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-26 11:45:29,712 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-06-26 11:45:29,712 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-06-26 11:45:30,727 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-24 10:11:52,012 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:11:53,028 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:11:53,028 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 10:11:54,043 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-26 11:45:30,727 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-26 11:45:31,727 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-06-26 11:45:31,727 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-06-26 11:45:32,743 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-24 10:11:54,043 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:11:55,043 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:11:55,043 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 10:11:56,059 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-26 11:45:32,743 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-26 11:45:33,768 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-06-26 11:45:33,768 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-06-26 11:45:34,786 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-24 10:11:56,059 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:11:57,075 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:11:57,075 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 10:11:58,090 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-26 11:45:34,786 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-26 11:45:35,786 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-06-26 11:45:35,786 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-06-26 11:45:36,802 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-24 10:11:58,090 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:11:59,106 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:11:59,106 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 10:12:00,122 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-26 11:45:36,802 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-26 11:45:37,817 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-06-26 11:45:37,817 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-06-26 11:45:38,833 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-24 10:12:00,122 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:12:01,137 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:12:01,137 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 10:12:02,139 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-26 11:45:38,833 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-26 11:45:39,849 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-06-26 11:45:39,849 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-06-26 11:45:40,864 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-24 10:12:02,139 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:12:03,142 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:12:03,143 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 10:12:04,144 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-26 11:45:40,864 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-26 11:45:41,880 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-06-26 11:45:41,880 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-06-26 11:45:42,896 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-24 10:12:04,144 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:12:05,171 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:12:05,171 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 10:12:06,186 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-26 11:45:42,896 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-26 11:45:43,902 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-06-26 11:45:43,902 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-06-26 11:45:44,918 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-24 10:12:06,186 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:12:07,202 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:12:07,202 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 10:12:08,218 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-26 11:45:44,918 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-26 11:45:45,933 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-06-26 11:45:45,933 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-06-26 11:45:46,949 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-24 10:12:08,218 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:12:09,233 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:12:09,233 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 10:12:10,249 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-26 11:45:46,949 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-26 11:45:47,949 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-06-26 11:45:47,949 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-06-26 11:45:48,965 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-24 10:12:10,249 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:12:11,265 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:12:11,265 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 10:12:12,280 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-26 11:45:48,965 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-26 11:45:49,981 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-06-26 11:45:49,981 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-06-26 11:45:50,998 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-24 10:12:12,280 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:12:13,296 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:12:13,296 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 10:12:14,312 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-26 11:45:50,998 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-26 11:45:52,013 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-06-26 11:45:52,013 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-06-26 11:45:53,023 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-24 10:12:14,312 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:12:15,343 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:12:15,343 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 10:12:16,359 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-26 11:45:53,023 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-26 11:45:54,026 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-06-26 11:45:54,027 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-06-26 11:45:55,029 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-24 10:12:16,359 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:12:17,374 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:12:17,374 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 10:12:18,390 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-26 11:45:55,030 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-26 11:45:56,027 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-06-26 11:45:56,027 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-06-26 11:45:57,041 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-24 10:12:18,390 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:12:19,406 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:12:19,406 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 10:12:20,421 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-26 11:45:57,041 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-26 11:45:58,057 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-06-26 11:45:58,057 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-06-26 11:45:59,072 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-24 10:12:20,421 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:12:21,435 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:12:21,435 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 10:12:22,436 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-26 11:45:59,072 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-26 11:46:00,080 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-06-26 11:46:00,080 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-06-26 11:46:01,096 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-24 10:12:22,436 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:12:23,439 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:12:23,440 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 10:12:24,454 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-06-26 11:46:01,096 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-26 11:46:02,096 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-06-26 11:46:02,096 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-06-26 11:46:03,115 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-06-24 10:12:24,454 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:12:25,470 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:12:25,470 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 10:12:26,486 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
-
-2015-06-24 10:12:26,486 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:12:27,485 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:12:27,485 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 10:12:28,501 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
-
-2015-06-24 10:12:28,501 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:12:29,501 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:12:29,501 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 10:12:30,516 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
-
-2015-06-24 10:12:30,516 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:12:31,516 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:12:31,516 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 10:12:32,519 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
-
-2015-06-24 10:12:32,519 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:12:33,531 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:12:33,531 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 10:12:34,547 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
-
-2015-06-24 10:12:34,547 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:12:35,547 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:12:35,547 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 10:12:36,563 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
-
-2015-06-24 10:12:36,563 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:12:37,578 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:12:37,578 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 10:12:38,594 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
-
-2015-06-24 10:12:38,594 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:12:39,610 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:12:39,610 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 10:12:40,625 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
-
-2015-06-24 10:12:40,625 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:12:41,625 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:12:41,625 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 10:12:42,641 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
-
-2015-06-24 10:12:42,641 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:12:43,657 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:12:43,657 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 10:12:44,672 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
-
-2015-06-24 10:12:44,672 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:12:45,688 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:12:45,688 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 10:12:46,704 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
-
-2015-06-24 10:12:46,704 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:12:47,704 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:12:47,704 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 10:12:48,719 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
-
-2015-06-24 10:12:48,719 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 10:12:49,735 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-06-24 10:12:49,735 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-06-24 11:38:36,489 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
-2015-06-24 11:38:36,793 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
-
-2015-06-24 11:38:36,793 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-06-24 11:38:36,849 [DEBUG] OnvifProxy.TyphoonCom - Done.
-
-2015-06-24 11:38:36,965 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
-2015-06-24 11:38:38,061 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
-2015-06-24 11:38:38,141 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
-2015-06-24 11:38:38,141 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
-2015-06-24 11:38:40,477 [DEBUG] OnvifProxy.TyphoonCom - Host opened
-2015-06-24 11:38:40,477 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-06-26 11:46:03,115 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-06-26 11:46:04,129 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-06-26 11:46:04,129 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
