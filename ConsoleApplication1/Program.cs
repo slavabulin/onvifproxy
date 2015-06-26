@@ -19,11 +19,8 @@ using System.ServiceModel.Dispatcher;
 
 
 //----------------------------
-using System.Collections.Generic;
-using System.Runtime.Serialization;
 using System.Xml.Serialization;
 using System.IO;
-using System.Text;
 using System.Xml;
 using System.Web.Services.Protocols; //ддя соап-документс-сеттингс
 using System.Runtime.InteropServices; // added to set system time&date

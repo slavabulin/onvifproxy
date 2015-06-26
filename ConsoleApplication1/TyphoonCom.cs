@@ -95,7 +95,6 @@ namespace OnvifProxy
 
         public static void TyphoonComInit (object ip)
         {
-
             ipaddr = (string)ip;
 
             flg_ConnectionFailedActive = false;
@@ -148,7 +147,6 @@ namespace OnvifProxy
             Thread thr_Connect = new Thread(new ThreadStart(Connect));
             thr_Connect.IsBackground = true;
             thr_Connect.Start();
-            //Connect();
             log.Debug("done?");
             
         }
