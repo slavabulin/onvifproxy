@@ -138,6 +138,7 @@ namespace OnvifProxy
             catch (InvalidOperationException ioe)
             {
                 OnSubscriptionTimeoutEvent(source, e);
+                TyphoonCom.log.DebugFormat("TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - {0}", ioe.Message);
             }
             //OnSubscriptionTimeout(source, e);
         }
@@ -513,6 +514,5 @@ namespace OnvifProxy
     public interface IPullPointService : Event.PullPointSubscription, Event.SubscriptionManager
     {
     }
-
   
 }

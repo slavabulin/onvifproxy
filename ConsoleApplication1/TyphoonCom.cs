@@ -39,9 +39,9 @@ namespace OnvifProxy
         //очередь команд от тайфуна
         public static Queue queueCmd = null;
         //------------------------------------------------------
-        private static Dictionary<UInt32, TyphoonMessage> queueRequest_ex = new Dictionary<uint, TyphoonMessage>();
-        private static Dictionary<UInt32, TyphoonMessage> queueResponce_ex = new Dictionary<uint, TyphoonMessage>();
-        private static Dictionary<UInt32, TyphoonMessage> queueCmd_ex = new Dictionary<uint, TyphoonMessage>();
+        static Dictionary<UInt32, TyphoonMessage> queueRequest_ex = new Dictionary<uint, TyphoonMessage>();
+        static Dictionary<UInt32, TyphoonMessage> queueResponce_ex = new Dictionary<uint, TyphoonMessage>();
+        static Dictionary<UInt32, TyphoonMessage> queueCmd_ex = new Dictionary<uint, TyphoonMessage>();
 
 
         //------------------------------------------------------
@@ -1522,16 +1522,75 @@ namespace OnvifProxy
 
     class TyphoonMessage_Ex
     {
+        public UInt32 MessageID;
+        public UInt32 MessageSubComNum;
+        public TyphoonMsgType MessageType;
+
+        double timeout = 5000;
+        string messageData;        
         System.Timers.Timer MessageTimeoutTimer;
 
-        TyphoonMessage_Ex()
+        TyphoonMessage_Ex(TyphoonMsgType messageType)
         {
+            MessageType = messageType;
+
             if (MessageTimeoutTimer == null)
             {
-                MessageTimeoutTimer = new System.Timers.Timer(5000);
-                //MessageTimeoutTimer.Elapsed += new ElapsedEventHandler(OnSubscriptionTimeoutEvent);
+                MessageTimeoutTimer = new System.Timers.Timer(timeout);
+                MessageTimeoutTimer.Elapsed += new ElapsedEventHandler(OnTyphoonMessageTimeout);
                 MessageTimeoutTimer.Enabled = true;
                 MessageTimeoutTimer.AutoReset = false;
+            }
+        }
+        public string MessageData
+        {
+            get
+            {
+                return this.messageData;
+            }
+            set
+            {
+                this.messageData = value;
+            }
+        }
+        void OnTyphoonMessageTimeout(object source, ElapsedEventArgs e)
+        {
+            //TyphoonCom_Ex.Add(typhoonmsg, TyphoonMsgType);
+            //TyphoonMsgManager.Remove();
+        }
+    }
+
+    public enum TyphoonMsgType
+    {
+        Request,
+        Responce,
+        Command
+    }
+
+    public static class TyphoonMsgManager
+    {
+        static Dictionary<UInt32, TyphoonMessage_Ex> queueRequest_ex = new Dictionary<uint, TyphoonMessage_Ex>();
+        static Dictionary<UInt32, TyphoonMessage_Ex> queueResponce_ex = new Dictionary<uint, TyphoonMessage_Ex>();
+        static Dictionary<UInt32, TyphoonMessage_Ex> queueCmd_ex = new Dictionary<uint, TyphoonMessage_Ex>();
+
+        static void Add(TyphoonMessage_Ex typhmsg, TyphoonMsgType type)
+        { 
+            if(typhmsg!=null)
+            {
+                switch(type)
+                {
+                    case TyphoonMsgType.Command:
+                        queueCmd_ex.Add(typhmsg.MessageID, typhmsg);
+                        break;
+                    case TyphoonMsgType.Request:
+                        queueRequest_ex.Add(typhmsg.MessageID, typhmsg);
+                        break;
+                    case TyphoonMsgType.Responce:
+                        queueResponce_ex.Add(typhmsg.MessageID, typhmsg);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
