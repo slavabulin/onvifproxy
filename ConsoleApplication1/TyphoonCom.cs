@@ -1557,6 +1557,7 @@ namespace OnvifProxy
         {
             //TyphoonCom_Ex.Add(typhoonmsg, TyphoonMsgType);
             //TyphoonMsgManager.Remove();
+
         }
     }
 
