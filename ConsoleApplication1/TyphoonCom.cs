@@ -39,10 +39,6 @@ namespace OnvifProxy
         //очередь команд от тайфуна
         public static Queue queueCmd = null;
         //------------------------------------------------------
-        static Dictionary<UInt32, TyphoonMessage> queueRequest_ex = new Dictionary<uint, TyphoonMessage>();
-        static Dictionary<UInt32, TyphoonMessage> queueResponce_ex = new Dictionary<uint, TyphoonMessage>();
-        static Dictionary<UInt32, TyphoonMessage> queueCmd_ex = new Dictionary<uint, TyphoonMessage>();
-
 
         //------------------------------------------------------
 
@@ -84,21 +80,15 @@ namespace OnvifProxy
         //флаг, указывающий, что как минимум один раз коннекшн падал
         private static bool flg_OnConnectionFailed = false;
         private static Object obj;
-
         private static TyphoonMessage tmpTyphMsg;
-        //private static UTF8Encoding utf8;
-        
-        private static byte[] Data;
-        
+        //private static UTF8Encoding utf8;        
+        private static byte[] Data;        
         //счетчик MessageID
         private static UInt32 msgIDCounter;
         private static WSHttpBinding binding;
         //private static BasicHttpBinding binding;
         private static NVTServiceClient nvtClient;
         private static System.Collections.ObjectModel.Collection<NVTServiceClient> nvtClientCollection = null;
-
-        
-        
 
         public static void TyphoonComInit (object ip)
         {
@@ -1520,7 +1510,7 @@ namespace OnvifProxy
         }
     }
 
-    class TyphoonMessage_Ex
+    public class TyphoonMsg_Ex
     {
         public UInt32 MessageID;
         public UInt32 MessageSubComNum;
@@ -1530,17 +1520,14 @@ namespace OnvifProxy
         string messageData;        
         System.Timers.Timer MessageTimeoutTimer;
 
-        TyphoonMessage_Ex(TyphoonMsgType messageType)
+        TyphoonMsg_Ex(TyphoonMsgType messageType)
         {
             MessageType = messageType;
 
-            if (MessageTimeoutTimer == null)
-            {
-                MessageTimeoutTimer = new System.Timers.Timer(timeout);
-                MessageTimeoutTimer.Elapsed += new ElapsedEventHandler(OnTyphoonMessageTimeout);
-                MessageTimeoutTimer.Enabled = true;
-                MessageTimeoutTimer.AutoReset = false;
-            }
+            MessageTimeoutTimer = new System.Timers.Timer(timeout);
+            MessageTimeoutTimer.Elapsed += new ElapsedEventHandler(OnTyphoonMessageTimeout);
+            MessageTimeoutTimer.AutoReset = false;
+            MessageTimeoutTimer.Enabled = true;
         }
         public string MessageData
         {
@@ -1555,30 +1542,33 @@ namespace OnvifProxy
         }
         void OnTyphoonMessageTimeout(object source, ElapsedEventArgs e)
         {
-            //TyphoonCom_Ex.Add(typhoonmsg, TyphoonMsgType);
-            //TyphoonMsgManager.Remove();
-
+            TyphoonCom.log.ErrorFormat("TyphoonMessage {0} type was removed due timeout", MessageType);
+            switch(MessageType)
+            {
+                case TyphoonMsgType.Command:
+                    TyphoonMsgManager.queueCmd_ex.Remove(MessageID);
+                    break;
+                case TyphoonMsgType.Request:
+                    TyphoonMsgManager.queueRequest_ex.Remove(MessageID);
+                    break;
+                case TyphoonMsgType.Responce:
+                    TyphoonMsgManager.queueResponce_ex.Remove(MessageID);
+                    break;
+            }
         }
     }
-
-    public enum TyphoonMsgType
-    {
-        Request,
-        Responce,
-        Command
-    }
-
+    
     public static class TyphoonMsgManager
     {
-        static Dictionary<UInt32, TyphoonMessage_Ex> queueRequest_ex = new Dictionary<uint, TyphoonMessage_Ex>();
-        static Dictionary<UInt32, TyphoonMessage_Ex> queueResponce_ex = new Dictionary<uint, TyphoonMessage_Ex>();
-        static Dictionary<UInt32, TyphoonMessage_Ex> queueCmd_ex = new Dictionary<uint, TyphoonMessage_Ex>();
+        internal static Dictionary<UInt32, TyphoonMsg_Ex> queueRequest_ex = new Dictionary<uint, TyphoonMsg_Ex>();
+        internal static Dictionary<UInt32, TyphoonMsg_Ex> queueResponce_ex = new Dictionary<uint, TyphoonMsg_Ex>();
+        internal static Dictionary<UInt32, TyphoonMsg_Ex> queueCmd_ex = new Dictionary<uint, TyphoonMsg_Ex>();
 
-        static void Add(TyphoonMessage_Ex typhmsg, TyphoonMsgType type)
+        public static void Add(TyphoonMsg_Ex typhmsg)
         { 
             if(typhmsg!=null)
             {
-                switch(type)
+                switch (typhmsg.MessageType)
                 {
                     case TyphoonMsgType.Command:
                         queueCmd_ex.Add(typhmsg.MessageID, typhmsg);
@@ -1593,6 +1583,15 @@ namespace OnvifProxy
                         break;
                 }
             }
+
+            queueRequest_ex.ToList().ElementAt(0);
         }
+    }
+
+    public enum TyphoonMsgType
+    {
+        Request,
+        Responce,
+        Command
     }
 }

@@ -748,6 +748,8 @@ namespace OnvifProxy
 
                             string ComStr = "<Capabilities><Device  xmlns=\u0022http://www.onvif.org/ver10/schema\u0022><IO><InputConnectors>0</InputConnectors></IO></Device></Capabilities>";
                             TyphoonCom.log.Debug("Service1: GetCapabilities added to commandQueue");
+                            
+                            //Encoding.ASCII.GetString((Encoding.ASCII.GetBytes(ComStr)));
 
                             TyphMsg.MessageData = ComStr;
                             byte[] tmp = TyphoonCom.FormCommand(200, 1, (TyphoonCom.MakeMem(TyphMsg.MessageData)), 0);
@@ -768,7 +770,6 @@ namespace OnvifProxy
                                     {
                                         //находим в очереди ответ с ID отправленного нами запроса
                                         Buf = TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID).MessageData;
-                                        //TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID);
                                     }
                                     catch (Exception ex)
                                     {
