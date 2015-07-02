@@ -1516,10 +1516,11 @@ namespace OnvifProxy
         public UInt32 MessageSubComNum;
         public TyphoonMsgType MessageType;
 
-        double timeout = 5000;
-        string messageData;        
-        System.Timers.Timer MessageTimeoutTimer;
 
+        double timeout = 5000;
+        string messageData;
+
+        System.Timers.Timer MessageTimeoutTimer;
         TyphoonMsg_Ex(TyphoonMsgType messageType)
         {
             MessageType = messageType;
@@ -1529,7 +1530,18 @@ namespace OnvifProxy
             MessageTimeoutTimer.AutoReset = false;
             MessageTimeoutTimer.Enabled = true;
         }
-        public string MessageData
+        public byte[] byteMessageData
+        { 
+            get
+            {
+                return Encoding.GetEncoding(1251).GetBytes(messageData);
+            }
+            set 
+            {
+                this.messageData = Encoding.GetEncoding(1251).GetString(value);
+            }
+        }
+        public string stringMessageData
         {
             get
             {
@@ -1542,7 +1554,7 @@ namespace OnvifProxy
         }
         void OnTyphoonMessageTimeout(object source, ElapsedEventArgs e)
         {
-            TyphoonCom.log.ErrorFormat("TyphoonMessage {0} type was removed due timeout", MessageType);
+            TyphoonCom.log.ErrorFormat("TyphoonMessage was removed from the queue {0} due timeout", this.MessageType.ToString());
             switch(MessageType)
             {
                 case TyphoonMsgType.Command:
@@ -1565,7 +1577,8 @@ namespace OnvifProxy
         internal static Dictionary<UInt32, TyphoonMsg_Ex> queueCmd_ex = new Dictionary<uint, TyphoonMsg_Ex>();
 
         public static void Add(TyphoonMsg_Ex typhmsg)
-        { 
+        {
+            TyphoonCom.log.DebugFormat("TyphoonMsg_Ex added to the queue {0}", typhmsg.MessageType.ToString());
             if(typhmsg!=null)
             {
                 switch (typhmsg.MessageType)
@@ -1583,8 +1596,6 @@ namespace OnvifProxy
                         break;
                 }
             }
-
-            queueRequest_ex.ToList().ElementAt(0);
         }
     }
 
