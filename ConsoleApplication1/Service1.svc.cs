@@ -2716,7 +2716,50 @@ namespace OnvifProxy
             tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null,0));
             TyphoonCom.log.Debug("Service1: GetProfiles added to commandQueue");
             ///добавляем в очередь на отправку
-            TyphoonCom.AddCommand(tmpBuf);
+            //TyphoonCom.AddCommand(tmpBuf);
+
+            //-----------test---------------------------
+            TyphoonMsg_Ex typhmsgg = new TyphoonMsg_Ex(TyphoonMsgType.Request);
+            typhmsgg.byteMessageData = tmpBuf;
+            TyphoonMsgManager.Add(typhmsgg);
+
+            
+            //TyphoonMessage TyphMsg = new TyphoonMessage();
+            //for (int a = 0; a < 4; a++)
+            //    {
+            //        TyphMsg.MessageID = TyphMsg.MessageID << 8;
+            //        TyphMsg.MessageID += tmpBuf[21-a];
+            //    }
+            //try
+            //{
+                
+            //    try
+            //    {
+            //        while (!TyphoonMsgManager.queueResponce_ex.ContainsKey(TyphMsg.MessageID))
+            //        {
+            //            Thread.Sleep(1);
+            //            TyphoonCom.log.DebugFormat("-");
+            //        }
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        TyphoonCom.log.DebugFormat("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            //    }
+
+            //    //if(TyphoonMsgManager.queueResponce_ex.ContainsKey(TyphMsg.MessageID))
+            //    //{
+            //    //    TyphoonCom.log.DebugFormat("queueResponce_ex contains TyphMsg.MessageID = {0}", TyphMsg.MessageID);
+            //    //}
+                
+            //}catch(Exception e)
+            //{
+            //}
+            //------------------------------------------
+
+
+
+
+
 
             ///создаем структуру под конфиг
             XmlConfig config = new XmlConfig();
@@ -2740,6 +2783,25 @@ namespace OnvifProxy
                 }
                 try
                 {
+                    ////-----------test---------------------------
+                    //try
+                    //{
+                    //    while (!TyphoonMsgManager.queueResponce_ex.ContainsKey(TyphMsg.MessageID))
+                    //    {
+                    //        Thread.Sleep(1);
+                    //        TyphoonCom.log.DebugFormat("-");
+                    //    }
+                    //}
+                    //catch(Exception e)
+                    //{
+                    //    TyphoonCom.log.DebugFormat("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    //}
+
+                    ////if(TyphoonMsgManager.queueResponce_ex.ContainsKey(TyphMsg.MessageID))
+                    ////{
+                    ////    TyphoonCom.log.DebugFormat("queueResponce_ex contains TyphMsg.MessageID = {0}", TyphMsg.MessageID);
+                    ////}
+                    ////------------------------------------------
                     TyphMsg.MessageData = TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID).MessageData;
                     TyphoonCom.queueResponce.Remove(TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID));
                 }
