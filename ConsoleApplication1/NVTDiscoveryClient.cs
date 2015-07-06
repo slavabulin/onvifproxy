@@ -48,16 +48,16 @@ namespace OnvifProxy
             {
                 if (confstr.Capabilities.Device.XAddr != e.EndpointDiscoveryMetadata.ListenUris[0].OriginalString)
                 {
-                    TyphoonCom.AddCommand(TyphoonCom.FormPacket(TyphoonCom.FormCommand(201, 1, FormNVTResponse(e.EndpointDiscoveryMetadata), msgID)));
+                    TyphoonMsg_Ex typhmsg = new TyphoonMsg_Ex(TyphoonMsgType.Request);
+                    typhmsg.byteMessageData = TyphoonCom.FormPacket(TyphoonCom.FormCommand(201, 1, FormNVTResponse(e.EndpointDiscoveryMetadata), msgID));
+                    TyphoonMsgManager.Add(typhmsg);
+                    //TyphoonCom.AddCommand(TyphoonCom.FormPacket(TyphoonCom.FormCommand(201, 1, FormNVTResponse(e.EndpointDiscoveryMetadata), msgID)));
                 }
             }
             else
             {
                 throw new Exception("NVTDiscoClient - couldnt read config");
             }
-            
-            
-            
         }
 
         void ClientFindCompleted(object sender, FindCompletedEventArgs e)

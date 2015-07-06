@@ -711,292 +711,294 @@ namespace OnvifProxy
 
             return (new GetWsdlUrlResponse(wsdluri.ToString()));
         }
+
+        //uncomment me!!!
         public GetCapabilitiesResponse GetCapabilities(GetCapabilitiesRequest request)
         {
-            if (request != null)
-            {
-                Console.WriteLine("entering GetCapabilities");
+            //if (request != null)
+            //{
+            //    Console.WriteLine("entering GetCapabilities");
 
-                UTF8Encoding utf8 = new UTF8Encoding();
-                ConfigStruct confstr = new ConfigStruct();
-                XmlConfig conf = new XmlConfig();
-                String Buf = null;
-                TyphoonMessage TyphMsg = new TyphoonMessage();
-                confstr.Scopes = new System.Collections.ObjectModel.Collection<OnvifScope>();
-                confstr = conf.Read();
+            //    UTF8Encoding utf8 = new UTF8Encoding();
+            //    ConfigStruct confstr = new ConfigStruct();
+            //    XmlConfig conf = new XmlConfig();
+            //    String Buf = null;
+            //    TyphoonMessage TyphMsg = new TyphoonMessage();
+            //    confstr.Scopes = new System.Collections.ObjectModel.Collection<OnvifScope>();
+            //    confstr = conf.Read();
 
-                GetCapabilitiesResponse getCapabilitiesResponse = new GetCapabilitiesResponse();
-                getCapabilitiesResponse.Capabilities = new Device.Capabilities();
+            //    GetCapabilitiesResponse getCapabilitiesResponse = new GetCapabilitiesResponse();
+            //    getCapabilitiesResponse.Capabilities = new Device.Capabilities();
 
-                if (request.Category.Length == 0)
-                {
-                    getCapabilitiesResponse.Capabilities = confstr.Capabilities;
-                    return getCapabilitiesResponse;
-                }
+            //    if (request.Category.Length == 0)
+            //    {
+            //        getCapabilitiesResponse.Capabilities = confstr.Capabilities;
+            //        return getCapabilitiesResponse;
+            //    }
 
-                switch (request.Category[0])
-                {
-                    case CapabilityCategory.All: getCapabilitiesResponse.Capabilities = confstr.Capabilities;
-                        return getCapabilitiesResponse;
-                    //--------------------------------------------------
-                    // обязательные разделы - Device, Media, Events
-                    //--------------------------------------------------
-                    case CapabilityCategory.Device:
-                        if (confstr.Capabilities.Device != null)
-                        {
-                            //--------------------------------------------------
+            //    switch (request.Category[0])
+            //    {
+            //        case CapabilityCategory.All: getCapabilitiesResponse.Capabilities = confstr.Capabilities;
+            //            return getCapabilitiesResponse;
+            //        //--------------------------------------------------
+            //        // обязательные разделы - Device, Media, Events
+            //        //--------------------------------------------------
+            //        case CapabilityCategory.Device:
+            //            if (confstr.Capabilities.Device != null)
+            //            {
+            //                //--------------------------------------------------
 
-                            string ComStr = "<Capabilities><Device  xmlns=\u0022http://www.onvif.org/ver10/schema\u0022><IO><InputConnectors>0</InputConnectors></IO></Device></Capabilities>";
-                            TyphoonCom.log.Debug("Service1: GetCapabilities added to commandQueue");
+            //                string ComStr = "<Capabilities><Device  xmlns=\u0022http://www.onvif.org/ver10/schema\u0022><IO><InputConnectors>0</InputConnectors></IO></Device></Capabilities>";
+            //                TyphoonCom.log.Debug("Service1: GetCapabilities added to commandQueue");
                             
-                            //Encoding.ASCII.GetString((Encoding.ASCII.GetBytes(ComStr)));
+            //                //Encoding.ASCII.GetString((Encoding.ASCII.GetBytes(ComStr)));
 
-                            TyphMsg.MessageData = ComStr;
-                            byte[] tmp = TyphoonCom.FormCommand(200, 1, (TyphoonCom.MakeMem(TyphMsg.MessageData)), 0);
+            //                TyphMsg.MessageData = ComStr;
+            //                byte[] tmp = TyphoonCom.FormCommand(200, 1, (TyphoonCom.MakeMem(TyphMsg.MessageData)), 0);
 
-                            for (int a = 0; a < 4; a++)
-                            {
-                                TyphMsg.MessageID = TyphMsg.MessageID << 8;
-                                TyphMsg.MessageID += tmp[9 - a];
-                            }
-                            TyphoonCom.AddCommand(TyphoonCom.FormPacket(tmp));
+            //                for (int a = 0; a < 4; a++)
+            //                {
+            //                    TyphMsg.MessageID = TyphMsg.MessageID << 8;
+            //                    TyphMsg.MessageID += tmp[9 - a];
+            //                }
+            //                TyphoonCom.AddCommand(TyphoonCom.FormPacket(tmp));
 
-                            {
-                                if (TyphoonCom.queueResponce.Count > 0)
-                                {
-                                    ConfigStruct tmpconfstr = new ConfigStruct();
+            //                {
+            //                    if (TyphoonCom.queueResponce.Count > 0)
+            //                    {
+            //                        ConfigStruct tmpconfstr = new ConfigStruct();
 
-                                    try
-                                    {
-                                        //находим в очереди ответ с ID отправленного нами запроса
-                                        Buf = TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID).MessageData;
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        TyphoonCom.log.ErrorFormat("от Typhoon пришли сообщения с одинаковыми ID или нет ни одного сообщения с таким ID {0}", ex.Message);
-                                    }
-                                    //удаляем из очереди мессагу с ID отправленного нами запроса
-                                    try
-                                    {
-                                        TyphoonCom.queueResponce.Remove(TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID));
+            //                        try
+            //                        {
+            //                            //находим в очереди ответ с ID отправленного нами запроса
+            //                            Buf = TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID).MessageData;
+            //                        }
+            //                        catch (Exception ex)
+            //                        {
+            //                            TyphoonCom.log.ErrorFormat("от Typhoon пришли сообщения с одинаковыми ID или нет ни одного сообщения с таким ID {0}", ex.Message);
+            //                        }
+            //                        //удаляем из очереди мессагу с ID отправленного нами запроса
+            //                        try
+            //                        {
+            //                            TyphoonCom.queueResponce.Remove(TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID));
 
-                                        //рихтуем данные 
-                                        Buf = TyphoonCom.ParseMem(0, Buf);
-                                        String DataString = "<?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022 ?><ConfigStruct xmlns:xsd=\u0022http://www.w3.org/2001/XMLSchema\u0022 xmlns:xsi=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022>";
-                                        //-------------------
-                                        {
-                                            DataString = String.Concat(DataString, "<IPAddr>", confstr.IPAddr, "</IPAddr>");
-                                            Buf = Buf.Replace("<Device>", "<Device  xmlns=\u0022http://www.onvif.org/ver10/schema\u0022>");
-                                            DataString = String.Concat(DataString, Buf);
-                                            DataString = String.Concat(DataString, "</ConfigStruct>");
-                                            tmpconfstr = conf.DeserializeString(confstr, DataString);
-                                            try
-                                            {
-                                                confstr.Capabilities.Device.IO = tmpconfstr.Capabilities.Device.IO;
-                                            }
-                                            catch (NullReferenceException e)
-                                            {
-                                                Console.WriteLine("GetCapabilities: {0}", e.Message);
-                                            }
-                                        }
-                                        //-------------------           
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        TyphoonCom.log.Error(ex.Message);
-                                    }
+            //                            //рихтуем данные 
+            //                            Buf = TyphoonCom.ParseMem(0, Buf);
+            //                            String DataString = "<?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022 ?><ConfigStruct xmlns:xsd=\u0022http://www.w3.org/2001/XMLSchema\u0022 xmlns:xsi=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022>";
+            //                            //-------------------
+            //                            {
+            //                                DataString = String.Concat(DataString, "<IPAddr>", confstr.IPAddr, "</IPAddr>");
+            //                                Buf = Buf.Replace("<Device>", "<Device  xmlns=\u0022http://www.onvif.org/ver10/schema\u0022>");
+            //                                DataString = String.Concat(DataString, Buf);
+            //                                DataString = String.Concat(DataString, "</ConfigStruct>");
+            //                                tmpconfstr = conf.DeserializeString(confstr, DataString);
+            //                                try
+            //                                {
+            //                                    confstr.Capabilities.Device.IO = tmpconfstr.Capabilities.Device.IO;
+            //                                }
+            //                                catch (NullReferenceException e)
+            //                                {
+            //                                    Console.WriteLine("GetCapabilities: {0}", e.Message);
+            //                                }
+            //                            }
+            //                            //-------------------           
+            //                        }
+            //                        catch (Exception ex)
+            //                        {
+            //                            TyphoonCom.log.Error(ex.Message);
+            //                        }
 
-                                }
-                                else
-                                {
-                                    Console.WriteLine("AddCommand returned false");
-                                }
-                            }
-                            //--------------------------------------------------
-                            getCapabilitiesResponse.Capabilities.Device = confstr.Capabilities.Device;
-                            return getCapabilitiesResponse;
-                        }
-                        else
-                        {
-                            // если нет такого раздела в config.xml
-                            // то возвращает Fault Code
-                            return null;
-                        }
-                    case CapabilityCategory.Media:
-                        //запросить раздел медиа у тайфуна
-                        //разобрать ответ
-                        //сформировать структуру на отдачу
-                        if (confstr.Capabilities.Device != null)
-                        {
-                            byte[] tmp = TyphoonCom.FormCommand(200, 4, null, 0);
-                            for (int a = 0; a < 4; a++)
-                            {
-                                TyphMsg.MessageID = TyphMsg.MessageID << 8;
-                                TyphMsg.MessageID += tmp[9 - a];
-                            }
-                            TyphoonCom.AddCommand(TyphoonCom.FormPacket(tmp));
+            //                    }
+            //                    else
+            //                    {
+            //                        Console.WriteLine("AddCommand returned false");
+            //                    }
+            //                }
+            //                //--------------------------------------------------
+            //                getCapabilitiesResponse.Capabilities.Device = confstr.Capabilities.Device;
+            //                return getCapabilitiesResponse;
+            //            }
+            //            else
+            //            {
+            //                // если нет такого раздела в config.xml
+            //                // то возвращает Fault Code
+            //                return null;
+            //            }
+            //        case CapabilityCategory.Media:
+            //            //запросить раздел медиа у тайфуна
+            //            //разобрать ответ
+            //            //сформировать структуру на отдачу
+            //            if (confstr.Capabilities.Device != null)
+            //            {
+            //                byte[] tmp = TyphoonCom.FormCommand(200, 4, null, 0);
+            //                for (int a = 0; a < 4; a++)
+            //                {
+            //                    TyphMsg.MessageID = TyphMsg.MessageID << 8;
+            //                    TyphMsg.MessageID += tmp[9 - a];
+            //                }
+            //                TyphoonCom.AddCommand(TyphoonCom.FormPacket(tmp));
 
-                            {
-                                do
-                                {
-                                    Thread.Sleep(1);////
-                                } while (TyphoonCom.queueResponce.Count == 0);
+            //                {
+            //                    do
+            //                    {
+            //                        Thread.Sleep(1);////
+            //                    } while (TyphoonCom.queueResponce.Count == 0);
 
-                                if (TyphoonCom.queueResponce.Count > 0)
-                                {
-                                    ConfigStruct tmpconfstr = new ConfigStruct();
+            //                    if (TyphoonCom.queueResponce.Count > 0)
+            //                    {
+            //                        ConfigStruct tmpconfstr = new ConfigStruct();
 
-                                    try
-                                    {
-                                        //находим в очереди ответ с ID отправленного нами запроса
-                                        Buf = TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID).MessageData;
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        TyphoonCom.log.ErrorFormat("от Typhoon пришли сообщения с одинаковыми ID или нет ни одного сообщения с таким ID {0}", ex.Message);
-                                    }
-                                    //удаляем из очереди мессагу с ID отправленного нами запроса
-                                    try
-                                    {
-                                        TyphoonCom.queueResponce.Remove(TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID));
-                                        ////рихтуем данные 
-                                        if (Buf.Length == 12)
-                                        {
-                                            byte[] b_rtpmulticast = new byte[4], b_rtp_tcp = new byte[4], b_rtp_rtsp_tcp = new byte[4], b_Buf;
+            //                        try
+            //                        {
+            //                            //находим в очереди ответ с ID отправленного нами запроса
+            //                            Buf = TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID).MessageData;
+            //                        }
+            //                        catch (Exception ex)
+            //                        {
+            //                            TyphoonCom.log.ErrorFormat("от Typhoon пришли сообщения с одинаковыми ID или нет ни одного сообщения с таким ID {0}", ex.Message);
+            //                        }
+            //                        //удаляем из очереди мессагу с ID отправленного нами запроса
+            //                        try
+            //                        {
+            //                            TyphoonCom.queueResponce.Remove(TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID));
+            //                            ////рихтуем данные 
+            //                            if (Buf.Length == 12)
+            //                            {
+            //                                byte[] b_rtpmulticast = new byte[4], b_rtp_tcp = new byte[4], b_rtp_rtsp_tcp = new byte[4], b_Buf;
 
-                                            b_Buf = Encoding.ASCII.GetBytes(Buf);
+            //                                b_Buf = Encoding.ASCII.GetBytes(Buf);
 
-                                            for (int t = 0; t < 4; t++)
-                                            {
-                                                b_rtpmulticast[t] = b_Buf[t];
-                                                b_rtp_tcp[t] = b_Buf[t + 4];
-                                                b_rtp_rtsp_tcp[t] = b_Buf[t + 8];
-                                            }
+            //                                for (int t = 0; t < 4; t++)
+            //                                {
+            //                                    b_rtpmulticast[t] = b_Buf[t];
+            //                                    b_rtp_tcp[t] = b_Buf[t + 4];
+            //                                    b_rtp_rtsp_tcp[t] = b_Buf[t + 8];
+            //                                }
 
-                                            getCapabilitiesResponse.Capabilities.Media = new MediaCapabilities();
-                                            getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities = new RealTimeStreamingCapabilities();
-                                            getCapabilitiesResponse.Capabilities.Media.XAddr = confstr.Capabilities.Media.XAddr;
+            //                                getCapabilitiesResponse.Capabilities.Media = new MediaCapabilities();
+            //                                getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities = new RealTimeStreamingCapabilities();
+            //                                getCapabilitiesResponse.Capabilities.Media.XAddr = confstr.Capabilities.Media.XAddr;
 
-                                            getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_RTSP_TCP = false;
-                                            getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_RTSP_TCPSpecified = true;
-                                            getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_TCP = false;
-                                            getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_TCPSpecified = true;
-                                            getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTPMulticast = false;
-                                            getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTPMulticastSpecified = true;
+            //                                getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_RTSP_TCP = false;
+            //                                getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_RTSP_TCPSpecified = true;
+            //                                getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_TCP = false;
+            //                                getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_TCPSpecified = true;
+            //                                getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTPMulticast = false;
+            //                                getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTPMulticastSpecified = true;
 
-                                            for (int t = 0; t < 4; t++)
-                                            {
-                                                if (b_rtpmulticast[t] != 0)
-                                                {
-                                                    getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTPMulticast = true;
-                                                    getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTPMulticastSpecified = true;
-                                                }
-                                                if (b_rtp_tcp[t] != 0)
-                                                {
-                                                    getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_TCP = true;
-                                                    getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_TCPSpecified = true;
-                                                }
-                                                if (b_rtp_rtsp_tcp[t] != 0)
-                                                {
-                                                    getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_RTSP_TCP = true;
-                                                    getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_RTSP_TCPSpecified = true;
-                                                }
-                                            }
+            //                                for (int t = 0; t < 4; t++)
+            //                                {
+            //                                    if (b_rtpmulticast[t] != 0)
+            //                                    {
+            //                                        getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTPMulticast = true;
+            //                                        getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTPMulticastSpecified = true;
+            //                                    }
+            //                                    if (b_rtp_tcp[t] != 0)
+            //                                    {
+            //                                        getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_TCP = true;
+            //                                        getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_TCPSpecified = true;
+            //                                    }
+            //                                    if (b_rtp_rtsp_tcp[t] != 0)
+            //                                    {
+            //                                        getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_RTSP_TCP = true;
+            //                                        getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_RTSP_TCPSpecified = true;
+            //                                    }
+            //                                }
 
 
-                                        }
-                                        else
-                                        {
-                                            TyphoonCom.log.Debug("CapabilityCategory.Media - Тайфун вернул не 12 байт");
-                                            return null;
-                                        }
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        TyphoonCom.log.Error(ex.Message);
-                                    }
+            //                            }
+            //                            else
+            //                            {
+            //                                TyphoonCom.log.Debug("CapabilityCategory.Media - Тайфун вернул не 12 байт");
+            //                                return null;
+            //                            }
+            //                        }
+            //                        catch (Exception ex)
+            //                        {
+            //                            TyphoonCom.log.Error(ex.Message);
+            //                        }
 
-                                }
-                                else
-                                {
-                                    Console.WriteLine("AddCommand returned false");
-                                }
-                            }
-                            return getCapabilitiesResponse;
-                        }
-                        else
-                        {
-                            // если нет такого раздела в config.xml
-                            // то возвращает Fault Code
-                            return null;
-                        }
+            //                    }
+            //                    else
+            //                    {
+            //                        Console.WriteLine("AddCommand returned false");
+            //                    }
+            //                }
+            //                return getCapabilitiesResponse;
+            //            }
+            //            else
+            //            {
+            //                // если нет такого раздела в config.xml
+            //                // то возвращает Fault Code
+            //                return null;
+            //            }
 
-                    case CapabilityCategory.Events:
-                        //Console.WriteLine("point 4");
-                        if (confstr.Capabilities.Events != null)
-                        {
-                            getCapabilitiesResponse.Capabilities.Events = confstr.Capabilities.Events;
-                            //TyphoonCom.log.DebugFormat("GetCapabilities.request - {0}", request.Category[0].ToString());
-                            return getCapabilitiesResponse;
-                        }
-                        else
-                        {
-                            // если нет такого раздела в config.xml
-                            // то возвращает Fault Code
-                            return null;
-                        }
-                    //--------------------------------------------------
-                    // необязательные разделы - Imaging, PTZ, Analytics
-                    //--------------------------------------------------
-                    case CapabilityCategory.Imaging:
-                        //Console.WriteLine("point 5");
-                        if (confstr.Capabilities.Imaging != null)
-                        {
-                            getCapabilitiesResponse.Capabilities.Imaging = confstr.Capabilities.Imaging;
-                            return getCapabilitiesResponse;
-                        }
-                        else
-                        {
-                            // если нет такого раздела в config.xml
-                            // то возвращает Fault Code
-                            return null;
-                        }
+            //        case CapabilityCategory.Events:
+            //            //Console.WriteLine("point 4");
+            //            if (confstr.Capabilities.Events != null)
+            //            {
+            //                getCapabilitiesResponse.Capabilities.Events = confstr.Capabilities.Events;
+            //                //TyphoonCom.log.DebugFormat("GetCapabilities.request - {0}", request.Category[0].ToString());
+            //                return getCapabilitiesResponse;
+            //            }
+            //            else
+            //            {
+            //                // если нет такого раздела в config.xml
+            //                // то возвращает Fault Code
+            //                return null;
+            //            }
+            //        //--------------------------------------------------
+            //        // необязательные разделы - Imaging, PTZ, Analytics
+            //        //--------------------------------------------------
+            //        case CapabilityCategory.Imaging:
+            //            //Console.WriteLine("point 5");
+            //            if (confstr.Capabilities.Imaging != null)
+            //            {
+            //                getCapabilitiesResponse.Capabilities.Imaging = confstr.Capabilities.Imaging;
+            //                return getCapabilitiesResponse;
+            //            }
+            //            else
+            //            {
+            //                // если нет такого раздела в config.xml
+            //                // то возвращает Fault Code
+            //                return null;
+            //            }
 
-                    case CapabilityCategory.PTZ:
-                        //Console.WriteLine("point 6");
-                        //confstr.Capabilities.PTZ. = new PTZCapabilities();
-                        if (confstr.Capabilities.PTZ != null)
-                        {
-                            getCapabilitiesResponse.Capabilities.PTZ = confstr.Capabilities.PTZ;
-                            return getCapabilitiesResponse;
-                        }
-                        else
-                        {
-                            // если нет такого раздела в config.xml
-                            // то возвращает Fault Code
-                            return null;
-                        }
-                    case CapabilityCategory.Analytics:
-                        //Console.WriteLine("point 7");
-                        if (confstr.Capabilities.Analytics != null)
-                        {
-                            getCapabilitiesResponse.Capabilities.Analytics = confstr.Capabilities.Analytics;
-                            return getCapabilitiesResponse;
-                        }
-                        else
-                        {
-                            // если нет такого раздела в config.xml
-                            // то возвращает Fault Code
-                            return null;
-                        }
+            //        case CapabilityCategory.PTZ:
+            //            //Console.WriteLine("point 6");
+            //            //confstr.Capabilities.PTZ. = new PTZCapabilities();
+            //            if (confstr.Capabilities.PTZ != null)
+            //            {
+            //                getCapabilitiesResponse.Capabilities.PTZ = confstr.Capabilities.PTZ;
+            //                return getCapabilitiesResponse;
+            //            }
+            //            else
+            //            {
+            //                // если нет такого раздела в config.xml
+            //                // то возвращает Fault Code
+            //                return null;
+            //            }
+            //        case CapabilityCategory.Analytics:
+            //            //Console.WriteLine("point 7");
+            //            if (confstr.Capabilities.Analytics != null)
+            //            {
+            //                getCapabilitiesResponse.Capabilities.Analytics = confstr.Capabilities.Analytics;
+            //                return getCapabilitiesResponse;
+            //            }
+            //            else
+            //            {
+            //                // если нет такого раздела в config.xml
+            //                // то возвращает Fault Code
+            //                return null;
+            //            }
 
-                    default: getCapabilitiesResponse.Capabilities = confstr.Capabilities;
-                        //Console.WriteLine("point 8");
-                        // если нет такого раздела в config.xml
-                        // то возвращает Fault Code
-                        return null;
-                }
-            }
+            //        default: getCapabilitiesResponse.Capabilities = confstr.Capabilities;
+            //            //Console.WriteLine("point 8");
+            //            // если нет такого раздела в config.xml
+            //            // то возвращает Fault Code
+            //            return null;
+            //    }
+            //}
             return null;
         }
         public SetHostnameResponse SetHostname(SetHostnameRequest request)
@@ -2414,220 +2416,223 @@ namespace OnvifProxy
         }
  
 //------------------------------Media--------------------------------------------------------------------
+
+        //uncomment me!!!
         public Media.GetVideoSourcesResponse GetVideoSources(Media.GetVideoSourcesRequest request)
         {
-            Media.GetVideoSourcesResponse getVideoSourcesResponse = new Media.GetVideoSourcesResponse();
-            #region
-            //getVideoSourcesResponse.VideoSources = new Media.VideoSource[1];
-            //getVideoSourcesResponse.VideoSources[0] = new Media.VideoSource();
-            //getVideoSourcesResponse.VideoSources[0].Extension = new Media.VideoSourceExtension();
-            //getVideoSourcesResponse.VideoSources[0].Extension.Extension = new Media.VideoSourceExtension2();
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging = new Media.ImagingSettings20();
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.BacklightCompensation = new Media.BacklightCompensation20();
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.BacklightCompensation.Level = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.BacklightCompensation.LevelSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.BacklightCompensation.Mode = Media.BacklightCompensationMode.ON;
+            //Media.GetVideoSourcesResponse getVideoSourcesResponse = new Media.GetVideoSourcesResponse();
+            //#region
+            ////getVideoSourcesResponse.VideoSources = new Media.VideoSource[1];
+            ////getVideoSourcesResponse.VideoSources[0] = new Media.VideoSource();
+            ////getVideoSourcesResponse.VideoSources[0].Extension = new Media.VideoSourceExtension();
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Extension = new Media.VideoSourceExtension2();
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging = new Media.ImagingSettings20();
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.BacklightCompensation = new Media.BacklightCompensation20();
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.BacklightCompensation.Level = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.BacklightCompensation.LevelSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.BacklightCompensation.Mode = Media.BacklightCompensationMode.ON;
 
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Brightness = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.BrightnessSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.ColorSaturation = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.ColorSaturationSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Contrast = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.ContrastSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure = new Media.Exposure20();
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.ExposureTime = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.ExposureTimeSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Gain = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.GainSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Iris = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.IrisSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MaxExposureTime = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MaxExposureTimeSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MaxGain = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MaxGainSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MaxIris = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MaxIrisSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MinExposureTime = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MinExposureTimeSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MinGain = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MinGainSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MinIris = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MinIrisSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Mode = Media.ExposureMode.AUTO;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Priority = Media.ExposurePriority.FrameRate;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.PrioritySpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Window = new Media.Rectangle();
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Brightness = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.BrightnessSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.ColorSaturation = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.ColorSaturationSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Contrast = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.ContrastSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure = new Media.Exposure20();
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.ExposureTime = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.ExposureTimeSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Gain = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.GainSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Iris = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.IrisSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MaxExposureTime = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MaxExposureTimeSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MaxGain = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MaxGainSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MaxIris = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MaxIrisSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MinExposureTime = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MinExposureTimeSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MinGain = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MinGainSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MinIris = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MinIrisSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Mode = Media.ExposureMode.AUTO;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Priority = Media.ExposurePriority.FrameRate;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.PrioritySpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Window = new Media.Rectangle();
 
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Window.bottom = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Window.bottomSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Window.left = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Window.leftSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Window.right = 100;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Window.rightSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Window.top = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Window.topSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Window.bottom = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Window.bottomSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Window.left = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Window.leftSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Window.right = 100;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Window.rightSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Window.top = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Window.topSpecified = true;
 
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Extension = new Media.ImagingSettingsExtension20();
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Extension = new Media.ImagingSettingsExtension20();
 
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Focus = new Media.FocusConfiguration20();
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Focus.AutoFocusMode = Media.AutoFocusMode.MANUAL;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Focus.DefaultSpeed = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Focus.DefaultSpeedSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Focus.Extension = new Media.FocusConfiguration20Extension();
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Focus = new Media.FocusConfiguration20();
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Focus.AutoFocusMode = Media.AutoFocusMode.MANUAL;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Focus.DefaultSpeed = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Focus.DefaultSpeedSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Focus.Extension = new Media.FocusConfiguration20Extension();
 
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Focus.FarLimit = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Focus.FarLimitSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Focus.NearLimit = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Focus.NearLimitSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Focus.FarLimit = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Focus.FarLimitSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Focus.NearLimit = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Focus.NearLimitSpecified = true;
 
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.IrCutFilter = new Media.IrCutFilterMode();
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.IrCutFilter = new Media.IrCutFilterMode();
 
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.IrCutFilterSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Sharpness = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.SharpnessSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.WhiteBalance = new Media.WhiteBalance20();
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.WhiteBalance.CbGain = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.WhiteBalance.CbGainSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.WhiteBalance.CrGain = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.WhiteBalance.CrGainSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.WhiteBalance.Extension = new Media.WhiteBalance20Extension();
-
-
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.WideDynamicRange = new Media.WideDynamicRange20();
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.WideDynamicRange.Level = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.WideDynamicRange.LevelSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.WideDynamicRange.Mode = Media.WideDynamicMode.ON;
-
-            //getVideoSourcesResponse.VideoSources[0].Framerate = 25;
-            //getVideoSourcesResponse.VideoSources[0].Imaging = new Media.ImagingSettings();
-            //getVideoSourcesResponse.VideoSources[0].Imaging = new Media.ImagingSettings();
-            //getVideoSourcesResponse.VideoSources[0].Imaging.BacklightCompensation = new Media.BacklightCompensation();
-            //getVideoSourcesResponse.VideoSources[0].Imaging.BacklightCompensation.Level = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.BacklightCompensation.Mode = Media.BacklightCompensationMode.ON;
-
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Brightness = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.BrightnessSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.ColorSaturation = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.ColorSaturationSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Contrast = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.ContrastSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure = new Media.Exposure();
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.ExposureTime = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Gain = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Iris = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.MaxExposureTime = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.MaxGain = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.MaxIris = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.MinExposureTime = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.MinGain = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.MinIris = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Mode = Media.ExposureMode.AUTO;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Priority = Media.ExposurePriority.FrameRate;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Window = new Media.Rectangle();
-
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Window.bottom = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Window.bottomSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Window.left = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Window.leftSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Window.right = 100;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Window.rightSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Window.top = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Window.topSpecified = true;
-
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Extension = new Media.ImagingSettingsExtension();
-
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Focus = new Media.FocusConfiguration();
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Focus.AutoFocusMode = Media.AutoFocusMode.MANUAL;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Focus.DefaultSpeed = 0;
-
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Focus.FarLimit = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Focus.NearLimit = 0;
-
-            //getVideoSourcesResponse.VideoSources[0].Imaging.IrCutFilter = new Media.IrCutFilterMode();
-
-            //getVideoSourcesResponse.VideoSources[0].Imaging.IrCutFilterSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Sharpness = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.SharpnessSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.WhiteBalance = new Media.WhiteBalance();
-            //getVideoSourcesResponse.VideoSources[0].Imaging.WhiteBalance.CbGain = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.WhiteBalance.CrGain = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.IrCutFilterSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Sharpness = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.SharpnessSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.WhiteBalance = new Media.WhiteBalance20();
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.WhiteBalance.CbGain = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.WhiteBalance.CbGainSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.WhiteBalance.CrGain = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.WhiteBalance.CrGainSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.WhiteBalance.Extension = new Media.WhiteBalance20Extension();
 
 
-            //getVideoSourcesResponse.VideoSources[0].Imaging.WideDynamicRange = new Media.WideDynamicRange();
-            //getVideoSourcesResponse.VideoSources[0].Imaging.WideDynamicRange.Level = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.WideDynamicRange.Mode = Media.WideDynamicMode.ON;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.WideDynamicRange = new Media.WideDynamicRange20();
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.WideDynamicRange.Level = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.WideDynamicRange.LevelSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Extension.Imaging.WideDynamicRange.Mode = Media.WideDynamicMode.ON;
 
-            //getVideoSourcesResponse.VideoSources[0].Resolution = new Media.VideoResolution();
-            //getVideoSourcesResponse.VideoSources[0].Resolution.Height = 10;
-            //getVideoSourcesResponse.VideoSources[0].Resolution.Width = 10;
+            ////getVideoSourcesResponse.VideoSources[0].Framerate = 25;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging = new Media.ImagingSettings();
+            ////getVideoSourcesResponse.VideoSources[0].Imaging = new Media.ImagingSettings();
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.BacklightCompensation = new Media.BacklightCompensation();
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.BacklightCompensation.Level = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.BacklightCompensation.Mode = Media.BacklightCompensationMode.ON;
 
-            //getVideoSourcesResponse.VideoSources[0].token = "token";
-            #endregion
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.Brightness = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.BrightnessSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.ColorSaturation = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.ColorSaturationSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.Contrast = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.ContrastSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.Exposure = new Media.Exposure();
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.ExposureTime = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Gain = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Iris = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.MaxExposureTime = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.MaxGain = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.MaxIris = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.MinExposureTime = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.MinGain = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.MinIris = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Mode = Media.ExposureMode.AUTO;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Priority = Media.ExposurePriority.FrameRate;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Window = new Media.Rectangle();
 
-            byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 6, null, 0)).Length)];
-            tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 6, null, 0));
-            TyphoonCom.AddCommand(tmpBuf);
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Window.bottom = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Window.bottomSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Window.left = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Window.leftSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Window.right = 100;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Window.rightSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Window.top = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Window.topSpecified = true;
 
-            TyphoonCom.log.Debug("Service1: GetVideoSources added to commandQueue");
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.Extension = new Media.ImagingSettingsExtension();
 
-            do
-            {
-                Thread.Sleep(1);
-            } while (TyphoonCom.queueResponce.Count == 0);
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.Focus = new Media.FocusConfiguration();
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.Focus.AutoFocusMode = Media.AutoFocusMode.MANUAL;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.Focus.DefaultSpeed = 0;
 
-            if(TyphoonCom.queueResponce.Count>0)
-            {
-                ///извлекаем MessageID из созданной команды
-                ///и кладем в TyphMsg.MessageID, чтобы потом 
-                ///по нему найти ответ в очереди ответов
-                TyphoonMessage TyphMsg = new TyphoonMessage();
-                for (int a = 0; a < 4; a++)
-                {
-                    TyphMsg.MessageID = TyphMsg.MessageID << 8;
-                    TyphMsg.MessageID += tmpBuf[21-a];
-                }
-                try
-                {
-                    TyphMsg.MessageData = TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID).MessageData;
-                    TyphoonCom.queueResponce.Remove(TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID));
-                }
-                catch (Exception ex)
-                {
-                    TyphoonCom.log.Error(ex.Message);
-                }
-                string tmpStr = TyphoonCom.ParseMem(0, TyphMsg.MessageData);
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.Focus.FarLimit = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.Focus.NearLimit = 0;
 
-                //tmpStr = String.Concat("<s:Envelope xmlns:s=\u0022http://www.w3.org/2003/05/soap-envelope\u0022><s:Body xmlns:xsi=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022 xmlns:xsd=\u0022http://www.w3.org/2001/XMLSchema\u0022>", tmpStr );
-                //tmpStr = String.Concat(tmpStr, "</s:Body></s:Envelope>");
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.IrCutFilter = new Media.IrCutFilterMode();
+
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.IrCutFilterSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.Sharpness = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.SharpnessSpecified = true;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.WhiteBalance = new Media.WhiteBalance();
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.WhiteBalance.CbGain = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.WhiteBalance.CrGain = 0;
+
+
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.WideDynamicRange = new Media.WideDynamicRange();
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.WideDynamicRange.Level = 0;
+            ////getVideoSourcesResponse.VideoSources[0].Imaging.WideDynamicRange.Mode = Media.WideDynamicMode.ON;
+
+            ////getVideoSourcesResponse.VideoSources[0].Resolution = new Media.VideoResolution();
+            ////getVideoSourcesResponse.VideoSources[0].Resolution.Height = 10;
+            ////getVideoSourcesResponse.VideoSources[0].Resolution.Width = 10;
+
+            ////getVideoSourcesResponse.VideoSources[0].token = "token";
+            //#endregion
+
+            //byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 6, null, 0)).Length)];
+            //tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 6, null, 0));
+            //TyphoonCom.AddCommand(tmpBuf);
+
+            //TyphoonCom.log.Debug("Service1: GetVideoSources added to commandQueue");
+
+            //do
+            //{
+            //    Thread.Sleep(1);
+            //} while (TyphoonCom.queueResponce.Count == 0);
+
+            //if(TyphoonCom.queueResponce.Count>0)
+            //{
+            //    ///извлекаем MessageID из созданной команды
+            //    ///и кладем в TyphMsg.MessageID, чтобы потом 
+            //    ///по нему найти ответ в очереди ответов
+            //    TyphoonMessage TyphMsg = new TyphoonMessage();
+            //    for (int a = 0; a < 4; a++)
+            //    {
+            //        TyphMsg.MessageID = TyphMsg.MessageID << 8;
+            //        TyphMsg.MessageID += tmpBuf[21-a];
+            //    }
+            //    try
+            //    {
+            //        TyphMsg.MessageData = TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID).MessageData;
+            //        TyphoonCom.queueResponce.Remove(TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID));
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        TyphoonCom.log.Error(ex.Message);
+            //    }
+            //    string tmpStr = TyphoonCom.ParseMem(0, TyphMsg.MessageData);
+
+            //    //tmpStr = String.Concat("<s:Envelope xmlns:s=\u0022http://www.w3.org/2003/05/soap-envelope\u0022><s:Body xmlns:xsi=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022 xmlns:xsd=\u0022http://www.w3.org/2001/XMLSchema\u0022>", tmpStr );
+            //    //tmpStr = String.Concat(tmpStr, "</s:Body></s:Envelope>");
 
                 
-                using (Stream ms = new MemoryStream(Encoding.UTF8.GetBytes(tmpStr)))
-                {
-                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(GetVideoSourcesResponse));
-                    try
-                    {
-                        //Stream fs = new FileStream("tmpFile.xml", FileMode.CreateNew);
-                        //xmlSerializer.Serialize(fs, getVideoSourcesResponse);
-                        getVideoSourcesResponse = (GetVideoSourcesResponse)xmlSerializer.Deserialize(ms);
-                        for(int y=0 ;y<getVideoSourcesResponse.VideoSources.Count();y++)
-                        {
-                            getVideoSourcesResponse.VideoSources[y].Resolution = new Media.VideoResolution();
-                            getVideoSourcesResponse.VideoSources[y].Resolution.Height = -1;
-                            getVideoSourcesResponse.VideoSources[y].Resolution.Width = -1;
-                        }
-                    }
-                    catch (SerializationException g)
-                    {
-                        Console.WriteLine("Не могу десериализовать GetVideoSources; " + g.Message);
-                        return null;
-                    }
-                    finally
-                    {
-                        ms.Close();
-                    }
-                }
-            }
-            return getVideoSourcesResponse;
+            //    using (Stream ms = new MemoryStream(Encoding.UTF8.GetBytes(tmpStr)))
+            //    {
+            //        XmlSerializer xmlSerializer = new XmlSerializer(typeof(GetVideoSourcesResponse));
+            //        try
+            //        {
+            //            //Stream fs = new FileStream("tmpFile.xml", FileMode.CreateNew);
+            //            //xmlSerializer.Serialize(fs, getVideoSourcesResponse);
+            //            getVideoSourcesResponse = (GetVideoSourcesResponse)xmlSerializer.Deserialize(ms);
+            //            for(int y=0 ;y<getVideoSourcesResponse.VideoSources.Count();y++)
+            //            {
+            //                getVideoSourcesResponse.VideoSources[y].Resolution = new Media.VideoResolution();
+            //                getVideoSourcesResponse.VideoSources[y].Resolution.Height = -1;
+            //                getVideoSourcesResponse.VideoSources[y].Resolution.Width = -1;
+            //            }
+            //        }
+            //        catch (SerializationException g)
+            //        {
+            //            Console.WriteLine("Не могу десериализовать GetVideoSources; " + g.Message);
+            //            return null;
+            //        }
+            //        finally
+            //        {
+            //            ms.Close();
+            //        }
+            //    }
+            //}
+            //return getVideoSourcesResponse;
+            return null;
         }
 
         public Media.GetAudioSourcesResponse GetAudioSources(Media.GetAudioSourcesRequest request)
@@ -2654,168 +2659,170 @@ namespace OnvifProxy
 
 
         //переделать хорошо!!!!!!!!!!!1
+        //uncomment me!!!
         public Media.Profile GetProfile(string ProfileToken)
         {
-            Console.WriteLine("GetProfile - token = " + ProfileToken);
-            ///формируем команду GetProfiles
-            byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null, 0))).Length];
-            tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null, 0));
-            ///добавляем в очередь на отправку
-            TyphoonCom.AddCommand(tmpBuf);
-
-            ///создаем структуру под конфиг
-            XmlConfig config = new XmlConfig();
-            Media.GetProfilesResponse mediaprofile = new Media.GetProfilesResponse();
-
-            do
-            {
-                Thread.Sleep(1);
-            } while (TyphoonCom.queueResponce.Count == 0);
-
-            if (TyphoonCom.queueResponce.Count > 0)
-            {
-                ///извлекаем MessageID из созданной команды
-                ///и кладем в TyphMsg.MessageID, чтобы потом 
-                ///по нему найти ответ в очереди ответов
-                TyphoonMessage TyphMsg = new TyphoonMessage();
-                for (int a = 0; a < 4; a++)
-                {
-                    TyphMsg.MessageID = TyphMsg.MessageID << 8;
-                    TyphMsg.MessageID += tmpBuf[21 - a];
-                }
-                try
-                {
-                    TyphMsg.MessageData = TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID).MessageData;
-                    TyphoonCom.queueResponce.Remove(TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID));
-                }
-                catch (Exception ex)
-                {
-                    TyphoonCom.log.Error(ex.Message);
-                }
-                string tmpStr = TyphoonCom.ParseMem(0, TyphMsg.MessageData);
-                mediaprofile = config.ParseGetProfiles(tmpStr);
-                //----------
-                int tokennum = Convert.ToInt32(ProfileToken);
-                if (tokennum > mediaprofile.Profiles.Length || tokennum < 1)
-                    throw new FaultException(new FaultReason("NoProfile"),
-                           new FaultCode("Sender",
-                               new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
-                                   new FaultCode("NoProfile", "http://www.onvif.org/ver10/error"))));
-                //----------
-                
-                return mediaprofile.Profiles[tokennum - 1];
-            }
-            TyphoonCom.log.DebugFormat("GetProfile - TyphoonCom.queueResponce.Count = {0}", TyphoonCom.queueResponce.Count);
-            return null;
-        }
-
-        public Media.GetProfilesResponse GetProfiles(Media.GetProfilesRequest request)
-        {
-            ///формируем команду GetProfiles
-            byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null,0))).Length];
-            tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null,0));
-            TyphoonCom.log.Debug("Service1: GetProfiles added to commandQueue");
-            ///добавляем в очередь на отправку
+            //Console.WriteLine("GetProfile - token = " + ProfileToken);
+            /////формируем команду GetProfiles
+            //byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null, 0))).Length];
+            //tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null, 0));
+            /////добавляем в очередь на отправку
             //TyphoonCom.AddCommand(tmpBuf);
 
-            //-----------test---------------------------
-            TyphoonMsg_Ex typhmsgg = new TyphoonMsg_Ex(TyphoonMsgType.Request);
-            typhmsgg.byteMessageData = tmpBuf;
-            TyphoonMsgManager.Add(typhmsgg);
+            /////создаем структуру под конфиг
+            //XmlConfig config = new XmlConfig();
+            //Media.GetProfilesResponse mediaprofile = new Media.GetProfilesResponse();
+
+            //do
+            //{
+            //    Thread.Sleep(1);
+            //} while (TyphoonCom.queueResponce.Count == 0);
+
+            //if (TyphoonCom.queueResponce.Count > 0)
+            //{
+            //    ///извлекаем MessageID из созданной команды
+            //    ///и кладем в TyphMsg.MessageID, чтобы потом 
+            //    ///по нему найти ответ в очереди ответов
+            //    TyphoonMessage TyphMsg = new TyphoonMessage();
+            //    for (int a = 0; a < 4; a++)
+            //    {
+            //        TyphMsg.MessageID = TyphMsg.MessageID << 8;
+            //        TyphMsg.MessageID += tmpBuf[21 - a];
+            //    }
+            //    try
+            //    {
+            //        TyphMsg.MessageData = TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID).MessageData;
+            //        TyphoonCom.queueResponce.Remove(TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID));
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        TyphoonCom.log.Error(ex.Message);
+            //    }
+            //    string tmpStr = TyphoonCom.ParseMem(0, TyphMsg.MessageData);
+            //    mediaprofile = config.ParseGetProfiles(tmpStr);
+            //    //----------
+            //    int tokennum = Convert.ToInt32(ProfileToken);
+            //    if (tokennum > mediaprofile.Profiles.Length || tokennum < 1)
+            //        throw new FaultException(new FaultReason("NoProfile"),
+            //               new FaultCode("Sender",
+            //                   new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
+            //                       new FaultCode("NoProfile", "http://www.onvif.org/ver10/error"))));
+            //    //----------
+                
+            //    return mediaprofile.Profiles[tokennum - 1];
+            //}
+            //TyphoonCom.log.DebugFormat("GetProfile - TyphoonCom.queueResponce.Count = {0}", TyphoonCom.queueResponce.Count);
+            return null;//leave me
+        }
+
+        //uncomment me!!!
+        public Media.GetProfilesResponse GetProfiles(Media.GetProfilesRequest request)
+        {
+            /////формируем команду GetProfiles
+            //byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null,0))).Length];
+            //tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null,0));
+            //TyphoonCom.log.Debug("Service1: GetProfiles added to commandQueue");
+            /////добавляем в очередь на отправку
+            ////TyphoonCom.AddCommand(tmpBuf);
+
+            ////-----------test---------------------------
+            //TyphoonMsg_Ex typhmsgg = new TyphoonMsg_Ex(TyphoonMsgType.Request);
+            //typhmsgg.byteMessageData = tmpBuf;
+            //TyphoonMsgManager.Add(typhmsgg);
 
             
-            //TyphoonMessage TyphMsg = new TyphoonMessage();
-            //for (int a = 0; a < 4; a++)
+            ////TyphoonMessage TyphMsg = new TyphoonMessage();
+            ////for (int a = 0; a < 4; a++)
+            ////    {
+            ////        TyphMsg.MessageID = TyphMsg.MessageID << 8;
+            ////        TyphMsg.MessageID += tmpBuf[21-a];
+            ////    }
+            ////try
+            ////{
+                
+            ////    try
+            ////    {
+            ////        while (!TyphoonMsgManager.queueResponce_ex.ContainsKey(TyphMsg.MessageID))
+            ////        {
+            ////            Thread.Sleep(1);
+            ////            TyphoonCom.log.DebugFormat("-");
+            ////        }
+            ////    }
+            ////    catch (Exception e)
+            ////    {
+            ////        TyphoonCom.log.DebugFormat("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            ////    }
+
+            ////    //if(TyphoonMsgManager.queueResponce_ex.ContainsKey(TyphMsg.MessageID))
+            ////    //{
+            ////    //    TyphoonCom.log.DebugFormat("queueResponce_ex contains TyphMsg.MessageID = {0}", TyphMsg.MessageID);
+            ////    //}
+                
+            ////}catch(Exception e)
+            ////{
+            ////}
+            ////------------------------------------------
+
+
+
+
+
+
+            /////создаем структуру под конфиг
+            //XmlConfig config = new XmlConfig();
+            //Media.GetProfilesResponse mediaprofile = new Media.GetProfilesResponse();
+
+            //do
+            //{
+            //    Thread.Sleep(1);
+            //} while (TyphoonCom.queueResponce.Count == 0);
+
+            //if(TyphoonCom.queueResponce.Count>0)
+            //{
+            //    ///извлекаем MessageID из созданной команды
+            //    ///и кладем в TyphMsg.MessageID, чтобы потом 
+            //    ///по нему найти ответ в очереди ответов
+            //    TyphoonMessage TyphMsg = new TyphoonMessage();
+            //    for (int a = 0; a < 4; a++)
             //    {
             //        TyphMsg.MessageID = TyphMsg.MessageID << 8;
             //        TyphMsg.MessageID += tmpBuf[21-a];
             //    }
-            //try
-            //{
-                
             //    try
             //    {
-            //        while (!TyphoonMsgManager.queueResponce_ex.ContainsKey(TyphMsg.MessageID))
-            //        {
-            //            Thread.Sleep(1);
-            //            TyphoonCom.log.DebugFormat("-");
-            //        }
+            //        ////-----------test---------------------------
+            //        //try
+            //        //{
+            //        //    while (!TyphoonMsgManager.queueResponce_ex.ContainsKey(TyphMsg.MessageID))
+            //        //    {
+            //        //        Thread.Sleep(1);
+            //        //        TyphoonCom.log.DebugFormat("-");
+            //        //    }
+            //        //}
+            //        //catch(Exception e)
+            //        //{
+            //        //    TyphoonCom.log.DebugFormat("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            //        //}
+
+            //        ////if(TyphoonMsgManager.queueResponce_ex.ContainsKey(TyphMsg.MessageID))
+            //        ////{
+            //        ////    TyphoonCom.log.DebugFormat("queueResponce_ex contains TyphMsg.MessageID = {0}", TyphMsg.MessageID);
+            //        ////}
+            //        ////------------------------------------------
+            //        TyphMsg.MessageData = TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID).MessageData;
+            //        TyphoonCom.queueResponce.Remove(TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID));
             //    }
-            //    catch (Exception e)
+            //    catch (Exception ex)
             //    {
-            //        TyphoonCom.log.DebugFormat("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            //        TyphoonCom.log.Error(ex.Message);
             //    }
-
-            //    //if(TyphoonMsgManager.queueResponce_ex.ContainsKey(TyphMsg.MessageID))
-            //    //{
-            //    //    TyphoonCom.log.DebugFormat("queueResponce_ex contains TyphMsg.MessageID = {0}", TyphMsg.MessageID);
-            //    //}
-                
-            //}catch(Exception e)
-            //{
-            //}
-            //------------------------------------------
-
-
-
-
-
-
-            ///создаем структуру под конфиг
-            XmlConfig config = new XmlConfig();
-            Media.GetProfilesResponse mediaprofile = new Media.GetProfilesResponse();
-
-            do
-            {
-                Thread.Sleep(1);
-            } while (TyphoonCom.queueResponce.Count == 0);
-
-            if(TyphoonCom.queueResponce.Count>0)
-            {
-                ///извлекаем MessageID из созданной команды
-                ///и кладем в TyphMsg.MessageID, чтобы потом 
-                ///по нему найти ответ в очереди ответов
-                TyphoonMessage TyphMsg = new TyphoonMessage();
-                for (int a = 0; a < 4; a++)
-                {
-                    TyphMsg.MessageID = TyphMsg.MessageID << 8;
-                    TyphMsg.MessageID += tmpBuf[21-a];
-                }
-                try
-                {
-                    ////-----------test---------------------------
-                    //try
-                    //{
-                    //    while (!TyphoonMsgManager.queueResponce_ex.ContainsKey(TyphMsg.MessageID))
-                    //    {
-                    //        Thread.Sleep(1);
-                    //        TyphoonCom.log.DebugFormat("-");
-                    //    }
-                    //}
-                    //catch(Exception e)
-                    //{
-                    //    TyphoonCom.log.DebugFormat("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                    //}
-
-                    ////if(TyphoonMsgManager.queueResponce_ex.ContainsKey(TyphMsg.MessageID))
-                    ////{
-                    ////    TyphoonCom.log.DebugFormat("queueResponce_ex contains TyphMsg.MessageID = {0}", TyphMsg.MessageID);
-                    ////}
-                    ////------------------------------------------
-                    TyphMsg.MessageData = TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID).MessageData;
-                    TyphoonCom.queueResponce.Remove(TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID));
-                }
-                catch (Exception ex)
-                {
-                    TyphoonCom.log.Error(ex.Message);
-                }
-                string tmpStr = TyphoonCom.ParseMem(0, TyphMsg.MessageData);
-                mediaprofile = config.ParseGetProfiles(tmpStr);
+            //    string tmpStr = TyphoonCom.ParseMem(0, TyphMsg.MessageData);
+            //    mediaprofile = config.ParseGetProfiles(tmpStr);
         
-                return mediaprofile;
-            }
-            TyphoonCom.log.DebugFormat("GetProfiles - TyphoonCom.queueResponce.Count = {0}", TyphoonCom.queueResponce.Count);
-            return null;
+            //    return mediaprofile;
+            //}
+            //TyphoonCom.log.DebugFormat("GetProfiles - TyphoonCom.queueResponce.Count = {0}", TyphoonCom.queueResponce.Count);
+            return null;//leave me!
         }
 
         public void AddVideoEncoderConfiguration(string ProfileToken, string ConfigurationToken)
@@ -3150,13 +3157,14 @@ namespace OnvifProxy
         {
             ConfigStruct confstr = new ConfigStruct();
             XmlConfig conf = new XmlConfig();
-            TyphoonMessage TyphMsg = new TyphoonMessage();
+            //TyphoonMessage TyphMsg = new TyphoonMessage();
+            TyphoonMsg_Ex TyphMsg = new TyphoonMsg_Ex(TyphoonMsgType.Request);
             MediaUri mediauri = new MediaUri();
             string Buf = null;
 
             string stream = StreamSetup.Stream.ToString();
             string protocol = StreamSetup.Transport.Protocol.ToString();
-                
+
             byte[] b_stream = Encoding.Convert(Encoding.Unicode, Encoding.ASCII, TyphoonCom.MakeMem(stream));
             byte[] b_protocol = Encoding.Convert(Encoding.Unicode, Encoding.ASCII, TyphoonCom.MakeMem(protocol));
             byte[] b_profileToken = Encoding.Convert(Encoding.Unicode, Encoding.ASCII, TyphoonCom.MakeMem(ProfileToken));
@@ -3190,7 +3198,11 @@ namespace OnvifProxy
             data = Encoding.Convert(Encoding.ASCII, Encoding.Unicode, data);
 
             byte[] tmp = TyphoonCom.FormCommand(200, 5, data, 0);
-            TyphoonCom.AddCommand(TyphoonCom.FormPacket(tmp));
+
+            TyphoonMsg_Ex typhmsg = new TyphoonMsg_Ex(TyphoonMsgType.Request);
+            typhmsg.byteMessageData = TyphoonCom.FormPacket(tmp);
+            TyphoonMsgManager.Add(typhmsg);
+            //TyphoonCom.AddCommand(TyphoonCom.FormPacket(tmp));
 
             for (int a = 0; a < 4; a++)
             {
@@ -3201,16 +3213,20 @@ namespace OnvifProxy
             do
             {
                 Thread.Sleep(1);
-            } while (TyphoonCom.queueResponce.Count == 0);
+            //} while (TyphoonCom.queueResponce.Count == 0);
+            } while (TyphoonMsgManager.queueResponce_ex.Count == 0);
 
             //Thread.Sleep(500);
-            
-            if (TyphoonCom.queueResponce.Count > 0)
+            if (TyphoonMsgManager.queueResponce_ex.Count > 0)            
+            //if (TyphoonCom.queueResponce.Count > 0)
             {
                 try
                 {
                     //находим в очереди ответ с ID отправленного нами запроса
-                    Buf = TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID).MessageData;
+                    //Buf = TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID).MessageData;
+                    TyphoonMsg_Ex tmptyphmsg = new TyphoonMsg_Ex(TyphoonMsgType.Responce);
+                    TyphoonMsgManager.queueResponce_ex.TryGetValue(TyphMsg.MessageID, out tmptyphmsg);
+                    Buf = tmptyphmsg.stringMessageData;
                     Buf = TyphoonCom.ParseMem(0, Buf);
                 }
                 catch (Exception ex)
@@ -3220,7 +3236,7 @@ namespace OnvifProxy
                 //удаляем из очереди мессагу с ID отправленного нами запроса
                 try
                 {
-                    TyphoonCom.queueResponce.Remove(TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID));
+                    //TyphoonCom.queueResponce.Remove(TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID));
                     ////рихтуем данные 
                 }
                 catch (Exception ex)
@@ -3237,6 +3253,7 @@ namespace OnvifProxy
             TyphoonCom.log.Debug("Service1: GetProfiles added to commandQueue");
 
             return mediauri;
+            //return null;
         }
 
         public void StartMulticastStreaming(string ProfileToken)
@@ -3254,111 +3271,113 @@ namespace OnvifProxy
             throw new NotImplementedException();
         }
 
+        //uncomment me!!!
         public Media.MediaUri GetSnapshotUri(string ProfileToken)
         {
-            /* 
-             * здесь они хотят ссылку на картинку в JPEG
-             * хз как это реализовывать и надо ли             
-             */
-            //Media.StreamSetup StreamSetup = new Media.StreamSetup();
+            ///* 
+            // * здесь они хотят ссылку на картинку в JPEG
+            // * хз как это реализовывать и надо ли             
+            // */
+            ////Media.StreamSetup StreamSetup = new Media.StreamSetup();
 
-            ConfigStruct confstr = new ConfigStruct();
-            XmlConfig conf = new XmlConfig();
-            TyphoonMessage TyphMsg = new TyphoonMessage();
-            MediaUri mediauri = new MediaUri();
-            string Buf = null;
-
-
-            //string stream = StreamSetup.Stream.ToString();
-            //string protocol = StreamSetup.Transport.Protocol.ToString();
+            //ConfigStruct confstr = new ConfigStruct();
+            //XmlConfig conf = new XmlConfig();
+            //TyphoonMessage TyphMsg = new TyphoonMessage();
+            //MediaUri mediauri = new MediaUri();
+            //string Buf = null;
 
 
-            string stream = new Media.StreamSetup().Stream.ToString();
-            string protocol = "UDP";
+            ////string stream = StreamSetup.Stream.ToString();
+            ////string protocol = StreamSetup.Transport.Protocol.ToString();
 
 
-            byte[] b_stream = Encoding.Convert(Encoding.Unicode, Encoding.ASCII, TyphoonCom.MakeMem(stream));
-            byte[] b_protocol = Encoding.Convert(Encoding.Unicode, Encoding.ASCII, TyphoonCom.MakeMem(protocol));
-            byte[] b_profileToken = Encoding.Convert(Encoding.Unicode, Encoding.ASCII, TyphoonCom.MakeMem(ProfileToken));
+            //string stream = new Media.StreamSetup().Stream.ToString();
+            //string protocol = "UDP";
 
-            uint datalen = (uint)b_profileToken.Length + (uint)b_protocol.Length + (uint)b_stream.Length;
 
-            byte[] b_datalen = TyphoonCom.Int32toByteAr(datalen);
+            //byte[] b_stream = Encoding.Convert(Encoding.Unicode, Encoding.ASCII, TyphoonCom.MakeMem(stream));
+            //byte[] b_protocol = Encoding.Convert(Encoding.Unicode, Encoding.ASCII, TyphoonCom.MakeMem(protocol));
+            //byte[] b_profileToken = Encoding.Convert(Encoding.Unicode, Encoding.ASCII, TyphoonCom.MakeMem(ProfileToken));
 
-            byte[] data = new byte[datalen];
+            //uint datalen = (uint)b_profileToken.Length + (uint)b_protocol.Length + (uint)b_stream.Length;
 
-            uint ptr = 0;
+            //byte[] b_datalen = TyphoonCom.Int32toByteAr(datalen);
 
-            for (uint a = 0; a < (uint)b_stream.Length; a++)
-            {
-                data[a + ptr] = b_stream[a];
-            }
-            ptr += (uint)b_stream.Length;
+            //byte[] data = new byte[datalen];
 
-            for (uint a = 0; a < (uint)b_protocol.Length; a++)
-            {
-                data[a + ptr] = b_protocol[a];
-            }
-            ptr += (uint)b_protocol.Length;
+            //uint ptr = 0;
 
-            for (uint a = 0; a < (uint)b_profileToken.Length; a++)
-            {
-                data[a + ptr] = b_profileToken[a];
-            }
-            ptr += (uint)b_profileToken.Length;
+            //for (uint a = 0; a < (uint)b_stream.Length; a++)
+            //{
+            //    data[a + ptr] = b_stream[a];
+            //}
+            //ptr += (uint)b_stream.Length;
 
-            data = Encoding.Convert(Encoding.ASCII, Encoding.Unicode, data);
+            //for (uint a = 0; a < (uint)b_protocol.Length; a++)
+            //{
+            //    data[a + ptr] = b_protocol[a];
+            //}
+            //ptr += (uint)b_protocol.Length;
 
-            byte[] tmp = TyphoonCom.FormCommand(200, 5, data, 0);
-            TyphoonCom.AddCommand(TyphoonCom.FormPacket(tmp));
+            //for (uint a = 0; a < (uint)b_profileToken.Length; a++)
+            //{
+            //    data[a + ptr] = b_profileToken[a];
+            //}
+            //ptr += (uint)b_profileToken.Length;
 
-            for (int a = 0; a < 4; a++)
-            {
-                TyphMsg.MessageID = TyphMsg.MessageID << 8;
-                TyphMsg.MessageID += tmp[9 - a];
-            }
-            //ждем первого ответа, кста, это не гарантирует, что это нужный ответ, надо бы переделать
-            do
-            {
-                Thread.Sleep(1);
-            } while (TyphoonCom.queueResponce.Count == 0);
+            //data = Encoding.Convert(Encoding.ASCII, Encoding.Unicode, data);
 
-            if (TyphoonCom.queueResponce.Count > 0)
-            {
-                try
-                {
-                    //находим в очереди ответ с ID отправленного нами запроса
-                    Buf = TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID).MessageData;
-                    Buf = TyphoonCom.ParseMem(0, Buf);
-                }
-                catch (Exception ex)
-                {
-                    TyphoonCom.log.ErrorFormat("от Typhoon пришли сообщения с одинаковыми ID или нет ни одного сообщения с таким ID {0}", ex.Message);
-                }
-                //удаляем из очереди мессагу с ID отправленного нами запроса
-                try
-                {
-                    TyphoonCom.queueResponce.Remove(TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID));
-                    ////рихтуем данные 
-                }
-                catch (Exception ex)
-                {
-                    TyphoonCom.log.Error(ex.Message);
-                }
+            //byte[] tmp = TyphoonCom.FormCommand(200, 5, data, 0);
+            //TyphoonCom.AddCommand(TyphoonCom.FormPacket(tmp));
+
+            //for (int a = 0; a < 4; a++)
+            //{
+            //    TyphMsg.MessageID = TyphMsg.MessageID << 8;
+            //    TyphMsg.MessageID += tmp[9 - a];
+            //}
+            ////ждем первого ответа, кста, это не гарантирует, что это нужный ответ, надо бы переделать
+            //do
+            //{
+            //    Thread.Sleep(1);
+            //} while (TyphoonCom.queueResponce.Count == 0);
+
+            //if (TyphoonCom.queueResponce.Count > 0)
+            //{
+            //    try
+            //    {
+            //        //находим в очереди ответ с ID отправленного нами запроса
+            //        Buf = TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID).MessageData;
+            //        Buf = TyphoonCom.ParseMem(0, Buf);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        TyphoonCom.log.ErrorFormat("от Typhoon пришли сообщения с одинаковыми ID или нет ни одного сообщения с таким ID {0}", ex.Message);
+            //    }
+            //    //удаляем из очереди мессагу с ID отправленного нами запроса
+            //    try
+            //    {
+            //        TyphoonCom.queueResponce.Remove(TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID));
+            //        ////рихтуем данные 
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        TyphoonCom.log.Error(ex.Message);
+            //    }
                 
-                mediauri.Uri = Buf;
-                mediauri.Timeout = "PT0S";
-                mediauri.InvalidAfterReboot = false;
-                mediauri.InvalidAfterConnect = true;
+            //    mediauri.Uri = Buf;
+            //    mediauri.Timeout = "PT0S";
+            //    mediauri.InvalidAfterReboot = false;
+            //    mediauri.InvalidAfterConnect = true;
 
-            }
-            else
-            {
-                Console.WriteLine("AddCommand returned false");
-            }
-            TyphoonCom.log.Debug("Service1: GetSnapshotUri");
+            //}
+            //else
+            //{
+            //    Console.WriteLine("AddCommand returned false");
+            //}
+            //TyphoonCom.log.Debug("Service1: GetSnapshotUri");
 
-            return mediauri;
+            //return mediauri;
+            return null;
         }
 //--------------------------EventHandling--------------------------------------------------------------------
         
