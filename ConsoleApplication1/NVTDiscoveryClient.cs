@@ -51,11 +51,11 @@ namespace OnvifProxy
                     TyphoonMsg_Ex typhmsg = new TyphoonMsg_Ex(TyphoonMsgType.Request);
                     typhmsg.byteMessageData = TyphoonCom.FormPacket(TyphoonCom.FormCommand(201, 1, FormNVTResponse(e.EndpointDiscoveryMetadata), msgID));
                     TyphoonMsgManager.Add(typhmsg);
-                    //TyphoonCom.AddCommand(TyphoonCom.FormPacket(TyphoonCom.FormCommand(201, 1, FormNVTResponse(e.EndpointDiscoveryMetadata), msgID)));
                 }
             }
             else
             {
+                //но блядь как?!!
                 throw new Exception("NVTDiscoClient - couldnt read config");
             }
         }
@@ -67,15 +67,14 @@ namespace OnvifProxy
             {
                 this.discoveryClient.InnerChannel.Close();
                 this.discoveryClient.ChannelFactory.Close();
-
             }
             catch (Exception ee)
-            { 
-                
+            {
+                TyphoonCom.log.DebugFormat("ClientFindComlete raised exception - {0}", ee.Message);
             }
 
-            discoveryClient.FindCompleted -= ClientFindCompleted;
-            discoveryClient.FindProgressChanged -= ClientFindProgressChanged;
+            this.discoveryClient.FindCompleted -= ClientFindCompleted;
+            this.discoveryClient.FindProgressChanged -= ClientFindProgressChanged;
             this.discoveryClient.Close();            
             this.discoveryClient = null;
             this.discEP = null;

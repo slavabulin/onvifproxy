@@ -177,7 +177,9 @@ namespace OnvifProxy
             }
                 catch(AddressAccessDeniedException aade)
             {
-                TyphoonCom.log.ErrorFormat("Port #80 is busy  - AddressAccessDeniedException raised - {0}", aade.Message);
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Port #80 is busy  - AddressAccessDeniedException raised - {0}", aade.Message);
+                Console.ResetColor();
                 Console.ReadLine();
             }
             catch (CommunicationException e)
