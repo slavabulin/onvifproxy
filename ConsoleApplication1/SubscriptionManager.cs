@@ -22,6 +22,7 @@ using System.IO;
 using System.Runtime.Serialization;
 //-----------------------------------
 
+
 namespace OnvifProxy
 {
     public static class bnSubscriptionManager
@@ -66,6 +67,9 @@ namespace OnvifProxy
                 SubscriberTimeoutTimer.Elapsed += new ElapsedEventHandler(OnSubscriptionTimeoutEvent);
                 SubscriberTimeoutTimer.Enabled = true;
                 SubscriberTimeoutTimer.AutoReset = false;
+
+                //to start OnSubscriptionTimeoutEvent in ThreadPool - to lock the collection
+                SubscriberTimeoutTimer.SynchronizingObject = null;
             }
 
             Addr = addr;
@@ -124,23 +128,25 @@ namespace OnvifProxy
 
         private void OnSubscriptionTimeoutEvent(object source, ElapsedEventArgs e)
         {
-            try
+            lock (((ICollection)EventStorage.storage).SyncRoot)
             {
-                foreach (TyphoonEvent evnt in EventStorage.storage)
+                try
                 {
-                    if (evnt == this)
+                    foreach (TyphoonEvent evnt in EventStorage.storage)
                     {
-                        EventStorage.storage.Remove(evnt);
-                        Console.WriteLine("TyphoonEvent.OnSubscriptionTimeoutEvent - event removed");
+                        if (evnt == this)
+                        {
+                            EventStorage.storage.Remove(evnt);
+                            Console.WriteLine("TyphoonEvent.OnSubscriptionTimeoutEvent - event removed");
+                        }
                     }
                 }
+                catch (InvalidOperationException ioe)
+                {
+                    OnSubscriptionTimeoutEvent(source, e);
+                    TyphoonCom.log.DebugFormat("TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - {0}", ioe.Message);
+                }
             }
-            catch (InvalidOperationException ioe)
-            {
-                OnSubscriptionTimeoutEvent(source, e);
-                TyphoonCom.log.DebugFormat("TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - {0}", ioe.Message);
-            }
-            //OnSubscriptionTimeout(source, e);
         }
     }
 
@@ -158,7 +164,6 @@ namespace OnvifProxy
     public class ppSubscriber
     {
         public string Addr;
-        //public static int Port = 32000;
         public Event.FilterType Filter;
         public System.Timers.Timer SubscriberTimeoutTimer;
         Guid guid;
@@ -182,15 +187,17 @@ namespace OnvifProxy
             confstr = conf.Read();
 
             this.Filter = filter;
-            //addr[0] = new Uri("http://" + confstr.IPAddr + ":" + Port.ToString());
             addr[0] = new Uri("http://" + confstr.IPAddr + "/onvif/pp_subscription_manager/");
-            //Port++;
+
             //if filter doesnt exits already
             //взведем таймер таймаута
             SubscriberTimeoutTimer = new System.Timers.Timer(timeout);
             SubscriberTimeoutTimer.Elapsed += new ElapsedEventHandler(OnSubscriptionTimeoutEvent);
             SubscriberTimeoutTimer.Enabled = true;
             SubscriberTimeoutTimer.AutoReset = false;
+
+            // to lock the timer
+            SubscriberTimeoutTimer.SynchronizingObject = null;
 
             servhost = new ServiceHost(typeof(PullPointNotificationService), addr);
             //epaddr = new EndpointAddress(addr[0] + "pp_subscription_manager");
@@ -205,7 +212,6 @@ namespace OnvifProxy
                     httpTransportBindingElement);
             binding.Namespace = "http://www.onvif.org/ver10/event/wsdl";
 
-            //servhost.AddServiceEndpoint(typeof(IPullPointService), binding, "pp_subscription_manager");
             servhost.AddServiceEndpoint(typeof(IPullPointService), binding, guid.ToString());
 
             try
@@ -216,7 +222,6 @@ namespace OnvifProxy
             }
             catch (CommunicationObjectFaultedException cofe)
             {
-                //Port++;
                 Console.WriteLine("additional service host openning failed - {0}", cofe.Message);
                 Console.WriteLine("another try ...");
                 servhost.Close();
@@ -227,7 +232,6 @@ namespace OnvifProxy
             }
             catch (Exception ex)
             {
-                //Port++;
                 Console.WriteLine("additional service host openning failed - {0}", ex.Message);
                 Console.WriteLine("another try ...");
                 ppSubscriptionManager.SubscribersCollection.Remove(this.Filter);
@@ -332,10 +336,6 @@ namespace OnvifProxy
                         pmresp.NotificationMessage[y].Topic.Any[0].Value = "tns1:VideoSource";
                        
                     }
-                    //foreach (TyphoonEvent tevent in EventStorage.storage)
-                    //{ 
-                        
-                    //}
                 }
             }
             //if no events
@@ -386,7 +386,6 @@ namespace OnvifProxy
             foreach (System.Collections.Generic.KeyValuePair<Event.FilterType, ppSubscriber> subs
                 in ppSubscriptionManager.SubscribersCollection)
             {
-                //if (subs.Value.Addr == addr)
                 if (subs.Value.Addr == context.Channel.LocalAddress.Uri.ToString())
                 {
                     subs.Value.SubscriberTimeoutTimer.Interval = hlp.ParseTermTime(request.Renew.TerminationTime);

@@ -318,9 +318,7 @@ namespace OnvifProxy
                             //    ((byte[])(queueRequest.Peek())).Length);
 
                             //queueRequest.Dequeue();
-                            //lock ((object)TyphoonMsgManager.queueRequest_ex)
-                            //lock (((ICollection)TyphoonMsgManager.queueRequest_ex).SyncRoot)
-                            {
+                            {                                
                                 Console.Write('1');
                                 stream.Write(TyphoonMsgManager.queueRequest_ex.ElementAt(0).Value.byteMessageData,
                                     0,
@@ -354,6 +352,12 @@ namespace OnvifProxy
                             if (!flg_ConnectionFailedActive) OnTyphoonDisconnect();
                             break;
                         }
+                            catch(InvalidOperationException ioe)
+                        {
+                            log.DebugFormat("stream.Write - InvalidOperationException {0}", ioe.Message);
+                            if (!flg_ConnectionFailedActive) OnTyphoonDisconnect();
+                            break;
+                        }
                         catch (Exception ex)
                         {
                             log.DebugFormat("stream.Write - Exception {0}", ex.Message);
@@ -361,6 +365,7 @@ namespace OnvifProxy
                             break;
                         }
                     }
+                    //TyphoonMsgManager.queueRequest_ex.ElementAt(0).Value.MessageTimeoutTimer.Enabled = true;
                 }
             }
             while (flg_SendToNet);
@@ -1528,7 +1533,7 @@ namespace OnvifProxy
         public TyphoonMsgType MessageType;
 
         string messageData;
-        System.Timers.Timer MessageTimeoutTimer;
+        public System.Timers.Timer MessageTimeoutTimer;
         double timeout = 5000;        
 
         
@@ -1540,6 +1545,9 @@ namespace OnvifProxy
             MessageTimeoutTimer.Elapsed += new ElapsedEventHandler(OnTyphoonMessageTimeout);
             MessageTimeoutTimer.AutoReset = false;
             MessageTimeoutTimer.Enabled = true;
+
+            //starts OnTyphoonMessageTimeout in ThreadPool - to lock the collection
+            MessageTimeoutTimer.SynchronizingObject = null;
         }
         public byte[] byteMessageData
         {
