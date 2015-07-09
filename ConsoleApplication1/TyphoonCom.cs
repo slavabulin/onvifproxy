@@ -319,13 +319,13 @@ namespace OnvifProxy
 
                             //queueRequest.Dequeue();
                             {                                
-                                Console.Write('1');
+                                //Console.Write('1');
                                 stream.Write(TyphoonMsgManager.queueRequest_ex.ElementAt(0).Value.byteMessageData,
                                     0,
                                     TyphoonMsgManager.queueRequest_ex.ElementAt(0).Value.byteMessageData.Length);                                
-                                Console.Write('2');
+                                //Console.Write('2');
                                 TyphoonMsgManager.queueRequest_ex.Remove(TyphoonMsgManager.queueRequest_ex.ElementAt(0).Key);
-                                Console.WriteLine('3');
+                                //Console.WriteLine('3');
                             }
                         }
                             catch(ArgumentNullException ane)
@@ -1545,7 +1545,6 @@ namespace OnvifProxy
             MessageTimeoutTimer.Elapsed += new ElapsedEventHandler(OnTyphoonMessageTimeout);
             MessageTimeoutTimer.AutoReset = false;
             MessageTimeoutTimer.Enabled = true;
-
             //starts OnTyphoonMessageTimeout in ThreadPool - to lock the collection
             MessageTimeoutTimer.SynchronizingObject = null;
         }
