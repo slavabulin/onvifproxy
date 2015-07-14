@@ -1571,6 +1571,7 @@ namespace OnvifProxy
     
     public static class TyphoonMsgManager
     {
+        //ConcurrentDictionary<TKey, TValue>
         internal static Dictionary<UInt32, TyphoonMsg_Ex> queueRequest_ex = new Dictionary<uint, TyphoonMsg_Ex>();
         internal static Dictionary<UInt32, TyphoonMsg_Ex> queueResponce_ex = new Dictionary<uint, TyphoonMsg_Ex>();
         internal static Dictionary<UInt32, TyphoonMsg_Ex> queueCmd_ex = new Dictionary<uint, TyphoonMsg_Ex>();
