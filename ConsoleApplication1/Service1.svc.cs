@@ -715,6 +715,7 @@ namespace OnvifProxy
         //uncomment me!!!
         public GetCapabilitiesResponse GetCapabilities(GetCapabilitiesRequest request)
         {
+            TyphoonMsg_Ex tmpmsg;
             if (request != null)
             {
                 //Console.WriteLine("entering GetCapabilities");
@@ -778,7 +779,7 @@ namespace OnvifProxy
                                     //удаляем из очереди мессагу с ID отправленного нами запроса
                                     try
                                     {
-                                        TyphoonMsgManager.queueResponce_ex.Remove(TyphMsg.MessageID);
+                                        TyphoonMsgManager.queueResponce_ex.TryRemove(TyphMsg.MessageID, out tmpmsg);
 
                                         //рихтуем данные 
                                         Buf = TyphoonCom.ParseMem(0, Buf);
@@ -861,7 +862,7 @@ namespace OnvifProxy
                                     //удаляем из очереди мессагу с ID отправленного нами запроса
                                     try
                                     {
-                                        TyphoonMsgManager.queueResponce_ex.Remove(TyphMsg.MessageID);
+                                        TyphoonMsgManager.queueResponce_ex.TryRemove(TyphMsg.MessageID, out tmpmsg);
                                         ////рихтуем данные 
                                         if (Buf.Length == 12)
                                         {
@@ -2421,6 +2422,7 @@ namespace OnvifProxy
         //uncomment me!!!
         public Media.GetVideoSourcesResponse GetVideoSources(Media.GetVideoSourcesRequest request)
         {
+            TyphoonMsg_Ex tmpmsg;
             Media.GetVideoSourcesResponse getVideoSourcesResponse = new Media.GetVideoSourcesResponse();
             #region
             //getVideoSourcesResponse.VideoSources = new Media.VideoSource[1];
@@ -2601,7 +2603,7 @@ namespace OnvifProxy
                     //TyphMsg.MessageData = TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID).MessageData;
                     TyphMsg.stringMessageData = TyphoonMsgManager.queueResponce_ex.Single(TyphoonMessage => TyphoonMessage.Value.MessageID == TyphMsg.MessageID).Value.stringMessageData;
                     //TyphoonCom.queueResponce.Remove(TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID));
-                    TyphoonMsgManager.queueResponce_ex.Remove(TyphMsg.MessageID);
+                    TyphoonMsgManager.queueResponce_ex.TryRemove(TyphMsg.MessageID, out tmpmsg);
                 }
                 catch (Exception ex)
                 {

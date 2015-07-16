@@ -129,7 +129,7 @@ namespace OnvifProxy
                         );
                     usertypefromfile = checkpass.CheckPassword();
 
-                    #region check if creds are wright
+                    #region check if creds are right
                     if (usertypefromfile != Usertype.wrongpass)
                     {
                         //Console.WriteLine("Pass is valid!");
