@@ -87,7 +87,6 @@ namespace OnvifProxy
         //счетчик MessageID
         private static UInt32 msgIDCounter;
         private static WSHttpBinding binding;
-        //private static BasicHttpBinding binding;
         private static NVTServiceClient nvtClient;
         private static System.Collections.ObjectModel.Collection<NVTServiceClient> nvtClientCollection = null;
 
@@ -96,13 +95,6 @@ namespace OnvifProxy
             ipaddr = (string)ip;
 
             flg_ConnectionFailedActive = false;
-
-            //if(queueRequest == null)queueRequest = new Queue();
-            //if(queueResponce == null)queueResponce = new Collection<TyphoonMessage>();
-            //if(queueCmd == null)queueCmd = new Queue();
-            //------------------------------------------
-            //------------------------------------------
-
 
             if(nvtClientCollection ==null)nvtClientCollection = new Collection<NVTServiceClient>();
 
@@ -273,7 +265,7 @@ namespace OnvifProxy
         private static void Process()
         {
             int key = 0;
-            TyphoonMsg_Ex tmpmsg;
+            TyphoonMsg tmpmsg;
             do
             {
                 Thread.Sleep(1);
@@ -385,7 +377,7 @@ namespace OnvifProxy
         {
             if (TyphoonCom.flg_Connected)
             {
-                TyphoonMsg_Ex typhmsg = new TyphoonMsg_Ex(TyphoonMsgType.Request);
+                TyphoonMsg typhmsg = new TyphoonMsg(TyphoonMsgType.Request);
                 typhmsg.byteMessageData = FormPacket(null);
                 TyphoonMsgManager.Add(typhmsg);
             }
@@ -401,7 +393,7 @@ namespace OnvifProxy
             byte[] b_ip = null;
             byte[] b_ip_ascii;
             byte[] tmpData;
-            TyphoonMsg_Ex typhmsg = new TyphoonMsg_Ex(TyphoonMsgType.Request);
+            TyphoonMsg typhmsg = new TyphoonMsg(TyphoonMsgType.Request);
 
             XmlConfig conf = new XmlConfig();
             conf = new XmlConfig();
@@ -487,7 +479,7 @@ namespace OnvifProxy
             byte[] tmpByteAr = new byte[4];
             uint dataBlockLen = 0;
 
-            TyphoonMsg_Ex tmpTyphMsg;
+            TyphoonMsg tmpTyphMsg;
             
             if (CommandBuff != null)
             {
@@ -503,7 +495,7 @@ namespace OnvifProxy
                             ///если номер команды 200 - это ответ на запросы от сервиса,
                             ///поместим данные в очередь ответов на запросы сервиса
                             //tmpTyphMsg = new TyphoonMessage();
-                            tmpTyphMsg = new TyphoonMsg_Ex(TyphoonMsgType.Responce);
+                            tmpTyphMsg = new TyphoonMsg(TyphoonMsgType.Responce);
                             
                             ///вынимаем номер субкоманды
                             for (int a = 0; a < 4; a++)
@@ -545,7 +537,7 @@ namespace OnvifProxy
                             ///если 201 - запрос от тайфуна на действие
                             ///поместим данные в очередь запросов от тайфуна
                             //tmpTyphMsg = new TyphoonMsg_Ex(TyphoonMsgType.Request);
-                            tmpTyphMsg = new TyphoonMsg_Ex(TyphoonMsgType.Command);
+                            tmpTyphMsg = new TyphoonMsg(TyphoonMsgType.Command);
 
                             ///вынимаем номер субкоманды
                             ///по нему мы будем определять, чего хочет тайфун
@@ -635,7 +627,8 @@ namespace OnvifProxy
         //разбор очереди команд, пришедших от тайфуна, вертится в отдельном потоке
         private static void ParseQueueCmd()
         {
-            TyphoonMsg_Ex typhmsg, tmpmsg ;
+            TyphoonMsg typhmsg, tmpmsg ;
+            bnSubscriber subs;
             Object obj = new object();
             binding = new WSHttpBinding(SecurityMode.None);
 
@@ -981,8 +974,7 @@ namespace OnvifProxy
                                         bytes1[y] = bytes[y];
                                     }
                                     eventdata.Eventtype = ByteArtoInt32(bytes1);
-                                    //
-
+                                    
                                     for (int y = 4; y < 8; y++)
                                     {
                                         bytes1[y - 4] = bytes[y];
@@ -1011,13 +1003,14 @@ namespace OnvifProxy
                                     //------------------------------------------
                                     //
                                     object objj = new object();
+                                    
                                     lock (bnSubscriptionManager.SubscribersCollection)
                                     {
                                         try
                                         {
                                             foreach (bnSubscriber subscriber in bnSubscriptionManager.SubscribersCollection.Values)
                                             {
-                                                bnSubscriptionManager.SubscribersCollection.Remove(bnSubscriptionManager.SubscribersCollection.First().Key);
+                                                bnSubscriptionManager.SubscribersCollection.TryRemove(bnSubscriptionManager.SubscribersCollection.First().Key, out subs);
                                                 #region
                                                 if (subscriber.Eventtype == eventdata.Eventtype)
                                                 {
@@ -1507,7 +1500,7 @@ namespace OnvifProxy
         #endregion
     }
 
-    public class TyphoonMsg_Ex
+    public class TyphoonMsg
     {
         public UInt32 MessageID;
         public UInt32 MessageSubComNum;
@@ -1517,8 +1510,7 @@ namespace OnvifProxy
         System.Timers.Timer MessageTimeoutTimer;
         double timeout = 5000;        
 
-        
-        public TyphoonMsg_Ex(TyphoonMsgType messageType)
+        public TyphoonMsg(TyphoonMsgType messageType)
         {
             MessageType = messageType;
 
@@ -1526,6 +1518,7 @@ namespace OnvifProxy
             MessageTimeoutTimer.Elapsed += new ElapsedEventHandler(OnTyphoonMessageTimeout);
             MessageTimeoutTimer.AutoReset = false;
             MessageTimeoutTimer.Enabled = true;
+
             //starts OnTyphoonMessageTimeout in ThreadPool - to lock the collection
             MessageTimeoutTimer.SynchronizingObject = null;
         }
@@ -1541,6 +1534,7 @@ namespace OnvifProxy
                 this.messageData = Encoding.GetEncoding(1251).GetString(value);
             }
         }
+
         public string stringMessageData
         {
             get
@@ -1552,16 +1546,17 @@ namespace OnvifProxy
                 this.messageData = value;
             }
         }
-    
 
         void OnTyphoonMessageTimeout(object source, ElapsedEventArgs e)
         {
-            //TyphoonCom.log.ErrorFormat("TyphoonMessage was removed from the queue {0} due timeout", this.MessageType.ToString());
-            TyphoonMsg_Ex msg;
+            TyphoonMsg msg;
+
             switch(MessageType)
             {
+                //they say that TryRemove returns false only because the key was already removed
                 case TyphoonMsgType.Command:
                     TyphoonMsgManager.queueCmd_ex.TryRemove(MessageID, out msg);
+                    TyphoonCom.log.DebugFormat("Msg removed - {0} left", TyphoonMsgManager.queueCmd_ex.Count.ToString());
                     break;
                 case TyphoonMsgType.Request:
                     TyphoonMsgManager.queueRequest_ex.TryRemove(MessageID, out msg);
@@ -1575,47 +1570,41 @@ namespace OnvifProxy
     
     public static class TyphoonMsgManager
     {
-        //ConcurrentDictionary<TKey, TValue>
-        internal static ConcurrentDictionary<UInt32, TyphoonMsg_Ex> queueRequest_ex = new ConcurrentDictionary<uint, TyphoonMsg_Ex>();
-        internal static ConcurrentDictionary<UInt32, TyphoonMsg_Ex> queueResponce_ex = new ConcurrentDictionary<uint, TyphoonMsg_Ex>();
-        internal static ConcurrentDictionary<UInt32, TyphoonMsg_Ex> queueCmd_ex = new ConcurrentDictionary<uint, TyphoonMsg_Ex>();
-        //internal static Dictionary<UInt32, TyphoonMsg_Ex> queueRequest_ex = new Dictionary<uint, TyphoonMsg_Ex>();
-        //internal static Dictionary<UInt32, TyphoonMsg_Ex> queueResponce_ex = new Dictionary<uint, TyphoonMsg_Ex>();
-        //internal static Dictionary<UInt32, TyphoonMsg_Ex> queueCmd_ex = new Dictionary<uint, TyphoonMsg_Ex>();
+        internal static ConcurrentDictionary<UInt32, TyphoonMsg> queueRequest_ex = new ConcurrentDictionary<uint, TyphoonMsg>();
+        internal static ConcurrentDictionary<UInt32, TyphoonMsg> queueResponce_ex = new ConcurrentDictionary<uint, TyphoonMsg>();
+        internal static ConcurrentDictionary<UInt32, TyphoonMsg> queueCmd_ex = new ConcurrentDictionary<uint, TyphoonMsg>();
+
         static UInt32 MsgIDCounter;
 
         static TyphoonMsgManager()
         {
-            Thread eventThread = new Thread(new ThreadStart(TyphoonMsgManager.EventPuller));
-            eventThread.IsBackground = true;
-            eventThread.Start();
+            ////for testing;
+            //Thread eventThread = new Thread(new ThreadStart(TyphoonMsgManager.EventPuller));
+            //eventThread.IsBackground = true;
+            //eventThread.Start();
         }
 
         static void EventPuller()
         {
-            
             bool rettryadd = false;
-            //UInt32 counter = 31000;
             uint counter = uint.MaxValue-100;
             while (true)
             {
 
-                TyphoonMsg_Ex tmpMsg = new TyphoonMsg_Ex(TyphoonMsgType.Command);
+                TyphoonMsg tmpMsg = new TyphoonMsg(TyphoonMsgType.Command);
                 tmpMsg.byteMessageData = new byte[] { 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 };
                 tmpMsg.MessageSubComNum = 6;
                 tmpMsg.MessageID = 0;
-
-                //if (counter >= 64000 || counter < 31000) counter = 31001;
-                //if (counter == UInt32.MaxValue) counter = UInt32.MinValue;
+                
                 if (counter == uint.MaxValue) counter = uint.MinValue;
                 tmpMsg.MessageID = counter;                
-                //Thread.Sleep(10);
+
                 try
                 {
                     rettryadd = queueCmd_ex.TryAdd(counter, tmpMsg);
                     if (rettryadd)
                     {
-                        //TyphoonCom.log.DebugFormat("Fake event counter - msg number - {0}, msgs in queue - {1}", counter, queueCmd_ex.Count.ToString());
+                        TyphoonCom.log.DebugFormat("Fake event counter - msg number - {0}, msgs in queue - {1}", counter, queueCmd_ex.Count.ToString());
                     }
                     else
                     {
@@ -1628,20 +1617,16 @@ namespace OnvifProxy
                         {
                             throw new Exception();
                         }
-                            
-
                     }
-
-
                 }
                 catch(Exception ex)
                 {
-                    throw;
+                    throw ex;
                 }
                 counter++;                
             }
         }
-        public static void Add(TyphoonMsg_Ex typhmsg)
+        public static void Add(TyphoonMsg typhmsg)
         {
             if (typhmsg.MessageID == 0)
             {

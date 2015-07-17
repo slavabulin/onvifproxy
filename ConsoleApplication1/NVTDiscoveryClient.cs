@@ -48,7 +48,7 @@ namespace OnvifProxy
             {
                 if (confstr.Capabilities.Device.XAddr != e.EndpointDiscoveryMetadata.ListenUris[0].OriginalString)
                 {
-                    TyphoonMsg_Ex typhmsg = new TyphoonMsg_Ex(TyphoonMsgType.Request);
+                    TyphoonMsg typhmsg = new TyphoonMsg(TyphoonMsgType.Request);
                     typhmsg.byteMessageData = TyphoonCom.FormPacket(TyphoonCom.FormCommand(201, 1, FormNVTResponse(e.EndpointDiscoveryMetadata), msgID));
                     TyphoonMsgManager.Add(typhmsg);
                 }

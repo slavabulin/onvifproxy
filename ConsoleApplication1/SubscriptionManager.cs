@@ -20,6 +20,7 @@ using System.Globalization;
 using System.Xml.Serialization;
 using System.IO;
 using System.Runtime.Serialization;
+using System.Collections.Concurrent;
 //-----------------------------------
 
 
@@ -27,11 +28,12 @@ namespace OnvifProxy
 {
     public static class bnSubscriptionManager
     {
-        public static Dictionary<Guid, bnSubscriber> SubscribersCollection = new Dictionary<Guid, bnSubscriber>();
+        //public static Dictionary<Guid, bnSubscriber> SubscribersCollection = new Dictionary<Guid, bnSubscriber>();
+        public static ConcurrentDictionary<Guid, bnSubscriber> SubscribersCollection = new ConcurrentDictionary<Guid, bnSubscriber>();
 
         public static void AddSubscriber(bnSubscriber subscriber)
         {
-            SubscribersCollection.Add(subscriber.id,subscriber);
+            SubscribersCollection.TryAdd(subscriber.id,subscriber);
             Console.WriteLine("one basic notification subscriber added, subs number = {0}", SubscribersCollection.Count);
         }
         
@@ -87,8 +89,9 @@ namespace OnvifProxy
 
         private void OnSubscriptionTimeout(object sender, EventArgs e)
         {
+            bnSubscriber subs;
             ((IClientChannel)channel).Close();
-            bnSubscriptionManager.SubscribersCollection.Remove(this.id);
+            bnSubscriptionManager.SubscribersCollection.TryRemove(this.id, out subs);
             Console.WriteLine("one basic notification subscriber deleted, subs number = {0}", OnvifProxy.bnSubscriptionManager.SubscribersCollection.Count);
         }
     }
@@ -173,6 +176,7 @@ namespace OnvifProxy
 
         public ppSubscriber(Event.FilterType filter)
         {
+            ppSubscriber tmpsubs;
             if (filter == null)
             { 
                 XmlDocument doc = new XmlDocument();
@@ -226,7 +230,7 @@ namespace OnvifProxy
                 Console.WriteLine("another try ...");
                 servhost.Close();
                 servhost = null;
-                ppSubscriptionManager.SubscribersCollection.Remove(this.Filter);
+                ppSubscriptionManager.SubscribersCollection.TryRemove(this.Filter, out tmpsubs);
                 new ppSubscriber(filter);
                 
             }
@@ -234,7 +238,7 @@ namespace OnvifProxy
             {
                 Console.WriteLine("additional service host openning failed - {0}", ex.Message);
                 Console.WriteLine("another try ...");
-                ppSubscriptionManager.SubscribersCollection.Remove(this.Filter);
+                ppSubscriptionManager.SubscribersCollection.TryRemove(this.Filter, out tmpsubs);
                 servhost = null;
                 new ppSubscriber(filter);
 
@@ -246,13 +250,14 @@ namespace OnvifProxy
 
         private void OnSubscriptionTimeoutEvent(object source, ElapsedEventArgs e)
         {
+            ppSubscriber tmpsubs;
             if (servhost.State != CommunicationState.Closed ||
                 servhost.State != CommunicationState.Closing ||
                 servhost.State != CommunicationState.Faulted)
             {
                 try
                 {
-                    ppSubscriptionManager.SubscribersCollection.Remove(this.Filter);
+                    ppSubscriptionManager.SubscribersCollection.TryRemove(this.Filter, out tmpsubs);
                     servhost.Close();
                     Console.WriteLine("one pull-point subscriber deleted, subs number = {0}", OnvifProxy.ppSubscriptionManager.SubscribersCollection.Count);
                 }
@@ -269,12 +274,12 @@ namespace OnvifProxy
 
     public static class ppSubscriptionManager
     {
-        public static Dictionary<Event.FilterType, ppSubscriber> SubscribersCollection =
-            new Dictionary<Event.FilterType, ppSubscriber>();
+        public static ConcurrentDictionary<Event.FilterType, ppSubscriber> SubscribersCollection =
+            new ConcurrentDictionary<Event.FilterType, ppSubscriber>();
 
         public static void AddSubscriber(ppSubscriber subscriber)
         {
-            SubscribersCollection.Add(subscriber.Filter, subscriber);
+            SubscribersCollection.TryAdd(subscriber.Filter, subscriber);
             Console.WriteLine("one pull-point subscriber added, subs number = {0}", SubscribersCollection.Count);
         }
     }
