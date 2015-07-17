@@ -183,14 +183,12 @@ namespace OnvifProxy
             TyphoonComInit(ipaddr);
         }
 
-
         static void OnTyphoonDisconnect()
         {
             TyphoonDisconnectEventHandler temp = TyphoonDisconnect;
             if (temp != null)
                 temp(typeof(TyphoonCom), new EventArgs());
         }
-
 
         public static void TyphoonComStop()
         {
@@ -1101,6 +1099,7 @@ namespace OnvifProxy
             //---------------------------------------------------------
         }
 
+        
         private static void PacketParseEx(IAsyncResult ar)
         {
             uint datalength = 0;
@@ -1573,9 +1572,9 @@ namespace OnvifProxy
         internal static ConcurrentDictionary<UInt32, TyphoonMsg> queueRequest_ex = new ConcurrentDictionary<uint, TyphoonMsg>();
         internal static ConcurrentDictionary<UInt32, TyphoonMsg> queueResponce_ex = new ConcurrentDictionary<uint, TyphoonMsg>();
         internal static ConcurrentDictionary<UInt32, TyphoonMsg> queueCmd_ex = new ConcurrentDictionary<uint, TyphoonMsg>();
+        volatile static bool flg_timeout=false;
 
         static UInt32 MsgIDCounter;
-
         static TyphoonMsgManager()
         {
             ////for testing;
@@ -1653,6 +1652,34 @@ namespace OnvifProxy
                         break;
                 }
             }
+        }
+
+        public static TyphoonMsg ParseQueueResponse(uint MsgID)
+        {
+            TyphoonMsg tmptyphmsg;
+            System.Timers.Timer tmr_ResponseTimeout;
+            tmr_ResponseTimeout = new System.Timers.Timer(4000);
+            tmr_ResponseTimeout.AutoReset = false;
+            tmr_ResponseTimeout.Elapsed += new ElapsedEventHandler(ParseQueueResponseTimeout);
+            tmr_ResponseTimeout.Enabled = true;
+            tmr_ResponseTimeout.Start();
+            flg_timeout = true;
+
+            while(flg_timeout)
+            {
+                if(TyphoonMsgManager.queueResponce_ex.TryGetValue(MsgID, out tmptyphmsg))
+                {
+                    return tmptyphmsg;
+                }
+                else
+                Thread.Sleep(1);
+            }
+            return null;
+        }
+
+        static void ParseQueueResponseTimeout(object source, ElapsedEventArgs e)
+        {
+            flg_timeout = false;
         }
     }
 
