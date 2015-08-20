@@ -16,6 +16,7 @@ using System.Xml.Serialization;
 using System.Xml;
 using System.Linq;
 using System.Collections.Concurrent;
+using System.Threading.Tasks;
 
 using log4net;
 
@@ -1654,32 +1655,59 @@ namespace OnvifProxy
             }
         }
 
-        public static TyphoonMsg ParseQueueResponse(uint MsgID)
-        {
-            TyphoonMsg tmptyphmsg;
-            System.Timers.Timer tmr_ResponseTimeout;
-            tmr_ResponseTimeout = new System.Timers.Timer(4000);
-            tmr_ResponseTimeout.AutoReset = false;
-            tmr_ResponseTimeout.Elapsed += new ElapsedEventHandler(ParseQueueResponseTimeout);
-            tmr_ResponseTimeout.Enabled = true;
-            tmr_ResponseTimeout.Start();
-            flg_timeout = true;
+        //public static TyphoonMsg ParseQueueResponse(uint MsgID)
+        //{
+        //    TyphoonMsg tmptyphmsg;
+        //    System.Timers.Timer tmr_ResponseTimeout;
+        //    tmr_ResponseTimeout = new System.Timers.Timer(4000);
+        //    tmr_ResponseTimeout.AutoReset = false;
+        //    tmr_ResponseTimeout.Elapsed += new ElapsedEventHandler(ParseQueueResponseTimeout);
+        //    tmr_ResponseTimeout.Enabled = true;
+        //    tmr_ResponseTimeout.Start();
+        //    flg_timeout = true;
 
-            while(flg_timeout)
-            {
-                if(TyphoonMsgManager.queueResponce_ex.TryGetValue(MsgID, out tmptyphmsg))
-                {
-                    return tmptyphmsg;
-                }
-                else
-                Thread.Sleep(1);
-            }
-            return null;
+        //    while(flg_timeout)
+        //    {
+        //        if(TyphoonMsgManager.queueResponce_ex.TryGetValue(MsgID, out tmptyphmsg))
+        //        {
+        //            return tmptyphmsg;
+        //        }
+        //        else
+        //        Thread.Sleep(1);
+        //    }
+        //    return null;
+        //}
+
+        //static void ParseQueueResponseTimeout(object source, ElapsedEventArgs e)
+        //{
+        //    flg_timeout = false;
+        //}
+
+        static TyphoonMsg GetMsgFromQueue(uint MsgID)
+        {
+            TyphoonMsg msg = new TyphoonMsg(TyphoonMsgType.Responce);
+            CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
+            CancellationToken token = cancelTokenSource.Token;
+            Task<TyphoonMsg> task = new Task<TyphoonMsg>(() => TaskGetMsg(MsgID, token), token);
+            task.Start();
+            task.Wait(4500);
+            msg = task.Result;
+            cancelTokenSource.Cancel();
+            task.Dispose();
+            cancelTokenSource.Dispose();
+            return (msg != null) ? msg : null;
         }
 
-        static void ParseQueueResponseTimeout(object source, ElapsedEventArgs e)
+        static TyphoonMsg TaskGetMsg(uint MsgID, CancellationToken token)
         {
-            flg_timeout = false;
+            while (!token.IsCancellationRequested)
+            {
+                //check queue
+                Thread.Sleep(500);//wait for next loop
+
+                return new TyphoonMsg(TyphoonMsgType.Command);
+            }
+            return null;
         }
     }
 
