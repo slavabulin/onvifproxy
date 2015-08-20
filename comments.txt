@@ -43,7 +43,7 @@ private static void Process(object ipaddr) - stream.WriteByte(0); - как обойтись
 
 
 ToDo:
-
+- уточнить размер MsgIDCounter в TyphoonMsgManager.Add у Шарова, чтобы совпадал
 - EventStorage.storage - сделан collection, переделать в ConcurentCollection
 - перенести логер из TyphoonCom в Program
 - механизм разбора очереди ответов от тайфуна - какая-то херота, надоть переделать бы  (не ждет ответа, а сразу проверяет очередь ответов и выходит)

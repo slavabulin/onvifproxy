@@ -1630,6 +1630,7 @@ namespace OnvifProxy
         {
             if (typhmsg.MessageID == 0)
             {
+                //уточнить размер MsgIDCounter у Шарова, чтобы совпадал 
                 if (MsgIDCounter == uint.MaxValue || MsgIDCounter == 0) MsgIDCounter = 1;
                 typhmsg.MessageID = MsgIDCounter;
                 MsgIDCounter++;
@@ -1641,13 +1642,22 @@ namespace OnvifProxy
                 switch (typhmsg.MessageType)
                 {
                     case TyphoonMsgType.Command:
-                        queueCmd_ex.TryAdd(typhmsg.MessageID, typhmsg);
+                        if (!queueCmd_ex.TryAdd(typhmsg.MessageID, typhmsg))//returns false if key already exists
+                        {
+                            TyphoonCom.log.DebugFormat("TyphoonMsgManager.Add(TyphoonMsgId) - TyphoonMsgId already exists in CommandQueue, Msg skipped");
+                        }
                         break;
                     case TyphoonMsgType.Request:
-                        queueRequest_ex.TryAdd(typhmsg.MessageID, typhmsg);
+                        if (!queueRequest_ex.TryAdd(typhmsg.MessageID, typhmsg))//returns false if key already exists
+                        {
+                            TyphoonCom.log.DebugFormat("TyphoonMsgManager.Add(TyphoonMsgId) - TyphoonMsgId already exists in RequestQueue, Msg skipped");
+                        }
                         break;
                     case TyphoonMsgType.Responce:
-                        queueResponce_ex.TryAdd(typhmsg.MessageID, typhmsg);
+                        if (!queueResponce_ex.TryAdd(typhmsg.MessageID, typhmsg))//returns false if key already exists
+                        {
+                            TyphoonCom.log.DebugFormat("TyphoonMsgManager.Add(TyphoonMsgId) - TyphoonMsgId already exists in ResponceQueue, Msg skipped");
+                        }
                         break;
                     default:
                         break;
@@ -1689,23 +1699,49 @@ namespace OnvifProxy
             CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
             CancellationToken token = cancelTokenSource.Token;
             Task<TyphoonMsg> task = new Task<TyphoonMsg>(() => TaskGetMsg(MsgID, token), token);
+
             task.Start();
             task.Wait(4500);
             msg = task.Result;
             cancelTokenSource.Cancel();
-            task.Dispose();
+            //task.Dispose();
             cancelTokenSource.Dispose();
             return (msg != null) ? msg : null;
         }
 
         static TyphoonMsg TaskGetMsg(uint MsgID, CancellationToken token)
         {
+            TyphoonMsg typhMsg;
+
             while (!token.IsCancellationRequested)
             {
-                //check queue
-                Thread.Sleep(500);//wait for next loop
-
-                return new TyphoonMsg(TyphoonMsgType.Command);
+                if (TyphoonMsgManager.queueResponce_ex.Count > 0)
+                {
+                    try
+                    {
+                        if (TyphoonMsgManager.queueResponce_ex.TryRemove(MsgID, out typhMsg))
+                        {
+                            Console.WriteLine("Длина ResponceQueue = {0}", TyphoonMsgManager.queueResponce_ex.Count);
+                            return typhMsg;
+                        }
+                        else
+                        {
+                            Thread.Sleep(100);
+                        }                        
+                    }
+                    catch (ArgumentNullException ane)
+                    {
+                        TyphoonCom.log.ErrorFormat("TyphoonMsgManager.TaskGetMsg() - TryRemove - Key=null {0}", ane.Message);
+                    }
+                    catch (Exception ex)
+                    {
+                        TyphoonCom.log.ErrorFormat("TyphoonMsgManager.TaskGetMsg() - TryRemove - {0}", ex.Message);
+                    }
+                }
+                else
+                {
+                    Thread.Sleep(100);
+                }                
             }
             return null;
         }
