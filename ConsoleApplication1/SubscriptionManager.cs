@@ -156,6 +156,7 @@ namespace OnvifProxy
     public static class EventStorage
     {
         public static Collection<TyphoonEvent> storage = new Collection<TyphoonEvent>();
+        //public static ConcurrentDictionary<TyphoonEvent.,TyphoonEvent> storage = new ConcurrentBag<TyphoonEvent>();
 
         public static void AddEvent(TyphoonEvent typhoonEvent)
         {

@@ -196,14 +196,12 @@ namespace OnvifProxy
             nvtClientCollection = null;
             commandBuffer = null;
         }
-
-
+        
         private static void OnConnectionTimeoutEvent(object source, ElapsedEventArgs e)
         {
             OnConnectionFailed(source, e);
         }
-
-
+        
         private static void Connect()
         {
             try
@@ -259,7 +257,6 @@ namespace OnvifProxy
                 if (!flg_ConnectionFailedActive) OnTyphoonDisconnect();
             }
         }
-
 
         private static void Process()
         {
@@ -1574,8 +1571,8 @@ namespace OnvifProxy
         internal static ConcurrentDictionary<UInt32, TyphoonMsg> queueResponce_ex = new ConcurrentDictionary<uint, TyphoonMsg>();
         internal static ConcurrentDictionary<UInt32, TyphoonMsg> queueCmd_ex = new ConcurrentDictionary<uint, TyphoonMsg>();
         volatile static bool flg_timeout=false;
-
         static UInt32 MsgIDCounter;
+
         static TyphoonMsgManager()
         {
             ////for testing;
@@ -1583,7 +1580,6 @@ namespace OnvifProxy
             //eventThread.IsBackground = true;
             //eventThread.Start();
         }
-
         static void EventPuller()
         {
             bool rettryadd = false;
