@@ -50,7 +50,7 @@ namespace OnvifProxy
                 {
                     TyphoonMsg typhmsg = new TyphoonMsg(TyphoonMsgType.Request);
                     typhmsg.byteMessageData = TyphoonCom.FormPacket(TyphoonCom.FormCommand(201, 1, FormNVTResponse(e.EndpointDiscoveryMetadata), msgID));
-                    TyphoonMsgManager.Add(typhmsg);
+                    TyphoonMsgManager.SendMsg(typhmsg);
                 }
             }
             else

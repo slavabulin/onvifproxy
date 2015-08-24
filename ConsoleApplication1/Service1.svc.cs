@@ -739,7 +739,13 @@ namespace OnvifProxy
 
                 switch (request.Category[0])
                 {
-                    case CapabilityCategory.All: getCapabilitiesResponse.Capabilities = confstr.Capabilities;
+                    //--------------------------------------------------
+                    // всё что есть
+                    // ----- хня, не спрашивает данные от тайфуна, берет 
+                    // ----- только из конфига
+                    //--------------------------------------------------
+                    case CapabilityCategory.All:
+                        getCapabilitiesResponse.Capabilities = confstr.Capabilities;
                         return getCapabilitiesResponse;
                     //--------------------------------------------------
                     // обязательные разделы - Device, Media, Events
@@ -760,60 +766,31 @@ namespace OnvifProxy
                                 TyphMsg.MessageID += tmp[9 - a];
                             }
                             TyphMsg.byteMessageData = TyphoonCom.FormPacket(tmp);
-                            TyphoonMsgManager.Add(TyphMsg);
+                            TyphoonMsgManager.SendMsg(TyphMsg);
+                            //----------------------------------------------
+                            ConfigStruct tmpconfstr = new ConfigStruct();
 
+                            TyphMsg = TyphoonMsgManager.GetMsg(TyphMsg.MessageID);
+                            if (TyphMsg == null) return null;
+                            Buf = TyphoonCom.ParseMem(0, TyphMsg.stringMessageData);
+
+                            String DataString = "<?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022 ?><ConfigStruct xmlns:xsd=\u0022http://www.w3.org/2001/XMLSchema\u0022 xmlns:xsi=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022>";
                             {
-                                if(TyphoonMsgManager.queueResponce_ex.Count > 0)
+                                DataString = String.Concat(DataString, "<IPAddr>", confstr.IPAddr, "</IPAddr>");
+                                Buf = Buf.Replace("<Device>", "<Device  xmlns=\u0022http://www.onvif.org/ver10/schema\u0022>");
+                                DataString = String.Concat(DataString, Buf);
+                                DataString = String.Concat(DataString, "</ConfigStruct>");
+                                tmpconfstr = conf.DeserializeString(confstr, DataString);
+                                try
                                 {
-                                    ConfigStruct tmpconfstr = new ConfigStruct();
-
-                                    try
-                                    {
-                                        //находим в очереди ответ с ID отправленного нами запроса
-                                        Buf = TyphoonMsgManager.queueResponce_ex.Single(TyphoonMessage => TyphoonMessage.Value.MessageID == TyphMsg.MessageID).Value.stringMessageData;
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        TyphoonCom.log.ErrorFormat("от Typhoon пришли сообщения с одинаковыми ID или нет ни одного сообщения с таким ID {0}", ex.Message);
-                                    }
-                                    //удаляем из очереди мессагу с ID отправленного нами запроса
-                                    try
-                                    {
-                                        TyphoonMsgManager.queueResponce_ex.TryRemove(TyphMsg.MessageID, out tmpmsg);
-
-                                        //рихтуем данные 
-                                        Buf = TyphoonCom.ParseMem(0, Buf);
-                                        String DataString = "<?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022 ?><ConfigStruct xmlns:xsd=\u0022http://www.w3.org/2001/XMLSchema\u0022 xmlns:xsi=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022>";
-                                        //-------------------
-                                        {
-                                            DataString = String.Concat(DataString, "<IPAddr>", confstr.IPAddr, "</IPAddr>");
-                                            Buf = Buf.Replace("<Device>", "<Device  xmlns=\u0022http://www.onvif.org/ver10/schema\u0022>");
-                                            DataString = String.Concat(DataString, Buf);
-                                            DataString = String.Concat(DataString, "</ConfigStruct>");
-                                            tmpconfstr = conf.DeserializeString(confstr, DataString);
-                                            try
-                                            {
-                                                confstr.Capabilities.Device.IO = tmpconfstr.Capabilities.Device.IO;
-                                            }
-                                            catch (NullReferenceException e)
-                                            {
-                                                Console.WriteLine("GetCapabilities: {0}", e.Message);
-                                            }
-                                        }
-                                        //-------------------           
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        TyphoonCom.log.Error(ex.Message);
-                                    }
-
+                                    confstr.Capabilities.Device.IO = tmpconfstr.Capabilities.Device.IO;
                                 }
-                                else
+                                catch (NullReferenceException e)
                                 {
-                                    Console.WriteLine("AddCommand returned false");
+                                    Console.WriteLine("GetCapabilities: {0}", e.Message);
                                 }
                             }
-                            //--------------------------------------------------
+
                             getCapabilitiesResponse.Capabilities.Device = confstr.Capabilities.Device;
                             return getCapabilitiesResponse;
                         }
@@ -838,7 +815,7 @@ namespace OnvifProxy
                             TyphoonMsg typhMsg = new TyphoonMsg(TyphoonMsgType.Request);
                             typhMsg.byteMessageData = TyphoonCom.FormPacket(tmp);
 
-                            TyphoonMsgManager.Add(typhMsg);
+                            TyphoonMsgManager.SendMsg(typhMsg);
 
                             {
                                 do
@@ -936,11 +913,9 @@ namespace OnvifProxy
                         }
 
                     case CapabilityCategory.Events:
-                        //Console.WriteLine("point 4");
                         if (confstr.Capabilities.Events != null)
                         {
                             getCapabilitiesResponse.Capabilities.Events = confstr.Capabilities.Events;
-                            //TyphoonCom.log.DebugFormat("GetCapabilities.request - {0}", request.Category[0].ToString());
                             return getCapabilitiesResponse;
                         }
                         else
@@ -2573,7 +2548,7 @@ namespace OnvifProxy
             TyphoonMsg tmpMsg = new TyphoonMsg(TyphoonMsgType.Request);
             byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 6, null, 0)).Length)];
             tmpMsg.byteMessageData = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 6, null, 0));
-            TyphoonMsgManager.Add(tmpMsg);
+            TyphoonMsgManager.SendMsg(tmpMsg);
 
             TyphoonCom.log.Debug("Service1: GetVideoSources added to commandQueue");
 
@@ -3200,7 +3175,7 @@ namespace OnvifProxy
 
             TyphoonMsg typhmsg = new TyphoonMsg(TyphoonMsgType.Request);
             typhmsg.byteMessageData = TyphoonCom.FormPacket(tmp);
-            TyphoonMsgManager.Add(typhmsg);
+            TyphoonMsgManager.SendMsg(typhmsg);
             //TyphoonCom.AddCommand(TyphoonCom.FormPacket(tmp));
 
             for (int a = 0; a < 4; a++)
