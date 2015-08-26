@@ -300,7 +300,8 @@ namespace OnvifProxy
                                     0,
                                     TyphoonMsgManager.queueRequest_ex.ElementAt(0).Value.byteMessageData.Length);                                
                                 //Console.Write('2');
-                                TyphoonMsgManager.queueRequest_ex.TryRemove(TyphoonMsgManager.queueRequest_ex.ElementAt(0).Key, out tmpmsg);
+                                //if(
+                                    TyphoonMsgManager.queueRequest_ex.TryRemove(TyphoonMsgManager.queueRequest_ex.ElementAt(0).Key, out tmpmsg);
                                 //Console.WriteLine('3');
                             }
                         }
@@ -359,7 +360,6 @@ namespace OnvifProxy
         {
             if (TyphoonCom.flg_Connected)
             {
-                //TyphoonMsg typhmsg = new TyphoonMsg(TyphoonMsgType.Request);
                 TyphoonMsg typhmsg = new TyphoonMsg(TyphoonMsgType.Zond);
                 typhmsg.byteMessageData = FormPacket(null);
                 TyphoonMsgManager.SendMsg(typhmsg);
@@ -426,7 +426,7 @@ namespace OnvifProxy
 
 
         //---------------------------------------------------------
-        //разбирает команды, пришедшие в пакете
+        // разбирает команды, пришедшие в пакете
         //---------------------------------------------------------
         private static void CommandParse(byte[] CommandBuff)
         {
@@ -582,8 +582,10 @@ namespace OnvifProxy
             }
         }
 
-
-        //разбор очереди команд, пришедших от тайфуна, вертится в отдельном потоке
+        //---------------------------------------------------------
+        // разбор очереди команд, пришедших от тайфуна, 
+        // вертится в отдельном потоке
+        //---------------------------------------------------------
         private static void ParseQueueCmd()
         {
             TyphoonMsg typhmsg, tmpmsg ;
@@ -595,9 +597,10 @@ namespace OnvifProxy
             {
                 lock ((object)TyphoonMsgManager.queueCmd_ex)
                 {
+                    //крутится пока не разберет всю очередь
+                    //команд от тайфуна, потом выходит 
                     while(TyphoonMsgManager.queueCmd_ex.Count>0)
                     {
-                        Thread.Sleep(1);
                         try
                         {
                             typhmsg = TyphoonMsgManager.queueCmd_ex.ElementAt(0).Value;
@@ -608,18 +611,23 @@ namespace OnvifProxy
                                     #region
                                     ///пнуть UdpDiscoClient
                                     new NVTDiscoClient(typhmsg.MessageID);
+                                    if(TyphoonMsgManager.queueCmd_ex.TryRemove(typhmsg.MessageID, out typhmsg))
+                                    {
+                                        Console.WriteLine("removing passed !");
+                                    };
                                     break;
                                     #endregion
                                 case 2:
                                     #region
-                                    ///дернуть GetDeviceInformation()
-                                    ///у NVTClient
+                                    ///дернуть GetDeviceInformation() у NVTClient
                                     Console.WriteLine("SubCom - 2 - GetDeviceInformation");
+                                    Console.WriteLine("ID - {0}", typhmsg.MessageID);
                                     typhmsg.stringMessageData = typhmsg.stringMessageData.Remove(0, 4);
 
                                     try
                                     {
-                                        nvtClient = TyphoonCom.nvtClientCollection.Single(NVTServiceClient => NVTServiceClient.Endpoint.ListenUri == (new Uri(typhmsg.stringMessageData)));
+                                        nvtClient = TyphoonCom.nvtClientCollection.Single(NVTServiceClient =>
+                                            NVTServiceClient.Endpoint.ListenUri == (new Uri(typhmsg.stringMessageData)));
                                     }
                                     catch (Exception ex)
                                     {
@@ -631,7 +639,7 @@ namespace OnvifProxy
                                         else
                                         {
                                             Console.WriteLine("Не удалось создать NVTServiceClient");
-                                            break;
+                                            break;// и чо?
                                         }
                                     }
 
@@ -653,7 +661,8 @@ namespace OnvifProxy
                                     b_hardwareid = MakeMem(hardwareid);
                                     b_manufacturer = MakeMem(manufacturer);
 
-                                    b_totalData = new byte[(b_model.Length + b_firmware.Length + b_serial.Length + b_hardwareid.Length + b_manufacturer.Length)];
+                                    b_totalData = new byte[(b_model.Length + b_firmware.Length + b_serial.Length
+                                        + b_hardwareid.Length + b_manufacturer.Length)];
                                     for (int a = 0; a < b_manufacturer.Length; a++)
                                     {
                                         b_totalData[a + ptr] = b_manufacturer[a];
@@ -682,10 +691,11 @@ namespace OnvifProxy
                                     ptr += b_hardwareid.Length;
 
                                     //потом отдать тайфуну
-                                    //AddCommand(FormPacket(FormCommand(201, 2, b_totalData, typhMsg.MessageID)));                    
                                     typhmsg.byteMessageData = FormPacket(FormCommand(201, 2, b_totalData, typhmsg.MessageID));
-                                    TyphoonMsgManager.SendMsg(typhmsg);
-
+                                    if(TyphoonMsgManager.SendMsg(typhmsg))
+                                    {
+                                        TyphoonCom.log.DebugFormat("sending succeseed");
+                                    }
                                     break;
                                     #endregion
                                 case 3:
@@ -1032,7 +1042,8 @@ namespace OnvifProxy
                                     #endregion
                                 default:
                                     ///сообщить о неизвестном номере субкоманды
-                                    log.ErrorFormat("В очередь команд от тайфуна (queueCmd) пришла команда с неизвестным номером субкоманды - {0}", typhmsg.MessageSubComNum);
+                                    log.ErrorFormat("В очередь команд от тайфуна (queueCmd) пришла команда с неизвестным"
+                                        +" номером субкоманды - {0}", typhmsg.MessageSubComNum);
                                     break;
                             }
                             if(TyphoonMsgManager.queueCmd_ex.Count!=0)
@@ -1044,6 +1055,7 @@ namespace OnvifProxy
                         }
                         catch(NullReferenceException nre)
                         { }
+                        Thread.Sleep(1);
                     }
                 }
             }
@@ -1137,7 +1149,7 @@ namespace OnvifProxy
 
 
         //---------------------------------------------------------------------------------------
-        //формирование команды для дальнейшего формирования пакета и отправки Тайфуну
+        // формирование команды для дальнейшего формирования пакета и отправки Тайфуну
         // на входе - номер команды и данные для неё, выход - массив байт для вставки в пакет
         //---------------------------------------------------------------------------------------
         public static byte[] FormCommand(ushort ComNum, int SubComNum, byte[] Data, uint MessageID)
@@ -1479,7 +1491,15 @@ namespace OnvifProxy
         {
             get
             {
-                return Encoding.GetEncoding(1251).GetBytes(messageData);
+                if (messageData == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return Encoding.GetEncoding(1251).GetBytes(messageData);
+                }
+                
             }
             set
             {
@@ -1499,6 +1519,10 @@ namespace OnvifProxy
             }
         }
 
+        //---------------------------------------------------------------------------------------
+        // здесь контрольное удаление месседжей из очередей, если они не отправлены (а значит и 
+        // удалены) в течении 5 секунд
+        //---------------------------------------------------------------------------------------
         void OnTyphoonMessageTimeout(object source, ElapsedEventArgs e)
         {
             TyphoonMsg msg;
@@ -1507,14 +1531,28 @@ namespace OnvifProxy
             {
                 //they say that TryRemove returns false only because the key was already removed
                 case TyphoonMsgType.Command:
-                    TyphoonMsgManager.queueCmd_ex.TryRemove(MessageID, out msg);
-                    TyphoonCom.log.DebugFormat("Msg removed - {0} left", TyphoonMsgManager.queueCmd_ex.Count.ToString());
+                    if(TyphoonMsgManager.queueCmd_ex.TryRemove(MessageID, out msg))
+                    {
+                        TyphoonCom.log.DebugFormat("Msg removed from Command queue by timeout- {0} left", TyphoonMsgManager.queueCmd_ex.Count.ToString());
+                    }                    
                     break;
                 case TyphoonMsgType.Request:
-                    TyphoonMsgManager.queueRequest_ex.TryRemove(MessageID, out msg);
+                    if(TyphoonMsgManager.queueRequest_ex.TryRemove(MessageID, out msg))
+                    {
+                        TyphoonCom.log.DebugFormat("Msg removed from Request queue by timeout- {0} left", TyphoonMsgManager.queueCmd_ex.Count.ToString());
+                    }                    
                     break;
                 case TyphoonMsgType.Responce:
-                    TyphoonMsgManager.queueResponce_ex.TryRemove(MessageID, out msg);
+                    if (TyphoonMsgManager.queueResponce_ex.TryRemove(MessageID, out msg))
+                    {
+                        TyphoonCom.log.DebugFormat("Msg removed from Response queue by timeout- {0} left", TyphoonMsgManager.queueCmd_ex.Count.ToString());
+                    }                    
+                    break;
+                case TyphoonMsgType.Zond:
+                    if(TyphoonMsgManager.queueRequest_ex.TryRemove(MessageID, out msg))
+                    {
+                        TyphoonCom.log.DebugFormat("Zond removed by timeout - {0} left", TyphoonMsgManager.queueCmd_ex.Count.ToString());
+                    };                    
                     break;
             }
         }
@@ -1615,46 +1653,56 @@ namespace OnvifProxy
         //---------------------------------------------------------------------------------------
         // метод - засылалка, засовывает сформированную мессагу для тайфуна в очередь на отправку
         //---------------------------------------------------------------------------------------
-        public static void SendMsg(TyphoonMsg typhmsg)
+        public static bool SendMsg(TyphoonMsg typhmsg)
         {
-            //int i = 1;
-            //msgID может быть только у зонда
-            //так, нахуй это если счетчик в FormCommand?
-            if (typhmsg.MessageID == 0|| typhmsg.MessageType != TyphoonMsgType.Zond)
+            // у зонда MsgId всегда 0, у остальных от 1 до Uint.MaxValue
+            if (typhmsg.MessageType == TyphoonMsgType.Zond) typhmsg.MessageID = 0;
+            if (typhmsg.MessageID == 0 && typhmsg.MessageType != TyphoonMsgType.Zond)
             {
                 if (MsgIDCounter == uint.MaxValue || MsgIDCounter == 0) MsgIDCounter = 1;
                 typhmsg.MessageID = MsgIDCounter;
                 MsgIDCounter++;
             }
+            
 
             //TyphoonCom.log.DebugFormat("TyphoonMsg_Ex added to the queue {0}", typhmsg.MessageType.ToString());
             if(typhmsg!=null)
             {
-                //i++;
                 switch (typhmsg.MessageType)
                 {
                     case TyphoonMsgType.Command:
                         if (!queueCmd_ex.TryAdd(typhmsg.MessageID, typhmsg))//returns false if key already exists
                         {
-                            TyphoonCom.log.DebugFormat("TyphoonMsgManager.SendMsg(TyphoonMsgId) - TyphoonMsgId already exists in CommandQueue, Msg skipped");
+                            TyphoonCom.log.DebugFormat("TyphoonMsgManager.SendMsg() failed to send msg - TyphoonMsgId already exists in CommandQueue, Msg skipped");
+                            return false;
                         }
-                        break;
+                        return true;
                     case TyphoonMsgType.Request:
                         if (!queueRequest_ex.TryAdd(typhmsg.MessageID, typhmsg))//returns false if key already exists
                         {
-                            TyphoonCom.log.DebugFormat("TyphoonMsgManager.SendMsg(TyphoonMsgId) - TyphoonMsgId already exists in RequestQueue, Msg skipped");
+                            TyphoonCom.log.DebugFormat("TyphoonMsgManager.SendMsg() failed to send msg - TyphoonMsgId already exists in RequestQueue, Msg skipped");
+                            return false;
                         }
-                        break;
+                        return true;
                     case TyphoonMsgType.Responce:
                         if (!queueResponce_ex.TryAdd(typhmsg.MessageID, typhmsg))//returns false if key already exists
                         {
-                            TyphoonCom.log.DebugFormat("TyphoonMsgManager.SendMsg(TyphoonMsgId) - TyphoonMsgId already exists in ResponceQueue, Msg skipped");
+                            TyphoonCom.log.DebugFormat("TyphoonMsgManager.SendMsg() failed to send msg - TyphoonMsgId already exists in ResponceQueue, Msg skipped");
+                            return false;
                         }
-                        break;
+                        return true;
+                    case TyphoonMsgType.Zond:
+                        if (!queueRequest_ex.TryAdd(typhmsg.MessageID, typhmsg))//returns false if key already exists
+                        {
+                            TyphoonCom.log.DebugFormat("TyphoonMsgManager.SendMsg() failed to send Zond - TyphoonMsgId already exists in RequestQueue, Msg skipped");
+                            return false;
+                        }
+                        return true;
                     default:
-                        break;
+                        return false;
                 }
             }
+            return false;
         }
 
         //---------------------------------------------------------------------------------------
@@ -1728,6 +1776,6 @@ namespace OnvifProxy
         Request,
         Responce,
         Command,
-        Zond
+        Zond// у зонда MsgId всегда 0, у остальных от 1 до Uint.MaxValue
     }
 }

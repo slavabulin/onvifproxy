@@ -49,9 +49,21 @@ namespace OnvifProxy
                 if (confstr.Capabilities.Device.XAddr != e.EndpointDiscoveryMetadata.ListenUris[0].OriginalString)
                 {
                     TyphoonMsg typhmsg = new TyphoonMsg(TyphoonMsgType.Request);
-                    typhmsg.byteMessageData = TyphoonCom.FormPacket(TyphoonCom.FormCommand(201, 1, FormNVTResponse(e.EndpointDiscoveryMetadata), msgID));
-                    //typhmsg.byteMessageData = TyphoonCom.FormPacket(TyphoonCom.FormCommand(201, 1, FormNVTResponse(e.EndpointDiscoveryMetadata), 0));
-                    TyphoonMsgManager.SendMsg(typhmsg);
+                    
+                    //byte[] tmp = TyphoonCom.FormCommand(201, 1, FormNVTResponse(e.EndpointDiscoveryMetadata), 0);
+                    byte[] tmp = TyphoonCom.FormCommand(201, 1, FormNVTResponse(e.EndpointDiscoveryMetadata), msgID);
+                    for (int a = 0; a < 4; a++)
+                    {
+                        typhmsg.MessageID = typhmsg.MessageID << 8;
+                        typhmsg.MessageID += tmp[9 - a];
+                    }
+                    typhmsg.byteMessageData = TyphoonCom.FormPacket(tmp);
+
+                    Console.WriteLine("msgID = {0}", typhmsg.MessageID);
+                    if(!TyphoonMsgManager.SendMsg(typhmsg))
+                    {
+                        Console.WriteLine("XXXXXXXX");
+                    }
                 }
             }
             else
