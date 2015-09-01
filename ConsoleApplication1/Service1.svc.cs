@@ -766,7 +766,7 @@ namespace OnvifProxy
                                 TyphMsg.MessageID += tmp[9 - a];
                             }
                             TyphMsg.byteMessageData = TyphoonCom.FormPacket(tmp);
-                            TyphoonMsgManager.SendMsg(TyphMsg);
+                            TyphoonMsgManager.EnqueueMsg(TyphMsg);
                             //----------------------------------------------
                             ConfigStruct tmpconfstr = new ConfigStruct();
 
@@ -815,22 +815,22 @@ namespace OnvifProxy
                             TyphoonMsg typhMsg = new TyphoonMsg(TyphoonMsgType.Request);
                             typhMsg.byteMessageData = TyphoonCom.FormPacket(tmp);
 
-                            TyphoonMsgManager.SendMsg(typhMsg);
+                            TyphoonMsgManager.EnqueueMsg(typhMsg);
 
                             {
                                 do
                                 {
                                     Thread.Sleep(1);
-                                } while (TyphoonMsgManager.queueResponce_ex.Count == 0);
+                                } while (TyphoonMsgManager.queueResponceFromTyphoon.Count == 0);
 
-                                if (TyphoonMsgManager.queueResponce_ex.Count > 0)
+                                if (TyphoonMsgManager.queueResponceFromTyphoon.Count > 0)
                                 {
                                     ConfigStruct tmpconfstr = new ConfigStruct();
 
                                     try
                                     {
                                         //находим в очереди ответ с ID отправленного нами запроса
-                                        Buf = TyphoonMsgManager.queueResponce_ex.Single(TyphoonMessage => TyphoonMessage.Value.MessageID == TyphMsg.MessageID).Value.stringMessageData;
+                                        Buf = TyphoonMsgManager.queueResponceFromTyphoon.Single(TyphoonMessage => TyphoonMessage.Value.MessageID == TyphMsg.MessageID).Value.stringMessageData;
                                     }
                                     catch (Exception ex)
                                     {
@@ -839,7 +839,7 @@ namespace OnvifProxy
                                     //удаляем из очереди мессагу с ID отправленного нами запроса
                                     try
                                     {
-                                        TyphoonMsgManager.queueResponce_ex.TryRemove(TyphMsg.MessageID, out tmpmsg);
+                                        TyphoonMsgManager.queueResponceFromTyphoon.TryRemove(TyphMsg.MessageID, out tmpmsg);
                                         ////рихтуем данные 
                                         if (Buf.Length == 12)
                                         {
@@ -2548,16 +2548,16 @@ namespace OnvifProxy
             TyphoonMsg tmpMsg = new TyphoonMsg(TyphoonMsgType.Request);
             byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 6, null, 0)).Length)];
             tmpMsg.byteMessageData = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 6, null, 0));
-            TyphoonMsgManager.SendMsg(tmpMsg);
+            TyphoonMsgManager.EnqueueMsg(tmpMsg);
 
             TyphoonCom.log.Debug("Service1: GetVideoSources added to commandQueue");
 
             do
             {
                 Thread.Sleep(1);
-            } while (TyphoonMsgManager.queueResponce_ex.Count== 0);
+            } while (TyphoonMsgManager.queueResponceFromTyphoon.Count== 0);
 
-            if (TyphoonMsgManager.queueResponce_ex.Count > 0)
+            if (TyphoonMsgManager.queueResponceFromTyphoon.Count > 0)
             {
                 ///извлекаем MessageID из созданной команды
                 ///и кладем в TyphMsg.MessageID, чтобы потом 
@@ -2570,8 +2570,8 @@ namespace OnvifProxy
                 }
                 try
                 {
-                    TyphMsg.stringMessageData = TyphoonMsgManager.queueResponce_ex.Single(TyphoonMessage => TyphoonMessage.Value.MessageID == TyphMsg.MessageID).Value.stringMessageData;
-                    TyphoonMsgManager.queueResponce_ex.TryRemove(TyphMsg.MessageID, out tmpmsg);
+                    TyphMsg.stringMessageData = TyphoonMsgManager.queueResponceFromTyphoon.Single(TyphoonMessage => TyphoonMessage.Value.MessageID == TyphMsg.MessageID).Value.stringMessageData;
+                    TyphoonMsgManager.queueResponceFromTyphoon.TryRemove(TyphMsg.MessageID, out tmpmsg);
                 }
                 catch (Exception ex)
                 {
@@ -3175,7 +3175,7 @@ namespace OnvifProxy
 
             TyphoonMsg typhmsg = new TyphoonMsg(TyphoonMsgType.Request);
             typhmsg.byteMessageData = TyphoonCom.FormPacket(tmp);
-            TyphoonMsgManager.SendMsg(typhmsg);
+            TyphoonMsgManager.EnqueueMsg(typhmsg);
             //TyphoonCom.AddCommand(TyphoonCom.FormPacket(tmp));
 
             for (int a = 0; a < 4; a++)
@@ -3188,16 +3188,16 @@ namespace OnvifProxy
             do
             {
                 Thread.Sleep(1);
-            } while (TyphoonMsgManager.queueResponce_ex.Count == 0);
+            } while (TyphoonMsgManager.queueResponceFromTyphoon.Count == 0);
 
-            if (TyphoonMsgManager.queueResponce_ex.Count > 0)            
+            if (TyphoonMsgManager.queueResponceFromTyphoon.Count > 0)            
             {
                 try
                 {
                     //находим в очереди ответ с ID отправленного нами запроса
                     //Buf = TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID).MessageData;
                     TyphoonMsg tmptyphmsg = new TyphoonMsg(TyphoonMsgType.Responce);
-                    TyphoonMsgManager.queueResponce_ex.TryGetValue(TyphMsg.MessageID, out tmptyphmsg);
+                    TyphoonMsgManager.queueResponceFromTyphoon.TryGetValue(TyphMsg.MessageID, out tmptyphmsg);
                     Buf = tmptyphmsg.stringMessageData;
                     Buf = TyphoonCom.ParseMem(0, Buf);
                 }

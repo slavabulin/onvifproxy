@@ -49,20 +49,27 @@ namespace OnvifProxy
                 if (confstr.Capabilities.Device.XAddr != e.EndpointDiscoveryMetadata.ListenUris[0].OriginalString)
                 {
                     TyphoonMsg typhmsg = new TyphoonMsg(TyphoonMsgType.Request);
-                    
-                    //byte[] tmp = TyphoonCom.FormCommand(201, 1, FormNVTResponse(e.EndpointDiscoveryMetadata), 0);
-                    byte[] tmp = TyphoonCom.FormCommand(201, 1, FormNVTResponse(e.EndpointDiscoveryMetadata), msgID);
+                    //есть опасность, что ID пересекутся, MessageID надо сформировать по значению от счетчика внутри FormCommand
+                    //создадим мессагу с ID счетчика
+                    byte[] tmp = TyphoonCom.FormCommand(201, 1, FormNVTResponse(e.EndpointDiscoveryMetadata), 0);
+                    //byte[] tmp = TyphoonCom.FormCommand(201, 1, FormNVTResponse(e.EndpointDiscoveryMetadata), msgID);
+                    //положим ID счетчика в typhmsg.MessageID
                     for (int a = 0; a < 4; a++)
                     {
                         typhmsg.MessageID = typhmsg.MessageID << 8;
                         typhmsg.MessageID += tmp[9 - a];
                     }
+                    //теперь заменим данные в мессаге на данные с msgID
+                    tmp = TyphoonCom.FormCommand(201, 1, FormNVTResponse(e.EndpointDiscoveryMetadata), msgID);
                     typhmsg.byteMessageData = TyphoonCom.FormPacket(tmp);
 
-                    Console.WriteLine("msgID = {0}", typhmsg.MessageID);
-                    if(!TyphoonMsgManager.SendMsg(typhmsg))
+                    Console.WriteLine("ClientFindProgressChanged typhmsg.MessageID = {0}", typhmsg.MessageID);
+                    Console.WriteLine("ClientFindProgressChanged msgID = {0}", msgID);
+                    //отправим пакет, у которого typhmsg.MessageID отличается msgID
+                    //это нужно для того, чтобы Тайфун различал ответы на разные запросы (уточнить у Шарова)
+                    if(!TyphoonMsgManager.EnqueueMsg(typhmsg))
                     {
-                        Console.WriteLine("XXXXXXXX");
+                        Console.WriteLine("Об этом девайсе Тайфун не узнает ... Да и хрен с ним.");
                     }
                 }
             }
