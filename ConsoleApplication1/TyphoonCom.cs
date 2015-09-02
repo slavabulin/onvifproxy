@@ -587,476 +587,477 @@ namespace OnvifProxy
             binding = new WSHttpBinding(SecurityMode.None);
 
             //---------------------------------------------------------
+            //крутится пока не разберет всю очередь
+            //команд от тайфуна, потом выходит 
+            while (TyphoonMsgManager.queueCommandsFromTyphoon.Count > 0)
             {
-                lock ((object)TyphoonMsgManager.queueCommandsFromTyphoon)
+                Console.WriteLine("queueCmd.Length - {0}", TyphoonMsgManager.queueCommandsFromTyphoon.Count);
+                try
                 {
-                    //крутится пока не разберет всю очередь
-                    //команд от тайфуна, потом выходит 
-                    while(TyphoonMsgManager.queueCommandsFromTyphoon.Count>0)
+                    typhmsg = TyphoonMsgManager.queueCommandsFromTyphoon.ElementAt(0).Value;
+                    log.DebugFormat("MessageSubComNum =  {0}", typhmsg.MessageSubComNum);
+                    switch (typhmsg.MessageSubComNum)
                     {
-                        Console.WriteLine("queueCmd.Length - {0}", TyphoonMsgManager.queueCommandsFromTyphoon.Count);
-                        try
-                        {
-                            typhmsg = TyphoonMsgManager.queueCommandsFromTyphoon.ElementAt(0).Value;
-                            log.DebugFormat("MessageSubComNum =  {0}", typhmsg.MessageSubComNum);
-                            switch (typhmsg.MessageSubComNum)
+                        case 1:
+                            #region
+                            ///пнуть UdpDiscoClient
+                            new NVTDiscoClient(typhmsg.MessageID);
+                            Console.WriteLine("ID для nvtdiscoclient - {0}", typhmsg.MessageID);
+                            if (TyphoonMsgManager.queueCommandsFromTyphoon.TryRemove(typhmsg.MessageID, out typhmsg))
                             {
-                                case 1:
-                                    #region
-                                    ///пнуть UdpDiscoClient
-                                    new NVTDiscoClient(typhmsg.MessageID);
-                                    Console.WriteLine("ID для nvtdiscoclient - {0}",typhmsg.MessageID);
-                                    if(TyphoonMsgManager.queueCommandsFromTyphoon.TryRemove(typhmsg.MessageID, out typhmsg))
-                                    {
-                                        Console.WriteLine("removing passed !");
-                                    };
+                                Console.WriteLine("removing passed !");
+                            };
+                            break;
+                            #endregion
+                        case 2:
+                            #region
+                            ///дернуть GetDeviceInformation() у NVTClient
+                            Console.WriteLine("SubCom - 2 - GetDeviceInformation");
+                            //Console.WriteLine("ID - {0}", typhmsg.MessageID);
+                            typhmsg.stringMessageData = typhmsg.stringMessageData.Remove(0, 4);
+
+                            try
+                            {
+                                nvtClient = TyphoonCom.nvtClientCollection.Single(NVTServiceClient =>
+                                    NVTServiceClient.Endpoint.ListenUri == (new Uri(typhmsg.stringMessageData)));
+                            }
+                            catch (Exception ex)
+                            {
+                                nvtClient = new NVTServiceClient(binding, (new EndpointAddress(typhmsg.stringMessageData)));
+                                if (nvtClient != null)
+                                {
+                                    nvtClientCollection.Add(nvtClient);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Не удалось создать NVTServiceClient");
+                                    break;// и чо?
+                                }
+                            }
+
+                            string model, firmware, serial, hardwareid, manufacturer;
+                            byte[] b_model, b_firmware, b_serial, b_hardwareid, b_manufacturer, b_totalData;
+                            int ptr = 0;
+                            try
+                            {
+                                manufacturer = nvtClient.GetDeviceInformation(out model, out firmware, out serial, out hardwareid);
+                            }
+                            catch (FaultException ex)
+                            {
+                                log.ErrorFormat("failed to GetDeviceInformation from {0}", typhmsg.stringMessageData);
+                                break;
+                            }
+                            b_model = MakeMem(model);
+                            b_firmware = MakeMem(firmware);
+                            b_serial = MakeMem(serial);
+                            b_hardwareid = MakeMem(hardwareid);
+                            b_manufacturer = MakeMem(manufacturer);
+
+                            b_totalData = new byte[(b_model.Length + b_firmware.Length + b_serial.Length
+                                + b_hardwareid.Length + b_manufacturer.Length)];
+                            for (int a = 0; a < b_manufacturer.Length; a++)
+                            {
+                                b_totalData[a + ptr] = b_manufacturer[a];
+                            }
+                            ptr += b_manufacturer.Length;
+
+                            for (int a = 0; a < b_model.Length; a++)
+                            {
+                                b_totalData[a + ptr] = b_model[a];
+                            }
+                            ptr += b_model.Length;
+                            for (int a = 0; a < b_firmware.Length; a++)
+                            {
+                                b_totalData[a + ptr] = b_firmware[a];
+                            }
+                            ptr += b_firmware.Length;
+                            for (int a = 0; a < b_serial.Length; a++)
+                            {
+                                b_totalData[a + ptr] = b_serial[a];
+                            }
+                            ptr += b_serial.Length;
+                            for (int a = 0; a < b_hardwareid.Length; a++)
+                            {
+                                b_totalData[a + ptr] = b_hardwareid[a];
+                            }
+                            ptr += b_hardwareid.Length;
+
+                            //потом отдать тайфуну
+                            typhmsg.byteMessageData = FormPacket(FormCommand(201, 2, b_totalData, typhmsg.MessageID));
+                            typhmsg.MessageType = TyphoonMsgType.Request;
+                            if (TyphoonMsgManager.EnqueueMsg(typhmsg))
+                            {
+                                TyphoonCom.log.DebugFormat("sending succeseed");
+                            }
+                            else
+                            {
+                                TyphoonCom.log.DebugFormat("sending failed");
+                            }
+                            break;
+                            #endregion
+                        case 3:
+                            #region
+                            ///дернуть GetMediaCapabilities()
+                            ///у NVTClient        
+                            //---------------
+                            Console.WriteLine("SubCom - 3 - GetMediaCapabilities");
+                            typhmsg.stringMessageData = typhmsg.stringMessageData.Remove(0, 4);
+                            ptr = 0;
+                            string xaddr, rtpmulticast, rtp_tcp, rtp_rtsp_tcp;
+                            byte[] b_xaddr, b_rtpmulticast, b_rtp_tcp, b_rtp_rtsp_tcp;
+
+                            try
+                            {
+                                nvtClient = TyphoonCom.nvtClientCollection.Single(NVTServiceClient => NVTServiceClient.Endpoint.ListenUri == (new Uri(typhmsg.stringMessageData)));
+                            }
+                            catch (Exception ex)
+                            {
+                                nvtClient = new NVTServiceClient(binding, (new EndpointAddress(typhmsg.stringMessageData)));
+                                if (nvtClient != null)
+                                {
+                                    nvtClientCollection.Add(nvtClient);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Не удалось создать NVTServiceClient");
                                     break;
-                                    #endregion
-                                case 2:
-                                    #region
-                                    ///дернуть GetDeviceInformation() у NVTClient
-                                    Console.WriteLine("SubCom - 2 - GetDeviceInformation");
-                                    //Console.WriteLine("ID - {0}", typhmsg.MessageID);
-                                    typhmsg.stringMessageData = typhmsg.stringMessageData.Remove(0, 4);
+                                }
+                            }
+                            GetCapabilitiesResponse nvtCapabilitiesResponse;
+                            try
+                            {
+                                nvtCapabilitiesResponse = nvtClient.GetCapabilities(new GetCapabilitiesRequest());
+                            }
+                            catch (FaultException ex)
+                            {
+                                log.ErrorFormat("failed to GetCapabilities from {0}", typhmsg.stringMessageData);
+                                break;
+                            }
 
-                                    try
-                                    {
-                                        nvtClient = TyphoonCom.nvtClientCollection.Single(NVTServiceClient =>
-                                            NVTServiceClient.Endpoint.ListenUri == (new Uri(typhmsg.stringMessageData)));
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        nvtClient = new NVTServiceClient(binding, (new EndpointAddress(typhmsg.stringMessageData)));
-                                        if (nvtClient != null)
-                                        {
-                                            nvtClientCollection.Add(nvtClient);
-                                        }
-                                        else
-                                        {
-                                            Console.WriteLine("Не удалось создать NVTServiceClient");
-                                            break;// и чо?
-                                        }
-                                    }
 
-                                    string model, firmware, serial, hardwareid, manufacturer;
-                                    byte[] b_model, b_firmware, b_serial, b_hardwareid, b_manufacturer, b_totalData;
-                                    int ptr = 0;
-                                    try
-                                    {
-                                        manufacturer = nvtClient.GetDeviceInformation(out model, out firmware, out serial, out hardwareid);
-                                    }
-                                    catch (FaultException ex)
-                                    {
-                                        log.ErrorFormat("failed to GetDeviceInformation from {0}", typhmsg.stringMessageData);
-                                        break;
-                                    }
-                                    b_model = MakeMem(model);
-                                    b_firmware = MakeMem(firmware);
-                                    b_serial = MakeMem(serial);
-                                    b_hardwareid = MakeMem(hardwareid);
-                                    b_manufacturer = MakeMem(manufacturer);
+                            xaddr = nvtCapabilitiesResponse.Capabilities.Media.XAddr;
+                            rtpmulticast = nvtCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTPMulticast.ToString();
+                            rtp_tcp = nvtCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_TCP.ToString();
+                            rtp_rtsp_tcp = nvtCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_RTSP_TCP.ToString();
 
-                                    b_totalData = new byte[(b_model.Length + b_firmware.Length + b_serial.Length
-                                        + b_hardwareid.Length + b_manufacturer.Length)];
-                                    for (int a = 0; a < b_manufacturer.Length; a++)
-                                    {
-                                        b_totalData[a + ptr] = b_manufacturer[a];
-                                    }
-                                    ptr += b_manufacturer.Length;
+                            b_xaddr = MakeMem(xaddr);
+                            b_rtpmulticast = MakeMem(rtpmulticast);
+                            b_rtp_tcp = MakeMem(rtp_tcp);
+                            b_rtp_rtsp_tcp = MakeMem(rtp_rtsp_tcp);
 
-                                    for (int a = 0; a < b_model.Length; a++)
-                                    {
-                                        b_totalData[a + ptr] = b_model[a];
-                                    }
-                                    ptr += b_model.Length;
-                                    for (int a = 0; a < b_firmware.Length; a++)
-                                    {
-                                        b_totalData[a + ptr] = b_firmware[a];
-                                    }
-                                    ptr += b_firmware.Length;
-                                    for (int a = 0; a < b_serial.Length; a++)
-                                    {
-                                        b_totalData[a + ptr] = b_serial[a];
-                                    }
-                                    ptr += b_serial.Length;
-                                    for (int a = 0; a < b_hardwareid.Length; a++)
-                                    {
-                                        b_totalData[a + ptr] = b_hardwareid[a];
-                                    }
-                                    ptr += b_hardwareid.Length;
+                            b_totalData = new byte[(b_xaddr.Length + b_rtpmulticast.Length + b_rtp_tcp.Length + b_rtp_rtsp_tcp.Length)];
 
-                                    //потом отдать тайфуну
-                                    typhmsg.byteMessageData = FormPacket(FormCommand(201, 2, b_totalData, typhmsg.MessageID));
-                                    typhmsg.MessageType = TyphoonMsgType.Request;
-                                    if(TyphoonMsgManager.EnqueueMsg(typhmsg))
-                                    {
-                                        TyphoonCom.log.DebugFormat("sending succeseed");
-                                    }
+                            for (int a = 0; a < b_xaddr.Length; a++)
+                            {
+                                b_totalData[a + ptr] = b_xaddr[a];
+                            }
+                            ptr += b_xaddr.Length;
+
+                            for (int a = 0; a < b_rtpmulticast.Length; a++)
+                            {
+                                b_totalData[a + ptr] = b_rtpmulticast[a];
+                            }
+                            ptr += b_rtpmulticast.Length;
+
+                            for (int a = 0; a < b_rtp_tcp.Length; a++)
+                            {
+                                b_totalData[a + ptr] = b_rtp_tcp[a];
+                            }
+                            ptr += b_rtp_tcp.Length;
+
+                            for (int a = 0; a < b_rtp_rtsp_tcp.Length; a++)
+                            {
+                                b_totalData[a + ptr] = b_rtp_rtsp_tcp[a];
+                            }
+                            ptr += b_rtp_rtsp_tcp.Length;
+                            //потом отдать тайфуну
+                            //AddCommand(FormPacket(FormCommand(201, 3, b_totalData, typhMsg.MessageID)));
+                            typhmsg.byteMessageData = FormPacket(FormCommand(201, 3, b_totalData, typhmsg.MessageID));
+                            typhmsg.MessageType = TyphoonMsgType.Request;
+                            TyphoonMsgManager.EnqueueMsg(typhmsg);
+
+                            break;
+                            #endregion
+                        case 4:
+                            #region
+                            ///дернуть GetMediaProfiles()
+                            ///у NVTClient
+                            Console.WriteLine("SubCom - 4 - GetMediaProfiles");
+                            typhmsg.stringMessageData = typhmsg.stringMessageData.Remove(0, 4);
+                            try
+                            {
+                                nvtClient = TyphoonCom.nvtClientCollection.Single(NVTServiceClient => NVTServiceClient.Endpoint.ListenUri == (new Uri(typhmsg.stringMessageData)));
+                            }
+                            catch (Exception ex)
+                            {
+                                nvtClient = new NVTServiceClient(binding, (new EndpointAddress(typhmsg.stringMessageData)));
+                                if (nvtClient != null)
+                                {
+                                    nvtClientCollection.Add(nvtClient);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Не удалось создать NVTServiceClient");
                                     break;
-                                    #endregion
-                                case 3:
-                                    #region
-                                    ///дернуть GetMediaCapabilities()
-                                    ///у NVTClient        
-                                    //---------------
-                                    Console.WriteLine("SubCom - 3 - GetMediaCapabilities");
-                                    typhmsg.stringMessageData = typhmsg.stringMessageData.Remove(0, 4);
-                                    ptr = 0;
-                                    string xaddr, rtpmulticast, rtp_tcp, rtp_rtsp_tcp;
-                                    byte[] b_xaddr, b_rtpmulticast, b_rtp_tcp, b_rtp_rtsp_tcp;
+                                }
+                            }
 
-                                    try
-                                    {
-                                        nvtClient = TyphoonCom.nvtClientCollection.Single(NVTServiceClient => NVTServiceClient.Endpoint.ListenUri == (new Uri(typhmsg.stringMessageData)));
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        nvtClient = new NVTServiceClient(binding, (new EndpointAddress(typhmsg.stringMessageData)));
-                                        if (nvtClient != null)
-                                        {
-                                            nvtClientCollection.Add(nvtClient);
-                                        }
-                                        else
-                                        {
-                                            Console.WriteLine("Не удалось создать NVTServiceClient");
-                                            break;
-                                        }
-                                    }
-                                    GetCapabilitiesResponse nvtCapabilitiesResponse;
-                                    try
-                                    {
-                                        nvtCapabilitiesResponse = nvtClient.GetCapabilities(new GetCapabilitiesRequest());
-                                    }
-                                    catch (FaultException ex)
-                                    {
-                                        log.ErrorFormat("failed to GetCapabilities from {0}", typhmsg.stringMessageData);
-                                        break;
-                                    }
+                            GetProfilesResponse nvtProfilesResponse;
+                            try
+                            {
+                                nvtProfilesResponse = nvtClient.GetProfiles(new GetProfilesRequest());
+                            }
+                            catch (FaultException ex)
+                            {
+                                log.ErrorFormat("failed to GetProfiles from {0}", typhmsg.stringMessageData);
+                                break;
+                            }
 
+                            using (MemoryStream ms = new MemoryStream())
+                            {
+                                XmlSerializer serializer = new XmlSerializer(typeof(GetProfilesResponse));
 
-                                    xaddr = nvtCapabilitiesResponse.Capabilities.Media.XAddr;
-                                    rtpmulticast = nvtCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTPMulticast.ToString();
-                                    rtp_tcp = nvtCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_TCP.ToString();
-                                    rtp_rtsp_tcp = nvtCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_RTSP_TCP.ToString();
+                                try
+                                {
+                                    serializer.Serialize(ms, nvtProfilesResponse);
+                                }
+                                catch (SerializationException e)
+                                {
+                                    Console.WriteLine("Не могу сериализовать nvtProfilesResponse " + e.Message);
+                                }
+                                catch
+                                {
+                                    Console.WriteLine("Не могу сериализовать nvtProfilesResponse ");
+                                }
+                                byte[] str = ms.ToArray();
 
-                                    b_xaddr = MakeMem(xaddr);
-                                    b_rtpmulticast = MakeMem(rtpmulticast);
-                                    b_rtp_tcp = MakeMem(rtp_tcp);
-                                    b_rtp_rtsp_tcp = MakeMem(rtp_rtsp_tcp);
+                                Encoding unicode = Encoding.Unicode;
+                                Encoding cp1251 = Encoding.GetEncoding(1251);
+                                string OutStr = unicode.GetString(Encoding.Convert(cp1251, unicode, str));
+                                int t = OutStr.IndexOf(">");
+                                OutStr = OutStr.Insert(t + 1, "<Envelope><Body>");
+                                OutStr += "</Body></Envelope>";
+                                byte[] OutAr = MakeMem(OutStr);
+                                //потом отдать тайфуну
+                                //AddCommand(FormPacket(FormCommand(201, 4, OutAr, typhMsg.MessageID)));
+                                typhmsg.byteMessageData = FormPacket(FormCommand(201, 4, OutAr, typhmsg.MessageID));
+                                typhmsg.MessageType = TyphoonMsgType.Request;
+                                TyphoonMsgManager.EnqueueMsg(typhmsg);
+                            }
 
-                                    b_totalData = new byte[(b_xaddr.Length + b_rtpmulticast.Length + b_rtp_tcp.Length + b_rtp_rtsp_tcp.Length)];
+                            break;
+                            #endregion
+                        case 5:
+                            #region
+                            ///дернуть SetVideoEncoderConfiguration и StreamUri()
+                            ///у NVTClient
+                            Console.WriteLine("SubCom - 5 - GetStreamUri");
+                            byte[] b_streamUri = null;
+                            StreamSetup streamSetup = new StreamSetup();
 
-                                    for (int a = 0; a < b_xaddr.Length; a++)
-                                    {
-                                        b_totalData[a + ptr] = b_xaddr[a];
-                                    }
-                                    ptr += b_xaddr.Length;
+                            int tmpptr = 0;
+                            string xaddrs = ParseMem(tmpptr, typhmsg.stringMessageData);
+                            tmpptr += xaddrs.Length + 4;
+                            string stream = ParseMem(tmpptr, typhmsg.stringMessageData);
+                            tmpptr += stream.Length + 4;
+                            string protocol = ParseMem(tmpptr, typhmsg.stringMessageData);
+                            tmpptr += protocol.Length + 4;
+                            string profileToken = ParseMem(tmpptr, typhmsg.stringMessageData);
+                            tmpptr += profileToken.Length + 4;
 
-                                    for (int a = 0; a < b_rtpmulticast.Length; a++)
-                                    {
-                                        b_totalData[a + ptr] = b_rtpmulticast[a];
-                                    }
-                                    ptr += b_rtpmulticast.Length;
-
-                                    for (int a = 0; a < b_rtp_tcp.Length; a++)
-                                    {
-                                        b_totalData[a + ptr] = b_rtp_tcp[a];
-                                    }
-                                    ptr += b_rtp_tcp.Length;
-
-                                    for (int a = 0; a < b_rtp_rtsp_tcp.Length; a++)
-                                    {
-                                        b_totalData[a + ptr] = b_rtp_rtsp_tcp[a];
-                                    }
-                                    ptr += b_rtp_rtsp_tcp.Length;
-                                    //потом отдать тайфуну
-                                    //AddCommand(FormPacket(FormCommand(201, 3, b_totalData, typhMsg.MessageID)));
-                                    typhmsg.byteMessageData = FormPacket(FormCommand(201, 3, b_totalData, typhmsg.MessageID));
-                                    TyphoonMsgManager.EnqueueMsg(typhmsg);
-
+                            try
+                            {
+                                nvtClient = TyphoonCom.nvtClientCollection.Single(NVTServiceClient => NVTServiceClient.Endpoint.ListenUri == (new Uri(xaddrs)));
+                            }
+                            catch (Exception ex)
+                            {
+                                nvtClient = new NVTServiceClient(binding, (new EndpointAddress(xaddrs)));
+                                if (nvtClient != null)
+                                {
+                                    nvtClientCollection.Add(nvtClient);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Не удалось создать NVTServiceClient");
                                     break;
-                                    #endregion
-                                case 4:
-                                    #region
-                                    ///дернуть GetMediaProfiles()
-                                    ///у NVTClient
-                                    Console.WriteLine("SubCom - 4 - GetMediaProfiles");
-                                    typhmsg.stringMessageData = typhmsg.stringMessageData.Remove(0, 4);
-                                    try
-                                    {
-                                        nvtClient = TyphoonCom.nvtClientCollection.Single(NVTServiceClient => NVTServiceClient.Endpoint.ListenUri == (new Uri(typhmsg.stringMessageData)));
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        nvtClient = new NVTServiceClient(binding, (new EndpointAddress(typhmsg.stringMessageData)));
-                                        if (nvtClient != null)
-                                        {
-                                            nvtClientCollection.Add(nvtClient);
-                                        }
-                                        else
-                                        {
-                                            Console.WriteLine("Не удалось создать NVTServiceClient");
-                                            break;
-                                        }
-                                    }
+                                }
+                            }
 
-                                    GetProfilesResponse nvtProfilesResponse;
-                                    try
-                                    {
-                                        nvtProfilesResponse = nvtClient.GetProfiles(new GetProfilesRequest());
-                                    }
-                                    catch (FaultException ex)
-                                    {
-                                        log.ErrorFormat("failed to GetProfiles from {0}", typhmsg.stringMessageData);
-                                        break;
-                                    }
 
-                                    using (MemoryStream ms = new MemoryStream())
-                                    {
-                                        XmlSerializer serializer = new XmlSerializer(typeof(GetProfilesResponse));
-
-                                        try
-                                        {
-                                            serializer.Serialize(ms, nvtProfilesResponse);
-                                        }
-                                        catch (SerializationException e)
-                                        {
-                                            Console.WriteLine("Не могу сериализовать nvtProfilesResponse " + e.Message);
-                                        }
-                                        catch
-                                        {
-                                            Console.WriteLine("Не могу сериализовать nvtProfilesResponse ");
-                                        }
-                                        byte[] str = ms.ToArray();
-
-                                        Encoding unicode = Encoding.Unicode;
-                                        Encoding cp1251 = Encoding.GetEncoding(1251);
-                                        string OutStr = unicode.GetString(Encoding.Convert(cp1251, unicode, str));
-                                        int t = OutStr.IndexOf(">");
-                                        OutStr = OutStr.Insert(t + 1, "<Envelope><Body>");
-                                        OutStr += "</Body></Envelope>";
-                                        byte[] OutAr = MakeMem(OutStr);
-                                        //потом отдать тайфуну
-                                        //AddCommand(FormPacket(FormCommand(201, 4, OutAr, typhMsg.MessageID)));
-                                        typhmsg.byteMessageData = FormPacket(FormCommand(201, 4, OutAr, typhmsg.MessageID));
-                                        TyphoonMsgManager.EnqueueMsg(typhmsg);
-                                    }
-
+                            switch (stream)
+                            {
+                                case "RTP-Multicast":
+                                    streamSetup.Stream = StreamType.RTPMulticast;
                                     break;
-                                    #endregion
-                                case 5:
-                                    #region
-                                    ///дернуть SetVideoEncoderConfiguration и StreamUri()
-                                    ///у NVTClient
-                                    Console.WriteLine("SubCom - 5 - GetStreamUri");
-                                    byte[] b_streamUri = null;
-                                    StreamSetup streamSetup = new StreamSetup();
-
-                                    int tmpptr = 0;
-                                    string xaddrs = ParseMem(tmpptr, typhmsg.stringMessageData);
-                                    tmpptr += xaddrs.Length + 4;
-                                    string stream = ParseMem(tmpptr, typhmsg.stringMessageData);
-                                    tmpptr += stream.Length + 4;
-                                    string protocol = ParseMem(tmpptr, typhmsg.stringMessageData);
-                                    tmpptr += protocol.Length + 4;
-                                    string profileToken = ParseMem(tmpptr, typhmsg.stringMessageData);
-                                    tmpptr += profileToken.Length + 4;
-
-                                    try
-                                    {
-                                        nvtClient = TyphoonCom.nvtClientCollection.Single(NVTServiceClient => NVTServiceClient.Endpoint.ListenUri == (new Uri(xaddrs)));
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        nvtClient = new NVTServiceClient(binding, (new EndpointAddress(xaddrs)));
-                                        if (nvtClient != null)
-                                        {
-                                            nvtClientCollection.Add(nvtClient);
-                                        }
-                                        else
-                                        {
-                                            Console.WriteLine("Не удалось создать NVTServiceClient");
-                                            break;
-                                        }
-                                    }
-
-
-                                    switch (stream)
-                                    {
-                                        case "RTP-Multicast":
-                                            streamSetup.Stream = StreamType.RTPMulticast;
-                                            break;
-                                        case "RTP-Unicast":
-                                            streamSetup.Stream = StreamType.RTPUnicast;
-                                            break;
-                                        default:
-                                            log.InfoFormat("GetStreamUri для streamSetup пришло {0}", stream);
-                                            break;
-                                    }
-                                    streamSetup.Transport = new Transport();
-                                    switch (protocol)
-                                    {
-                                        case "HTTP":
-                                            streamSetup.Transport.Protocol = TransportProtocol.HTTP;
-                                            break;
-                                        case "RTSP":
-                                            streamSetup.Transport.Protocol = TransportProtocol.RTSP;
-                                            break;
-                                        case "TCP":
-                                            streamSetup.Transport.Protocol = TransportProtocol.TCP;
-                                            break;
-                                        case "UDP":
-                                            streamSetup.Transport.Protocol = TransportProtocol.UDP;
-                                            break;
-                                        default:
-                                            log.InfoFormat("GetStreamUri для streamSetup.Transport.Protocol пришло {0}", protocol);
-                                            break;
-                                    }
-
-                                    //запросить uri соответствующую конфигурации
-                                    MediaUri nvtStreamUri = nvtClient.GetStreamUri(streamSetup, profileToken);
-                                    //потом отдать тайфуну
-                                    b_streamUri = MakeMem(nvtStreamUri.Uri);
-                                    //AddCommand(FormPacket(FormCommand(201, 5, b_streamUri, typhMsg.MessageID)));
-                                    typhmsg.byteMessageData = FormPacket(FormCommand(201, 5, b_streamUri, typhmsg.MessageID));
-                                    TyphoonMsgManager.EnqueueMsg(typhmsg);
+                                case "RTP-Unicast":
+                                    streamSetup.Stream = StreamType.RTPUnicast;
                                     break;
-                                    #endregion
-                                case 6:
-                                    #region
-                                    //пришло событие от тайфуна
-                                    Console.WriteLine("SubCom - 6 - Event came from Typhoon");
-                                    log.DebugFormat("event msg ID - {0}", typhmsg.MessageID);
-                                    byte[] bytes = Encoding.UTF8.GetBytes(typhmsg.stringMessageData.ToCharArray());
-
-                                    byte[] bytes1 = { 0, 0, 0, 0 };
-
-                                    EventData eventdata = new EventData();
-
-                                    for (int y = 0; y < 4; y++)
-                                    {
-                                        bytes1[y] = bytes[y];
-                                    }
-                                    eventdata.Eventtype = ByteArtoInt32(bytes1);
-                                    
-                                    for (int y = 4; y < 8; y++)
-                                    {
-                                        bytes1[y - 4] = bytes[y];
-                                    }
-                                    eventdata.Devicenumber = ByteArtoInt32(bytes1);
-                                    //
-
-                                    for (int y = 8; y < 12; y++)
-                                    {
-                                        bytes1[y - 8] = bytes[y];
-                                    }
-
-                                    uint alst = ByteArtoInt32(bytes1);
-                                    if (alst != 0)
-                                    {
-                                        eventdata.Status = Alarmstatus.AlarmOff;
-                                    }
-                                    else
-                                    {
-                                        eventdata.Status = Alarmstatus.AlarmOn;
-                                    }
-                                    //------------------------------------------
-                                    //здесь добавим в EventStorage
-                                    TyphoonEvent tevent = new TyphoonEvent(eventdata, 60000);
-                                    EventStorage.AddEvent(tevent);
-                                    //------------------------------------------
-                                    //
-                                    object objj = new object();
-                                    
-                                    lock (bnSubscriptionManager.SubscribersCollection)
-                                    {
-                                        try
-                                        {
-                                            foreach (bnSubscriber subscriber in bnSubscriptionManager.SubscribersCollection.Values)
-                                            {
-                                                bnSubscriptionManager.SubscribersCollection.TryRemove(bnSubscriptionManager.SubscribersCollection.First().Key, out subs);
-                                                #region
-                                                if (subscriber.Eventtype == eventdata.Eventtype)
-                                                {
-                                                    Event.Notify1 notify = new Event.Notify1(new Event.Notify());
-                                                    notify.Notify.NotificationMessage = new Event.NotificationMessageHolderType[1];
-                                                    notify.Notify.NotificationMessage[0] = new Event.NotificationMessageHolderType();
-                                                    XmlDocument doc = new XmlDocument();
-                                                    doc.LoadXml("<Notify><NotificationMessage xmlns = 'http://docs.oasis-open.org/wsn/b-2' >"
-                                                    + "<Topic  Dialect='http://docs.oasis-open.org/wsn/t-1/TopicExpression/ConcreteTopic'>"
-                                                        //+ "tns1:VideoSource/MotionAlarm</Topic>"
-                                                    + "tns1:VideoSource</Topic>"
-                                                    + "<Message><tt:Message UtcTime='" + (System.DateTime.UtcNow).ToString("s") + "' "
-                                                    + "PropertyOperation='Initialized' xmlns:tt='http://www.onvif.org/ver10/schema'><tt:Source>"
-                                                    + "<tt:SimpleItem Name='app' Value='changed' /></tt:Source><tt:Key>"
-                                                    + "<tt:SimpleItem Name='channel' Value='0' /></tt:Key><tt:Data><tt:SimpleItem Name='tampering' Value='0' />"
-                                                    + "</tt:Data></tt:Message></Message>"
-                                                    + "</NotificationMessage></Notify>"
-                                                    );
-
-                                                    string strs = "<?xml version='1.0' encoding='utf-8' ?>" + doc.InnerXml.ToString();
-                                                    using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(strs)))
-                                                    {
-                                                        XmlSerializer serializer = new XmlSerializer(typeof(Event.Notify));
-
-                                                        try
-                                                        {
-                                                            notify.Notify = (Event.Notify)serializer.Deserialize(ms);  //                                          
-                                                        }
-                                                        catch (Exception ex)
-                                                        {
-                                                            Console.WriteLine("TyphoonCom: Event: Не могу сериализовать " + ex.Message);
-                                                        }
-
-                                                    }
-                                                    //--------------------------------------
-                                                #endregion
-                                                    try
-                                                    {
-                                                        subscriber.channel.Notify(notify);
-                                                    }
-                                                    catch (Exception ex)
-                                                    {
-                                                        log.Warn(ex.Message.ToString());
-                                                    }
-                                                    //break;
-                                                }
-                                            }
-                                        }
-                                        catch (InvalidOperationException ioe)
-                                        {
-                                            //try to form notify again
-                                            Console.WriteLine("пыщыпщпыщ");
-                                        }
-                                        catch (Exception ex)
-                                        {
-                                            log.Warn(ex.Message.ToString());
-                                        }
-
-                                    }
-                                    break;
-                                    #endregion
                                 default:
-                                    ///сообщить о неизвестном номере субкоманды
-                                    log.ErrorFormat("В очередь команд от тайфуна (queueCmd) пришла команда с неизвестным"
-                                        +" номером субкоманды - {0}", typhmsg.MessageSubComNum);
+                                    log.InfoFormat("GetStreamUri для streamSetup пришло {0}", stream);
                                     break;
                             }
-                            if(TyphoonMsgManager.queueCommandsFromTyphoon.Count!=0)
-                            TyphoonMsgManager.queueCommandsFromTyphoon.TryRemove(TyphoonMsgManager.queueCommandsFromTyphoon.ElementAt(0).Key, out tmpmsg);
-                        }
-                        catch(InvalidOperationException ioe)
-                        {
-                            log.DebugFormat("InvalidOperationException - {0}", ioe.Message);
-                        }
-                        catch(NullReferenceException nre)
-                        { }
-                        Thread.Sleep(1);
-                    }
-                }
-            }
-            
+                            streamSetup.Transport = new Transport();
+                            switch (protocol)
+                            {
+                                case "HTTP":
+                                    streamSetup.Transport.Protocol = TransportProtocol.HTTP;
+                                    break;
+                                case "RTSP":
+                                    streamSetup.Transport.Protocol = TransportProtocol.RTSP;
+                                    break;
+                                case "TCP":
+                                    streamSetup.Transport.Protocol = TransportProtocol.TCP;
+                                    break;
+                                case "UDP":
+                                    streamSetup.Transport.Protocol = TransportProtocol.UDP;
+                                    break;
+                                default:
+                                    log.InfoFormat("GetStreamUri для streamSetup.Transport.Protocol пришло {0}", protocol);
+                                    break;
+                            }
 
+                            //запросить uri соответствующую конфигурации
+                            MediaUri nvtStreamUri = nvtClient.GetStreamUri(streamSetup, profileToken);
+                            //потом отдать тайфуну
+                            b_streamUri = MakeMem(nvtStreamUri.Uri);
+                            typhmsg.byteMessageData = FormPacket(FormCommand(201, 5, b_streamUri, typhmsg.MessageID));
+                            typhmsg.MessageType = TyphoonMsgType.Request;
+                            TyphoonMsgManager.EnqueueMsg(typhmsg);
+                            break;
+                            #endregion
+                        case 6:
+                            #region
+                            //пришло событие от тайфуна
+                            Console.WriteLine("SubCom - 6 - Event came from Typhoon");
+                            log.DebugFormat("event msg ID - {0}", typhmsg.MessageID);
+                            byte[] bytes = Encoding.UTF8.GetBytes(typhmsg.stringMessageData.ToCharArray());
+
+                            byte[] bytes1 = { 0, 0, 0, 0 };
+
+                            EventData eventdata = new EventData();
+
+                            for (int y = 0; y < 4; y++)
+                            {
+                                bytes1[y] = bytes[y];
+                            }
+                            eventdata.Eventtype = ByteArtoInt32(bytes1);
+
+                            for (int y = 4; y < 8; y++)
+                            {
+                                bytes1[y - 4] = bytes[y];
+                            }
+                            eventdata.Devicenumber = ByteArtoInt32(bytes1);
+                            //
+
+                            for (int y = 8; y < 12; y++)
+                            {
+                                bytes1[y - 8] = bytes[y];
+                            }
+
+                            uint alst = ByteArtoInt32(bytes1);
+                            if (alst != 0)
+                            {
+                                eventdata.Status = Alarmstatus.AlarmOff;
+                            }
+                            else
+                            {
+                                eventdata.Status = Alarmstatus.AlarmOn;
+                            }
+                            //------------------------------------------
+                            //здесь добавим в EventStorage
+                            TyphoonEvent tevent = new TyphoonEvent(eventdata, 60000);
+                            EventStorage.AddEvent(tevent);
+                            //------------------------------------------
+                            //
+                            object objj = new object();
+
+                            lock (bnSubscriptionManager.SubscribersCollection)
+                            {
+                                try
+                                {
+                                    foreach (bnSubscriber subscriber in bnSubscriptionManager.SubscribersCollection.Values)
+                                    {
+                                        bnSubscriptionManager.SubscribersCollection.TryRemove(bnSubscriptionManager.SubscribersCollection.First().Key, out subs);
+                                        #region
+                                        if (subscriber.Eventtype == eventdata.Eventtype)
+                                        {
+                                            Event.Notify1 notify = new Event.Notify1(new Event.Notify());
+                                            notify.Notify.NotificationMessage = new Event.NotificationMessageHolderType[1];
+                                            notify.Notify.NotificationMessage[0] = new Event.NotificationMessageHolderType();
+                                            XmlDocument doc = new XmlDocument();
+                                            doc.LoadXml("<Notify><NotificationMessage xmlns = 'http://docs.oasis-open.org/wsn/b-2' >"
+                                            + "<Topic  Dialect='http://docs.oasis-open.org/wsn/t-1/TopicExpression/ConcreteTopic'>"
+                                                //+ "tns1:VideoSource/MotionAlarm</Topic>"
+                                            + "tns1:VideoSource</Topic>"
+                                            + "<Message><tt:Message UtcTime='" + (System.DateTime.UtcNow).ToString("s") + "' "
+                                            + "PropertyOperation='Initialized' xmlns:tt='http://www.onvif.org/ver10/schema'><tt:Source>"
+                                            + "<tt:SimpleItem Name='app' Value='changed' /></tt:Source><tt:Key>"
+                                            + "<tt:SimpleItem Name='channel' Value='0' /></tt:Key><tt:Data><tt:SimpleItem Name='tampering' Value='0' />"
+                                            + "</tt:Data></tt:Message></Message>"
+                                            + "</NotificationMessage></Notify>"
+                                            );
+
+                                            string strs = "<?xml version='1.0' encoding='utf-8' ?>" + doc.InnerXml.ToString();
+                                            using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(strs)))
+                                            {
+                                                XmlSerializer serializer = new XmlSerializer(typeof(Event.Notify));
+
+                                                try
+                                                {
+                                                    notify.Notify = (Event.Notify)serializer.Deserialize(ms);  //                                          
+                                                }
+                                                catch (Exception ex)
+                                                {
+                                                    Console.WriteLine("TyphoonCom: Event: Не могу сериализовать " + ex.Message);
+                                                }
+
+                                            }
+                                            //--------------------------------------
+                                        #endregion
+                                            try
+                                            {
+                                                subscriber.channel.Notify(notify);
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                log.Warn(ex.Message.ToString());
+                                            }
+                                            //break;
+                                        }
+                                    }
+                                }
+                                catch (InvalidOperationException ioe)
+                                {
+                                    //try to form notify again
+                                    Console.WriteLine("пыщыпщпыщ");
+                                }
+                                catch (Exception ex)
+                                {
+                                    log.Warn(ex.Message.ToString());
+                                }
+
+                            }
+                            break;
+                            #endregion
+                        default:
+                            ///сообщить о неизвестном номере субкоманды
+                            log.ErrorFormat("В очередь команд от тайфуна (queueCmd) пришла команда с неизвестным"
+                                + " номером субкоманды - {0}", typhmsg.MessageSubComNum);
+                            break;
+                    }
+                    if (TyphoonMsgManager.queueCommandsFromTyphoon.Count != 0)
+                        TyphoonMsgManager.queueCommandsFromTyphoon.TryRemove(TyphoonMsgManager.queueCommandsFromTyphoon.ElementAt(0).Key, out tmpmsg);
+                }
+                catch (InvalidOperationException ioe)
+                {
+                    log.DebugFormat("InvalidOperationException - {0}", ioe.Message);
+                }
+                catch (NullReferenceException nre)
+                {
+                    log.DebugFormat("NullReferenceException - {0}", nre.Message);
+                }
+                Thread.Sleep(1);
+            }                    
             //---------------------------------------------------------
         }
 
