@@ -48,6 +48,7 @@ private static void Process(object ipaddr) - stream.WriteByte(0); - как обойтись
 
 
 ToDo:
+- при попытке неавторизованного доступа - Fault
 - сделать прокси апи 
 - EventStorage.storage - сделан Сollection, переделать в ConcurentCollection
 - перенести логер из TyphoonCom в Program - надо ли?

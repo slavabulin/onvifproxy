@@ -33,10 +33,24 @@ namespace OnvifProxy
         InstanceContextMode = InstanceContextMode.Single)]
 
 
-    public class Service1 : Device.IDevice, Media.IMedia, Event.INotificationProducer, Event.IEventPortType,
-        Event.IPullPoint, Event.ICreatePullPoint, Event.SubscriptionManager, Event.IPausableSubscriptionManager,
-        Event.INotificationConsumer, Event.PullPointSubscription
+    public class Service1 : Device.IDevice,
+        Media.IMedia,
+        Event.INotificationProducer, 
+        Event.IEventPortType,
+        Event.IPullPoint,
+        Event.ICreatePullPoint,
+        Event.SubscriptionManager,
+        Event.IPausableSubscriptionManager,
+        Event.INotificationConsumer,
+        Event.PullPointSubscription
     {
+        public GetServicesResponse UnauthorizedAccessFault()
+        {
+            throw new FaultException(new FaultReason("The requested operation is not permitted by the device"),
+                          new FaultCode("Sender",
+                              new FaultCode("NotAuthorized", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("Operation not Permitted", "http://www.onvif.org/ver10/error"))));
+        }
         //---------------------------------------------------
         // added to set system time&date
         [DllImport("kernel32.dll", SetLastError = true)]
@@ -2637,6 +2651,53 @@ namespace OnvifProxy
         //uncomment me!!!
         public Media.Profile GetProfile(string ProfileToken)
         {
+            /*
+             * формируем запрос к тайфуну
+             * дожидаемся ответа
+             * заполняем Profile
+             * возвращаем Profile
+             * 
+             * */
+            Console.WriteLine("GetProfile - token = " + ProfileToken);
+
+            ///формируем команду GetProfiles
+            TyphoonMsg typhmsgreq = new TyphoonMsg(TyphoonMsgType.Request);
+            TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
+
+            byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null, 0))).Length];
+            tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null, 0));
+            for (int a = 0; a < 4; a++)
+            {
+                typhmsgreq.MessageID = typhmsgreq.MessageID << 8;
+                typhmsgreq.MessageID += tmpBuf[21 - a];
+            }
+            typhmsgreq.byteMessageData = tmpBuf;
+            ///добавляем в очередь на отправку
+            TyphoonMsgManager.EnqueueMsg(typhmsgreq);
+            
+            typhmsgresp = TyphoonMsgManager.GetMsg(typhmsgreq.MessageID);
+            if(typhmsgresp!=null)
+            {
+                XmlConfig config = new XmlConfig();
+                Media.GetProfilesResponse mediaprofile = new Media.GetProfilesResponse();
+
+                string tmpStr = TyphoonCom.ParseMem(0, typhmsgresp.stringMessageData);
+                mediaprofile = config.ParseGetProfiles(tmpStr);
+                //----------
+                int tokennum = Convert.ToInt32(ProfileToken);
+                if (tokennum > mediaprofile.Profiles.Length || tokennum < 1)
+                    throw new FaultException(new FaultReason("NoProfile"),
+                           new FaultCode("Sender",
+                               new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
+                                   new FaultCode("NoProfile", "http://www.onvif.org/ver10/error"))));
+                //----------
+
+                return mediaprofile.Profiles[tokennum - 1];
+            }
+            else
+            {
+                return null;
+            }
             //Console.WriteLine("GetProfile - token = " + ProfileToken);
             /////формируем команду GetProfiles
             //byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null, 0))).Length];
@@ -2658,7 +2719,7 @@ namespace OnvifProxy
             //    ///извлекаем MessageID из созданной команды
             //    ///и кладем в TyphMsg.MessageID, чтобы потом 
             //    ///по нему найти ответ в очереди ответов
-            //    TyphoonMessage TyphMsg = new TyphoonMessage();
+            //    TyphoonMsg TyphMsg = new TyphoonMsg(TyphoonMsgType.);
             //    for (int a = 0; a < 4; a++)
             //    {
             //        TyphMsg.MessageID = TyphMsg.MessageID << 8;
@@ -2687,12 +2748,48 @@ namespace OnvifProxy
             //    return mediaprofile.Profiles[tokennum - 1];
             //}
             //TyphoonCom.log.DebugFormat("GetProfile - TyphoonCom.queueResponce.Count = {0}", TyphoonCom.queueResponce.Count);
-            return null;//leave me
+            //return null;//leave me
         }
 
         //uncomment me!!!
         public Media.GetProfilesResponse GetProfiles(Media.GetProfilesRequest request)
         {
+            ///формируем запрос к тайфуну GetProfiles
+            TyphoonMsg typhsmgreq = new TyphoonMsg(TyphoonMsgType.Request);
+            TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
+           
+
+
+            byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null, 0))).Length];
+            tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null, 0));
+            typhsmgreq.byteMessageData = tmpBuf;
+            for (int a = 0; a < 4; a++)
+            {
+                typhsmgreq.MessageID = typhsmgreq.MessageID << 8;
+                typhsmgreq.MessageID += tmpBuf[21 - a];
+            }
+            TyphoonMsgManager.EnqueueMsg(typhsmgreq);
+            TyphoonCom.log.Debug("Service1: GetProfiles added to commandQueue");
+            typhmsgresp = TyphoonMsgManager.GetMsg(typhsmgreq.MessageID);
+
+            if(typhmsgresp!=null)
+            {
+                ///создаем структуру под конфиг
+                XmlConfig config = new XmlConfig();
+                Media.GetProfilesResponse mediaprofile = new Media.GetProfilesResponse();
+
+                string tmpStr = TyphoonCom.ParseMem(0, typhmsgresp.stringMessageData);
+                mediaprofile = config.ParseGetProfiles(tmpStr);
+
+                return mediaprofile;
+            }
+            else 
+            {
+                return null;
+            }
+
+            ///добавляем в очередь на отправку
+            //TyphoonCom.AddCommand(tmpBuf);
             /////формируем команду GetProfiles
             //byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null,0))).Length];
             //tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null,0));

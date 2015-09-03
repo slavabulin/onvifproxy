@@ -194,16 +194,19 @@ namespace OnvifProxy
                                 return methodname.Name;
                             }
                         }
+                        //
                     }
                     catch (ArgumentNullException ane)
                     {
                         return null;
+                        //return "UnauthorizedAccessFault";
                     }
 
                     //---------------------------------
 
                     message = msgcopy1;
                     return null;
+                    //return "UnauthorizedAccessFault";
 
                 #endregion check if there is security header
 

@@ -39,6 +39,16 @@ namespace Device
     public interface IDevice
     {
 
+       // // CODEGEN: Параметр "Service" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
+       // [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
+       //OnvifProxy.SecurityOperationBehavoir("UnauthorizedAccessFault", "http://www.onvif.org/ver10/device/wsdl", 3)]
+       // //[OnvifProxy.SecurityOperationBehavoir("GetServices", "http://www.onvif.org/ver10/device/wsdl", 0)]
+       // [System.ServiceModel.XmlSerializerFormatAttribute()]
+       // [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+       // [return: System.ServiceModel.MessageParameterAttribute(Name = "Service")]
+       // GetServicesResponse UnauthorizedAccessFault();
+
+
         // CODEGEN: Параметр "Service" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
        OnvifProxy.SecurityOperationBehavoir("GetServices", "http://www.onvif.org/ver10/device/wsdl", 3)]
