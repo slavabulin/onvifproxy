@@ -64,7 +64,7 @@ namespace OnvifProxy
         private static byte[] commandBuffer = null;
         private static string ipaddr = null;
         //флажок, указывающий, что отработка действий при OnConnectionFailed началась
-        private static bool flg_ConnectionFailedActive = false;    
+        private static volatile bool flg_ConnectionFailedActive = false;    
         //флаг, указывающий, что как минимум один раз коннекшн падал
         private static bool flg_OnConnectionFailed = false;
         private static Object obj;
@@ -239,7 +239,6 @@ namespace OnvifProxy
 
         private static void Process()
         {
-            int key = 0;
             TyphoonMsg tmpmsg;
             do
             {
@@ -276,66 +275,53 @@ namespace OnvifProxy
                 //----------------------------
                 //отсылка команд для тайфуна
                 //----------------------------
-                //lock (((ICollection)TyphoonMsgManager.queueRequest_ex).SyncRoot)
+                if (TyphoonMsgManager.queueRequestToTyphoon.Count > 0)
                 {
-                    if(TyphoonMsgManager.queueRequestToTyphoon.Count > 0)
+                    try
                     {
-                        try
-                        {
-                            //stream.Write((byte[])(queueRequest.Peek()),
-                            //    0,
-                            //    ((byte[])(queueRequest.Peek())).Length);
-
-                            //queueRequest.Dequeue();
-                            {                                
-                                //Console.Write('1');
-                                stream.Write(TyphoonMsgManager.queueRequestToTyphoon.ElementAt(0).Value.byteMessageData,
-                                    0,
-                                    TyphoonMsgManager.queueRequestToTyphoon.ElementAt(0).Value.byteMessageData.Length);                                
-                                //Console.Write('2');
-                                //if(
-                                    TyphoonMsgManager.queueRequestToTyphoon.TryRemove(TyphoonMsgManager.queueRequestToTyphoon.ElementAt(0).Key, out tmpmsg);
-                                //Console.WriteLine('3');
-                            }
-                        }
-                            catch(ArgumentNullException ane)
-                        {
-                            log.DebugFormat("stream.Write - ArgumentNullException {0}", ane.Message);
-                            if (!flg_ConnectionFailedActive) OnTyphoonDisconnect();
-                            break;
-                        }
-                            catch(ArgumentOutOfRangeException aoore)
-                        {
-                            log.DebugFormat("stream.Write - ArgumentOutOfRangeException {0}", aoore.Message);
-                            if (!flg_ConnectionFailedActive) OnTyphoonDisconnect();
-                            break;
-                        }
-                            catch(IOException ioe)
-                        {
-                            log.DebugFormat("stream.Write - IOException {0}", ioe.Message);
-                            if (!flg_ConnectionFailedActive) OnTyphoonDisconnect();
-                            break;
-                        }
-                            catch(ObjectDisposedException ode)
-                        {
-                            log.DebugFormat("stream.Write - ObjectDisposedException {0}", ode.Message);
-                            if (!flg_ConnectionFailedActive) OnTyphoonDisconnect();
-                            break;
-                        }
-                            catch(InvalidOperationException ioe)
-                        {
-                            log.DebugFormat("stream.Write - InvalidOperationException {0}", ioe.Message);
-                            if (!flg_ConnectionFailedActive) OnTyphoonDisconnect();
-                            break;
-                        }
-                        catch (Exception ex)
-                        {
-                            log.DebugFormat("stream.Write - Exception {0}", ex.Message);
-                            if (!flg_ConnectionFailedActive) OnTyphoonDisconnect();
-                            break;
-                        }
+                        stream.Write(TyphoonMsgManager.queueRequestToTyphoon.ElementAt(0).Value.byteMessageData,
+                            0,
+                            TyphoonMsgManager.queueRequestToTyphoon.ElementAt(0).Value.byteMessageData.Length);
+                        TyphoonMsgManager.queueRequestToTyphoon.TryRemove(TyphoonMsgManager.queueRequestToTyphoon.ElementAt(0).Key,
+                            out tmpmsg);
                     }
-                    //TyphoonMsgManager.queueRequest_ex.ElementAt(0).Value.MessageTimeoutTimer.Enabled = true;
+                    catch (ArgumentNullException ane)
+                    {
+                        log.DebugFormat("stream.Write - ArgumentNullException {0}", ane.Message);
+                        if (!flg_ConnectionFailedActive) OnTyphoonDisconnect();
+                        break;
+                    }
+                    catch (ArgumentOutOfRangeException aoore)
+                    {
+                        log.DebugFormat("stream.Write - ArgumentOutOfRangeException {0}", aoore.Message);
+                        if (!flg_ConnectionFailedActive) OnTyphoonDisconnect();
+                        break;
+                    }
+                    catch (IOException ioe)
+                    {
+                        log.DebugFormat("stream.Write - IOException {0}", ioe.Message);
+                        if (!flg_ConnectionFailedActive) OnTyphoonDisconnect();
+                        break;
+                        //continue;
+                    }
+                    catch (ObjectDisposedException ode)
+                    {
+                        log.DebugFormat("stream.Write - ObjectDisposedException {0}", ode.Message);
+                        if (!flg_ConnectionFailedActive) OnTyphoonDisconnect();
+                        break;
+                    }
+                    catch (InvalidOperationException ioe)
+                    {
+                        log.DebugFormat("stream.Write - InvalidOperationException {0}", ioe.Message);
+                        if (!flg_ConnectionFailedActive) OnTyphoonDisconnect();
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        log.DebugFormat("stream.Write - Exception {0}", ex.Message);
+                        if (!flg_ConnectionFailedActive) OnTyphoonDisconnect();
+                        break;
+                    }
                 }
             }
             while (flg_SendToNet);
@@ -1073,7 +1059,6 @@ namespace OnvifProxy
             {
                 packlen = stream.EndRead(ar);
                 flg = true;
-                //log.DebugFormat("packlen - {0}", packlen);
             }
             catch (ArgumentException ae)
             {
@@ -1573,12 +1558,12 @@ namespace OnvifProxy
         static TyphoonMsgManager()
         {
             ////for testing;
-            //Thread eventThread = new Thread(new ThreadStart(TyphoonMsgManager.TestEventPuller));
-            //eventThread.IsBackground = true;
-            //eventThread.Start();
-            //Thread eventThread = new Thread(new ThreadStart(TyphoonMsgManager.TestGetMsgs));
-            //eventThread.IsBackground = true;
-            //eventThread.Start();
+            Thread eventThread = new Thread(new ThreadStart(TyphoonMsgManager.TestEventPuller));
+            eventThread.IsBackground = true;
+            eventThread.Start();
+            //Thread eventThread2 = new Thread(new ThreadStart(TyphoonMsgManager.TestGetMsgs));
+            //eventThread2.IsBackground = true;
+            //eventThread2.Start();
         }
 
         //---------------------------------------------------------------------------------------
@@ -1587,29 +1572,39 @@ namespace OnvifProxy
         static void TestEventPuller()
         {
             bool rettryadd = false;
-            uint counter = uint.MaxValue - 100;
+            //uint counter = uint.MaxValue - 100;
+            byte[] tmp;
             while (true)
             {
 
                 TyphoonMsg tmpMsg = new TyphoonMsg(TyphoonMsgType.Command);
+
+                tmp = TyphoonCom.FormCommand(200, 1, null, 0);
+                for (int a = 0; a < 4; a++)
+                {
+                    tmpMsg.MessageID = tmpMsg.MessageID << 8;
+                    tmpMsg.MessageID += tmp[9 - a];
+                }
+
                 tmpMsg.byteMessageData = new byte[] { 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 };
                 tmpMsg.MessageSubComNum = 6;
-                tmpMsg.MessageID = 0;
+                //tmpMsg.MessageID = 0;
 
-                if (counter == uint.MaxValue) counter = uint.MinValue;
-                tmpMsg.MessageID = counter;
+                //if (counter == uint.MaxValue) counter = uint.MinValue;
+                //tmpMsg.MessageID = counter;
 
                 try
                 {
-                    rettryadd = queueCommandsFromTyphoon.TryAdd(counter, tmpMsg);
+                    //rettryadd = queueCommandsFromTyphoon.TryAdd(tmpMsg.MessageID, tmpMsg);
+                    rettryadd = TyphoonMsgManager.EnqueueMsg(tmpMsg);
                     if (rettryadd)
                     {
                         TyphoonCom.log.DebugFormat("Fake event counter - msg number - {0}, msgs in queue - {1}",
-                            counter, queueCommandsFromTyphoon.Count.ToString());
+                            tmpMsg.MessageID, queueCommandsFromTyphoon.Count.ToString());
                     }
                     else
                     {
-                        if (queueCommandsFromTyphoon.TryGetValue(counter, out tmpMsg))
+                        if (queueCommandsFromTyphoon.TryGetValue(tmpMsg.MessageID, out tmpMsg))
                         {
                             Console.WriteLine("Message already exist - {0}", tmpMsg.MessageID);
                             break;
@@ -1624,7 +1619,8 @@ namespace OnvifProxy
                 {
                     throw ex;
                 }
-                counter++;
+                //counter++;
+                tmpMsg = null;
             }
         }
 
@@ -1652,7 +1648,14 @@ namespace OnvifProxy
                 
                 TyphoonMsgManager.EnqueueMsg(typhmsg);
                 typhmsg = GetMsg(typhmsg.MessageID);
-                TyphoonCom.log.DebugFormat("TestGetMsgs TestMsg.MsgID = {0}", typhmsg.MessageID);
+                if (typhmsg != null)
+                {
+                    TyphoonCom.log.DebugFormat("TestGetMsgs TestMsg.MsgID = {0}", typhmsg.MessageID);
+                }
+                else
+                {
+                    typhmsg = new TyphoonMsg(TyphoonMsgType.Request);
+                }
             }
         }
 
@@ -1661,6 +1664,7 @@ namespace OnvifProxy
         //---------------------------------------------------------------------------------------
         public static bool EnqueueMsg(TyphoonMsg typhmsg)
         {
+            if (typhmsg == null) return false;
             // у зонда MsgId всегда 0, у остальных от 1 до Uint.MaxValue
             if (typhmsg.MessageType == TyphoonMsgType.Zond) typhmsg.MessageID = 0;
             if (typhmsg.MessageID == 0 && typhmsg.MessageType != TyphoonMsgType.Zond)
@@ -1669,50 +1673,44 @@ namespace OnvifProxy
                 typhmsg.MessageID = MsgIDCounter;
                 MsgIDCounter++;
             }
-            
 
-            //TyphoonCom.log.DebugFormat("TyphoonMsg_Ex added to the queue {0}", typhmsg.MessageType.ToString());
-            if(typhmsg!=null)
+            switch (typhmsg.MessageType)
             {
-                switch (typhmsg.MessageType)
-                {
-                    case TyphoonMsgType.Command:
-                        if (!queueCommandsFromTyphoon.TryAdd(typhmsg.MessageID, typhmsg))//returns false if key already exists
-                        {
-                            TyphoonCom.log.DebugFormat("TyphoonMsgManager.SendMsg() failed to send msg - TyphoonMsgId"
-                                +" already exists in CommandQueue, Msg skipped");
-                            return false;
-                        }
-                        return true;
-                    case TyphoonMsgType.Request:
-                        if (!queueRequestToTyphoon.TryAdd(typhmsg.MessageID, typhmsg))//returns false if key already exists
-                        {
-                            TyphoonCom.log.DebugFormat("TyphoonMsgManager.SendMsg() failed to send msg - TyphoonMsgId"
-                                +" already exists in RequestQueue, Msg skipped");
-                            return false;
-                        }
-                        return true;
-                    case TyphoonMsgType.Responce:
-                        if (!queueResponceFromTyphoon.TryAdd(typhmsg.MessageID, typhmsg))//returns false if key already exists
-                        {
-                            TyphoonCom.log.DebugFormat("TyphoonMsgManager.SendMsg() failed to send msg - TyphoonMsgId"
-                                +" already exists in ResponceQueue, Msg skipped");
-                            return false;
-                        }
-                        return true;
-                    case TyphoonMsgType.Zond:
-                        if (!queueRequestToTyphoon.TryAdd(typhmsg.MessageID, typhmsg))//returns false if key already exists
-                        {
-                            TyphoonCom.log.DebugFormat("TyphoonMsgManager.SendMsg() failed to send Zond - TyphoonMsgId"
-                                +" already exists in RequestQueue, Msg skipped");
-                            return false;
-                        }
-                        return true;
-                    default:
+                case TyphoonMsgType.Command:
+                    if (!queueCommandsFromTyphoon.TryAdd(typhmsg.MessageID, typhmsg))//returns false if key already exists
+                    {
+                        TyphoonCom.log.DebugFormat("TyphoonMsgManager.SendMsg() failed to send msg - TyphoonMsgId"
+                            + " already exists in CommandQueue, Msg skipped");
                         return false;
-                }
+                    }
+                    return true;
+                case TyphoonMsgType.Request:
+                    if (!queueRequestToTyphoon.TryAdd(typhmsg.MessageID, typhmsg))//returns false if key already exists
+                    {
+                        TyphoonCom.log.DebugFormat("TyphoonMsgManager.SendMsg() failed to send msg - TyphoonMsgId"
+                            + " already exists in RequestQueue, Msg skipped");
+                        return false;
+                    }
+                    return true;
+                case TyphoonMsgType.Responce:
+                    if (!queueResponceFromTyphoon.TryAdd(typhmsg.MessageID, typhmsg))//returns false if key already exists
+                    {
+                        TyphoonCom.log.DebugFormat("TyphoonMsgManager.SendMsg() failed to send msg - TyphoonMsgId"
+                            + " already exists in ResponceQueue, Msg skipped");
+                        return false;
+                    }
+                    return true;
+                case TyphoonMsgType.Zond:
+                    if (!queueRequestToTyphoon.TryAdd(typhmsg.MessageID, typhmsg))//returns false if key already exists
+                    {
+                        TyphoonCom.log.DebugFormat("TyphoonMsgManager.SendMsg() failed to send Zond - TyphoonMsgId"
+                            + " already exists in RequestQueue, Msg skipped");
+                        return false;
+                    }
+                    return true;
+                default:
+                    return false;
             }
-            return false;
         }
 
         //---------------------------------------------------------------------------------------
