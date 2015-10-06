@@ -1,0 +1,316 @@
+2015-10-06 12:46:21,668 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-10-06 12:46:23,391 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-10-06 12:46:23,391 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-10-06 12:46:23,655 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-10-06 12:46:23,784 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-10-06 12:46:25,168 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-10-06 12:46:25,264 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-10-06 12:46:25,264 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-10-06 12:46:27,897 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-10-06 12:46:27,897 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-10-06 12:47:22,130 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-10-06 12:47:22,538 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-10-06 12:47:22,538 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-10-06 12:47:22,562 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-10-06 12:47:22,610 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-10-06 12:47:23,432 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-10-06 12:47:23,470 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-10-06 12:47:23,470 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-10-06 12:47:26,437 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-10-06 12:47:26,437 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-10-06 12:47:29,112 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:47:30,887 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:47:32,725 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:47:37,021 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:47:42,876 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:47:44,918 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:47:51,081 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:47:57,314 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:47:59,280 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:48:03,313 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:48:05,315 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:48:07,418 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:48:09,387 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:48:11,372 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:48:13,408 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:48:15,408 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:48:17,417 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:48:21,555 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:48:23,543 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:48:25,599 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:48:27,717 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:48:31,686 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:48:33,679 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:48:35,696 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:48:37,757 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:50:38,407 [DEBUG] OnvifProxy.TyphoonCom - IOException - Не удается прочитать данные из транспортного соединения: EndReceive может вызываться только один раз для каждой асинхронной операции..
+2015-10-06 12:50:39,230 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:50:42,835 [DEBUG] OnvifProxy.TyphoonCom - stream.Write - IOException Не удается записать данные в транспортное соединение: Программа на вашем хост-компьютере разорвала установленное подключение.
+2015-10-06 12:50:42,835 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-10-06 12:50:42,835 [DEBUG] OnvifProxy.TyphoonCom - Opened
+2015-10-06 12:50:43,347 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:50:44,251 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-10-06 12:50:44,251 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-10-06 12:50:44,467 [DEBUG] OnvifProxy.TyphoonCom - Host closed
+2015-10-06 12:50:44,539 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-10-06 12:50:46,612 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:50:49,898 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-10-06 12:50:50,069 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-10-06 12:50:50,069 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-10-06 12:50:50,069 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-10-06 12:50:50,634 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:50:50,730 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-10-06 12:50:50,730 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-10-06 12:50:52,702 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:50:54,814 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:50:58,773 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:51:01,019 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:51:02,793 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:51:04,847 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:51:06,825 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:51:08,881 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:51:14,963 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:51:19,072 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:51:21,080 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:51:23,187 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:51:25,135 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:51:41,354 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:51:43,361 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:51:45,393 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:51:47,403 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:51:49,438 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:51:53,685 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:51:55,574 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:51:57,613 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:52:05,706 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:52:11,759 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:52:13,790 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:52:25,932 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:52:32,115 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:52:34,119 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:52:36,161 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:52:38,265 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:52:40,242 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:52:42,324 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:52:46,490 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:52:46,504 [DEBUG] OnvifProxy.TyphoonCom - stream.Write - ArgumentOutOfRangeException Заданный аргумент находится вне диапазона допустимых значений.
+Имя параметра: index
+2015-10-06 12:52:46,539 [DEBUG] OnvifProxy.TyphoonCom - Opened
+2015-10-06 12:52:46,539 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-10-06 12:52:47,369 [DEBUG] OnvifProxy.TyphoonCom - Host closed
+2015-10-06 12:52:47,547 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-10-06 12:52:47,557 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-10-06 12:52:47,592 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-10-06 12:52:49,648 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:52:52,744 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-10-06 12:52:52,940 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-10-06 12:52:52,941 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-10-06 12:52:52,941 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-10-06 12:52:53,792 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:52:53,859 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-10-06 12:52:53,859 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-10-06 12:52:55,841 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:52:57,808 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:53:01,883 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:53:03,931 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:53:06,330 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:53:10,025 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:53:14,055 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:53:22,212 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:53:24,238 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:53:26,252 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:53:28,281 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:53:30,359 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:53:34,545 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:53:38,533 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:53:40,576 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:53:42,594 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:53:51,058 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:53:51,071 [DEBUG] OnvifProxy.TyphoonCom - stream.Write - ArgumentOutOfRangeException Заданный аргумент находится вне диапазона допустимых значений.
+Имя параметра: index
+2015-10-06 12:53:51,071 [DEBUG] OnvifProxy.TyphoonCom - Opened
+2015-10-06 12:53:51,071 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-10-06 12:53:52,017 [DEBUG] OnvifProxy.TyphoonCom - Host closed
+2015-10-06 12:53:52,087 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-10-06 12:53:52,096 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-10-06 12:53:52,238 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-10-06 12:53:54,284 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:53:57,177 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-10-06 12:53:57,433 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-10-06 12:53:57,433 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-10-06 12:53:57,433 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-10-06 12:53:58,325 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:53:58,330 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-10-06 12:53:58,330 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-10-06 12:54:00,388 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:54:02,401 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:54:08,631 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:54:10,609 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:54:12,642 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:54:18,823 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:54:20,737 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:54:20,751 [DEBUG] OnvifProxy.TyphoonCom - stream.Write - ArgumentOutOfRangeException Заданный аргумент находится вне диапазона допустимых значений.
+Имя параметра: index
+2015-10-06 12:54:20,770 [DEBUG] OnvifProxy.TyphoonCom - Opened
+2015-10-06 12:54:20,771 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-10-06 12:54:21,466 [DEBUG] OnvifProxy.TyphoonCom - Host closed
+2015-10-06 12:54:21,813 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-10-06 12:54:21,820 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-10-06 12:54:21,976 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-10-06 12:54:26,056 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:54:26,546 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-10-06 12:54:26,810 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-10-06 12:54:26,811 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-10-06 12:54:26,811 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-10-06 12:54:27,652 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-10-06 12:54:27,652 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-10-06 12:54:28,124 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:54:32,207 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:54:34,377 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:54:36,350 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:54:36,363 [DEBUG] OnvifProxy.TyphoonCom - stream.Write - ArgumentOutOfRangeException Заданный аргумент находится вне диапазона допустимых значений.
+Имя параметра: index
+2015-10-06 12:54:36,387 [DEBUG] OnvifProxy.TyphoonCom - Opened
+2015-10-06 12:54:36,387 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-10-06 12:54:37,309 [DEBUG] OnvifProxy.TyphoonCom - Host closed
+2015-10-06 12:54:37,396 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-10-06 12:54:37,421 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-10-06 12:54:37,451 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-10-06 12:54:39,480 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:54:42,406 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-10-06 12:54:42,613 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-10-06 12:54:42,619 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-10-06 12:54:42,620 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-10-06 12:54:43,609 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:54:44,462 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-10-06 12:54:44,462 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-10-06 12:54:47,842 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:54:49,741 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:54:53,876 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:54:55,880 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:55:00,193 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:55:02,022 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:55:04,028 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:55:06,075 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:55:08,104 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:55:10,214 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:55:26,702 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:55:12,256 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:55:14,213 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:55:22,441 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:55:28,599 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:55:31,107 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:55:32,610 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:55:32,621 [DEBUG] OnvifProxy.TyphoonCom - stream.Write - ArgumentOutOfRangeException Заданный аргумент находится вне диапазона допустимых значений.
+Имя параметра: index
+2015-10-06 12:55:32,622 [DEBUG] OnvifProxy.TyphoonCom - Opened
+2015-10-06 12:55:32,622 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-10-06 12:55:33,409 [DEBUG] OnvifProxy.TyphoonCom - Host closed
+2015-10-06 12:55:33,624 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-10-06 12:55:33,625 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-10-06 12:55:33,653 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-10-06 12:55:38,836 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-10-06 12:55:39,096 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-10-06 12:55:39,097 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-10-06 12:55:39,097 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-10-06 12:55:40,699 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-10-06 12:55:40,700 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-10-06 12:55:42,112 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:55:43,979 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:55:50,204 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:55:58,249 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:56:00,558 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:56:06,745 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:56:10,733 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:56:10,748 [DEBUG] OnvifProxy.TyphoonCom - stream.Write - ArgumentOutOfRangeException Заданный аргумент находится вне диапазона допустимых значений.
+Имя параметра: index
+2015-10-06 12:56:10,748 [DEBUG] OnvifProxy.TyphoonCom - Opened
+2015-10-06 12:56:10,749 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-10-06 12:56:11,750 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-10-06 12:56:11,760 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-10-06 12:56:11,808 [DEBUG] OnvifProxy.TyphoonCom - Host closed
+2015-10-06 12:56:11,960 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-10-06 12:56:13,989 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:56:16,936 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-10-06 12:56:17,169 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-10-06 12:56:17,169 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-10-06 12:56:17,169 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-10-06 12:56:18,029 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:56:18,498 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-10-06 12:56:18,498 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-10-06 12:56:22,132 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:56:24,162 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:56:26,168 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:56:28,195 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:56:30,276 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:56:32,285 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:56:32,318 [DEBUG] OnvifProxy.TyphoonCom - stream.Write - ArgumentOutOfRangeException Заданный аргумент находится вне диапазона допустимых значений.
+Имя параметра: index
+2015-10-06 12:56:32,341 [DEBUG] OnvifProxy.TyphoonCom - Opened
+2015-10-06 12:56:32,341 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-10-06 12:56:33,032 [DEBUG] OnvifProxy.TyphoonCom - Host closed
+2015-10-06 12:56:33,394 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-10-06 12:56:33,395 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-10-06 12:56:33,619 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-10-06 12:56:37,699 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:56:38,167 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-10-06 12:56:38,405 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-10-06 12:56:38,406 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-10-06 12:56:38,406 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-10-06 12:56:39,340 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-10-06 12:56:39,340 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-10-06 12:56:40,395 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:56:44,205 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:56:46,206 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:56:50,240 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:56:52,263 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:56:56,293 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:56:58,330 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:57:04,379 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:57:08,492 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:57:10,436 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:57:16,473 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:57:22,582 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:57:24,593 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:57:26,625 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:57:30,671 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:57:32,695 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:57:34,712 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:57:36,764 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:57:38,751 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:57:44,889 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:57:48,925 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:57:52,956 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
+2015-10-06 12:59:24,986 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-10-06 12:59:25,538 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-10-06 12:59:25,539 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-10-06 12:59:25,576 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-10-06 12:59:25,616 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-10-06 12:59:26,579 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-10-06 12:59:26,647 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-10-06 12:59:26,647 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-10-06 12:59:29,217 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-10-06 12:59:29,217 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-10-06 12:59:31,879 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left

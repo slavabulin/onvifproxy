@@ -1446,7 +1446,7 @@ namespace OnvifProxy
         #endregion
     }
 
-    public class TyphoonMsg
+    public class TyphoonMsg : IDisposable//патамушта MessageTimeoutTimer - Disposable
     {
         public UInt32 MessageID;
         public UInt32 MessageSubComNum;
@@ -1467,6 +1467,19 @@ namespace OnvifProxy
 
             //starts OnTyphoonMessageTimeout in ThreadPool - to lock the collection
             MessageTimeoutTimer.SynchronizingObject = null;
+        }
+
+        public void Dispose()
+        {
+            MessageTimeoutTimer.Close();
+            //MessageTimeoutTimer.Dispose();
+            GC.SuppressFinalize(this);//чтобы при ошибке не вывалиться в деструктор
+        }
+
+        ~TyphoonMsg()
+        {
+            MessageTimeoutTimer.Close();
+            //MessageTimeoutTimer.Dispose();
         }
 
         public byte[] byteMessageData
@@ -1564,6 +1577,19 @@ namespace OnvifProxy
             //Thread eventThread2 = new Thread(new ThreadStart(TyphoonMsgManager.TestGetMsgs));
             //eventThread2.IsBackground = true;
             //eventThread2.Start();
+=======
+            //Thread eventThread = new Thread(new ThreadStart(TyphoonMsgManager.TestEventPuller));
+            //eventThread.IsBackground = true;
+            //eventThread.Start();
+
+            //Thread eventThread = new Thread(new ThreadStart(TyphoonMsgManager.TestGetMsgs));
+            //eventThread.IsBackground = true;
+            //eventThread.Start();
+
+            Thread eventThread = new Thread(new ThreadStart(TyphoonMsgManager.TestTyphoonMsgCreator));
+            eventThread.IsBackground = true;
+            eventThread.Start();
+>>>>>>> 3e4b5faf169347592258517c33d93be91730d111
         }
 
         //---------------------------------------------------------------------------------------
@@ -1659,6 +1685,15 @@ namespace OnvifProxy
             }
         }
 
+        static void TestTyphoonMsgCreator()
+        {
+            while (true)
+            {
+                TyphoonMsg msg = new TyphoonMsg(TyphoonMsgType.Request);
+                msg = null;
+            }
+        }
+
         //---------------------------------------------------------------------------------------
         // метод - засылалка, засовывает сформированную мессагу для тайфуна в очередь на отправку
         //---------------------------------------------------------------------------------------
@@ -1741,7 +1776,6 @@ namespace OnvifProxy
         private static TyphoonMsg TaskGetMsg(uint MsgID, CancellationToken token)
         {
             TyphoonMsg typhMsg;
-
             //Console.WriteLine("Current MsgID = {0}", MsgID);
             while (!token.IsCancellationRequested)
             {
