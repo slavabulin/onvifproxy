@@ -1446,7 +1446,7 @@ namespace OnvifProxy
         #endregion
     }
 
-    public class TyphoonMsg : IDisposable//патамушта MessageTimeoutTimer - Disposable
+    public class TyphoonMsg : IDisposable//патамушта MessageTimeoutTimer - Disposable!!
     {
         public UInt32 MessageID;
         public UInt32 MessageSubComNum;
