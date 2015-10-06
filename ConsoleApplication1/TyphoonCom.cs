@@ -1571,13 +1571,6 @@ namespace OnvifProxy
         static TyphoonMsgManager()
         {
             ////for testing;
-            Thread eventThread = new Thread(new ThreadStart(TyphoonMsgManager.TestEventPuller));
-            eventThread.IsBackground = true;
-            eventThread.Start();
-            //Thread eventThread2 = new Thread(new ThreadStart(TyphoonMsgManager.TestGetMsgs));
-            //eventThread2.IsBackground = true;
-            //eventThread2.Start();
-=======
             //Thread eventThread = new Thread(new ThreadStart(TyphoonMsgManager.TestEventPuller));
             //eventThread.IsBackground = true;
             //eventThread.Start();
@@ -1586,10 +1579,9 @@ namespace OnvifProxy
             //eventThread.IsBackground = true;
             //eventThread.Start();
 
-            Thread eventThread = new Thread(new ThreadStart(TyphoonMsgManager.TestTyphoonMsgCreator));
-            eventThread.IsBackground = true;
-            eventThread.Start();
->>>>>>> 3e4b5faf169347592258517c33d93be91730d111
+            //Thread eventThread = new Thread(new ThreadStart(TyphoonMsgManager.TestTyphoonMsgCreator));
+            //eventThread.IsBackground = true;
+            //eventThread.Start();
         }
 
         //---------------------------------------------------------------------------------------
