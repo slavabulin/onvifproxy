@@ -33,9 +33,9 @@ namespace OnvifProxy
         public static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         
         public static event TyphoonDisconnectEventHandler TyphoonDisconnect;
-        private static TcpClient client = null;
+        private static TcpClient client = null;//IDisposable
         private static LingerOption lingerOpt = null;
-        private static NetworkStream stream = null;
+        private static NetworkStream stream = null;//IDisposable
 
         //тред для парсера очереди команд от тайфуна - queueCmd
         private static Thread thr_parseQueueCmd = null;
@@ -124,7 +124,7 @@ namespace OnvifProxy
             ev_TyphComStoped.Reset();
             log.Debug("Connecting Typhoon...\n");
 
-            Thread thr_Connect = new Thread(new ThreadStart(Connect));
+            Thread thr_Connect = new Thread(new ThreadStart(Connect));//в этом потоке будет происходить общение с Тайфуном
             thr_Connect.IsBackground = true;
             thr_Connect.Start();
             log.Debug("done?");
@@ -155,7 +155,7 @@ namespace OnvifProxy
             }
             lingerOpt = null;           
 
-            msgIDCounter = 1;
+            msgIDCounter = 1;//сбросим счетчик мессаг до 1 (0 зарезервирован для зондов)
             TyphoonComStop();
 
             Thread.Sleep(1000);        
@@ -240,6 +240,8 @@ namespace OnvifProxy
         private static void Process()
         {
             TyphoonMsg tmpmsg;
+            object locker = new object();
+            
             do
             {
                 Thread.Sleep(1);
@@ -252,6 +254,7 @@ namespace OnvifProxy
                     {
                         try
                         {
+                            lock(locker)
                             stream.BeginRead(commandBuffer,
                                 0,
                                 commandBuffer.Length,
@@ -279,6 +282,7 @@ namespace OnvifProxy
                 {
                     try
                     {
+                        lock(locker)
                         stream.Write(TyphoonMsgManager.queueRequestToTyphoon.ElementAt(0).Value.byteMessageData,
                             0,
                             TyphoonMsgManager.queueRequestToTyphoon.ElementAt(0).Value.byteMessageData.Length);
@@ -389,8 +393,6 @@ namespace OnvifProxy
                 }
             }
         }
-
-
 
 
         //---------------------------------------------------------
@@ -1053,6 +1055,7 @@ namespace OnvifProxy
             uint datalength = 0;
             int packlen = 0;
             bool flg = false;
+            object locker = new object();
 
 
             try
@@ -1083,6 +1086,7 @@ namespace OnvifProxy
                 for (uint y = intPacketPtr; y < (4 + intPacketPtr); y++)
                 {
                     datalength = (datalength << 8);
+                    lock(locker)
                     datalength += (uint)commandBuffer[3 - y + intPacketPtr];
                 }
 
@@ -1093,30 +1097,34 @@ namespace OnvifProxy
                 //копирую туда данные из пакета
                 for (uint t = 0; t < (datalength - 5); t++)
                 {
+                    lock(locker)
                     tmpBuff[t] = commandBuffer[4 + t + intPacketPtr];
                 }
 
                 //считаю crc от того массива и сверяю с crc пришедшего пакета
-                if (commandBuffer[datalength - 1 + intPacketPtr] == TyphoonCom.CRC8(tmpBuff))
+                //lock (locker)
                 {
-                    //crc8 сошелся - сбросим таймер таймаута
-                    tmr_ConnectionTimeout.Stop();
-                    tmr_ConnectionTimeout.Start();
-
-                    //--------------------------------
-                    ev_TyphComStarted.Set(); //отсылаем событие "Тайфун приконнекчен" ??
-                    //--------------------------------
-
-
-                    Byte[] pureData = new byte[tmpBuff.Length - 8];
-                    for (int a = 0; a < pureData.Length; a++)
+                    if (commandBuffer[datalength - 1 + intPacketPtr] == TyphoonCom.CRC8(tmpBuff))
                     {
-                        pureData[a] = tmpBuff[a + 8];
-                    }
-                    //анализируем пришедший набор команд
-                    CommandParse(pureData);
+                        //crc8 сошелся - сбросим таймер таймаута
+                        tmr_ConnectionTimeout.Stop();
+                        tmr_ConnectionTimeout.Start();
 
+                        //--------------------------------
+                        ev_TyphComStarted.Set(); //отсылаем событие "Тайфун приконнекчен" ??
+                        //--------------------------------
+
+
+                        Byte[] pureData = new byte[tmpBuff.Length - 8];
+                        for (int a = 0; a < pureData.Length; a++)
+                        {
+                            pureData[a] = tmpBuff[a + 8];
+                        }
+                        //анализируем пришедший набор команд
+                        CommandParse(pureData);
+                    }
                 }
+
                 intPacketPtr += datalength;
                 //если есть еще пакеты в буфере - продолжаем обработку
                 if (intPacketPtr < packlen)
