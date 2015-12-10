@@ -767,7 +767,7 @@ namespace OnvifProxy
                     case CapabilityCategory.Device:
                         if (confstr.Capabilities.Device != null)
                         {
-                            //--------------------------------------------------
+                            //------Треш угар и содомия далее-------------------
 
                             string ComStr = "<Capabilities><Device  xmlns=\u0022http://www.onvif.org/ver10/schema\u0022><IO><InputConnectors>0</InputConnectors></IO></Device></Capabilities>";
                             TyphoonCom.log.Debug("Service1: GetCapabilities added to commandQueue");
@@ -785,6 +785,7 @@ namespace OnvifProxy
                             ConfigStruct tmpconfstr = new ConfigStruct();
 
                             TyphMsg = TyphoonMsgManager.GetMsg(TyphMsg.MessageID);
+
                             if (TyphMsg == null) return null;
                             Buf = TyphoonCom.ParseMem(0, TyphMsg.stringMessageData);
 
@@ -3020,7 +3021,6 @@ namespace OnvifProxy
             vencconf[0].MPEG4 = new Mpeg4Configuration();
             vencconf[0].Multicast = new MulticastConfiguration();
             vencconf[0].Multicast.Address = new Media.IPAddress();
-            //vencconf[0].SessionTimeout = (System.DateTime.Parse(TimeSpan.FromSeconds(10).ToString())).ToString("f");
             vencconf[0].SessionTimeout = "PT10S";
             vencconf[0].UseCount = 1;
 

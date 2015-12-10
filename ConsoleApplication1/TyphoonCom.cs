@@ -1576,6 +1576,9 @@ namespace OnvifProxy
 
         static UInt32 MsgIDCounter;
 
+        //таймаут ожидания ответа от тайфуна в милисекундах
+        private const int typh_msg_timeout = 4500; 
+
         static TyphoonMsgManager()
         {
             ////for testing;
@@ -1750,8 +1753,8 @@ namespace OnvifProxy
 
         //---------------------------------------------------------------------------------------
         // метод - синхронная читалка ответа с таймаутом. ждёт таймаут (4,5сек) или ответа от тайфуна
-        //смотря что происходит быстрее, и возвращает либо мессагу от тайфуна (ответ пришел до
-        //таймаута), либо null если таймут произошел раньше. На входе ID мессаги с ответом, на 
+        // смотря что происходит быстрее, и возвращает либо мессагу от тайфуна (ответ пришел до
+        // таймаута), либо null если таймут произошел раньше. На входе ID мессаги с ответом, на 
         // выходе мессага с ответом либо null
         //---------------------------------------------------------------------------------------
         public static TyphoonMsg GetMsg(uint MsgID)
@@ -1762,7 +1765,8 @@ namespace OnvifProxy
             Task<TyphoonMsg> task = new Task<TyphoonMsg>(() => TaskGetMsg(MsgID, token), token);
 
             task.Start();
-            task.Wait(4500);
+            //task.Wait(4500);
+            task.Wait(typh_msg_timeout);
             
             cancelTokenSource.Cancel();
             cancelTokenSource.Dispose();
