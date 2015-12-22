@@ -784,9 +784,10 @@ namespace OnvifProxy
                             //----------------------------------------------
                             ConfigStruct tmpconfstr = new ConfigStruct();
 
+                            // дожидается ответа 4,5 секунды или возвращает нулл
                             TyphMsg = TyphoonMsgManager.GetMsg(TyphMsg.MessageID);
 
-                            if (TyphMsg == null) return null;
+                            if (TyphMsg == null) return null;// наверное надо бы fault выкинуть
                             Buf = TyphoonCom.ParseMem(0, TyphMsg.stringMessageData);
 
                             String DataString = "<?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022 ?><ConfigStruct xmlns:xsd=\u0022http://www.w3.org/2001/XMLSchema\u0022 xmlns:xsi=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022>";
@@ -813,6 +814,7 @@ namespace OnvifProxy
                         {
                             // если нет такого раздела в config.xml
                             // то возвращает Fault Code
+                            // наверное надо бы fault выкинуть, а не null
                             return null;
                         }
                     case CapabilityCategory.Media:
@@ -2412,6 +2414,24 @@ namespace OnvifProxy
         //uncomment me!!!
         public Media.GetVideoSourcesResponse GetVideoSources(Media.GetVideoSourcesRequest request)
         {
+
+            /*
+               TyphoonMsg typhmsgreq = new TyphoonMsg(TyphoonMsgType.Request);
+            TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
+
+            byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null, 0))).Length];
+            tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null, 0));
+            for (int a = 0; a < 4; a++)
+            {
+                typhmsgreq.MessageID = typhmsgreq.MessageID << 8;
+                typhmsgreq.MessageID += tmpBuf[21 - a];
+            }
+            typhmsgreq.byteMessageData = tmpBuf;
+            ///добавляем в очередь на отправку
+            TyphoonMsgManager.EnqueueMsg(typhmsgreq);
+            
+            typhmsgresp = TyphoonMsgManager.GetMsg(typhmsgreq.MessageID);
+             */
             TyphoonMsg tmpmsg;
             Media.GetVideoSourcesResponse getVideoSourcesResponse = new Media.GetVideoSourcesResponse();
             #region
@@ -2560,40 +2580,56 @@ namespace OnvifProxy
 
             //getVideoSourcesResponse.VideoSources[0].token = "token";
             #endregion
-            TyphoonMsg tmpMsg = new TyphoonMsg(TyphoonMsgType.Request);
+
+            TyphoonMsg typhmsgreq = new TyphoonMsg(TyphoonMsgType.Request);
+            TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
+
             byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 6, null, 0)).Length)];
-            tmpMsg.byteMessageData = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 6, null, 0));
-            TyphoonMsgManager.EnqueueMsg(tmpMsg);
+            tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 6, null, 0));
+
+            for (int a = 0; a < 4; a++)
+            {
+                typhmsgreq.MessageID = typhmsgreq.MessageID << 8;
+                typhmsgreq.MessageID += tmpBuf[21 - a];
+            }
+            typhmsgreq.byteMessageData = tmpBuf;
+
+            //tmpmsgreq.byteMessageData = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 6, null, 0));
+            TyphoonMsgManager.EnqueueMsg(typhmsgreq);
 
             TyphoonCom.log.Debug("Service1: GetVideoSources added to commandQueue");
+            typhmsgresp = TyphoonMsgManager.GetMsg(typhmsgreq.MessageID);
 
-            do
-            {
-                Thread.Sleep(1);
-            } while (TyphoonMsgManager.queueResponceFromTyphoon.Count== 0);
+            if (typhmsgresp == null)
+                throw new FaultException(new FaultReason("arghh"),
+                             new FaultCode("Sender",
+                                 new FaultCode("NotAuthorized", "http://www.onvif.org/ver10/error",
+                                     new FaultCode("Operation not Permitted", "http://www.onvif.org/ver10/error")))); 
 
-            if (TyphoonMsgManager.queueResponceFromTyphoon.Count > 0)
-            {
                 ///извлекаем MessageID из созданной команды
                 ///и кладем в TyphMsg.MessageID, чтобы потом 
                 ///по нему найти ответ в очереди ответов
-                TyphoonMsg TyphMsg = new TyphoonMsg(TyphoonMsgType.Responce);
-                for (int a = 0; a < 4; a++)
-                {
-                    TyphMsg.MessageID = TyphMsg.MessageID << 8;
-                    TyphMsg.MessageID += tmpBuf[21 - a];
-                }
-                try
-                {
-                    TyphMsg.stringMessageData = TyphoonMsgManager.queueResponceFromTyphoon.Single(TyphoonMessage => TyphoonMessage.Value.MessageID == TyphMsg.MessageID).Value.stringMessageData;
-                    TyphoonMsgManager.queueResponceFromTyphoon.TryRemove(TyphMsg.MessageID, out tmpmsg);
-                }
-                catch (Exception ex)
-                {
-                    TyphoonCom.log.Error(ex.Message);
-                }
-                string tmpStr = TyphoonCom.ParseMem(0, TyphMsg.stringMessageData);
-                if (tmpStr == null) return null;
+            //TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
+            //for (int a = 0; a < 4; a++)
+            //{
+            //    typhmsgresp.MessageID = typhmsgresp.MessageID << 8;
+            //    typhmsgresp.MessageID += tmpBuf[21 - a];
+            //}
+                //try
+                //{
+                //    typhmsgresp.stringMessageData = TyphoonMsgManager.queueResponceFromTyphoon.Single(TyphoonMessage => TyphoonMessage.Value.MessageID == typhmsgresp.MessageID).Value.stringMessageData;
+                //    TyphoonMsgManager.queueResponceFromTyphoon.TryRemove(typhmsgresp.MessageID, out tmpmsg);
+                //}
+                //catch (Exception ex)
+                //{
+                //    TyphoonCom.log.Error(ex.Message);
+                //}
+                string tmpStr = TyphoonCom.ParseMem(0, typhmsgresp.stringMessageData);
+                if (tmpStr == null) 
+                    throw new FaultException(new FaultReason("arghh!!!"),
+                             new FaultCode("Sender",
+                                 new FaultCode("NotAuthorized", "http://www.onvif.org/ver10/error",
+                                     new FaultCode("Operation not Permitted", "http://www.onvif.org/ver10/error"))));
 
                 //tmpStr = String.Concat("<s:Envelope xmlns:s=\u0022http://www.w3.org/2003/05/soap-envelope\u0022><s:Body xmlns:xsi=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022 xmlns:xsd=\u0022http://www.w3.org/2001/XMLSchema\u0022>", tmpStr );
                 //tmpStr = String.Concat(tmpStr, "</s:Body></s:Envelope>");
@@ -2610,8 +2646,9 @@ namespace OnvifProxy
                         for (int y = 0; y < getVideoSourcesResponse.VideoSources.Count(); y++)
                         {
                             getVideoSourcesResponse.VideoSources[y].Resolution = new Media.VideoResolution();
-                            getVideoSourcesResponse.VideoSources[y].Resolution.Height = -1;
-                            getVideoSourcesResponse.VideoSources[y].Resolution.Width = -1;
+                            getVideoSourcesResponse.VideoSources[y].Resolution.Height = 1080;
+                            getVideoSourcesResponse.VideoSources[y].Resolution.Width = 1920;
+                            getVideoSourcesResponse.VideoSources[y].Framerate = 30;
                         }
                     }
                     catch (SerializationException g)
@@ -2624,7 +2661,6 @@ namespace OnvifProxy
                         ms.Close();
                     }
                 }
-            }
             return getVideoSourcesResponse;
         }
 

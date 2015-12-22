@@ -337,6 +337,9 @@ namespace OnvifProxy
             httpTransportBindingElement.KeepAliveEnabled = false;
             //httpTransportBindingElement.AuthenticationScheme = AuthenticationSchemes.Basic;//RFC2617
 
+            HttpsTransportBindingElement httpsTransportBindingElement = new HttpsTransportBindingElement();
+            httpsTransportBindingElement.RequireClientCertificate = true;
+
             CustomBinding binding = new CustomBinding(
                     //new TextMessageEncodingBindingElement(MessageVersion.Soap12WSAddressing10, Encoding.UTF8),
                     new TextMessageEncodingBindingElement(MessageVersion.Soap12, Encoding.UTF8),
@@ -351,6 +354,7 @@ namespace OnvifProxy
             binding.Namespace = "http://www.onvif.org/ver10/device/wsdl";
             binding1.Namespace = "http://www.onvif.org/ver10/event/wsdl";
             binding2.Namespace = "http://www.onvif.org/ver10/event/wsdl";
+            //--------------------------
 
             ServiceDiscoveryBehavior serviceDiscoveryBehavior = new ServiceDiscoveryBehavior();
 

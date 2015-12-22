@@ -56,6 +56,13 @@ namespace OnvifProxy
                 default:
                     break;
             }
+             
+            /*
+            adminList.Add(new XmlQualifiedName(name, ns));
+            operatorList.Add(new XmlQualifiedName(name, ns));
+            userList.Add(new XmlQualifiedName(name, ns));
+            anonList.Add(new XmlQualifiedName(name, ns));
+             */
         }
 
         internal Dictionary<string, List<XmlQualifiedName>> QName
