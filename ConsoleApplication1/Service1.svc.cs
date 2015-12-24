@@ -3263,9 +3263,11 @@ namespace OnvifProxy
 
         public Media.MediaUri GetStreamUri(Media.StreamSetup StreamSetup, string ProfileToken)
         {
-            ConfigStruct confstr = new ConfigStruct();
-            XmlConfig conf = new XmlConfig();
-            TyphoonMsg TyphMsg = new TyphoonMsg(TyphoonMsgType.Request);
+            //ConfigStruct confstr = new ConfigStruct();
+            //XmlConfig conf = new XmlConfig();
+            TyphoonMsg typhmsgreq = new TyphoonMsg(TyphoonMsgType.Request);
+            TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
+
             MediaUri mediauri = new MediaUri();
             string Buf = null;
 
@@ -3277,7 +3279,7 @@ namespace OnvifProxy
             byte[] b_profileToken = Encoding.Convert(Encoding.Unicode, Encoding.ASCII, TyphoonCom.MakeMem(ProfileToken));
 
             uint datalen = (uint)b_profileToken.Length + (uint)b_protocol.Length + (uint)b_stream.Length;
-
+            #region
             byte[] b_datalen = TyphoonCom.Int32toByteAr(datalen);
 
             byte[] data = new byte[datalen];
@@ -3303,62 +3305,35 @@ namespace OnvifProxy
             ptr += (uint)b_profileToken.Length;
 
             data = Encoding.Convert(Encoding.ASCII, Encoding.Unicode, data);
+            #endregion
+            //---------------------------------------
 
-            byte[] tmp = TyphoonCom.FormCommand(200, 5, data, 0);
-
-            TyphoonMsg typhmsg = new TyphoonMsg(TyphoonMsgType.Request);
-            typhmsg.byteMessageData = TyphoonCom.FormPacket(tmp);
-            TyphoonMsgManager.EnqueueMsg(typhmsg);
-            //TyphoonCom.AddCommand(TyphoonCom.FormPacket(tmp));
+            byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 5, data, 0))).Length];
+            tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 5, data, 0));
 
             for (int a = 0; a < 4; a++)
             {
-                TyphMsg.MessageID = TyphMsg.MessageID << 8;
-                TyphMsg.MessageID += tmp[9 - a];
+                typhmsgreq.MessageID = typhmsgreq.MessageID << 8;
+                typhmsgreq.MessageID += tmpBuf[21 - a];
             }
+            typhmsgreq.byteMessageData = tmpBuf;
 
-            //ждем первого ответа, кста, это не гарантирует, что это нужный ответ, надо бы переделать
-            do
+            TyphoonMsgManager.EnqueueMsg(typhmsgreq);
+            typhmsgresp = TyphoonMsgManager.GetMsg(typhmsgreq.MessageID);
+            if (typhmsgresp != null)
             {
-                Thread.Sleep(1);
-            } while (TyphoonMsgManager.queueResponceFromTyphoon.Count == 0);
-
-            if (TyphoonMsgManager.queueResponceFromTyphoon.Count > 0)            
-            {
-                try
-                {
-                    //находим в очереди ответ с ID отправленного нами запроса
-                    //Buf = TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID).MessageData;
-                    TyphoonMsg tmptyphmsg = new TyphoonMsg(TyphoonMsgType.Responce);
-                    TyphoonMsgManager.queueResponceFromTyphoon.TryGetValue(TyphMsg.MessageID, out tmptyphmsg);
-                    Buf = tmptyphmsg.stringMessageData;
-                    Buf = TyphoonCom.ParseMem(0, Buf);
-                }
-                catch (Exception ex)
-                {
-                    TyphoonCom.log.ErrorFormat("от Typhoon пришли сообщения с одинаковыми ID или нет ни одного сообщения с таким ID {0}", ex.Message);
-                }
-                //удаляем из очереди мессагу с ID отправленного нами запроса
-                try
-                {
-                    //TyphoonCom.queueResponce.Remove(TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID));
-                    ////рихтуем данные 
-                }
-                catch (Exception ex)
-                {
-                    TyphoonCom.log.Error(ex.Message);
-                }
+                Buf = typhmsgresp.stringMessageData;
+                Buf = TyphoonCom.ParseMem(0, Buf);
                 mediauri.Uri = Buf;
-
+                return mediauri;
             }
             else
             {
-                Console.WriteLine("AddCommand returned false");
+                throw new FaultException(new FaultReason("NoStreamUriFound"),
+                       new FaultCode("Sender",
+                           new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
+                               new FaultCode("NoStreamUriFound", "http://www.onvif.org/ver10/error"))));
             }
-            TyphoonCom.log.Debug("Service1: GetProfiles added to commandQueue");
-
-            return mediauri;
-            //return null;
         }
 
         public void StartMulticastStreaming(string ProfileToken)
