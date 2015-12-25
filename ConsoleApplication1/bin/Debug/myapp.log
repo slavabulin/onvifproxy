@@ -1,97 +1,33 @@
-2015-12-24 09:25:01,549 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
-2015-12-24 09:25:02,790 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-12-25 10:56:05,993 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-12-25 10:56:06,313 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-12-24 09:25:02,790 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-12-24 09:25:02,886 [DEBUG] OnvifProxy.TyphoonCom - Done.
+2015-12-25 10:56:06,313 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-25 10:56:08,793 [DEBUG] OnvifProxy.TyphoonCom - Done.
 
-2015-12-24 09:25:03,014 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
-2015-12-24 09:25:06,194 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
-2015-12-24 09:25:06,330 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
-2015-12-24 09:25:06,338 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
-2015-12-24 09:25:11,219 [DEBUG] OnvifProxy.TyphoonCom - Host opened
-2015-12-24 09:25:11,219 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://172.16.32.149/
-2015-12-24 12:10:45,277 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
-2015-12-24 12:10:45,948 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2015-12-25 10:56:08,865 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-12-25 10:56:08,977 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-12-25 10:56:08,985 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-12-25 10:56:08,985 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-12-25 10:56:09,766 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-12-25 10:56:09,766 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://172.16.32.149/
+2015-12-25 10:56:55,441 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-12-25 10:56:55,761 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2015-12-24 12:10:45,956 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-12-24 12:10:46,012 [DEBUG] OnvifProxy.TyphoonCom - Done.
+2015-12-25 10:56:55,761 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-25 10:56:55,777 [DEBUG] OnvifProxy.TyphoonCom - Done.
 
-2015-12-24 12:10:46,052 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
-2015-12-24 12:10:46,507 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
-2015-12-24 12:10:46,547 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
-2015-12-24 12:10:46,547 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
-2015-12-24 12:10:48,591 [DEBUG] OnvifProxy.TyphoonCom - Host opened
-2015-12-24 12:10:48,591 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://172.16.32.149/
-2015-12-24 14:56:19,571 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
-2015-12-24 14:56:20,187 [DEBUG] OnvifProxy.TyphoonCom - слипшиеся команды
-2015-12-24 14:56:20,195 [DEBUG] OnvifProxy.TyphoonCom - TyphoonMsgManager.SendMsg() failed to send msg - TyphoonMsgId already exists in CommandQueue, Msg skipped
-2015-12-24 14:56:20,211 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
-2015-12-24 14:56:20,211 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
-2015-12-24 14:56:20,219 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 1
-2015-12-24 14:56:20,211 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 1
-2015-12-24 14:56:20,299 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
-2015-12-24 14:57:20,348 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
-2015-12-24 14:57:20,388 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
-2015-12-24 16:04:51,524 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
-2015-12-24 16:04:51,980 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
-
-2015-12-24 16:04:51,980 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-12-24 16:04:52,004 [DEBUG] OnvifProxy.TyphoonCom - Done.
-
-2015-12-24 16:04:52,052 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
-2015-12-24 16:04:52,556 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
-2015-12-24 16:04:52,580 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
-2015-12-24 16:04:52,580 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
-2015-12-24 16:04:54,427 [DEBUG] OnvifProxy.TyphoonCom - Host opened
-2015-12-24 16:04:54,427 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://172.16.32.149/
-2015-12-24 16:16:09,126 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
-2015-12-24 16:16:14,132 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Response queue by timeout- 0 left
-2015-12-24 16:16:23,174 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
-2015-12-24 16:19:47,356 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
-2015-12-24 16:25:53,169 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
-2015-12-24 16:28:28,807 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
-2015-12-24 16:28:44,559 [DEBUG] OnvifProxy.TyphoonCom - Zond removed by timeout - 0 left
-2015-12-24 16:28:44,775 [DEBUG] OnvifProxy.TyphoonCom - IOException - Не удается прочитать данные из транспортного соединения: EndReceive может вызываться только один раз для каждой асинхронной операции..
-2015-12-24 16:37:25,793 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
-2015-12-24 16:37:30,793 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Response queue by timeout- 0 left
-2015-12-24 16:37:45,321 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
-2015-12-24 16:37:50,322 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Response queue by timeout- 0 left
-2015-12-24 16:38:00,546 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
-2015-12-24 16:38:05,546 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Response queue by timeout- 0 left
-2015-12-24 16:39:06,811 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
-2015-12-24 16:39:11,812 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Response queue by timeout- 0 left
-2015-12-24 16:40:54,998 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
-2015-12-24 16:40:59,998 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Response queue by timeout- 0 left
-2015-12-24 16:41:11,255 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
-2015-12-24 16:41:11,255 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
-2015-12-24 16:41:11,255 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 1
-2015-12-24 16:41:11,255 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 1
-2015-12-24 16:42:11,288 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
-2015-12-24 16:53:02,236 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
-2015-12-24 17:45:52,243 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
-2015-12-24 17:45:53,457 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
-
-2015-12-24 17:45:53,457 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-12-24 17:45:53,521 [DEBUG] OnvifProxy.TyphoonCom - Done.
-
-2015-12-24 17:45:53,905 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
-2015-12-24 17:45:55,468 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
-2015-12-24 17:45:55,652 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
-2015-12-24 17:45:55,652 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
-2015-12-24 17:45:57,888 [DEBUG] OnvifProxy.TyphoonCom - Host opened
-2015-12-24 17:45:57,888 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
-2015-12-24 17:46:17,773 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
-2015-12-24 18:04:28,443 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
-2015-12-24 18:04:28,866 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
-
-2015-12-24 18:04:28,867 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-12-24 18:04:29,955 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-12-24 18:04:29,955 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-12-24 18:04:30,977 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
-
-2015-12-24 18:04:30,977 [DEBUG] OnvifProxy.TyphoonCom - done?
-2015-12-24 18:04:32,040 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
-2015-12-24 18:04:32,040 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2015-12-24 18:04:33,050 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
-
-2015-12-24 18:04:33,050 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-25 10:56:55,825 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-12-25 10:56:55,953 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-12-25 10:56:55,961 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-12-25 10:56:55,961 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-12-25 10:56:57,345 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-12-25 10:56:57,345 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://172.16.32.149/
+2015-12-25 11:52:58,508 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
+2015-12-25 11:52:59,108 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-25 11:52:59,116 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 1
+2015-12-25 11:52:59,132 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-25 11:52:59,132 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 1
+2015-12-25 11:53:59,181 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-25 11:53:59,181 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-25 12:52:57,910 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
+2015-12-25 13:52:58,458 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue

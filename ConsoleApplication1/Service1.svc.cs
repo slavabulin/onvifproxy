@@ -244,6 +244,8 @@ namespace OnvifProxy
                 getServicesResponse.Service[2].Version.Major = 0;
                 getServicesResponse.Service[2].Version.Minor = 1;
 
+                //getServicesResponse.Service[]
+
                 return getServicesResponse;
             }
         }
