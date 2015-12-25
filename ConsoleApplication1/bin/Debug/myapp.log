@@ -37,3 +37,15 @@
 2015-12-25 14:13:16,493 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 4
 2015-12-25 14:14:15,478 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised -  оллекци€ была изменена; невозможно выполнить операцию перечислени€.
 2015-12-25 14:14:16,495 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised -  оллекци€ была изменена; невозможно выполнить операцию перечислени€.
+2015-12-25 14:58:57,821 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-12-25 14:58:58,820 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-25 14:58:58,820 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-25 14:58:58,868 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-12-25 14:58:59,062 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-12-25 14:59:02,125 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-12-25 14:59:02,253 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-12-25 14:59:02,253 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-12-25 14:59:07,294 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-12-25 14:59:07,294 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://172.16.32.149/

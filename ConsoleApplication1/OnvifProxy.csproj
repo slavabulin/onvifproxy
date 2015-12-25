@@ -97,6 +97,7 @@
     <Compile Include="AsyncResult.cs" />
     <Compile Include="CustomMessageFormatter.cs" />
     <Compile Include="IEvent.cs" />
+    <Compile Include="MediaSourcesProvider.cs" />
     <Compile Include="NVTClient.cs" />
     <Compile Include="NVTDiscoveryClient.cs" />
     <Compile Include="IDevice.cs" />
