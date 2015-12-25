@@ -31,3 +31,9 @@
 2015-12-25 11:53:59,181 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised -  оллекци€ была изменена; невозможно выполнить операцию перечислени€.
 2015-12-25 12:52:57,910 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
 2015-12-25 13:52:58,458 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
+2015-12-25 14:13:15,460 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-25 14:13:15,468 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 3
+2015-12-25 14:13:16,493 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-25 14:13:16,493 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 4
+2015-12-25 14:14:15,478 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised -  оллекци€ была изменена; невозможно выполнить операцию перечислени€.
+2015-12-25 14:14:16,495 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised -  оллекци€ была изменена; невозможно выполнить операцию перечислени€.
