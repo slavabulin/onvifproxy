@@ -1,0 +1,440 @@
+2015-12-01 12:10:34,144 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-12-01 12:10:35,619 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 12:10:35,620 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 12:10:35,720 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-12-01 12:10:35,881 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-12-01 12:10:45,936 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 12:10:46,156 [DEBUG] OnvifProxy.TyphoonCom - IOException - Не удается прочитать данные из транспортного соединения: EndReceive может вызываться только один раз для каждой асинхронной операции..
+2015-12-01 12:10:46,185 [DEBUG] OnvifProxy.TyphoonCom - stream.DataAvailable - Exception Ссылка на объект не указывает на экземпляр объекта.
+2015-12-01 12:10:47,788 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 12:10:47,789 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 12:10:47,797 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-12-01 12:10:47,980 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-12-01 12:10:50,274 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-12-01 12:10:50,275 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-12-01 12:10:54,778 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-12-01 12:10:54,778 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-12-01 12:17:59,260 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-12-01 12:18:03,497 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-12-01 12:18:08,495 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Response queue by timeout- 0 left
+2015-12-01 12:18:40,794 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-12-01 12:18:45,797 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Response queue by timeout- 0 left
+2015-12-01 12:19:15,076 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-12-01 12:19:20,088 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Response queue by timeout- 0 left
+2015-12-01 12:20:00,425 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-12-01 12:20:05,430 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Response queue by timeout- 0 left
+2015-12-01 12:20:30,826 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-12-01 12:20:37,893 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-12-01 12:20:38,023 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-12-01 12:20:43,036 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Response queue by timeout- 0 left
+2015-12-01 12:21:23,170 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-12-01 12:21:25,826 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-12-01 12:21:30,836 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Response queue by timeout- 0 left
+2015-12-01 12:22:21,467 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-12-01 12:22:21,846 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 12:22:21,846 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 12:22:21,869 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-12-01 12:22:21,902 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-12-01 12:22:22,331 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-12-01 12:22:22,389 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-12-01 12:22:22,389 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-12-01 12:22:23,733 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-12-01 12:22:23,733 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-12-01 12:22:50,543 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-12-01 12:22:53,782 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-12-01 12:22:58,796 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Response queue by timeout- 0 left
+2015-12-01 12:23:03,622 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-12-01 12:23:08,640 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Response queue by timeout- 0 left
+2015-12-01 12:32:27,867 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-12-01 12:32:28,394 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 12:32:28,394 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 12:32:28,414 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-12-01 12:32:28,447 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-12-01 12:32:28,919 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-12-01 12:32:28,968 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-12-01 12:32:28,968 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-12-01 12:32:30,577 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-12-01 12:32:30,577 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-12-01 12:32:56,568 [DEBUG] OnvifProxy.TyphoonCom - stream.Write - IOException Не удается записать данные в транспортное соединение: Удаленный хост принудительно разорвал существующее подключение.
+2015-12-01 12:32:56,569 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 12:32:56,570 [DEBUG] OnvifProxy.TyphoonCom - Opened
+2015-12-01 12:32:57,462 [DEBUG] OnvifProxy.TyphoonCom - Zond removed by timeout - 0 left
+2015-12-01 12:32:57,584 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 12:32:57,674 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 12:32:57,766 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Сделана попытка выполнить операцию на объекте, не являющемся сокетом 127.0.0.1:7520
+2015-12-01 12:32:57,766 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 12:32:57,771 [DEBUG] OnvifProxy.TyphoonCom - Host closed
+2015-12-01 12:32:58,767 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 12:32:58,768 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:43:26,091 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-12-01 15:43:27,817 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:43:27,817 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:43:28,895 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:43:28,895 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:43:29,908 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:43:29,908 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:43:30,944 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:43:30,944 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:43:31,959 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:43:31,959 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:43:33,006 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:43:33,006 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:43:34,022 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:43:34,022 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:43:35,053 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:43:35,053 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:43:36,069 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:43:36,069 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:43:37,134 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:43:37,134 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:43:38,142 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:43:38,142 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:43:39,184 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:43:39,184 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:43:40,191 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:43:40,191 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:43:41,225 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-12-01 15:43:41,347 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-12-01 15:43:41,969 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-12-01 15:43:42,009 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-12-01 15:43:42,009 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-12-01 15:43:43,916 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-01 15:43:43,916 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 1
+2015-12-01 15:43:44,204 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-12-01 15:43:44,204 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-12-01 15:43:51,279 [DEBUG] OnvifProxy.TyphoonCom - stream.Write - IOException Не удается записать данные в транспортное соединение: Удаленный хост принудительно разорвал существующее подключение.
+2015-12-01 15:43:51,279 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:43:51,279 [DEBUG] OnvifProxy.TyphoonCom - Opened
+2015-12-01 15:43:52,201 [DEBUG] OnvifProxy.TyphoonCom - Host closed
+2015-12-01 15:43:52,217 [DEBUG] OnvifProxy.TyphoonCom - Zond removed by timeout - 0 left
+2015-12-01 15:43:52,295 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:43:52,295 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:43:53,343 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:43:53,343 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:43:54,353 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:43:54,353 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:43:55,400 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:43:55,400 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:43:56,416 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:43:56,416 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:43:57,271 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-12-01 15:43:57,396 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-12-01 15:43:57,458 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:43:57,458 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:43:58,474 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:43:58,474 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:43:58,981 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-12-01 15:43:58,981 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-12-01 15:43:58,989 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-12-01 15:44:00,085 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-01 15:44:00,085 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 1
+2015-12-01 15:44:00,397 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-12-01 15:44:00,397 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-12-01 15:44:38,308 [DEBUG] OnvifProxy.TyphoonCom - Opened
+2015-12-01 15:44:38,308 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:44:38,332 [DEBUG] OnvifProxy.TyphoonCom - stream.DataAvailable - Exception Ссылка на объект не указывает на экземпляр объекта.
+2015-12-01 15:44:39,179 [DEBUG] OnvifProxy.TyphoonCom - Host closed
+2015-12-01 15:44:39,315 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:44:39,315 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:44:39,323 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-12-01 15:44:44,023 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-01 15:44:44,243 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-12-01 15:44:44,319 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-12-01 15:44:44,319 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-12-01 15:44:44,319 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-12-01 15:44:45,559 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-12-01 15:44:45,559 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-12-01 15:44:49,320 [DEBUG] OnvifProxy.TyphoonCom - Opened
+2015-12-01 15:44:49,320 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:44:49,344 [DEBUG] OnvifProxy.TyphoonCom - stream.DataAvailable - Exception Ссылка на объект не указывает на экземпляр объекта.
+2015-12-01 15:44:50,289 [DEBUG] OnvifProxy.TyphoonCom - Host closed
+2015-12-01 15:44:50,385 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:44:50,409 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:44:50,441 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-12-01 15:44:55,346 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-12-01 15:44:55,450 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-12-01 15:44:55,458 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-12-01 15:44:55,458 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-12-01 15:44:56,362 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-12-01 15:44:56,362 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-12-01 15:45:00,102 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-01 15:45:00,446 [DEBUG] OnvifProxy.TyphoonCom - Opened
+2015-12-01 15:45:00,446 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:45:00,470 [DEBUG] OnvifProxy.TyphoonCom - stream.DataAvailable - Exception Ссылка на объект не указывает на экземпляр объекта.
+2015-12-01 15:45:01,002 [DEBUG] OnvifProxy.TyphoonCom - Host closed
+2015-12-01 15:45:01,458 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:45:01,458 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:45:01,466 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-12-01 15:45:03,487 [DEBUG] OnvifProxy.TyphoonCom - Zond removed by timeout - 0 left
+2015-12-01 15:45:03,503 [DEBUG] OnvifProxy.TyphoonCom - stream.Write - ArgumentOutOfRangeException Заданный аргумент находится вне диапазона допустимых значений.
+Имя параметра: index
+2015-12-01 15:45:03,503 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:45:04,518 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:45:04,518 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:45:06,090 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-12-01 15:45:06,183 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-12-01 15:45:06,183 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-12-01 15:45:06,183 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-12-01 15:45:07,262 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-12-01 15:45:07,262 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-12-01 15:45:25,567 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 127.0.0.1:7520
+2015-12-01 15:45:25,567 [DEBUG] OnvifProxy.TyphoonCom - Opened
+2015-12-01 15:45:25,567 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:45:26,376 [DEBUG] OnvifProxy.TyphoonCom - Host closed
+2015-12-01 15:45:26,579 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:45:26,579 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:45:31,439 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-12-01 15:45:31,533 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-12-01 15:45:47,621 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 127.0.0.1:7520
+2015-12-01 15:45:47,621 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:45:48,637 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:45:48,637 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:46:09,712 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 127.0.0.1:7520
+2015-12-01 15:46:09,712 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:46:10,728 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:46:10,728 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:46:31,816 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 127.0.0.1:7520
+2015-12-01 15:46:31,816 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:46:32,829 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:46:32,829 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:46:53,890 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 127.0.0.1:7520
+2015-12-01 15:46:53,890 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:46:54,895 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:46:54,895 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:46:55,941 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:46:55,941 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:46:56,961 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:46:56,961 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:46:58,018 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:46:58,018 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:46:59,034 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:46:59,034 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:47:00,063 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:47:00,063 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:47:01,084 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:47:01,084 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:47:02,130 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:47:02,130 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:47:03,146 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:47:03,146 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:47:04,224 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:47:04,224 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:47:05,240 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:47:05,240 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:47:06,287 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:47:06,287 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:47:07,303 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:47:07,303 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:47:08,361 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:47:08,361 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:47:09,377 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:47:09,377 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:47:10,420 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:47:10,420 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:47:11,432 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:47:11,432 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:47:12,484 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:47:12,484 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:47:13,499 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:47:13,499 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:47:14,537 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:47:14,537 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:47:15,551 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:47:15,551 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:47:15,575 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-12-01 15:47:15,575 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-12-01 15:47:15,583 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-12-01 15:47:16,234 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-01 15:47:16,234 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 1
+2015-12-01 15:47:16,698 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-12-01 15:47:16,698 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-12-01 15:47:23,653 [DEBUG] OnvifProxy.TyphoonCom - stream.Write - IOException Не удается записать данные в транспортное соединение: Удаленный хост принудительно разорвал существующее подключение.
+2015-12-01 15:47:23,653 [DEBUG] OnvifProxy.TyphoonCom - Opened
+2015-12-01 15:47:23,653 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:47:24,513 [DEBUG] OnvifProxy.TyphoonCom - Host closed
+2015-12-01 15:47:24,612 [DEBUG] OnvifProxy.TyphoonCom - Zond removed by timeout - 0 left
+2015-12-01 15:47:24,675 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:47:24,675 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:47:25,723 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:47:25,723 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:47:26,738 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:47:26,738 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:47:27,780 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:47:27,780 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:47:28,796 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:47:28,796 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:47:29,611 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-12-01 15:47:29,721 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-12-01 15:47:29,832 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:47:29,832 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:47:30,848 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:47:30,848 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:47:31,895 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:47:31,895 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:47:32,904 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:47:32,904 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:47:33,953 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:47:33,953 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:47:34,971 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:47:34,971 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:47:36,021 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:47:36,021 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:47:37,025 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:47:37,025 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:47:38,086 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:47:38,086 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:47:39,102 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:47:39,102 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:47:40,145 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:47:40,145 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:47:41,162 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:47:41,162 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:47:42,196 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:47:42,196 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:47:43,213 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:47:43,213 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:47:43,213 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-12-01 15:47:43,213 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-12-01 15:47:43,221 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-12-01 15:47:44,367 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-12-01 15:47:44,367 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-12-01 15:47:44,375 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-01 15:47:44,375 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 1
+2015-12-01 15:47:57,297 [DEBUG] OnvifProxy.TyphoonCom - stream.Write - IOException Не удается записать данные в транспортное соединение: Удаленный хост принудительно разорвал существующее подключение.
+2015-12-01 15:47:57,297 [DEBUG] OnvifProxy.TyphoonCom - Opened
+2015-12-01 15:47:57,297 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:47:58,155 [DEBUG] OnvifProxy.TyphoonCom - Host closed
+2015-12-01 15:47:58,264 [DEBUG] OnvifProxy.TyphoonCom - Zond removed by timeout - 0 left
+2015-12-01 15:47:58,327 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:47:58,327 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:47:59,389 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:47:59,389 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:48:00,408 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:48:00,408 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:48:01,440 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:48:01,440 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:48:02,455 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:48:02,455 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:48:03,237 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-12-01 15:48:03,331 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-12-01 15:48:03,487 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-01 15:48:03,487 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:48:04,496 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:48:04,496 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:48:05,006 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-12-01 15:48:05,006 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-12-01 15:48:05,014 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-12-01 15:48:06,094 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-01 15:48:06,094 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 1
+2015-12-01 15:48:06,118 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-12-01 15:48:06,118 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-12-01 15:48:16,260 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-01 15:48:44,399 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-01 15:48:55,607 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-12-01 15:48:59,282 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-12-01 15:49:04,280 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Response queue by timeout- 0 left
+2015-12-01 15:49:04,560 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-12-01 15:49:06,117 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-01 15:49:09,557 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Response queue by timeout- 0 left
+2015-12-01 15:49:23,275 [DEBUG] OnvifProxy.TyphoonCom - stream.Write - IOException Не удается записать данные в транспортное соединение: Программа на вашем хост-компьютере разорвала установленное подключение.
+2015-12-01 15:49:23,275 [DEBUG] OnvifProxy.TyphoonCom - Opened
+2015-12-01 15:49:23,275 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:49:24,165 [DEBUG] OnvifProxy.TyphoonCom - Host closed
+2015-12-01 15:49:24,243 [DEBUG] OnvifProxy.TyphoonCom - Zond removed by timeout - 0 left
+2015-12-01 15:49:24,290 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:49:24,290 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:49:25,306 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-12-01 15:49:26,096 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-01 15:49:26,096 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 1
+2015-12-01 15:49:29,256 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-12-01 15:49:29,360 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-12-01 15:49:29,360 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-12-01 15:49:29,360 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-12-01 15:49:30,472 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-12-01 15:49:30,472 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-12-01 15:49:39,429 [DEBUG] OnvifProxy.TyphoonCom - stream.Write - IOException Не удается записать данные в транспортное соединение: Программа на вашем хост-компьютере разорвала установленное подключение.
+2015-12-01 15:49:39,444 [DEBUG] OnvifProxy.TyphoonCom - Opened
+2015-12-01 15:49:39,444 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-01 15:49:40,089 [DEBUG] OnvifProxy.TyphoonCom - Host closed
+2015-12-01 15:49:40,373 [DEBUG] OnvifProxy.TyphoonCom - Zond removed by timeout - 0 left
+2015-12-01 15:49:40,453 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-01 15:49:40,461 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-01 15:49:40,477 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-12-01 15:49:41,660 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-01 15:49:41,660 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 1
+2015-12-01 15:49:41,740 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-01 15:49:41,740 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 2
+2015-12-01 15:49:41,818 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-01 15:49:41,818 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 3
+2015-12-01 15:49:45,158 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-12-01 15:49:45,254 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-12-01 15:49:45,254 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-12-01 15:49:45,254 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-12-01 15:49:46,440 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-12-01 15:49:46,440 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/

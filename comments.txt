@@ -48,11 +48,17 @@ private static void Process(object ipaddr) - stream.WriteByte(0); - как обойтись
 
 
 ToDo:
+<<<<<<< HEAD
 - похоже течет обработка ивентов (при запуске тестивентмесседжсендер) + течет либо FormCommand/MakeMem/FormPacket/EnqueueMsg/GetMsg
 - при попытке неавторизованного доступа - Fault
 - сделать прокси апи 
 - EventStorage.storage - сделан Сollection, переделать в ConcurentCollection
 - перенести логер из TyphoonCom в Program - надо ли?
+=======
+- перенести логер из TyphoonCom в Program
+- механизм разбора очереди ответов от тайфуна - какая-то херота, надоть переделать бы  (не ждет ответа, а сразу проверяет очередь ответов и выходит)
+- в Notify херота какая-то с namespace наговнокожена
+>>>>>>> origin/master
 
 - в Notify херота какая-то с namespace наговнокожена
 - !!!!минимизировать инфу в ини-файле,(см. Capabilities) 

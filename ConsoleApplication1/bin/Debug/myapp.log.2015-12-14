@@ -1,0 +1,316 @@
+2015-12-14 11:38:19,807 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-12-14 11:38:20,434 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-14 11:38:20,437 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-14 11:38:20,481 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-12-14 11:38:20,530 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-12-14 11:38:22,945 [DEBUG] OnvifProxy.TyphoonCom - слипшиеся команды
+2015-12-14 11:38:22,950 [DEBUG] OnvifProxy.TyphoonCom - TyphoonMsgManager.SendMsg() failed to send msg - TyphoonMsgId already exists in CommandQueue, Msg skipped
+2015-12-14 11:38:22,963 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 11:38:22,964 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 11:38:22,964 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 1
+2015-12-14 11:38:22,964 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 11:38:22,964 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 1
+2015-12-14 11:38:22,980 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 1
+2015-12-14 11:38:23,006 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-12-14 11:38:23,158 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-12-14 11:38:23,158 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-12-14 11:38:27,485 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-12-14 11:38:27,485 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-12-14 11:39:23,110 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 11:39:23,139 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 11:39:23,157 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 11:39:51,559 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
+2015-12-14 11:39:51,699 [ERROR] OnvifProxy.TyphoonCom - Последовательность не содержит соответствующий элемент
+2015-12-14 11:39:51,885 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-12-14 11:39:56,635 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Response queue by timeout- 0 left
+2015-12-14 12:14:44,266 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
+2015-12-14 12:14:44,378 [ERROR] OnvifProxy.TyphoonCom - Последовательность не содержит соответствующий элемент
+2015-12-14 12:14:44,554 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-12-14 12:14:49,341 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Response queue by timeout- 0 left
+2015-12-14 12:43:42,692 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 12:43:42,693 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 4
+2015-12-14 12:43:42,719 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 12:43:42,720 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 5
+2015-12-14 12:44:42,730 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 12:44:42,762 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 13:14:07,773 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 13:14:07,781 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 6
+2015-12-14 13:14:07,789 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 13:14:07,789 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 7
+2015-12-14 13:15:07,830 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 13:15:07,870 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 13:33:50,929 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 13:33:50,929 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 8
+2015-12-14 13:33:50,961 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 13:33:50,961 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 9
+2015-12-14 13:34:01,488 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 13:34:01,488 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 10
+2015-12-14 13:34:01,536 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 13:34:01,536 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 11
+2015-12-14 13:34:50,957 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 13:34:50,981 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 13:35:01,521 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 13:35:01,569 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 13:51:53,025 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 13:51:53,025 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 12
+2015-12-14 13:51:53,097 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 13:51:53,097 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 13:51:53,113 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 13
+2015-12-14 13:51:53,113 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 13:51:53,113 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 13
+2015-12-14 13:51:53,113 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 13
+2015-12-14 13:52:53,043 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 13:52:53,163 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 13:52:53,187 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 13:52:53,203 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 14:34:51,069 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 14:34:51,077 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 16
+2015-12-14 14:34:51,101 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 14:34:51,101 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 17
+2015-12-14 14:34:51,253 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 14:34:51,253 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 18
+2015-12-14 14:34:51,301 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 14:34:51,301 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 19
+2015-12-14 14:35:51,086 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 14:35:51,110 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 14:35:51,278 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 14:35:51,310 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 14:42:53,519 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 14:42:53,519 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 20
+2015-12-14 14:42:53,550 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 14:42:53,550 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 21
+2015-12-14 14:43:53,553 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 14:43:53,580 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 15:02:45,666 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 15:02:45,667 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 22
+2015-12-14 15:02:45,687 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 15:02:45,687 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 23
+2015-12-14 15:03:45,704 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 15:03:45,728 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 15:13:27,219 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 15:13:27,219 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 24
+2015-12-14 15:13:27,235 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 15:13:27,235 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 25
+2015-12-14 15:13:27,331 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 15:13:27,331 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 26
+2015-12-14 15:13:27,379 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 15:13:27,379 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 27
+2015-12-14 15:14:27,274 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 15:14:27,298 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 15:14:27,362 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 15:14:27,410 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 15:24:00,206 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 15:24:00,206 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 28
+2015-12-14 15:24:00,222 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 15:24:00,222 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 29
+2015-12-14 15:24:11,281 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 15:24:11,283 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 30
+2015-12-14 15:24:11,293 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 15:24:11,293 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 31
+2015-12-14 15:25:00,227 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 15:25:00,251 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 15:25:11,305 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 15:25:11,329 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 15:25:43,650 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 15:25:43,650 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 32
+2015-12-14 15:25:43,658 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 15:25:43,658 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 33
+2015-12-14 15:26:25,906 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 15:26:25,906 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 34
+2015-12-14 15:26:25,922 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 15:26:25,922 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 35
+2015-12-14 15:26:43,698 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 15:26:43,722 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 15:26:47,145 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 15:26:47,145 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 36
+2015-12-14 15:26:47,193 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 15:26:47,193 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 37
+2015-12-14 15:26:57,819 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 15:26:57,819 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 38
+2015-12-14 15:26:57,835 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 15:26:57,835 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 39
+2015-12-14 15:27:25,930 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 15:27:25,944 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 15:27:47,164 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 15:27:47,204 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 15:27:57,847 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 15:27:57,863 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 16:13:26,783 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 16:13:26,783 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 40
+2015-12-14 16:13:26,803 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 16:13:26,803 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 41
+2015-12-14 16:13:52,427 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 16:13:52,427 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 42
+2015-12-14 16:13:52,459 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 16:13:52,459 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 43
+2015-12-14 16:14:03,020 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 16:14:03,020 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 44
+2015-12-14 16:14:03,063 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 16:14:03,063 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 45
+2015-12-14 16:14:26,820 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 16:14:26,848 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 16:14:52,460 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 16:14:52,485 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 16:15:03,056 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 16:15:03,088 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 17:44:29,842 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-12-14 17:44:31,591 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-14 17:44:31,591 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-14 17:44:31,847 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-12-14 17:44:31,959 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-12-14 17:44:33,774 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-12-14 17:44:33,968 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-12-14 17:44:33,968 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-12-14 17:44:37,449 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-12-14 17:44:37,449 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-12-14 17:47:31,086 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2015-12-14 17:47:31,670 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-14 17:47:31,670 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-14 17:47:31,694 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-12-14 17:47:31,726 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-12-14 17:47:32,198 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-12-14 17:47:32,230 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-12-14 17:47:32,230 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-12-14 17:47:33,618 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-12-14 17:47:33,618 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-12-14 17:47:59,828 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-14 17:47:59,828 [DEBUG] OnvifProxy.TyphoonCom - Opened
+2015-12-14 17:47:59,876 [DEBUG] OnvifProxy.TyphoonCom - stream.DataAvailable - Exception Ссылка на объект не указывает на экземпляр объекта.
+2015-12-14 17:48:00,730 [DEBUG] OnvifProxy.TyphoonCom - Host closed
+2015-12-14 17:48:00,841 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-14 17:48:00,871 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-14 17:48:00,903 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-12-14 17:48:05,781 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-12-14 17:48:05,893 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-12-14 17:48:05,893 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-12-14 17:48:05,893 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-12-14 17:48:06,741 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-12-14 17:48:06,741 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-12-14 17:48:10,894 [DEBUG] OnvifProxy.TyphoonCom - Opened
+2015-12-14 17:48:10,894 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-14 17:48:10,918 [DEBUG] OnvifProxy.TyphoonCom - stream.DataAvailable - Exception Ссылка на объект не указывает на экземпляр объекта.
+2015-12-14 17:48:11,350 [DEBUG] OnvifProxy.TyphoonCom - Host closed
+2015-12-14 17:48:11,901 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-14 17:48:11,901 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-14 17:48:11,909 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-12-14 17:48:13,937 [DEBUG] OnvifProxy.TyphoonCom - Zond removed by timeout - 0 left
+2015-12-14 17:48:13,953 [DEBUG] OnvifProxy.TyphoonCom - stream.Write - ArgumentOutOfRangeException Заданный аргумент находится вне диапазона допустимых значений.
+Имя параметра: index
+2015-12-14 17:48:13,953 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-14 17:48:14,962 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-14 17:48:14,962 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-14 17:48:14,978 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-12-14 17:48:16,407 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-12-14 17:48:16,491 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-12-14 17:48:16,492 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-12-14 17:48:16,492 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-12-14 17:48:17,192 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-12-14 17:48:17,192 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-12-14 17:48:24,965 [DEBUG] OnvifProxy.TyphoonCom - Opened
+2015-12-14 17:48:24,965 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-14 17:48:24,989 [DEBUG] OnvifProxy.TyphoonCom - stream.DataAvailable - Exception Ссылка на объект не указывает на экземпляр объекта.
+2015-12-14 17:48:25,820 [DEBUG] OnvifProxy.TyphoonCom - Host closed
+2015-12-14 17:48:25,972 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-14 17:48:25,972 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-14 17:48:25,980 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-12-14 17:48:30,861 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-12-14 17:48:30,957 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-12-14 17:48:30,957 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-12-14 17:48:30,957 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-12-14 17:48:31,828 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-12-14 17:48:31,828 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-12-14 17:48:35,991 [DEBUG] OnvifProxy.TyphoonCom - Opened
+2015-12-14 17:48:35,991 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-14 17:48:36,017 [DEBUG] OnvifProxy.TyphoonCom - stream.DataAvailable - Exception Ссылка на объект не указывает на экземпляр объекта.
+2015-12-14 17:48:36,639 [DEBUG] OnvifProxy.TyphoonCom - Host closed
+2015-12-14 17:48:36,999 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-14 17:48:36,999 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-14 17:48:37,007 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-12-14 17:48:39,014 [DEBUG] OnvifProxy.TyphoonCom - Zond removed by timeout - 0 left
+2015-12-14 17:48:41,704 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-12-14 17:48:41,793 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-12-14 17:48:41,794 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-12-14 17:48:41,794 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-12-14 17:48:43,088 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-12-14 17:48:43,088 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-12-14 17:48:47,007 [DEBUG] OnvifProxy.TyphoonCom - Opened
+2015-12-14 17:48:47,007 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-14 17:48:47,038 [DEBUG] OnvifProxy.TyphoonCom - stream.DataAvailable - Exception Ссылка на объект не указывает на экземпляр объекта.
+2015-12-14 17:48:47,950 [DEBUG] OnvifProxy.TyphoonCom - Host closed
+2015-12-14 17:48:48,012 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-14 17:48:48,012 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-14 17:48:49,127 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-14 17:48:49,127 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-14 17:48:50,147 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-14 17:48:50,147 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-14 17:48:51,194 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-14 17:48:51,194 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-14 17:48:52,211 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-14 17:48:52,211 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-14 17:48:53,006 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2015-12-14 17:48:53,100 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2015-12-14 17:48:53,272 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-14 17:48:53,272 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-14 17:48:54,287 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-14 17:48:54,287 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-14 17:48:55,340 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-14 17:48:55,340 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-14 17:48:56,352 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-14 17:48:56,352 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-14 17:48:57,386 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-14 17:48:57,386 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-14 17:48:58,402 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-14 17:48:58,402 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-14 17:48:59,433 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-14 17:48:59,433 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-14 17:49:00,457 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-14 17:49:00,457 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-14 17:49:01,487 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:7520
+2015-12-14 17:49:01,493 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2015-12-14 17:49:02,498 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2015-12-14 17:49:02,498 [DEBUG] OnvifProxy.TyphoonCom - done?
+2015-12-14 17:49:03,003 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2015-12-14 17:49:03,003 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2015-12-14 17:49:03,011 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2015-12-14 17:49:03,835 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 17:49:03,835 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 1
+2015-12-14 17:49:03,899 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2015-12-14 17:49:03,899 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2015-12-14 17:49:30,892 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 17:49:30,892 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 2
+2015-12-14 17:49:30,988 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
+2015-12-14 17:49:30,988 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 3
+2015-12-14 17:50:03,925 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 17:50:30,908 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 17:50:31,020 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
+2015-12-14 17:50:50,415 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-12-14 17:51:23,190 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-12-14 17:51:31,285 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-12-14 17:52:15,282 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-12-14 17:52:19,342 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetProfiles added to commandQueue
+2015-12-14 17:52:24,336 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Response queue by timeout- 0 left
