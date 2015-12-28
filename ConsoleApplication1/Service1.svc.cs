@@ -137,50 +137,7 @@ namespace OnvifProxy
                             a++;
                         }
                         tmpstr = tmpstr.Replace("DeviceCapabilities", "Capabilities");
-                        //confstr.Capabilities.Device.
-                        ////--------STUB----------------
-                        //tmpstr = "<tds:Capabilities xmlns:tds = 'http://www.onvif.org/ver10/device/wsdl'>"
-                        //    +"<tds:Network IPFilter='false' ZeroConfiguration='true' "
-                        //    +"IPVersion6='false' DynDNS='false' Dot11Configuration='false' "
-                        //    +"HostnameFromDHCP='false' NTP='0' /> "
-                        //    +"            <tds:Security TLS1.0='false' TLS1.1='false' TLS1.2='false' "
-                        //    +"OnboardKeyGeneration='false' AccessPolicyConfig='false' DefaultAccessPolicy='false' "
-                        //    +"Dot1X='false' RemoteUserHandling='false' X.509Token='false' SAMLToken='false' "
-                        //    +"KerberosToken='false' UsernameToken='false' HttpDigest='false' RELToken='false' /> "
-                        //    +"            <tds:System DiscoveryResolve='true' DiscoveryBye='true' "
-                        //    +"RemoteDiscovery='false' SystemBackup='false' SystemLogging='false' "
-                        //    +"FirmwareUpgrade='true' HttpFirmwareUpgrade='false' HttpSystemBackup='false' "
-                        //    +"HttpSystemLogging='false' HttpSupportInformation='false' /> "
-                        //    +"            <tds:MiscCapabilities AuxiliaryCommands='' /> "
-                        //    +"          </tds:Capabilities> "
-                        //    +"         </tds:Capabilities> "
-                        //    +"        <tds:Version> "
-                        //    +"         <tt:Major>2</tt:Major> "
-                        //    +"         <tt:Minor>20</tt:Minor> "
-                        //    +"        </tds:Version> "
-                        //    +"      </tds:Service> "
-                        //    +"      <tds:Service> "
-                        //    +"        <tds:Namespace>http://www.onvif.org/ver10/media/wsdl</tds:Namespace> "
-                        //    +"        <tds:XAddr>http://192.168.0.10/onvif</tds:XAddr> "
-                        //    +"        <tds:Capabilities> "
-                        //    +"          <trt:Capabilities xmlns:trt='http://www.onvif.org/ver10/media/wsdl' "
-                        //    +"SnapshotUri='true' Rotation='false'> "
-                        //    +"            <trt:ProfileCapabilities MaximumNumberOfProfiles='10' /> "
-                        //    +"            <trt:StreamingCapabilities RTPMulticast='true' RTP_TCP='false' "
-                        //    +"RTP_RTSP_TCP='true' NonAggregateControl='true' /> "
-                        //    +"          </trt:Capabilities> "
-                        //    +"        </tds:Capabilities> "
-                        //    +"        <tds:Version> "
-                        //    +"          <tt:Major>2</tt:Major> "
-                        //    +"          <tt:Minor>20</tt:Minor> "
-                        //    +"        </tds:Version> "
-                        //    +"      </tds:Service> "
-                        //    +"      <tds:Service> "
-                        //    +"        <tds:Namespace>http://www.onvif.org/ver20/ptz/wsdl</tds:Namespace> "
-                        //    +"        <tds:XAddr>http://192.168.0.10/onvif</tds:XAddr> "
-                        //    +"        <tds:Capabilities>";
-                        ////----------------------------
-                        //--------STUB----------------
+                
                         tmpstr = "<tds:Capabilities xmlns:tds='http://www.onvif.org/ver10/device/wsdl'> " +
                             "<tds:Network IPFilter='false' ZeroConfiguration='true' " +
                             "IPVersion6='false' DynDNS='false' Dot11Configuration='false' " +

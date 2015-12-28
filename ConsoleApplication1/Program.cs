@@ -349,11 +349,18 @@ namespace OnvifProxy
                     //new TextMessageEncodingBindingElement(MessageVersion.Soap12, Encoding.UTF8),
                     httpTransportBindingElement);
             WSDualHttpBinding binding2 = new WSDualHttpBinding(WSDualHttpSecurityMode.None);
+
+
+            CustomBinding binding3 = new CustomBinding(
+                new TextMessageEncodingBindingElement(MessageVersion.Soap12WSAddressing10, Encoding.UTF8),
+                httpTransportBindingElement);
             //--------------------------
             //binding
             binding.Namespace = "http://www.onvif.org/ver10/device/wsdl";
             binding1.Namespace = "http://www.onvif.org/ver10/event/wsdl";
             binding2.Namespace = "http://www.onvif.org/ver10/event/wsdl";
+
+            binding3.Namespace = "urn:ias:cvss:msp:1.0";//added
             //--------------------------
 
             ServiceDiscoveryBehavior serviceDiscoveryBehavior = new ServiceDiscoveryBehavior();
@@ -363,7 +370,8 @@ namespace OnvifProxy
                     NotificationProducerServiceEndpoint,
                     EventPortTypeServiceEndpoint,
                     SubscriptionManagerServiceEndpoint,
-                    PullPointSubscriptionServiceEndpoint;
+                    PullPointSubscriptionServiceEndpoint,
+                    MediaSourceProviderServiceEndpoint;//added
 
             //EndpointDiscoveryBehavior DeviceServiceBehavior = new EndpointDiscoveryBehavior();
             EndpointDiscoveryBehavior MediaServiceBehavior = new EndpointDiscoveryBehavior();
@@ -462,6 +470,11 @@ namespace OnvifProxy
                     "/onvif/event_service/bn_subscription_manager");
                     PullPointSubscriptionServiceEndpoint.Behaviors.Add(PullPointSubscriptionServiceBehavior);
 
+
+                    MediaSourceProviderServiceEndpoint = host.AddServiceEndpoint(//added
+                        typeof(MediaSourcesProvider),
+                        binding3,
+                        "/onvif/msp_service");
                     
 
                     DeviceServiceEndpoint.Contract.Name = "NetworkVideoTransmitter";
@@ -482,7 +495,8 @@ namespace OnvifProxy
                     PullPointSubscriptionServiceEndpoint.Contract.Name = "PullPointSubscription";
                     PullPointSubscriptionServiceEndpoint.Contract.Namespace = "http://www.onvif.org/ver10/events/wsdl";
 
-
+                    MediaSourceProviderServiceEndpoint.Contract.Name = "MediaSourceProvider";//added
+                    MediaSourceProviderServiceEndpoint.Contract.Namespace = "urn:ias:cvss:msp:1.0";//added
                     //----------------------------------------------------------------------------------
                     //если размер отсылаемого пакета больше 1518 байт, например слишком много скопов, 
                     //то система отсылает только первые 1518 и больше не досылает ни при Announcement'е
