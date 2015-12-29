@@ -38,7 +38,17 @@ namespace Media
         ////GetServiceCapabilitiesResponse1 GetServiceCapabilities(GetServiceCapabilitiesRequest request);
 
         // CODEGEN: Параметр "VideoSources" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
+        //---------------------------------------------------------------------------------
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*", Action = "*"),
+        OnvifProxy.SecurityOperationBehavoir("ActionNotSupported", "http://www.onvif.org/ver10/media/wsdl", 3)]
+        [System.ServiceModel.XmlSerializerFormatAttribute()]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name = "ActionNotSupported")]
+        void ActionNotSupported();
+        //---------------------------------------------------------------------------------
+
+        [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"/*, Action = "*"*/),
         OnvifProxy.SecurityOperationBehavoir("GetVideoSources", "http://www.onvif.org/ver10/media/wsdl", 0)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
@@ -12222,6 +12232,13 @@ namespace Media
         //    GetServiceCapabilitiesResponse1 retVal = ((IMedia)(this)).GetServiceCapabilities(inValue);
         //    return retVal.GetServiceCapabilitiesResponse;
         //}
+        public void ActionNotSupported()
+        {
+            throw new FaultException(new FaultReason("ActionNotSupported"),
+                            new FaultCode("Sender",
+                                new FaultCode("ActionNotSupported", "http://www.onvif.org/ver10/error",
+                                    new FaultCode("ActionNotSupported", "http://www.onvif.org/ver10/error"))));
+        }
 
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         GetVideoSourcesResponse IMedia.GetVideoSources(GetVideoSourcesRequest request)

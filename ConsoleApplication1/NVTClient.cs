@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using Device;
 using Media;
+using System.ServiceModel;
+
+
 
 namespace OnvifProxy
 {
@@ -56,7 +59,13 @@ namespace OnvifProxy
 
         #region
 
-
+        public void ActionNotSupported()
+        {
+            throw new FaultException(new FaultReason("ActionNotSupported"),
+                            new FaultCode("Sender",
+                                new FaultCode("ActionNotSupported", "http://www.onvif.org/ver10/error",
+                                    new FaultCode("ActionNotSupported", "http://www.onvif.org/ver10/error"))));
+        }
 
 
         public MediaUri GetSnapshotUri(string ProfileToken)

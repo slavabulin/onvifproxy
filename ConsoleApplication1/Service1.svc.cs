@@ -33,7 +33,7 @@ namespace OnvifProxy
         InstanceContextMode = InstanceContextMode.Single)]
 
 
-    public class Service1 : Device.IDevice,
+    public partial class Service1 : Device.IDevice,
         Media.IMedia,
         Event.INotificationProducer, 
         Event.IEventPortType,
@@ -42,7 +42,8 @@ namespace OnvifProxy
         Event.SubscriptionManager,
         Event.IPausableSubscriptionManager,
         Event.INotificationConsumer,
-        Event.PullPointSubscription
+        Event.PullPointSubscription,
+        IMediaSourcesProvider//added
     {
         public GetServicesResponse UnauthorizedAccessFault()
         {
@@ -1686,9 +1687,7 @@ namespace OnvifProxy
         {
             System.TimeZone tz = System.TimeZone.CurrentTimeZone;
             
-            if (DateTimeType != null &&
-                DaylightSavings != null &&
-                UTCDateTime != null)
+            if (UTCDateTime != null)
             {
                 SYSTEMTIME systime = new SYSTEMTIME();
 
@@ -2374,29 +2373,16 @@ namespace OnvifProxy
         }
  
 //------------------------------Media--------------------------------------------------------------------
-
+        public void ActionNotSupported()
+        {
+            throw new FaultException(new FaultReason("ActionNotSupported"),
+                            new FaultCode("Sender",
+                                new FaultCode("ActionNotSupported", "http://www.onvif.org/ver10/error",
+                                    new FaultCode("ActionNotSupported", "http://www.onvif.org/ver10/error")))); 
+        }
         //uncomment me!!!
         public Media.GetVideoSourcesResponse GetVideoSources(Media.GetVideoSourcesRequest request)
         {
-
-            /*
-               TyphoonMsg typhmsgreq = new TyphoonMsg(TyphoonMsgType.Request);
-            TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
-
-            byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null, 0))).Length];
-            tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null, 0));
-            for (int a = 0; a < 4; a++)
-            {
-                typhmsgreq.MessageID = typhmsgreq.MessageID << 8;
-                typhmsgreq.MessageID += tmpBuf[21 - a];
-            }
-            typhmsgreq.byteMessageData = tmpBuf;
-            ///добавляем в очередь на отправку
-            TyphoonMsgManager.EnqueueMsg(typhmsgreq);
-            
-            typhmsgresp = TyphoonMsgManager.GetMsg(typhmsgreq.MessageID);
-             */
-            TyphoonMsg tmpmsg;
             Media.GetVideoSourcesResponse getVideoSourcesResponse = new Media.GetVideoSourcesResponse();
             #region
             //getVideoSourcesResponse.VideoSources = new Media.VideoSource[1];
@@ -2558,7 +2544,6 @@ namespace OnvifProxy
             }
             typhmsgreq.byteMessageData = tmpBuf;
 
-            //tmpmsgreq.byteMessageData = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 6, null, 0));
             TyphoonMsgManager.EnqueueMsg(typhmsgreq);
 
             TyphoonCom.log.Debug("Service1: GetVideoSources added to commandQueue");
@@ -2609,6 +2594,7 @@ namespace OnvifProxy
                         getVideoSourcesResponse = (GetVideoSourcesResponse)xmlSerializer.Deserialize(ms);
                         for (int y = 0; y < getVideoSourcesResponse.VideoSources.Count(); y++)
                         {
+                            //здесь надо получить от Шарова реальное разрешение
                             getVideoSourcesResponse.VideoSources[y].Resolution = new Media.VideoResolution();
                             getVideoSourcesResponse.VideoSources[y].Resolution.Height = 1080;
                             getVideoSourcesResponse.VideoSources[y].Resolution.Width = 1920;
@@ -2895,7 +2881,7 @@ namespace OnvifProxy
             //    return mediaprofile;
             //}
             //TyphoonCom.log.DebugFormat("GetProfiles - TyphoonCom.queueResponce.Count = {0}", TyphoonCom.queueResponce.Count);
-            return null;//leave me!
+            //return null;//leave me!
         }
 
         public void AddVideoEncoderConfiguration(string ProfileToken, string ConfigurationToken)
@@ -3229,6 +3215,12 @@ namespace OnvifProxy
         {
             //ConfigStruct confstr = new ConfigStruct();
             //XmlConfig conf = new XmlConfig();
+            if(StreamSetup==null||ProfileToken==null)
+                throw new FaultException(new FaultReason("NoStreamSetupOrProfileToken"),
+                       new FaultCode("Sender",
+                           new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
+                               new FaultCode("NoStreamSetupOrProfileToken", "http://www.onvif.org/ver10/error"))));
+
             TyphoonMsg typhmsgreq = new TyphoonMsg(TyphoonMsgType.Request);
             TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
 

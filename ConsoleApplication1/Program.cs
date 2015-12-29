@@ -472,7 +472,7 @@ namespace OnvifProxy
 
 
                     MediaSourceProviderServiceEndpoint = host.AddServiceEndpoint(//added
-                        typeof(MediaSourcesProvider),
+                        typeof(IMediaSourcesProvider),
                         binding3,
                         "/onvif/msp_service");
                     
