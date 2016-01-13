@@ -472,7 +472,7 @@ namespace OnvifProxy
 
 
                     MediaSourceProviderServiceEndpoint = host.AddServiceEndpoint(//added
-                        typeof(IMediaSourcesProvider),
+                        typeof(MediaSourcesProvider.IMediaSourcesProvider),
                         binding3,
                         "/onvif/msp_service");
                     
@@ -497,6 +497,7 @@ namespace OnvifProxy
 
                     MediaSourceProviderServiceEndpoint.Contract.Name = "MediaSourceProvider";//added
                     MediaSourceProviderServiceEndpoint.Contract.Namespace = "urn:ias:cvss:msp:1.0";//added
+
                     //----------------------------------------------------------------------------------
                     //если размер отсылаемого пакета больше 1518 байт, например слишком много скопов, 
                     //то система отсылает только первые 1518 и больше не досылает ни при Announcement'е

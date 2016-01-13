@@ -43,7 +43,7 @@ namespace OnvifProxy
         Event.IPausableSubscriptionManager,
         Event.INotificationConsumer,
         Event.PullPointSubscription,
-        IMediaSourcesProvider//added
+        MediaSourcesProvider.IMediaSourcesProvider//added
     {
         public GetServicesResponse UnauthorizedAccessFault()
         {
@@ -3993,6 +3993,39 @@ namespace OnvifProxy
                 networkInterface = value;
             }
 
+        }
+    }
+    public partial class Service1 : Device.IDevice,
+        Media.IMedia,
+        Event.INotificationProducer,
+        Event.IEventPortType,
+        Event.IPullPoint,
+        Event.ICreatePullPoint,
+        Event.SubscriptionManager,
+        Event.IPausableSubscriptionManager,
+        Event.INotificationConsumer,
+        Event.PullPointSubscription,
+        MediaSourcesProvider.IMediaSourcesProvider//added
+    {
+        public MediaSourcesProvider.GetMediaSourcesResponse GetMediaSources(MediaSourcesProvider.GetMediaSourcesRequest request)
+        {
+            return new MediaSourcesProvider.GetMediaSourcesResponse();
+        }
+
+        public MediaSourcesProvider.FindMediaSourcesResponse FindMediaSources(MediaSourcesProvider.FindMediaSourcesRequest request)
+        {
+            return new MediaSourcesProvider.FindMediaSourcesResponse();
+        }
+
+
+        public MediaSourcesProvider.GetSearchResultsResponse GetSearchResults(MediaSourcesProvider.GetSearchResultsRequest request)
+        {
+            return new MediaSourcesProvider.GetSearchResultsResponse();
+        }
+
+        public MediaSourcesProvider.GetUpdatesResponse GetUpdates(MediaSourcesProvider.GetUpdatesRequest request)
+        {
+            return new MediaSourcesProvider.GetUpdatesResponse();
         }
     }
 }
