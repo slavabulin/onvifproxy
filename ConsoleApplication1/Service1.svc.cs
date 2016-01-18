@@ -22,7 +22,7 @@ using Media;
 using System.Globalization;
 
 using System.Text.RegularExpressions;
-//using System.Net.Security;
+using RecordingSearch;
 
 
 namespace OnvifProxy
@@ -43,7 +43,9 @@ namespace OnvifProxy
         Event.IPausableSubscriptionManager,
         Event.INotificationConsumer,
         Event.PullPointSubscription,
-        MediaSourcesProvider.IMediaSourcesProvider//added
+        MediaSourcesProvider.IMediaSourcesProvider,//added
+        ReplayService.IReplayPort,//added
+        RecordingSearch.ISearchPort//added
     {
         public GetServicesResponse UnauthorizedAccessFault()
         {
@@ -2994,7 +2996,7 @@ namespace OnvifProxy
             vencconf[0] = new VideoEncoderConfiguration();
             vencconf[0].token = "1";
             vencconf[0].Name = vencconf[0].token;
-            vencconf[0].Encoding = VideoEncoding.H264;
+            vencconf[0].Encoding = Media.VideoEncoding.H264;
             vencconf[0].Resolution = new Media.VideoResolution();
             vencconf[0].Resolution.Height = 0;
             vencconf[0].Resolution.Width = 0;
@@ -4005,7 +4007,8 @@ namespace OnvifProxy
         Event.IPausableSubscriptionManager,
         Event.INotificationConsumer,
         Event.PullPointSubscription,
-        MediaSourcesProvider.IMediaSourcesProvider//added
+        MediaSourcesProvider.IMediaSourcesProvider,//added
+        ReplayService.IReplayPort//added
     {
         public MediaSourcesProvider.GetMediaSourcesResponse GetMediaSources(MediaSourcesProvider.GetMediaSourcesRequest request)
         {
@@ -4028,5 +4031,122 @@ namespace OnvifProxy
             return new MediaSourcesProvider.GetUpdatesResponse();
         }
     }
+    public partial class Service1 : Device.IDevice,
+        Media.IMedia,
+        Event.INotificationProducer,
+        Event.IEventPortType,
+        Event.IPullPoint,
+        Event.ICreatePullPoint,
+        Event.SubscriptionManager,
+        Event.IPausableSubscriptionManager,
+        Event.INotificationConsumer,
+        Event.PullPointSubscription,
+        MediaSourcesProvider.IMediaSourcesProvider,//added
+        ReplayService.IReplayPort,//added
+        RecordingSearch.ISearchPort//added
+    {
+        public ReplayService.Capabilities GetReplayServiceCapabilities()
+        {
+            Console.WriteLine("GetReplayServiceCapabilities called");
+            return new ReplayService.Capabilities();
+        }
+        public ReplayService.GetReplayUriResponse GetReplayUri(ReplayService.GetReplayUriRequest request)
+        {
+            Console.WriteLine("GetReplayUri called");
+            return new ReplayService.GetReplayUriResponse();
+        }
+        public ReplayService.ReplayConfiguration GetReplayConfiguration()
+        {
+            Console.WriteLine("GetReplayConfiguration called");
+            return new ReplayService.ReplayConfiguration();
+        }
+        public void SetReplayConfiguration(ReplayService.ReplayConfiguration Configuration)
+        {
+            Console.WriteLine("SetReplayConfiguration called");
+        }
+    }
+
+    public partial class Service1 : Device.IDevice,
+        Media.IMedia,
+        Event.INotificationProducer,
+        Event.IEventPortType,
+        Event.IPullPoint,
+        Event.ICreatePullPoint,
+        Event.SubscriptionManager,
+        Event.IPausableSubscriptionManager,
+        Event.INotificationConsumer,
+        Event.PullPointSubscription,
+        MediaSourcesProvider.IMediaSourcesProvider,//added
+        ReplayService.IReplayPort,//added
+        RecordingSearch.ISearchPort//added
+    {
+        public RecordingSearch.Capabilities GetRecordingServiceCapabilities()
+        {
+            return new RecordingSearch.Capabilities();
+        }
+
+        public RecordingSummary GetRecordingSummary()
+        {
+            return new RecordingSummary();
+        }
+
+        public RecordingInformation GetRecordingInformation(string RecordingToken)
+        {
+            return new RecordingInformation();
+        }
+
+        public GetMediaAttributesResponse GetMediaAttributes(GetMediaAttributesRequest request)
+        {
+            return new GetMediaAttributesResponse();
+        }
+
+        public FindRecordingsResponse FindRecordings(FindRecordingsRequest request)
+        {
+            return new FindRecordingsResponse();
+        }
+
+        public GetRecordingSearchResultsResponse GetRecordingSearchResults(GetRecordingSearchResultsRequest request)
+        {
+            return new GetRecordingSearchResultsResponse();
+        }
+
+        public FindEventsResponse FindEvents(FindEventsRequest request)
+        {
+            return new FindEventsResponse();
+        }
+
+        public GetEventSearchResultsResponse GetEventSearchResults(GetEventSearchResultsRequest request)
+        {
+            return new GetEventSearchResultsResponse();
+        }
+
+        public FindPTZPositionResponse FindPTZPosition(FindPTZPositionRequest request)
+        {
+            return new FindPTZPositionResponse();
+        }
+
+        public GetPTZPositionSearchResultsResponse GetPTZPositionSearchResults(GetPTZPositionSearchResultsRequest request)
+        {
+            return new GetPTZPositionSearchResultsResponse();
+        }
+        public SearchState GetSearchState(string SearchToken)
+        {
+            return new SearchState();
+        }
+        public System.DateTime EndSearch(string SearchToken)
+        {
+            return new System.DateTime();
+        }
+        public FindMetadataResponse FindMetadata(FindMetadataRequest request)
+        {
+            return new FindMetadataResponse();
+        }
+        public GetMetadataSearchResultsResponse GetMetadataSearchResults(GetMetadataSearchResultsRequest request)
+        {
+            return new GetMetadataSearchResultsResponse();
+        }
+    }
+     
+
 }
 

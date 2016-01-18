@@ -1,77 +1,43 @@
-2016-01-13 13:33:01,865 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
-2016-01-13 13:33:03,521 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2016-01-18 17:19:00,672 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2016-01-18 17:19:17,652 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2016-01-13 13:33:03,521 [DEBUG] OnvifProxy.TyphoonCom - done?
-2016-01-13 13:33:03,860 [DEBUG] OnvifProxy.TyphoonCom - Done.
+2016-01-18 17:19:17,653 [DEBUG] OnvifProxy.TyphoonCom - done?
+2016-01-18 17:19:40,744 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 127.0.0.1:7520
+2016-01-18 17:19:40,754 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2016-01-18 17:19:41,795 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2016-01-13 13:33:03,996 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
-2016-01-13 13:33:09,130 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
-2016-01-13 13:33:09,496 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
-2016-01-13 13:33:09,496 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
-2016-01-13 13:33:19,683 [DEBUG] OnvifProxy.TyphoonCom - Host opened
-2016-01-13 13:33:19,683 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://172.16.32.149/
-2016-01-13 13:33:55,724 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  1
-2016-01-13 13:33:58,704 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  2
-2016-01-13 13:34:00,104 [DEBUG] OnvifProxy.TyphoonCom - sending succeseed
-2016-01-13 13:34:00,128 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  3
-2016-01-13 13:34:00,272 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  4
-2016-01-13 13:34:00,520 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  4
-2016-01-13 13:34:07,074 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Command queue by timeout- 1 left
-2016-01-13 13:34:07,074 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Command queue by timeout- 0 left
-2016-01-13 13:34:07,074 [DEBUG] OnvifProxy.TyphoonCom - Zond removed by timeout - 0 left
-2016-01-13 13:34:12,912 [DEBUG] OnvifProxy.TyphoonCom - Zond removed by timeout - 0 left
-2016-01-13 13:34:12,952 [DEBUG] OnvifProxy.TyphoonCom - IOException - Не удается прочитать данные из транспортного соединения: EndReceive может вызываться только один раз для каждой асинхронной операции..
-2016-01-13 13:34:13,088 [DEBUG] OnvifProxy.TyphoonCom - IOException - Не удается прочитать данные из транспортного соединения: EndReceive может вызываться только один раз для каждой асинхронной операции..
-2016-01-13 13:34:17,985 [DEBUG] OnvifProxy.TyphoonCom - Zond removed by timeout - 0 left
-2016-01-13 13:34:38,393 [DEBUG] OnvifProxy.TyphoonCom - IOException - Не удается прочитать данные из транспортного соединения: EndReceive может вызываться только один раз для каждой асинхронной операции..
-2016-01-13 13:34:38,465 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
-2016-01-13 13:34:38,545 [DEBUG] OnvifProxy.TyphoonCom - Opened
-2016-01-13 13:34:39,562 [DEBUG] OnvifProxy.TyphoonCom - stream.DataAvailable - Exception Доступ к ликвидированному объекту невозможен.
-Имя объекта: "System.Net.Sockets.NetworkStream".
-2016-01-13 13:34:39,778 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2016-01-18 17:19:41,818 [DEBUG] OnvifProxy.TyphoonCom - done?
+2016-01-18 17:20:02,862 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 127.0.0.1:7520
+2016-01-18 17:20:02,862 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2016-01-18 17:20:03,864 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2016-01-13 13:34:39,794 [DEBUG] OnvifProxy.TyphoonCom - done?
-2016-01-13 13:34:40,578 [DEBUG] OnvifProxy.TyphoonCom - Done.
+2016-01-18 17:20:03,864 [DEBUG] OnvifProxy.TyphoonCom - done?
+2016-01-18 17:20:25,061 [DEBUG] OnvifProxy.TyphoonCom - Connect() - SocketException Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 127.0.0.1:7520
+2016-01-18 17:20:25,063 [DEBUG] OnvifProxy.TyphoonCom - Connection Failed
+2016-01-18 17:20:26,065 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2016-01-13 13:34:44,203 [DEBUG] OnvifProxy.TyphoonCom - IOException - Не удается прочитать данные из транспортного соединения: Объект IAsyncResult не был возвращен соответствующим асинхронным методом данного класса.
-Имя параметра: asyncResult.
-2016-01-13 13:34:56,420 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
-2016-01-13 13:34:56,884 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2016-01-18 17:20:26,065 [DEBUG] OnvifProxy.TyphoonCom - done?
+2016-01-18 17:21:44,484 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2016-01-18 17:21:45,034 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2016-01-13 13:34:56,884 [DEBUG] OnvifProxy.TyphoonCom - done?
-2016-01-13 13:34:56,916 [DEBUG] OnvifProxy.TyphoonCom - Done.
+2016-01-18 17:21:45,034 [DEBUG] OnvifProxy.TyphoonCom - done?
+2016-01-18 17:21:45,284 [DEBUG] OnvifProxy.TyphoonCom - Done.
 
-2016-01-13 13:34:56,956 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
-2016-01-13 13:34:57,628 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
-2016-01-13 13:34:57,708 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
-2016-01-13 13:34:57,708 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
-2016-01-13 13:34:59,955 [DEBUG] OnvifProxy.TyphoonCom - Host opened
-2016-01-13 13:34:59,955 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://172.16.32.149/
-2016-01-13 14:26:14,763 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
-2016-01-13 14:26:14,763 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 1
-2016-01-13 14:26:14,795 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
-2016-01-13 14:26:14,795 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 1
-2016-01-13 14:26:18,906 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  6
-2016-01-13 14:26:18,906 [DEBUG] OnvifProxy.TyphoonCom - event msg ID - 3
-2016-01-13 14:26:51,798 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  1
-2016-01-13 14:26:57,565 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  2
-2016-01-13 14:26:57,976 [DEBUG] OnvifProxy.TyphoonCom - sending succeseed
-2016-01-13 14:26:58,000 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  3
-2016-01-13 14:26:58,160 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  4
-2016-01-13 14:27:14,879 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
-2016-01-13 14:27:14,903 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
-2016-01-13 14:27:18,941 [DEBUG] OnvifProxy.TyphoonCom - TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - Коллекция была изменена; невозможно выполнить операцию перечисления.
-2016-01-13 14:27:27,046 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  1
-2016-01-13 14:27:29,609 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  2
-2016-01-13 14:27:29,841 [DEBUG] OnvifProxy.TyphoonCom - sending succeseed
-2016-01-13 14:27:29,873 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  3
-2016-01-13 14:27:29,969 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  4
-2016-01-13 14:27:34,906 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  5
-2016-01-13 14:28:07,281 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  1
-2016-01-13 14:28:11,514 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  2
-2016-01-13 14:28:11,757 [DEBUG] OnvifProxy.TyphoonCom - sending succeseed
-2016-01-13 14:28:11,789 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  3
-2016-01-13 14:28:11,893 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  4
-2016-01-13 14:28:17,031 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  5
-2016-01-13 14:28:23,050 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  5
-2016-01-13 14:28:27,852 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  5
+2016-01-18 17:21:45,335 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2016-01-18 17:21:49,401 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2016-01-18 17:21:49,580 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2016-01-18 17:21:49,580 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2016-01-18 17:21:56,176 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2016-01-18 17:21:56,176 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://172.16.32.149/
+2016-01-18 17:35:21,019 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2016-01-18 17:35:21,567 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+
+2016-01-18 17:35:21,567 [DEBUG] OnvifProxy.TyphoonCom - done?
+2016-01-18 17:35:21,613 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2016-01-18 17:35:21,662 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2016-01-18 17:35:22,379 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2016-01-18 17:35:22,455 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2016-01-18 17:35:22,455 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2016-01-18 17:35:24,925 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2016-01-18 17:35:24,925 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://172.16.32.149/

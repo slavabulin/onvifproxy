@@ -7,6 +7,14 @@
     </OnvifScope>
     <OnvifScope>
       <ScopeType>Fixed</ScopeType>
+      <Data>onvif://www.onvif.org/type/Network_Video_Transmitter</Data>
+    </OnvifScope>
+    <OnvifScope>
+      <ScopeType>Fixed</ScopeType>
+      <Data>onvif://www.onvif.org/type/Network_Video_Storage</Data>
+    </OnvifScope>
+    <OnvifScope>
+      <ScopeType>Fixed</ScopeType>
       <Data>onvif://www.onvif.org/type/video_encoder</Data>
     </OnvifScope>
     <OnvifScope>
