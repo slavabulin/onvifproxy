@@ -174,8 +174,8 @@ namespace OnvifProxy
                 //-----------
 
                 GetServicesResponse getServicesResponse = new GetServicesResponse();
-                getServicesResponse.Service = new Device.Service[4];
-                //getServicesResponse.Service = new Device.Service[1];
+                //getServicesResponse.Service = new Device.Service[4];
+                getServicesResponse.Service = new Device.Service[6];
 
                 getServicesResponse.Service[0] = new Device.Service();
                 getServicesResponse.Service[0].XAddr = "http://" + confstr.IPAddr + "/onvif/device_service";
@@ -207,9 +207,23 @@ namespace OnvifProxy
                 getServicesResponse.Service[3] = new Device.Service();
                 getServicesResponse.Service[3].XAddr = "http://" + confstr.IPAddr + "/onvif/msp_service";
                 getServicesResponse.Service[3].Namespace = "urn:ias:cvss:msp:1.0";
-                //getServicesResponse.Service[3].Version = new OnvifVersion();
-                //getServicesResponse.Service[3].Version.Major = 2;
-                //getServicesResponse.Service[3].Version.Minor = 4;
+                getServicesResponse.Service[3].Version = new OnvifVersion();
+                getServicesResponse.Service[3].Version.Major = 1;
+                getServicesResponse.Service[3].Version.Minor = 0;
+                
+                getServicesResponse.Service[4] = new Device.Service();
+                getServicesResponse.Service[4].XAddr = "http://" + confstr.IPAddr + "/onvif/replay_service";
+                getServicesResponse.Service[4].Namespace = "http://www.onvif.org/ver10/replay/wsdl";
+                getServicesResponse.Service[4].Version = new OnvifVersion();
+                getServicesResponse.Service[4].Version.Major = 2;
+                getServicesResponse.Service[4].Version.Minor = 4;
+
+                getServicesResponse.Service[5] = new Device.Service();
+                getServicesResponse.Service[5].XAddr = "http://" + confstr.IPAddr + "/onvif/recordingsearch_service";
+                getServicesResponse.Service[5].Namespace = "http://www.onvif.org/ver10/search/wsdl";
+                getServicesResponse.Service[5].Version = new OnvifVersion();
+                getServicesResponse.Service[5].Version.Major = 2;
+                getServicesResponse.Service[5].Version.Minor = 4;
 
                 return getServicesResponse;
             }

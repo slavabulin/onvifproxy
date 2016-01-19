@@ -350,8 +350,14 @@ namespace OnvifProxy
                     httpTransportBindingElement);
             WSDualHttpBinding binding2 = new WSDualHttpBinding(WSDualHttpSecurityMode.None);
 
-
+            //--------------------------
             CustomBinding binding3 = new CustomBinding(
+                new TextMessageEncodingBindingElement(MessageVersion.Soap12WSAddressing10, Encoding.UTF8),
+                httpTransportBindingElement);
+             CustomBinding bindingReplay = new CustomBinding(
+                new TextMessageEncodingBindingElement(MessageVersion.Soap12WSAddressing10, Encoding.UTF8),
+                httpTransportBindingElement);
+            CustomBinding bindingRecSearch = new CustomBinding(
                 new TextMessageEncodingBindingElement(MessageVersion.Soap12WSAddressing10, Encoding.UTF8),
                 httpTransportBindingElement);
             //--------------------------
@@ -361,6 +367,8 @@ namespace OnvifProxy
             binding2.Namespace = "http://www.onvif.org/ver10/event/wsdl";
 
             binding3.Namespace = "urn:ias:cvss:msp:1.0";//added
+            bindingReplay.Namespace = "http://www.onvif.org/ver10/replay/wsdl";//added
+            bindingRecSearch.Namespace = "http://www.onvif.org/ver10/search/wsdl";//added
             //--------------------------
 
             ServiceDiscoveryBehavior serviceDiscoveryBehavior = new ServiceDiscoveryBehavior();
@@ -371,7 +379,9 @@ namespace OnvifProxy
                     EventPortTypeServiceEndpoint,
                     SubscriptionManagerServiceEndpoint,
                     PullPointSubscriptionServiceEndpoint,
-                    MediaSourceProviderServiceEndpoint;//added
+                    MediaSourceProviderServiceEndpoint,//added
+                    ReplayServiceEndpoint,//added
+                    RecordingSearchEndPoint;//added
 
             //EndpointDiscoveryBehavior DeviceServiceBehavior = new EndpointDiscoveryBehavior();
             EndpointDiscoveryBehavior MediaServiceBehavior = new EndpointDiscoveryBehavior();
@@ -380,6 +390,8 @@ namespace OnvifProxy
             EndpointDiscoveryBehavior SubscriptionManagerServiceBehavior = new EndpointDiscoveryBehavior();
             EndpointDiscoveryBehavior PullPointSubscriptionServiceBehavior = new EndpointDiscoveryBehavior();
             EndpointDiscoveryBehavior udpAnnouncementEndpointBehavior = new EndpointDiscoveryBehavior();
+
+            EndpointDiscoveryBehavior ReplayServiceBehavior = new EndpointDiscoveryBehavior();
             //---------------------------------
             //HttpErrorsAttribute HttpErrorBehavior = new HttpErrorsAttribute();
             //---------------------------------
@@ -427,7 +439,8 @@ namespace OnvifProxy
                 EventPortTypeServiceBehavior.Enabled = false;
                 SubscriptionManagerServiceBehavior.Enabled = false;
                 PullPointSubscriptionServiceBehavior.Enabled = false;
-                
+
+                ReplayServiceBehavior.Enabled = false;
                 //------------------------------
                 // Add endpoints to the service
                 try
@@ -475,6 +488,17 @@ namespace OnvifProxy
                         typeof(MediaSourcesProvider.IMediaSourcesProvider),
                         binding3,
                         "/onvif/msp_service");
+
+                    ReplayServiceEndpoint = host.AddServiceEndpoint(//added
+                        typeof(ReplayService.IReplayPort),
+                        bindingReplay,//?????
+                        "/onvif/replay_service");
+                    ReplayServiceEndpoint.Behaviors.Add(ReplayServiceBehavior);
+
+                    RecordingSearchEndPoint = host.AddServiceEndpoint(//added
+                        typeof(RecordingSearch.ISearchPort),
+                        bindingRecSearch,
+                        "/onvif/recordingsearch_service");
                     
 
                     DeviceServiceEndpoint.Contract.Name = "NetworkVideoTransmitter";
@@ -497,6 +521,12 @@ namespace OnvifProxy
 
                     MediaSourceProviderServiceEndpoint.Contract.Name = "MediaSourceProvider";//added
                     MediaSourceProviderServiceEndpoint.Contract.Namespace = "urn:ias:cvss:msp:1.0";//added
+
+                    ReplayServiceEndpoint.Contract.Name = "ReplayService";
+                    ReplayServiceEndpoint.Contract.Namespace = "http://www.onvif.org/ver10/replay/wsdl";
+
+                    RecordingSearchEndPoint.Contract.Name = "RecocdingSearchService";
+                    RecordingSearchEndPoint.Contract.Namespace = "http://www.onvif.org/ver10/search/wsdl";
 
                     //----------------------------------------------------------------------------------
                     //если размер отсылаемого пакета больше 1518 байт, например слишком много скопов, 
@@ -547,6 +577,10 @@ namespace OnvifProxy
                     EventPortTypeServiceEndpoint = null;
                     SubscriptionManagerServiceEndpoint = null;
                     PullPointSubscriptionServiceEndpoint = null;
+
+                    MediaSourceProviderServiceEndpoint = null;
+                    ReplayServiceEndpoint = null;
+                    RecordingSearchEndPoint = null;
                 }
                 catch (NullReferenceException e)
                 {
@@ -559,6 +593,10 @@ namespace OnvifProxy
                     EventPortTypeServiceEndpoint = null;
                     SubscriptionManagerServiceEndpoint = null;
                     PullPointSubscriptionServiceEndpoint = null;
+
+                    MediaSourceProviderServiceEndpoint = null;
+                    ReplayServiceEndpoint = null;
+                    RecordingSearchEndPoint = null;
                 }   
                 return host;
             }
