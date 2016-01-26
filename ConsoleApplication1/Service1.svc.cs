@@ -224,6 +224,7 @@ namespace OnvifProxy
                 getServicesResponse.Service[5].Version = new OnvifVersion();
                 getServicesResponse.Service[5].Version.Major = 2;
                 getServicesResponse.Service[5].Version.Minor = 4;
+                //getServicesResponse.Service[5].Capabilities = 
 
                 return getServicesResponse;
             }
@@ -4101,7 +4102,32 @@ namespace OnvifProxy
 
         public RecordingSummary GetRecordingSummary()
         {
-            return new RecordingSummary();
+            TyphoonMsg typhmsgreq = new TyphoonMsg(TyphoonMsgType.Request);
+            TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
+
+            byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 7, null, 0))).Length];
+            tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 7, null, 0));
+
+            for (int a = 0; a < 4; a++)
+            {
+                typhmsgreq.MessageID = typhmsgreq.MessageID << 8;
+                typhmsgreq.MessageID += tmpBuf[21 - a];
+            }
+            typhmsgreq.byteMessageData = tmpBuf;
+
+            TyphoonMsgManager.EnqueueMsg(typhmsgreq);
+            typhmsgresp = TyphoonMsgManager.GetMsg(typhmsgreq.MessageID);
+            if(typhmsgresp!=null)
+            {
+                return new RecordingSummary();
+            }
+            else
+            {
+                throw new FaultException(new FaultReason("NoGetRecordingSummaryReturned"),
+                       new FaultCode("Sender",
+                           new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
+                               new FaultCode("NoGetRecordingSummaryReturned", "http://www.onvif.org/ver10/error"))));
+            }            
         }
 
         public RecordingInformation GetRecordingInformation(string RecordingToken)
@@ -4145,7 +4171,34 @@ namespace OnvifProxy
         }
         public SearchState GetSearchState(string SearchToken)
         {
-            return new SearchState();
+            TyphoonMsg typhmsgreq = new TyphoonMsg(TyphoonMsgType.Request);
+            TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
+
+            byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 18, null, 0))).Length];
+            tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 18, null, 0));
+
+            for (int a = 0; a < 4; a++)
+            {
+                typhmsgreq.MessageID = typhmsgreq.MessageID << 8;
+                typhmsgreq.MessageID += tmpBuf[21 - a];
+            }
+            typhmsgreq.byteMessageData = tmpBuf;
+
+            TyphoonMsgManager.EnqueueMsg(typhmsgreq);
+            typhmsgresp = TyphoonMsgManager.GetMsg(typhmsgreq.MessageID);
+            if (typhmsgresp != null)
+            {
+                throw new FaultException(new FaultReason("NoImplementedYet"),
+                       new FaultCode("Sender",
+                           new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
+                               new FaultCode("NoImplementedYet", "http://www.onvif.org/ver10/error"))));
+                
+            }
+            else
+            {
+                return SearchState.Unknown;
+            }         
+            
         }
         public System.DateTime EndSearch(string SearchToken)
         {

@@ -31,7 +31,7 @@
     </OnvifScope>
   </Scopes>
   <ServiceDiscoveryStatus>Discoverable</ServiceDiscoveryStatus>
-  <IPAddr>172.16.32.149</IPAddr>
+  <IPAddr>192.168.1.170</IPAddr>
   <TyphoonIP>127.0.0.1</TyphoonIP>
   <Capabilities>
     <Analytics xmlns="http://www.onvif.org/ver10/schema">
@@ -40,7 +40,7 @@
       <AnalyticsModuleSupport>false</AnalyticsModuleSupport>
     </Analytics>
     <Device xmlns="http://www.onvif.org/ver10/schema">
-      <XAddr>http://172.16.32.149/onvif/device_service</XAddr>
+      <XAddr>http://192.168.1.170/onvif/device_service</XAddr>
       <Network>
         <IPFilter>false</IPFilter>
         <ZeroConfiguration>false</ZeroConfiguration>
@@ -95,7 +95,7 @@
       <Extension />
     </Device>
     <Events xmlns="http://www.onvif.org/ver10/schema">
-      <XAddr>http://172.16.32.149/onvif/event_service</XAddr>
+      <XAddr>http://192.168.1.170/onvif/event_service</XAddr>
       <WSSubscriptionPolicySupport>false</WSSubscriptionPolicySupport>
       <WSPullPointSupport>false</WSPullPointSupport>
       <WSPausableSubscriptionManagerInterfaceSupport>false</WSPausableSubscriptionManagerInterfaceSupport>
@@ -104,7 +104,7 @@
       <XAddr>http://192.168.1.170/onvif/device_service</XAddr>
     </Imaging>
     <Media xmlns="http://www.onvif.org/ver10/schema">
-      <XAddr>http://172.16.32.149/onvif/media_service</XAddr>
+      <XAddr>http://192.168.1.170/onvif/media_service</XAddr>
       <StreamingCapabilities>
         <RTPMulticast>false</RTPMulticast>
         <RTP_TCP>false</RTP_TCP>
