@@ -23,6 +23,7 @@ using System.Globalization;
 
 using System.Text.RegularExpressions;
 using RecordingSearch;
+using MediaSourcesProvider;
 
 
 namespace OnvifProxy
@@ -224,12 +225,13 @@ namespace OnvifProxy
                 getServicesResponse.Service[5].Version = new OnvifVersion();
                 getServicesResponse.Service[5].Version.Major = 2;
                 getServicesResponse.Service[5].Version.Minor = 4;
-                //getServicesResponse.Service[5].Capabilities = 
+                getServicesResponse.Service[5].Capabilities =
+                new XmlDocument().CreateElement("cap", "Capabilities", "http://www.onvif.org/ver10/search/wsdl");
 
                 return getServicesResponse;
             }
         }
-        public DeviceServiceCapabilities GetServiceCapabilities()
+        public Device.DeviceServiceCapabilities GetServiceCapabilities()
         {
             return (new DeviceServiceCapabilities());
         }
@@ -2401,153 +2403,7 @@ namespace OnvifProxy
         public Media.GetVideoSourcesResponse GetVideoSources(Media.GetVideoSourcesRequest request)
         {
             Media.GetVideoSourcesResponse getVideoSourcesResponse = new Media.GetVideoSourcesResponse();
-            #region
-            //getVideoSourcesResponse.VideoSources = new Media.VideoSource[1];
-            //getVideoSourcesResponse.VideoSources[0] = new Media.VideoSource();
-            //getVideoSourcesResponse.VideoSources[0].Extension = new Media.VideoSourceExtension();
-            //getVideoSourcesResponse.VideoSources[0].Extension.Extension = new Media.VideoSourceExtension2();
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging = new Media.ImagingSettings20();
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.BacklightCompensation = new Media.BacklightCompensation20();
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.BacklightCompensation.Level = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.BacklightCompensation.LevelSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.BacklightCompensation.Mode = Media.BacklightCompensationMode.ON;
-
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Brightness = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.BrightnessSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.ColorSaturation = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.ColorSaturationSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Contrast = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.ContrastSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure = new Media.Exposure20();
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.ExposureTime = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.ExposureTimeSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Gain = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.GainSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Iris = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.IrisSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MaxExposureTime = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MaxExposureTimeSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MaxGain = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MaxGainSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MaxIris = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MaxIrisSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MinExposureTime = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MinExposureTimeSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MinGain = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MinGainSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MinIris = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.MinIrisSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Mode = Media.ExposureMode.AUTO;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Priority = Media.ExposurePriority.FrameRate;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.PrioritySpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Window = new Media.Rectangle();
-
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Window.bottom = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Window.bottomSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Window.left = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Window.leftSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Window.right = 100;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Window.rightSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Window.top = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Exposure.Window.topSpecified = true;
-
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Extension = new Media.ImagingSettingsExtension20();
-
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Focus = new Media.FocusConfiguration20();
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Focus.AutoFocusMode = Media.AutoFocusMode.MANUAL;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Focus.DefaultSpeed = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Focus.DefaultSpeedSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Focus.Extension = new Media.FocusConfiguration20Extension();
-
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Focus.FarLimit = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Focus.FarLimitSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Focus.NearLimit = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Focus.NearLimitSpecified = true;
-
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.IrCutFilter = new Media.IrCutFilterMode();
-
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.IrCutFilterSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.Sharpness = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.SharpnessSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.WhiteBalance = new Media.WhiteBalance20();
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.WhiteBalance.CbGain = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.WhiteBalance.CbGainSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.WhiteBalance.CrGain = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.WhiteBalance.CrGainSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.WhiteBalance.Extension = new Media.WhiteBalance20Extension();
-
-
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.WideDynamicRange = new Media.WideDynamicRange20();
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.WideDynamicRange.Level = 0;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.WideDynamicRange.LevelSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Extension.Imaging.WideDynamicRange.Mode = Media.WideDynamicMode.ON;
-
-            //getVideoSourcesResponse.VideoSources[0].Framerate = 25;
-            //getVideoSourcesResponse.VideoSources[0].Imaging = new Media.ImagingSettings();
-            //getVideoSourcesResponse.VideoSources[0].Imaging = new Media.ImagingSettings();
-            //getVideoSourcesResponse.VideoSources[0].Imaging.BacklightCompensation = new Media.BacklightCompensation();
-            //getVideoSourcesResponse.VideoSources[0].Imaging.BacklightCompensation.Level = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.BacklightCompensation.Mode = Media.BacklightCompensationMode.ON;
-
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Brightness = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.BrightnessSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.ColorSaturation = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.ColorSaturationSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Contrast = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.ContrastSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure = new Media.Exposure();
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.ExposureTime = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Gain = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Iris = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.MaxExposureTime = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.MaxGain = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.MaxIris = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.MinExposureTime = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.MinGain = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.MinIris = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Mode = Media.ExposureMode.AUTO;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Priority = Media.ExposurePriority.FrameRate;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Window = new Media.Rectangle();
-
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Window.bottom = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Window.bottomSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Window.left = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Window.leftSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Window.right = 100;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Window.rightSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Window.top = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Exposure.Window.topSpecified = true;
-
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Extension = new Media.ImagingSettingsExtension();
-
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Focus = new Media.FocusConfiguration();
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Focus.AutoFocusMode = Media.AutoFocusMode.MANUAL;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Focus.DefaultSpeed = 0;
-
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Focus.FarLimit = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Focus.NearLimit = 0;
-
-            //getVideoSourcesResponse.VideoSources[0].Imaging.IrCutFilter = new Media.IrCutFilterMode();
-
-            //getVideoSourcesResponse.VideoSources[0].Imaging.IrCutFilterSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.Sharpness = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.SharpnessSpecified = true;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.WhiteBalance = new Media.WhiteBalance();
-            //getVideoSourcesResponse.VideoSources[0].Imaging.WhiteBalance.CbGain = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.WhiteBalance.CrGain = 0;
-
-
-            //getVideoSourcesResponse.VideoSources[0].Imaging.WideDynamicRange = new Media.WideDynamicRange();
-            //getVideoSourcesResponse.VideoSources[0].Imaging.WideDynamicRange.Level = 0;
-            //getVideoSourcesResponse.VideoSources[0].Imaging.WideDynamicRange.Mode = Media.WideDynamicMode.ON;
-
-            //getVideoSourcesResponse.VideoSources[0].Resolution = new Media.VideoResolution();
-            //getVideoSourcesResponse.VideoSources[0].Resolution.Height = 10;
-            //getVideoSourcesResponse.VideoSources[0].Resolution.Width = 10;
-
-            //getVideoSourcesResponse.VideoSources[0].token = "token";
-            #endregion
-
+          
             TyphoonMsg typhmsgreq = new TyphoonMsg(TyphoonMsgType.Request);
             TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
 
@@ -2571,63 +2427,40 @@ namespace OnvifProxy
                              new FaultCode("Sender",
                                  new FaultCode("NotAuthorized", "http://www.onvif.org/ver10/error",
                                      new FaultCode("Operation not Permitted", "http://www.onvif.org/ver10/error")))); 
+            
+            string tmpStr = TyphoonCom.ParseMem(0, typhmsgresp.stringMessageData);
+            if (tmpStr == null) 
+                throw new FaultException(new FaultReason("arghh!!!"),
+                    new FaultCode("Sender",
+                        new FaultCode("NotAuthorized", "http://www.onvif.org/ver10/error",
+                            new FaultCode("Operation not Permitted", "http://www.onvif.org/ver10/error"))));
 
-                ///извлекаем MessageID из созданной команды
-                ///и кладем в TyphMsg.MessageID, чтобы потом 
-                ///по нему найти ответ в очереди ответов
-            //TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
-            //for (int a = 0; a < 4; a++)
-            //{
-            //    typhmsgresp.MessageID = typhmsgresp.MessageID << 8;
-            //    typhmsgresp.MessageID += tmpBuf[21 - a];
-            //}
-                //try
-                //{
-                //    typhmsgresp.stringMessageData = TyphoonMsgManager.queueResponceFromTyphoon.Single(TyphoonMessage => TyphoonMessage.Value.MessageID == typhmsgresp.MessageID).Value.stringMessageData;
-                //    TyphoonMsgManager.queueResponceFromTyphoon.TryRemove(typhmsgresp.MessageID, out tmpmsg);
-                //}
-                //catch (Exception ex)
-                //{
-                //    TyphoonCom.log.Error(ex.Message);
-                //}
-                string tmpStr = TyphoonCom.ParseMem(0, typhmsgresp.stringMessageData);
-                if (tmpStr == null) 
-                    throw new FaultException(new FaultReason("arghh!!!"),
-                             new FaultCode("Sender",
-                                 new FaultCode("NotAuthorized", "http://www.onvif.org/ver10/error",
-                                     new FaultCode("Operation not Permitted", "http://www.onvif.org/ver10/error"))));
-
-                //tmpStr = String.Concat("<s:Envelope xmlns:s=\u0022http://www.w3.org/2003/05/soap-envelope\u0022><s:Body xmlns:xsi=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022 xmlns:xsd=\u0022http://www.w3.org/2001/XMLSchema\u0022>", tmpStr );
-                //tmpStr = String.Concat(tmpStr, "</s:Body></s:Envelope>");
-
-
-                using (Stream ms = new MemoryStream(Encoding.UTF8.GetBytes(tmpStr)))
+            using (Stream ms = new MemoryStream(Encoding.UTF8.GetBytes(tmpStr)))
+            {
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(GetVideoSourcesResponse));
+                try
                 {
-                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(GetVideoSourcesResponse));
-                    try
+                    getVideoSourcesResponse = (GetVideoSourcesResponse)xmlSerializer.Deserialize(ms);
+                    for (int y = 0; y < getVideoSourcesResponse.VideoSources.Count(); y++)
                     {
-                        //Stream fs = new FileStream("tmpFile.xml", FileMode.CreateNew);
-                        //xmlSerializer.Serialize(fs, getVideoSourcesResponse);
-                        getVideoSourcesResponse = (GetVideoSourcesResponse)xmlSerializer.Deserialize(ms);
-                        for (int y = 0; y < getVideoSourcesResponse.VideoSources.Count(); y++)
-                        {
-                            //здесь надо получить от Шарова реальное разрешение
-                            getVideoSourcesResponse.VideoSources[y].Resolution = new Media.VideoResolution();
-                            getVideoSourcesResponse.VideoSources[y].Resolution.Height = 1080;
-                            getVideoSourcesResponse.VideoSources[y].Resolution.Width = 1920;
-                            getVideoSourcesResponse.VideoSources[y].Framerate = 30;
-                        }
-                    }
-                    catch (SerializationException g)
-                    {
-                        Console.WriteLine("Не могу десериализовать GetVideoSources; " + g.Message);
-                        return null;
-                    }
-                    finally
-                    {
-                        ms.Close();
+                        //здесь надо получить от Шарова реальное разрешение
+                        getVideoSourcesResponse.VideoSources[y].Resolution = new Media.VideoResolution();
+                        getVideoSourcesResponse.VideoSources[y].Resolution.Height = 1080;
+                        getVideoSourcesResponse.VideoSources[y].Resolution.Width = 1920;
+                        getVideoSourcesResponse.VideoSources[y].Framerate = 30;
                     }
                 }
+                catch (SerializationException g)
+                {
+                    Console.WriteLine("Не могу десериализовать GetVideoSources; " + g.Message);
+                    return null;
+                }
+                finally
+                {
+                    ms.Close();
+                }
+            }
+                
             return getVideoSourcesResponse;
         }
 
@@ -2791,114 +2624,6 @@ namespace OnvifProxy
             {
                 return null;
             }
-
-            ///добавляем в очередь на отправку
-            //TyphoonCom.AddCommand(tmpBuf);
-            /////формируем команду GetProfiles
-            //byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null,0))).Length];
-            //tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null,0));
-            //TyphoonCom.log.Debug("Service1: GetProfiles added to commandQueue");
-            /////добавляем в очередь на отправку
-            ////TyphoonCom.AddCommand(tmpBuf);
-
-            ////-----------test---------------------------
-            //TyphoonMsg_Ex typhmsgg = new TyphoonMsg_Ex(TyphoonMsgType.Request);
-            //typhmsgg.byteMessageData = tmpBuf;
-            //TyphoonMsgManager.Add(typhmsgg);
-
-            
-            ////TyphoonMessage TyphMsg = new TyphoonMessage();
-            ////for (int a = 0; a < 4; a++)
-            ////    {
-            ////        TyphMsg.MessageID = TyphMsg.MessageID << 8;
-            ////        TyphMsg.MessageID += tmpBuf[21-a];
-            ////    }
-            ////try
-            ////{
-                
-            ////    try
-            ////    {
-            ////        while (!TyphoonMsgManager.queueResponce_ex.ContainsKey(TyphMsg.MessageID))
-            ////        {
-            ////            Thread.Sleep(1);
-            ////            TyphoonCom.log.DebugFormat("-");
-            ////        }
-            ////    }
-            ////    catch (Exception e)
-            ////    {
-            ////        TyphoonCom.log.DebugFormat("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            ////    }
-
-            ////    //if(TyphoonMsgManager.queueResponce_ex.ContainsKey(TyphMsg.MessageID))
-            ////    //{
-            ////    //    TyphoonCom.log.DebugFormat("queueResponce_ex contains TyphMsg.MessageID = {0}", TyphMsg.MessageID);
-            ////    //}
-                
-            ////}catch(Exception e)
-            ////{
-            ////}
-            ////------------------------------------------
-
-
-
-
-
-
-            /////создаем структуру под конфиг
-            //XmlConfig config = new XmlConfig();
-            //Media.GetProfilesResponse mediaprofile = new Media.GetProfilesResponse();
-
-            //do
-            //{
-            //    Thread.Sleep(1);
-            //} while (TyphoonCom.queueResponce.Count == 0);
-
-            //if(TyphoonCom.queueResponce.Count>0)
-            //{
-            //    ///извлекаем MessageID из созданной команды
-            //    ///и кладем в TyphMsg.MessageID, чтобы потом 
-            //    ///по нему найти ответ в очереди ответов
-            //    TyphoonMessage TyphMsg = new TyphoonMessage();
-            //    for (int a = 0; a < 4; a++)
-            //    {
-            //        TyphMsg.MessageID = TyphMsg.MessageID << 8;
-            //        TyphMsg.MessageID += tmpBuf[21-a];
-            //    }
-            //    try
-            //    {
-            //        ////-----------test---------------------------
-            //        //try
-            //        //{
-            //        //    while (!TyphoonMsgManager.queueResponce_ex.ContainsKey(TyphMsg.MessageID))
-            //        //    {
-            //        //        Thread.Sleep(1);
-            //        //        TyphoonCom.log.DebugFormat("-");
-            //        //    }
-            //        //}
-            //        //catch(Exception e)
-            //        //{
-            //        //    TyphoonCom.log.DebugFormat("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            //        //}
-
-            //        ////if(TyphoonMsgManager.queueResponce_ex.ContainsKey(TyphMsg.MessageID))
-            //        ////{
-            //        ////    TyphoonCom.log.DebugFormat("queueResponce_ex contains TyphMsg.MessageID = {0}", TyphMsg.MessageID);
-            //        ////}
-            //        ////------------------------------------------
-            //        TyphMsg.MessageData = TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID).MessageData;
-            //        TyphoonCom.queueResponce.Remove(TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID));
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        TyphoonCom.log.Error(ex.Message);
-            //    }
-            //    string tmpStr = TyphoonCom.ParseMem(0, TyphMsg.MessageData);
-            //    mediaprofile = config.ParseGetProfiles(tmpStr);
-        
-            //    return mediaprofile;
-            //}
-            //TyphoonCom.log.DebugFormat("GetProfiles - TyphoonCom.queueResponce.Count = {0}", TyphoonCom.queueResponce.Count);
-            //return null;//leave me!
         }
 
         public void AddVideoEncoderConfiguration(string ProfileToken, string ConfigurationToken)
@@ -4012,22 +3737,39 @@ namespace OnvifProxy
 
         }
     }
-    public partial class Service1 : Device.IDevice,
-        Media.IMedia,
-        Event.INotificationProducer,
-        Event.IEventPortType,
-        Event.IPullPoint,
-        Event.ICreatePullPoint,
-        Event.SubscriptionManager,
-        Event.IPausableSubscriptionManager,
-        Event.INotificationConsumer,
-        Event.PullPointSubscription,
-        MediaSourcesProvider.IMediaSourcesProvider,//added
-        ReplayService.IReplayPort//added
+
+
+
+    public partial class Service1 : MediaSourcesProvider.IMediaSourcesProvider//added
     {
         public MediaSourcesProvider.GetMediaSourcesResponse GetMediaSources(MediaSourcesProvider.GetMediaSourcesRequest request)
         {
-            return new MediaSourcesProvider.GetMediaSourcesResponse();
+            //----------------------------------
+
+            MediaSourcesProvider.GetMediaSourcesResponse getmediasource = new MediaSourcesProvider.GetMediaSourcesResponse();
+            Media.GetVideoSourcesResponse videosources = new GetVideoSourcesResponse();
+            videosources = GetVideoSources(null);
+
+            getmediasource.MediaSource = new MediaSourcesProvider.MediaSourceType[videosources.VideoSources.Length];
+            for (int i = 0; i < getmediasource.MediaSource.Length; i++)
+            {
+                getmediasource.MediaSource[i] = new MediaSourceType();
+                getmediasource.MediaSource[i].Location = new MediaSourcesProvider.GeoCircle();
+                getmediasource.MediaSource[i].Location.Value = "someValue";
+                getmediasource.MediaSource[i].ONVIFBinding = new MediaSourcesProvider.ONVIFBindingType();
+                getmediasource.MediaSource[i].ONVIFBinding.Endpoint = new MediaSourcesProvider.EndpointType[1];
+                getmediasource.MediaSource[i].ONVIFBinding.MediaSourceToken = "someStringToken";
+                getmediasource.MediaSource[i].ONVIFBinding.ProfileToken = videosources.VideoSources[i].token;
+
+                getmediasource.MediaSource[i].token = "mediasourcetoken";
+                getmediasource.MediaSource[i].Name = new NameType[1];
+                getmediasource.MediaSource[i].Name[0] = new NameType();
+                getmediasource.MediaSource[i].Name[0].lang = "RU";
+                getmediasource.MediaSource[i].Name[0].Value = videosources.VideoSources[i].token;
+
+            }
+            //----------------------------------
+            return getmediasource;
         }
 
         public MediaSourcesProvider.FindMediaSourcesResponse FindMediaSources(MediaSourcesProvider.FindMediaSourcesRequest request)
@@ -4046,19 +3788,7 @@ namespace OnvifProxy
             return new MediaSourcesProvider.GetUpdatesResponse();
         }
     }
-    public partial class Service1 : Device.IDevice,
-        Media.IMedia,
-        Event.INotificationProducer,
-        Event.IEventPortType,
-        Event.IPullPoint,
-        Event.ICreatePullPoint,
-        Event.SubscriptionManager,
-        Event.IPausableSubscriptionManager,
-        Event.INotificationConsumer,
-        Event.PullPointSubscription,
-        MediaSourcesProvider.IMediaSourcesProvider,//added
-        ReplayService.IReplayPort,//added
-        RecordingSearch.ISearchPort//added
+    public partial class Service1 : ReplayService.IReplayPort//added        
     {
         public ReplayService.Capabilities GetReplayServiceCapabilities()
         {
@@ -4080,24 +3810,44 @@ namespace OnvifProxy
             Console.WriteLine("SetReplayConfiguration called");
         }
     }
-
-    public partial class Service1 : Device.IDevice,
-        Media.IMedia,
-        Event.INotificationProducer,
-        Event.IEventPortType,
-        Event.IPullPoint,
-        Event.ICreatePullPoint,
-        Event.SubscriptionManager,
-        Event.IPausableSubscriptionManager,
-        Event.INotificationConsumer,
-        Event.PullPointSubscription,
-        MediaSourcesProvider.IMediaSourcesProvider,//added
-        ReplayService.IReplayPort,//added
-        RecordingSearch.ISearchPort//added
+    public partial class Service1 : RecordingSearch.ISearchPort//added
     {
         public RecordingSearch.Capabilities GetRecordingServiceCapabilities()
         {
-            return new RecordingSearch.Capabilities();
+            ////-----для отладки mediasourceprovider---
+
+            //MediaSourcesProvider.GetMediaSourcesResponse getmediasource = new MediaSourcesProvider.GetMediaSourcesResponse();
+            //Media.GetVideoSourcesResponse videosources = new GetVideoSourcesResponse();
+            //videosources = GetVideoSources(null);
+
+            //getmediasource.MediaSource = new MediaSourcesProvider.MediaSourceType[videosources.VideoSources.Length];
+            //for(int i=0;i<getmediasource.MediaSource.Length;i++)
+            //{
+            //    getmediasource.MediaSource[i] = new MediaSourceType();
+            //    getmediasource.MediaSource[i].Location = new MediaSourcesProvider.GeoCircle();
+            //    getmediasource.MediaSource[i].Location.Value = "someValue";
+            //    getmediasource.MediaSource[i].ONVIFBinding = new MediaSourcesProvider.ONVIFBindingType();
+            //    getmediasource.MediaSource[i].ONVIFBinding.Endpoint = new MediaSourcesProvider.EndpointType[1];
+            //    //getmediasource.MediaSource[i].ONVIFBinding.Endpoint[0].
+            //    getmediasource.MediaSource[i].ONVIFBinding.MediaSourceToken = "someStringToken";
+            //    getmediasource.MediaSource[i].ONVIFBinding.ProfileToken = videosources.VideoSources[i].token;
+
+            //    getmediasource.MediaSource[i].token = "mediasourcetoken";
+            //    getmediasource.MediaSource[i].Name = new NameType[1];
+            //    getmediasource.MediaSource[i].Name[0] = new NameType();
+            //    getmediasource.MediaSource[i].Name[0].lang = "RU";
+            //    getmediasource.MediaSource[i].Name[0].Value = videosources.VideoSources[i].token;
+
+            //}
+            ////-------------------------------------
+
+
+            RecordingSearch.Capabilities caps = new RecordingSearch.Capabilities();
+            caps.MetadataSearch = false;
+            caps.GeneralStartEvents = false;
+            caps.GeneralStartEventsSpecified = true;
+            caps.MetadataSearchSpecified = true;
+            return caps;
         }
 
         public RecordingSummary GetRecordingSummary()
@@ -4164,7 +3914,6 @@ namespace OnvifProxy
         {
             return new FindPTZPositionResponse();
         }
-
         public GetPTZPositionSearchResultsResponse GetPTZPositionSearchResults(GetPTZPositionSearchResultsRequest request)
         {
             return new GetPTZPositionSearchResultsResponse();
