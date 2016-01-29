@@ -602,6 +602,10 @@ namespace OnvifProxy
                             ///дернуть GetDeviceInformation() у NVTClient
                             Console.WriteLine("SubCom - 2 - GetDeviceInformation");
                             //Console.WriteLine("ID - {0}", typhmsg.MessageID);
+                            //
+                            //       Нормальный парсинг сделай!!!!!
+                            //
+                            //
                             typhmsg.stringMessageData = typhmsg.stringMessageData.Remove(0, 4);
 
                             try

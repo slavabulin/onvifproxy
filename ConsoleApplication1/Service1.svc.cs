@@ -3867,16 +3867,37 @@ namespace OnvifProxy
 
             TyphoonMsgManager.EnqueueMsg(typhmsgreq);
             typhmsgresp = TyphoonMsgManager.GetMsg(typhmsgreq.MessageID);
+
             if(typhmsgresp!=null)
             {
-                return new RecordingSummary();
+                string tmpstring = TyphoonCom.ParseMem(0, typhmsgresp.stringMessageData);
+                RecordingSummary recsumresponse = new RecordingSummary();
+                //tmpstring += "/////";                
+                try
+                {
+                    XmlDocument doc = new XmlDocument();
+                    doc.LoadXml(tmpstring);
+
+                    recsumresponse.DataFrom = System.DateTime.Parse(doc.FirstChild.FirstChild["DataFrom"].InnerText);
+                    recsumresponse.DataUntil = System.DateTime.Parse(doc.FirstChild.FirstChild["DataUntil"].InnerText);
+                    recsumresponse.NumberRecordings = Int16.Parse(doc.FirstChild.FirstChild["NumberRecordings"].InnerText);                    
+                }
+                catch(Exception ex)
+                {
+                    throw new FaultException(new FaultReason("WrongGetRecordingSummaryRecievedFromTyphoon"),
+                       new FaultCode("Sender",
+                           new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
+                               new FaultCode("WrongGetRecordingSummaryRecievedFromTyphoon", "http://www.onvif.org/ver10/error"))));
+                }
+                               
+                return recsumresponse;
             }
             else
             {
-                throw new FaultException(new FaultReason("NoGetRecordingSummaryReturned"),
+                throw new FaultException(new FaultReason("NoGetRecordingSummaryRecievedFromTyphoon"),
                        new FaultCode("Sender",
                            new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
-                               new FaultCode("NoGetRecordingSummaryReturned", "http://www.onvif.org/ver10/error"))));
+                               new FaultCode("NoGetRecordingSummaryRecievedFromTyphoon", "http://www.onvif.org/ver10/error"))));
             }            
         }
 
