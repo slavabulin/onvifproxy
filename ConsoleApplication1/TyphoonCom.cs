@@ -587,7 +587,7 @@ namespace OnvifProxy
                     switch (typhmsg.MessageSubComNum)
                     {
                         case 1:
-                            #region
+                            #region пнуть UdpDiscoClient
                             ///пнуть UdpDiscoClient
                             new NVTDiscoClient(typhmsg.MessageID);
                             Console.WriteLine("ID для nvtdiscoclient - {0}", typhmsg.MessageID);
@@ -598,7 +598,7 @@ namespace OnvifProxy
                             break;
                             #endregion
                         case 2:
-                            #region
+                            #region дернуть GetDeviceInformation() у NVTClient
                             ///дернуть GetDeviceInformation() у NVTClient
                             Console.WriteLine("SubCom - 2 - GetDeviceInformation");
                             //Console.WriteLine("ID - {0}", typhmsg.MessageID);
@@ -688,7 +688,7 @@ namespace OnvifProxy
                             break;
                             #endregion
                         case 3:
-                            #region
+                            #region дернуть GetMediaCapabilities()
                             ///дернуть GetMediaCapabilities()
                             ///у NVTClient        
                             //---------------
@@ -771,7 +771,7 @@ namespace OnvifProxy
                             break;
                             #endregion
                         case 4:
-                            #region
+                            #region дернуть GetMediaProfiles()
                             ///дернуть GetMediaProfiles()
                             ///у NVTClient
                             Console.WriteLine("SubCom - 4 - GetMediaProfiles");
@@ -840,7 +840,7 @@ namespace OnvifProxy
                             break;
                             #endregion
                         case 5:
-                            #region
+                            #region дернуть SetVideoEncoderConfiguration и StreamUri()
                             ///дернуть SetVideoEncoderConfiguration и StreamUri()
                             ///у NVTClient
                             Console.WriteLine("SubCom - 5 - GetStreamUri");
@@ -918,7 +918,7 @@ namespace OnvifProxy
                             break;
                             #endregion
                         case 6:
-                            #region
+                            #region пришло событие от тайфуна
                             //пришло событие от тайфуна
                             Console.WriteLine("SubCom - 6 - Event came from Typhoon");
                             log.DebugFormat("event msg ID - {0}", typhmsg.MessageID);

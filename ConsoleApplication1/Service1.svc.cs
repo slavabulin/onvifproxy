@@ -3872,7 +3872,7 @@ namespace OnvifProxy
             {
                 string tmpstring = TyphoonCom.ParseMem(0, typhmsgresp.stringMessageData);
                 RecordingSummary recsumresponse = new RecordingSummary();
-                //tmpstring += "/////";                
+                   
                 try
                 {
                     XmlDocument doc = new XmlDocument();
@@ -3913,6 +3913,67 @@ namespace OnvifProxy
 
         public FindRecordingsResponse FindRecordings(FindRecordingsRequest request)
         {
+            ////TODO : get all recordings from Typhoon and place it in recInfo
+            RecordingInformation recInfo = new RecordingInformation();
+            recInfo.EarliestRecording = System.DateTime.Now;
+            recInfo.EarliestRecordingSpecified = true;
+            recInfo.LatestRecording = System.DateTime.Now;
+            recInfo.RecordingStatus = RecordingStatus.Stopped;
+            recInfo.RecordingToken = Guid.NewGuid().ToString();
+            recInfo.Source = new RecordingSourceInformation();
+            recInfo.Source.Address = "sourceaddress";
+            recInfo.Source.SourceId = "2";
+            recInfo.Track = new TrackInformation[1];
+            recInfo.Track[0] = new TrackInformation();
+            recInfo.Track[0].TrackType = TrackType.Video;
+            recInfo.Track[0].TrackToken = "tracktoken1";
+            recInfo.Source.Location = "mylocation";
+            recInfo.Content = "mycontent";
+
+            string formedstrign;
+
+            using(MemoryStream ms =new MemoryStream())
+            {
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(RecordingInformation));
+                try
+                {
+                    xmlSerializer.Serialize(ms, recInfo);
+                    StreamReader strread = new StreamReader(ms);
+                    ms.Position = 0;
+                    formedstrign = strread.ReadToEnd();
+                }
+                catch (InvalidOperationException iox)
+                {
+                    throw iox;
+                }
+                catch (IOException ioex)
+                {
+                    throw ioex;
+                }
+                catch (OutOfMemoryException oomex)
+                {
+                    throw oomex;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(formedstrign);
+            XmlElement xRoot = doc.DocumentElement;
+
+            XmlNodeList childnodes;
+            try
+            {
+                childnodes = xRoot.SelectNodes(request.Scope.RecordingInformationFilter.Replace('"','');
+            }
+            catch (System.Xml.XPath.XPathException xpex)
+            {
+                throw xpex;
+            }
+            
+
             return new FindRecordingsResponse();
         }
 
