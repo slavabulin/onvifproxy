@@ -114,6 +114,7 @@
     <Compile Include="AdaptersInfo.cs" />
     <Compile Include="AsyncResult.cs" />
     <Compile Include="CustomMessageFormatter.cs" />
+    <Compile Include="FilterParser.cs" />
     <Compile Include="IEvent.cs" />
     <Compile Include="IMediaSourcesProvider.cs" />
     <Compile Include="IRecordingSearch.cs" />

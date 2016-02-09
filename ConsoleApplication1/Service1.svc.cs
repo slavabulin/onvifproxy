@@ -3913,6 +3913,79 @@ namespace OnvifProxy
 
         public FindRecordingsResponse FindRecordings(FindRecordingsRequest request)
         {
+            /*
+             Dialect=http://www.onvif.org/ver10/tse/searchFilter 
+[1] Expression ::= BoolExpr | Expression 'and' Expression 
+  | Expression 'or' Expression | '('Expression')' | 
+'not''('Expression')' 
+[2] BoolExpr ::= 'boolean''('PathExpr')' | 'contains''(' ElementPath ',' 
+'"' String '"' ')'  
+[3] PathExpr ::= '//SimpleItem' NodeTest | '//ElementItem' NodeTest | 
+  ElementTest 
+[4] NodeTest ::= '['AttrExpr']' 
+[5] AttrExpr ::= NameComp | ValueComp | AttrExpr 'and' AttrExpr | AttrExpr 
+'or' AttrExpr | 'not''(AttrExpr')' 
+[6] NameComp ::= NameAttr'=''"'String'"' 
+[7] ValueComp ::= ValueAttr Operator '"'String'"' 
+[8] Operator ::= '=' | '!=' | '<' | '<=' | '>' | '>=' 
+[9] NameAttr ::= '@Name' 
+[10] ValueAttr ::= '@Value' 
+[11] ElementTest ::= '/' ElementPath '['NodeComp']'  
+[12] ElementPath ::= ElementName ElementName* 
+[13] ElementName ::= '/' String [14] NodeComp ::= NodeName Operator '"' String '"' 
+[15] NodeName ::= '@' String | String 
+             * 
+             * Example of an XPath expression used to find recordings from the basement where there is at 
+least one track containing video: 
+boolean(//Source[Location = “Basement”]) and 
+boolean(//Track[TrackType = “Video”])
+             */
+
+            request.Scope.RecordingInformationFilter = @"  BOOlean(//Source[Location = “mylocation”]) and boolean(//Track[TrackType = “Video”]) not boolean(//Track[TrackType = “Metadata”])";
+
+            //[1]
+            string pattern = @"(and)|(or)|(not)";
+            string[] match = Regex.Split(request.Scope.RecordingInformationFilter.ToLower(), pattern);
+            
+            //[2]
+            string[] matchtmp = new string[match.Length];
+            for(int i=0; i<match.Length; i++)
+            {
+                match[i] = match[i].TrimStart();
+                if (match[i] == "and" || match[i] == "or" || match[i] == "not")
+                {
+                    matchtmp[i] = match[i];
+                    continue;
+                }
+                //[3]                
+                if (match[i].StartsWith("boolean"))
+                {
+                    //'PathExpr'//просто передать XPath?
+                    matchtmp[i] = match[i].Remove(0, 7);
+                    matchtmp[i] = matchtmp[i].TrimEnd().TrimEnd(')');
+                    matchtmp[i] = matchtmp[i].TrimStart().TrimStart('(');
+                    matchtmp[i] = matchtmp[i].Replace('\u201C', '\'');//left qoutation mark
+                    matchtmp[i] = matchtmp[i].Replace('\u201D', '\'');//right qoutation mark
+                    if (matchtmp[i].StartsWith("//"))
+                    {
+                        matchtmp[i] = matchtmp[i].Insert(2, "a:");
+                        matchtmp[i] = matchtmp[i].Replace("[", "[a:");
+                    }
+                    else throw new ArgumentException();
+                }
+                else
+                    if (match[i].StartsWith("contains"))
+                    {
+                        //(' ElementPath ',' '"' String '"' ')//просто передать XPath?
+                        matchtmp[i] = match[i].Remove(0, 8);
+                        matchtmp[i] = matchtmp[i].TrimEnd().TrimEnd(')');
+                        matchtmp[i] = matchtmp[i].TrimStart().TrimStart('(');
+                    }
+                    else
+                        throw new ArgumentException("Argument", "Filter doesnt suit the rules");
+            }
+
+
             ////TODO : get all recordings from Typhoon and place it in recInfo
             RecordingInformation recInfo = new RecordingInformation();
             recInfo.EarliestRecording = System.DateTime.Now;
@@ -3960,13 +4033,15 @@ namespace OnvifProxy
                 }
             }
             XmlDocument doc = new XmlDocument();
-            doc.LoadXml(formedstrign);
+            doc.LoadXml(formedstrign.ToLower());
             XmlElement xRoot = doc.DocumentElement;
+            XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
+            nsmgr.AddNamespace("a", "http://www.onvif.org/ver10/schema");
 
             XmlNodeList childnodes;
             try
             {
-                childnodes = xRoot.SelectNodes(request.Scope.RecordingInformationFilter.Replace('"','');
+                childnodes = xRoot.SelectNodes(matchtmp[0],nsmgr);
             }
             catch (System.Xml.XPath.XPathException xpex)
             {
