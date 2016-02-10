@@ -3913,6 +3913,8 @@ namespace OnvifProxy
 
         public FindRecordingsResponse FindRecordings(FindRecordingsRequest request)
         {
+            bool a = FilterParser.ParseExpression(@"(  BOOlean(//Source[Location = “mylocation”]) and boolean(//Track[TrackType = “Video”]) not boolean(//Track[TrackType = “Operator”]))  ");
+
             /*
              Dialect=http://www.onvif.org/ver10/tse/searchFilter 
 [1] Expression ::= BoolExpr | Expression 'and' Expression 
@@ -3932,7 +3934,8 @@ namespace OnvifProxy
 [10] ValueAttr ::= '@Value' 
 [11] ElementTest ::= '/' ElementPath '['NodeComp']'  
 [12] ElementPath ::= ElementName ElementName* 
-[13] ElementName ::= '/' String [14] NodeComp ::= NodeName Operator '"' String '"' 
+[13] ElementName ::= '/' String 
+[14] NodeComp ::= NodeName Operator '"' String '"' 
 [15] NodeName ::= '@' String | String 
              * 
              * Example of an XPath expression used to find recordings from the basement where there is at 
@@ -3941,37 +3944,54 @@ boolean(//Source[Location = “Basement”]) and
 boolean(//Track[TrackType = “Video”])
              */
 
-            request.Scope.RecordingInformationFilter = @"  BOOlean(//Source[Location = “mylocation”]) and boolean(//Track[TrackType = “Video”]) not boolean(//Track[TrackType = “Metadata”])";
-
+            request.Scope.RecordingInformationFilter = @"(  BOOlean(//Source[Location = “mylocation”]) and boolean(//Track[TrackType = “Video”]) not boolean(//Track[TrackType = “Operator”]))  ";
+            var xpathList = new List<string>();
             //[1]
-            string pattern = @"(and)|(or)|(not)";
+            string pattern = @"( and )|( or )|( not )";
             string[] match = Regex.Split(request.Scope.RecordingInformationFilter.ToLower(), pattern);
             
-            //[2]
+
             string[] matchtmp = new string[match.Length];
             for(int i=0; i<match.Length; i++)
             {
-                match[i] = match[i].TrimStart();
+                match[i] = match[i].Trim();
                 if (match[i] == "and" || match[i] == "or" || match[i] == "not")
                 {
                     matchtmp[i] = match[i];
                     continue;
                 }
-                //[3]                
-                if (match[i].StartsWith("boolean"))
+        
+                matchtmp[i] = match[i];
+                matchtmp[i] = matchtmp[i].Trim();
+                if (matchtmp[i].StartsWith("(") && matchtmp[i].EndsWith(")"))
                 {
+                    matchtmp[i] = matchtmp[i].Remove(matchtmp[i].Length - 1, 1).Remove(0, 1);
+                    matchtmp[i] = matchtmp[i].Trim();
+                }
+                //[2]
+                if (matchtmp[i].StartsWith("boolean"))
+                {
+                    //[3]
                     //'PathExpr'//просто передать XPath?
-                    matchtmp[i] = match[i].Remove(0, 7);
-                    matchtmp[i] = matchtmp[i].TrimEnd().TrimEnd(')');
-                    matchtmp[i] = matchtmp[i].TrimStart().TrimStart('(');
+                    matchtmp[i] = matchtmp[i].Remove(0, 7);
+                    matchtmp[i] = matchtmp[i].Trim();
+                    matchtmp[i] = matchtmp[i].TrimEnd(')');
+                    matchtmp[i] = matchtmp[i].TrimStart('(');
                     matchtmp[i] = matchtmp[i].Replace('\u201C', '\'');//left qoutation mark
                     matchtmp[i] = matchtmp[i].Replace('\u201D', '\'');//right qoutation mark
                     if (matchtmp[i].StartsWith("//"))
-                    {
+                    {//check [4]
+                        //if()
                         matchtmp[i] = matchtmp[i].Insert(2, "a:");
                         matchtmp[i] = matchtmp[i].Replace("[", "[a:");
+                        //
                     }
-                    else throw new ArgumentException();
+                    else
+                        if (matchtmp[i].StartsWith("/"))
+                        { //check [11]
+                            //
+                        }
+                        else throw new ArgumentException();
                 }
                 else
                     if (match[i].StartsWith("contains"))
