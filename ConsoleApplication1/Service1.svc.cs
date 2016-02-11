@@ -20,6 +20,7 @@ using System.Management;
 using Device;
 using Media;
 using System.Globalization;
+using System.Xml.XPath;
 
 using System.Text.RegularExpressions;
 using RecordingSearch;
@@ -3914,7 +3915,7 @@ namespace OnvifProxy
         public FindRecordingsResponse FindRecordings(FindRecordingsRequest request)
         {
             bool a = FilterParser.ParseExpression(@"(  BOOlean(//Source[Location = “mylocation”]) and boolean(//Track[TrackType = “Video”]) not boolean(//Track[TrackType = “Operator”]))  ");
-
+            #region
             /*
              Dialect=http://www.onvif.org/ver10/tse/searchFilter 
 [1] Expression ::= BoolExpr | Expression 'and' Expression 
@@ -3943,7 +3944,7 @@ least one track containing video:
 boolean(//Source[Location = “Basement”]) and 
 boolean(//Track[TrackType = “Video”])
              */
-
+            /*
             request.Scope.RecordingInformationFilter = @"(  BOOlean(//Source[Location = “mylocation”]) and boolean(//Track[TrackType = “Video”]) not boolean(//Track[TrackType = “Operator”]))  ";
             var xpathList = new List<string>();
             //[1]
@@ -4004,8 +4005,8 @@ boolean(//Track[TrackType = “Video”])
                     else
                         throw new ArgumentException("Argument", "Filter doesnt suit the rules");
             }
-
-
+            */
+            #endregion
             ////TODO : get all recordings from Typhoon and place it in recInfo
             RecordingInformation recInfo = new RecordingInformation();
             recInfo.EarliestRecording = System.DateTime.Now;
@@ -4016,10 +4017,14 @@ boolean(//Track[TrackType = “Video”])
             recInfo.Source = new RecordingSourceInformation();
             recInfo.Source.Address = "sourceaddress";
             recInfo.Source.SourceId = "2";
-            recInfo.Track = new TrackInformation[1];
+            recInfo.Track = new TrackInformation[2];
             recInfo.Track[0] = new TrackInformation();
             recInfo.Track[0].TrackType = TrackType.Video;
             recInfo.Track[0].TrackToken = "tracktoken1";
+
+            recInfo.Track[1] = new TrackInformation();
+            recInfo.Track[1].TrackType = TrackType.Audio;
+            recInfo.Track[1].TrackToken = "tracktoken2";
             recInfo.Source.Location = "mylocation";
             recInfo.Content = "mycontent";
 
@@ -4030,7 +4035,11 @@ boolean(//Track[TrackType = “Video”])
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(RecordingInformation));
                 try
                 {
-                    xmlSerializer.Serialize(ms, recInfo);
+                    var namespaces = new XmlSerializerNamespaces();
+                    namespaces.Add("tt", "http://www.onvif.org/ver10/schema");
+
+                    xmlSerializer.Serialize(ms, recInfo, namespaces);
+                    //xmlSerializer.Serialize(ms, recInfo);                    
                     StreamReader strread = new StreamReader(ms);
                     ms.Position = 0;
                     formedstrign = strread.ReadToEnd();
@@ -4052,22 +4061,35 @@ boolean(//Track[TrackType = “Video”])
                     throw ex;
                 }
             }
+
             XmlDocument doc = new XmlDocument();
-            doc.LoadXml(formedstrign.ToLower());
+
+            doc.LoadXml(formedstrign.ToLower().Trim());
             XmlElement xRoot = doc.DocumentElement;
             XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
-            nsmgr.AddNamespace("a", "http://www.onvif.org/ver10/schema");
+            nsmgr.AddNamespace("tt", "http://www.onvif.org/ver10/schema");
 
             XmlNodeList childnodes;
+    
+            XPathNavigator navigator = doc.CreateNavigator();
+
+            request.Scope.RecordingInformationFilter = request.Scope.RecordingInformationFilter.Replace('\u201C', '\'').Replace('\u201D', '\'');
+            request.Scope.RecordingInformationFilter = request.Scope.RecordingInformationFilter.Replace('\"', '\'');
+            request.Scope.RecordingInformationFilter = request.Scope.RecordingInformationFilter.ToLower();
+            request.Scope.RecordingInformationFilter = "((/tt:track[tt:tracktype='audio'])and(//tt:track[tt:tracktype='video']))";
             try
             {
-                childnodes = xRoot.SelectNodes(matchtmp[0],nsmgr);
+                //navigator.Compile(request.Scope.RecordingInformationFilter);
+                //childnodes = xRoot.SelectNodes(request.Scope.RecordingInformationFilter, nsmgr);
+                XPathExpression expr = navigator.Compile(request.Scope.RecordingInformationFilter);
+                expr.SetContext(nsmgr);
+                XPathNodeIterator ni = navigator.Select(expr);
+                //childnodes = xRoot.SelectNodes(navigator.Compile(request.Scope.RecordingInformationFilter).Expression);
             }
             catch (System.Xml.XPath.XPathException xpex)
             {
                 throw xpex;
             }
-            
 
             return new FindRecordingsResponse();
         }
