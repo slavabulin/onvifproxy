@@ -3914,7 +3914,9 @@ namespace OnvifProxy
 
         public FindRecordingsResponse FindRecordings(FindRecordingsRequest request)
         {
-            //bool a = FilterParser.ParseExpression(@"(  BOOlean(//Source[Location = “mylocation”]) and boolean(//Track[TrackType = “Video”]) not boolean(//Track[TrackType = “Operator”]))  ");
+            //string a = FilterParser.ParseExpression(@" BOOlean(//Source[Location = “mylocation”]) and boolean(//Track[TrackType = “Video”]) not boolean(//Track[TrackType = “Operator”]) ");
+            string a = FilterParser.ParseExpression(request.Scope.RecordingInformationFilter);
+
             #region
             /*
              Dialect=http://www.onvif.org/ver10/tse/searchFilter 
@@ -4111,15 +4113,16 @@ boolean(//Track[TrackType = “Video”])
             //request.Scope.RecordingInformationFilter = "((/tt:track[tt:tracktype='audio'])and(//tt:track[tt:tracktype='video']))";
             try
             {
-                ////navigator.Compile(request.Scope.RecordingInformationFilter);
-                ////childnodes = xRoot.SelectNodes(request.Scope.RecordingInformationFilter, nsmgr);
-                XPathExpression expr = navigator.Compile(@"boolean(//tt:track[tt:tracktype = 'video']) or boolean(//tt:track[tt:tracktype = 'audio'])");
-                expr.SetContext(nsmgr);
-                //Boolean total = (bool)navigator.Evaluate(@"boolean(//track[tracktype = 'video']) or boolean(//track[tracktype = 'audio'])");
-                //total = (bool)navigator.Evaluate(@"boolean(//track[tracktype = 'video'])");
-                total = (bool)navigator.Evaluate(expr);
-                //XPathNodeIterator ni = navigator.Select(expr);
-                ////childnodes = xRoot.SelectNodes(navigator.Compile(request.Scope.RecordingInformationFilter).Expression);
+                if(a!="")
+                {
+                    XPathExpression expr = navigator.Compile(a);
+                    expr.SetContext(nsmgr);
+                    total = (bool)navigator.Evaluate(expr);
+                }else
+                {
+                    throw new ArgumentException();
+                }
+                
             }
             catch (System.Xml.XPath.XPathException xpex)
             {
