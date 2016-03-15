@@ -1530,7 +1530,7 @@ namespace OnvifProxy
 
         public GetNetworkProtocolsResponse GetNetworkProtocols(GetNetworkProtocolsRequest request)
         {
-            //заглушко!
+            //йа заглушко!
             GetNetworkProtocolsResponse resp = new GetNetworkProtocolsResponse();
             resp.NetworkProtocols = new NetworkProtocol[3];
 
@@ -3745,20 +3745,26 @@ namespace OnvifProxy
     {
         public MediaSourcesProvider.GetMediaSourcesResponse GetMediaSources(MediaSourcesProvider.GetMediaSourcesRequest request)
         {
+            MediaSourcesProvider.GetMediaSourcesResponse getmediasource = new MediaSourcesProvider.GetMediaSourcesResponse();
+
+            //----------------------------------
+           
+
             //----------------------------------
 
-            MediaSourcesProvider.GetMediaSourcesResponse getmediasource = new MediaSourcesProvider.GetMediaSourcesResponse();
             Media.GetVideoSourcesResponse videosources = new GetVideoSourcesResponse();
             videosources = GetVideoSources(null);
 
             getmediasource.MediaSource = new MediaSourcesProvider.MediaSourceType[videosources.VideoSources.Length];
             for (int i = 0; i < getmediasource.MediaSource.Length; i++)
             {
+                
                 getmediasource.MediaSource[i] = new MediaSourceType();
                 getmediasource.MediaSource[i].Location = new MediaSourcesProvider.GeoCircle();
-                getmediasource.MediaSource[i].Location.Value = "someValue";
+                getmediasource.MediaSource[i].Location.Value = "someValue";//string geo coordinates
                 getmediasource.MediaSource[i].ONVIFBinding = new MediaSourcesProvider.ONVIFBindingType();
-                getmediasource.MediaSource[i].ONVIFBinding.Endpoint = new MediaSourcesProvider.EndpointType[1];
+                getmediasource.MediaSource[i].ONVIFBinding.Endpoint = new MediaSourcesProvider.EndpointType[1];//endpoint string, filled by me
+                //getmediasource.MediaSource[i].ONVIFBinding.Endpoint[0].
                 getmediasource.MediaSource[i].ONVIFBinding.MediaSourceToken = "someStringToken";
                 getmediasource.MediaSource[i].ONVIFBinding.ProfileToken = videosources.VideoSources[i].token;
 
@@ -3769,6 +3775,37 @@ namespace OnvifProxy
                 getmediasource.MediaSource[i].Name[0].Value = videosources.VideoSources[i].token;
 
             }
+
+            //string formedstrign;
+            //using (MemoryStream ms = new MemoryStream())
+            //{
+            //    XmlSerializer xmlSerializer = new XmlSerializer(typeof(GetMediaSourcesResponse));
+            //    xmlSerializer.Serialize(ms, getmediasource);
+            //    StreamReader strread = new StreamReader(ms);
+            //    ms.Position = 0;
+            //    formedstrign = strread.ReadToEnd();
+            //}
+            /*
+             <?xml version=\"1.0\"?>
+             * \r\n<GetMediaSourcesResponse xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">
+             * \r\n  <MediaSource token=\"mediasourcetoken\">
+             * \r\n    <ONVIFBinding xmlns=\"urn:ias:cvss:msp:1.0\">
+             * \r\n      <MediaSourceToken>someStringToken</MediaSourceToken>
+             * \r\n      <ProfileToken>2</ProfileToken>
+             * \r\n    </ONVIFBinding>
+             * \r\n    <Name xml:lang=\"RU\" xmlns=\"urn:ias:cvss:msp:1.0\">2</Name>
+             * \r\n    <Location xmlns=\"urn:ias:cvss:msp:1.0\">someValue</Location>
+             * \r\n  </MediaSource>
+             * \r\n  <MediaSource token=\"mediasourcetoken\">
+             * \r\n    <ONVIFBinding xmlns=\"urn:ias:cvss:msp:1.0\">
+             * \r\n      <MediaSourceToken>someStringToken</MediaSourceToken>
+             * \r\n      <ProfileToken>4</ProfileToken>
+             * \r\n    </ONVIFBinding>
+             * \r\n    <Name xml:lang=\"RU\" xmlns=\"urn:ias:cvss:msp:1.0\">4</Name>
+             * \r\n    <Location xmlns=\"urn:ias:cvss:msp:1.0\">someValue</Location>
+             * \r\n  </MediaSource>
+             * \r\n</GetMediaSourcesResponse>
+             */
             //----------------------------------
             return getmediasource;
         }
@@ -4040,7 +4077,6 @@ boolean(//Track[TrackType = “Video”])
                     var namespaces = new XmlSerializerNamespaces();
                     namespaces.Add("tt", "http://www.onvif.org/ver10/schema");
 
-                    //xmlSerializer.Serialize(ms, recInfo, namespaces);
                     xmlSerializer.Serialize(ms, recInfo);                    
                     StreamReader strread = new StreamReader(ms);
                     ms.Position = 0;
@@ -4071,46 +4107,9 @@ boolean(//Track[TrackType = “Video”])
             XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
             nsmgr.AddNamespace("tt", "http://www.onvif.org/ver10/schema");
 
-            XmlNodeList childnodes;
             Boolean total;
             XPathNavigator navigator = doc.CreateNavigator();
 
-            ////--------------------------------------------
-            //List<string> strlisttmp = new List<string>();
-            //List<string> strlist = new List<string>();
-
-            //request.Scope.RecordingInformationFilter = @"(  BOOlean(//Source[Location = 'mylocation']) and boolean(//Track[TrackType = 'Video']) not boolean(//Track[TrackType = 'Operator']))  ";
-
-            //try
-            //{
-            //    strlisttmp = Regex.Split(request.Scope.RecordingInformationFilter, @"(\w*)").ToList<string>();
-
-            //    foreach (string str in strlisttmp)
-            //    {
-            //        if (str == "" || str == " ") continue;
-            //        strlist.Add(str);
-            //    }
-            //}
-            //catch (ArgumentNullException anex)
-            //{
-            //    throw anex;
-            //}
-            //catch (ArgumentException aex)
-            //{
-            //    throw aex;
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw ex;
-            //}
-            //------------------------------------------------
-
-
-
-            //request.Scope.RecordingInformationFilter = request.Scope.RecordingInformationFilter.Replace('\u201C', '\'').Replace('\u201D', '\'');
-            //request.Scope.RecordingInformationFilter = request.Scope.RecordingInformationFilter.Replace('\"', '\'');
-            //request.Scope.RecordingInformationFilter = request.Scope.RecordingInformationFilter.ToLower();
-            //request.Scope.RecordingInformationFilter = "((/tt:track[tt:tracktype='audio'])and(//tt:track[tt:tracktype='video']))";
             try
             {
                 if(a!="")

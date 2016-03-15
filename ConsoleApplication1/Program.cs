@@ -335,6 +335,8 @@ namespace OnvifProxy
             //--------------------------
             HttpTransportBindingElement httpTransportBindingElement = new HttpTransportBindingElement();
             httpTransportBindingElement.KeepAliveEnabled = false;
+            //Console.WriteLine("httpTransportBindingElement.MaxBufferSize - {0}", httpTransportBindingElement.MaxBufferSize);
+            
             //httpTransportBindingElement.AuthenticationScheme = AuthenticationSchemes.Basic;//RFC2617
 
             HttpsTransportBindingElement httpsTransportBindingElement = new HttpsTransportBindingElement();

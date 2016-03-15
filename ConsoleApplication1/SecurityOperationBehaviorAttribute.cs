@@ -57,13 +57,15 @@ namespace OnvifProxy
             //        break;
             //}
 
+            //-------------------------------------------------------------
             // отключение авторизации ws-usertokenname
-            // чтобы работало - закоментить всё что выше
+            // чтобы включить авторизацию обратно - закоментить
+            // всё что ниже и раскоментить всё что выше
             adminList.Add(new XmlQualifiedName(name, ns));
             operatorList.Add(new XmlQualifiedName(name, ns));
             userList.Add(new XmlQualifiedName(name, ns));
             anonList.Add(new XmlQualifiedName(name, ns));
-             
+            //------------------------------------------------------------- 
         }
 
         internal Dictionary<string, List<XmlQualifiedName>> QName

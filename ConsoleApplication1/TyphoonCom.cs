@@ -77,6 +77,11 @@ namespace OnvifProxy
         private static NVTServiceClient nvtClient;
         private static System.Collections.ObjectModel.Collection<NVTServiceClient> nvtClientCollection = null;
 
+        private const int TYPHOON_PORT_NUM = 7520;
+        private const int TYPHOON_CONNECTION_TIMEOUT = 10000;
+        private const int TYPHOON_ZOND_PERIOD = 2000;
+        private const int TYPHOON_CONNECTION_RESTART_TIMEOUT = 1000;
+
         public static void TyphoonComInit (object ip)
         {
             ipaddr = (string)ip;
@@ -96,7 +101,7 @@ namespace OnvifProxy
 
             if (tmr_ConnectionTimeout == null)
             {
-                tmr_ConnectionTimeout = new System.Timers.Timer(10000);//конфигурируем таймер таймаута коннекта к тайфуну
+                tmr_ConnectionTimeout = new System.Timers.Timer(TYPHOON_CONNECTION_TIMEOUT);//конфигурируем таймер таймаута коннекта к тайфуну
                 tmr_ConnectionTimeout.Elapsed += new ElapsedEventHandler(OnConnectionTimeoutEvent);
                 tmr_ConnectionTimeout.Enabled = true;
                 tmr_ConnectionTimeout.Stop();
@@ -104,7 +109,7 @@ namespace OnvifProxy
             
             if (tmr_SendZond == null)
             {
-                tmr_SendZond = new System.Timers.Timer(2000);//конфигурируем таймер отправки зонда тайфуну
+                tmr_SendZond = new System.Timers.Timer(TYPHOON_ZOND_PERIOD);//конфигурируем таймер отправки зонда тайфуну
                 tmr_SendZond.Elapsed += new ElapsedEventHandler(Send_Zond);
                 tmr_SendZond.Enabled = true;
                 tmr_SendZond.Stop();
@@ -158,7 +163,7 @@ namespace OnvifProxy
             msgIDCounter = 1;//сбросим счетчик мессаг до 1 (0 зарезервирован для зондов)
             TyphoonComStop();
 
-            Thread.Sleep(1000);        
+            Thread.Sleep(TYPHOON_CONNECTION_RESTART_TIMEOUT);        
             
             TyphoonComInit(ipaddr);
         }
@@ -188,7 +193,7 @@ namespace OnvifProxy
                 client = new TcpClient();
                 lingerOpt = new LingerOption(true, 0);
                 client.LingerState = lingerOpt;
-                client.Connect(ipaddr, 7520);
+                client.Connect(ipaddr, TYPHOON_PORT_NUM);
 
                 stream = client.GetStream();
 
@@ -1466,13 +1471,13 @@ namespace OnvifProxy
 
         string messageData;
         System.Timers.Timer MessageTimeoutTimer;
-        double timeout = 5000;        
+        private const double TYPHOON_MSG_EXIST_TIMEOUT = 5000;        
 
         public TyphoonMsg(TyphoonMsgType messageType)
         {
             MessageType = messageType;
 
-            MessageTimeoutTimer = new System.Timers.Timer(timeout);
+            MessageTimeoutTimer = new System.Timers.Timer(TYPHOON_MSG_EXIST_TIMEOUT);
             MessageTimeoutTimer.Elapsed += new ElapsedEventHandler(OnTyphoonMessageTimeout);
             MessageTimeoutTimer.AutoReset = false;
             MessageTimeoutTimer.Enabled = true;
@@ -1577,11 +1582,10 @@ namespace OnvifProxy
         internal static ConcurrentDictionary<UInt32, TyphoonMsg> queueResponceFromTyphoon = new ConcurrentDictionary<uint, TyphoonMsg>();
         // очередь команд от Тайфуна
         internal static ConcurrentDictionary<UInt32, TyphoonMsg> queueCommandsFromTyphoon = new ConcurrentDictionary<uint, TyphoonMsg>();
-
         static UInt32 MsgIDCounter;
-
         //таймаут ожидания ответа от тайфуна в милисекундах
-        private const int typh_msg_timeout = 4500; 
+        private const int TYPHOON_RESPONSE_TIMEOUT = 4500;
+        private const int TYPHOON_CHECK_FOR_RESPONSE_PERIOD = 100;
 
         static TyphoonMsgManager()
         {
@@ -1769,8 +1773,7 @@ namespace OnvifProxy
             Task<TyphoonMsg> task = new Task<TyphoonMsg>(() => TaskGetMsg(MsgID, token), token);
 
             task.Start();
-            //task.Wait(4500);
-            task.Wait(typh_msg_timeout);
+            task.Wait(TYPHOON_RESPONSE_TIMEOUT);
             
             cancelTokenSource.Cancel();
             cancelTokenSource.Dispose();
@@ -1799,7 +1802,7 @@ namespace OnvifProxy
                         }
                         else
                         {
-                            Thread.Sleep(100);
+                            Thread.Sleep(TYPHOON_CHECK_FOR_RESPONSE_PERIOD);
                         }                        
                     }
                     catch (ArgumentNullException ane)
@@ -1813,7 +1816,7 @@ namespace OnvifProxy
                 }
                 else
                 {
-                    Thread.Sleep(100);
+                    Thread.Sleep(TYPHOON_CHECK_FOR_RESPONSE_PERIOD);
                 }                
             }
             return null;

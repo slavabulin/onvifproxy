@@ -48,6 +48,7 @@ private static void Process(object ipaddr) - stream.WriteByte(0); - как обойтись
 
 
 ToDo:
+- при месседжах больше MTU не досылает оставшуюся часть сообщения
 <<<<<<< HEAD
 - похоже течет обработка ивентов (при запуске тестивентмесседжсендер) + течет либо FormCommand/MakeMem/FormPacket/EnqueueMsg/GetMsg
 - при попытке неавторизованного доступа - Fault
