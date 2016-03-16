@@ -44,6 +44,8 @@ namespace OnvifProxy
 
         public static Guid uuid;
 
+        private static MediaSource mediaSource;
+
         public static void Main(string[] args)
         {
             //makexml();//make template for pwd.xml
@@ -150,6 +152,8 @@ namespace OnvifProxy
                 ev_RebootEnded.Set();
                 FlagHostThreadReboot.Start = false;
 
+                mediaSource = new MediaSource();
+
                 TyphoonCom.log.DebugFormat("NetworkVideoTransmitter Service started at {0}", host.BaseAddresses.ElementAt(0));
 
                 Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -206,6 +210,7 @@ namespace OnvifProxy
             //Thread.Sleep(10000);
             //Console.WriteLine("Got command to reboot host.");
             object LockObj = new object();
+            mediaSource = null;
 
             try
             {

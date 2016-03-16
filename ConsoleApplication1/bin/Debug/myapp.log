@@ -1,53 +1,541 @@
-2016-03-15 11:19:20,138 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
-2016-03-15 11:19:25,116 [DEBUG] OnvifProxy.TyphoonCom - Msg removed from Request queue by timeout- 0 left
-2016-03-15 11:20:25,495 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
-2016-03-15 11:24:24,816 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
-2016-03-15 11:24:26,574 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
+2016-03-16 14:30:34,461 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97698
+2016-03-16 14:30:34,461 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97699
+2016-03-16 14:30:34,469 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97700
+2016-03-16 14:30:34,469 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97701
+2016-03-16 14:30:34,469 [INFO] OnvifProxy.TyphoonCom - От Тайфуна пришли данные с несоответствующим номером команды , данные отброшены, как неклассифицированные
+2016-03-16 14:30:34,469 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97702
+2016-03-16 14:30:34,469 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97703
+2016-03-16 14:30:34,477 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97704
+2016-03-16 14:30:34,485 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97705
+2016-03-16 14:30:34,485 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97706
+2016-03-16 14:30:34,501 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97707
+2016-03-16 14:30:34,501 [DEBUG] OnvifProxy.TyphoonCom - IOException - Не удается прочитать данные из транспортного соединения: EndReceive может вызываться только один раз для каждой асинхронной операции..
+2016-03-16 14:30:34,501 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97708
+2016-03-16 14:30:34,501 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97709
+2016-03-16 14:30:34,501 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97710
+2016-03-16 14:30:34,501 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97711
+2016-03-16 14:30:34,501 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97712
+2016-03-16 14:30:34,501 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97713
+2016-03-16 14:30:34,501 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97714
+2016-03-16 14:30:34,501 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97715
+2016-03-16 14:30:34,501 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97716
+2016-03-16 14:30:34,501 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97717
+2016-03-16 14:30:34,501 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97718
+2016-03-16 14:30:34,501 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97719
+2016-03-16 14:30:34,501 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97720
+2016-03-16 14:30:34,501 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97721
+2016-03-16 14:30:34,501 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97722
+2016-03-16 14:30:34,501 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97723
+2016-03-16 14:30:34,501 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97724
+2016-03-16 14:30:34,501 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97725
+2016-03-16 14:30:34,501 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97726
+2016-03-16 14:30:34,501 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97727
+2016-03-16 14:30:34,501 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97728
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97729
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97730
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97731
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97732
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97733
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97734
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97735
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97736
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97737
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97738
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97739
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97740
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97741
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97742
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97743
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97744
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97745
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97746
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97747
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97748
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97749
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97750
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97751
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97752
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97753
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97754
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97755
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97756
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97757
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97758
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97759
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97760
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97761
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97762
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97763
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97764
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97765
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97766
+2016-03-16 14:30:34,509 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97767
+2016-03-16 14:30:34,517 [INFO] OnvifProxy.TyphoonCom - От Тайфуна пришли данные с несоответствующим номером команды , данные отброшены, как неклассифицированные
+2016-03-16 14:30:34,517 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97768
+2016-03-16 14:30:34,517 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97769
+2016-03-16 14:30:34,525 [INFO] OnvifProxy.TyphoonCom - От Тайфуна пришли данные с несоответствующим номером команды , данные отброшены, как неклассифицированные
+2016-03-16 14:30:34,525 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97770
+2016-03-16 14:30:34,557 [INFO] OnvifProxy.TyphoonCom - От Тайфуна пришли данные с несоответствующим номером команды , данные отброшены, как неклассифицированные
+2016-03-16 14:30:34,557 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97771
+2016-03-16 14:30:34,581 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97772
+2016-03-16 14:30:34,581 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97773
+2016-03-16 14:30:34,581 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97774
+2016-03-16 14:30:34,581 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97775
+2016-03-16 14:30:34,581 [DEBUG] OnvifProxy.TyphoonCom - IOException - Не удается прочитать данные из транспортного соединения: EndReceive может вызываться только один раз для каждой асинхронной операции..
+2016-03-16 14:30:34,581 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97776
+2016-03-16 14:30:34,581 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97777
+2016-03-16 14:30:34,581 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97778
+2016-03-16 14:30:34,581 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97779
+2016-03-16 14:30:34,581 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97780
+2016-03-16 14:30:34,581 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97781
+2016-03-16 14:30:34,581 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97782
+2016-03-16 14:30:34,581 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97783
+2016-03-16 14:30:34,581 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97784
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97785
+2016-03-16 14:30:34,589 [INFO] OnvifProxy.TyphoonCom - От Тайфуна пришли данные с несоответствующим номером команды , данные отброшены, как неклассифицированные
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97786
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97787
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97788
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97789
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97790
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97791
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97792
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97793
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97794
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97795
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97796
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97797
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97798
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97799
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97800
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97801
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97802
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97803
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97804
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97805
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97806
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97807
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97808
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97809
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97810
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97811
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97812
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97813
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97814
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97815
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97816
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97817
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97818
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97819
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97820
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97821
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97822
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97823
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97824
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97825
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97826
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97827
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97828
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97829
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97830
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97831
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97832
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97833
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97834
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97835
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97836
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97837
+2016-03-16 14:30:34,589 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97838
+2016-03-16 14:30:34,597 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97839
+2016-03-16 14:30:34,597 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97840
+2016-03-16 14:30:34,597 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97841
+2016-03-16 14:30:34,597 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97842
+2016-03-16 14:30:34,597 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97843
+2016-03-16 14:30:34,597 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97844
+2016-03-16 14:30:34,597 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97845
+2016-03-16 14:30:34,597 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97846
+2016-03-16 14:30:34,597 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97847
+2016-03-16 14:30:34,597 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97848
+2016-03-16 14:30:34,597 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97849
+2016-03-16 14:30:34,597 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97850
+2016-03-16 14:30:34,597 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97851
+2016-03-16 14:30:34,597 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97852
+2016-03-16 14:30:34,597 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97853
+2016-03-16 14:30:34,597 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97854
+2016-03-16 14:30:34,597 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97855
+2016-03-16 14:30:34,597 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97856
+2016-03-16 14:30:34,597 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97857
+2016-03-16 14:30:34,597 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97858
+2016-03-16 14:30:34,597 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97859
+2016-03-16 14:30:34,597 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97860
+2016-03-16 14:30:34,597 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97861
+2016-03-16 14:30:34,605 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97862
+2016-03-16 14:30:34,605 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97863
+2016-03-16 14:30:34,605 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97864
+2016-03-16 14:30:34,605 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97865
+2016-03-16 14:30:34,605 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97866
+2016-03-16 14:30:34,605 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97867
+2016-03-16 14:30:34,605 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97868
+2016-03-16 14:30:34,605 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97869
+2016-03-16 14:30:34,605 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97870
+2016-03-16 14:30:34,613 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97871
+2016-03-16 14:30:34,613 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97872
+2016-03-16 14:30:34,613 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97873
+2016-03-16 14:30:34,613 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97874
+2016-03-16 14:30:34,613 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97875
+2016-03-16 14:30:34,613 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97876
+2016-03-16 14:30:34,613 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97877
+2016-03-16 14:30:34,621 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97878
+2016-03-16 14:30:34,621 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97879
+2016-03-16 14:30:34,621 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97880
+2016-03-16 14:30:34,621 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97881
+2016-03-16 14:30:34,621 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97882
+2016-03-16 14:30:34,621 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97883
+2016-03-16 14:30:34,621 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97884
+2016-03-16 14:30:34,621 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97885
+2016-03-16 14:30:34,621 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97886
+2016-03-16 14:30:34,621 [INFO] OnvifProxy.TyphoonCom - От Тайфуна пришли данные с несоответствующим номером команды , данные отброшены, как неклассифицированные
+2016-03-16 14:30:34,621 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97887
+2016-03-16 14:30:34,621 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97888
+2016-03-16 14:30:34,621 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97889
+2016-03-16 14:30:34,621 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97890
+2016-03-16 14:30:34,621 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97891
+2016-03-16 14:30:34,621 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97892
+2016-03-16 14:30:34,629 [INFO] OnvifProxy.TyphoonCom - От Тайфуна пришли данные с несоответствующим номером команды , данные отброшены, как неклассифицированные
+2016-03-16 14:30:34,629 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97893
+2016-03-16 14:30:34,629 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97894
+2016-03-16 14:30:34,637 [INFO] OnvifProxy.TyphoonCom - От Тайфуна пришли данные с несоответствующим номером команды , данные отброшены, как неклассифицированные
+2016-03-16 14:30:34,637 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97895
+2016-03-16 14:30:34,677 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97896
+2016-03-16 14:30:34,685 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97897
+2016-03-16 14:30:34,701 [INFO] OnvifProxy.TyphoonCom - От Тайфуна пришли данные с несоответствующим номером команды , данные отброшены, как неклассифицированные
+2016-03-16 14:30:34,701 [DEBUG] OnvifProxy.TyphoonCom - IOException - Не удается прочитать данные из транспортного соединения: EndReceive может вызываться только один раз для каждой асинхронной операции..
+2016-03-16 14:30:34,701 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97898
+2016-03-16 14:30:34,701 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97899
+2016-03-16 14:30:34,701 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97900
+2016-03-16 14:30:34,701 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97901
+2016-03-16 14:30:34,701 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97902
+2016-03-16 14:30:34,701 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97903
+2016-03-16 14:30:34,701 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97904
+2016-03-16 14:30:34,701 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97905
+2016-03-16 14:30:34,701 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97906
+2016-03-16 14:30:34,701 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97907
+2016-03-16 14:30:34,709 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97908
+2016-03-16 14:30:34,709 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97909
+2016-03-16 14:30:34,709 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97910
+2016-03-16 14:30:34,709 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97911
+2016-03-16 14:30:34,709 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97912
+2016-03-16 14:30:34,709 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97913
+2016-03-16 14:30:34,709 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97914
+2016-03-16 14:30:34,709 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97915
+2016-03-16 14:30:34,709 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97916
+2016-03-16 14:30:34,709 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97917
+2016-03-16 14:30:34,709 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97918
+2016-03-16 14:30:34,709 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97919
+2016-03-16 14:30:34,709 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97920
+2016-03-16 14:30:34,709 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97921
+2016-03-16 14:30:34,709 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97922
+2016-03-16 14:30:34,709 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97923
+2016-03-16 14:30:34,709 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97924
+2016-03-16 14:30:34,709 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97925
+2016-03-16 14:30:34,709 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97926
+2016-03-16 14:30:34,709 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97927
+2016-03-16 14:30:34,709 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97928
+2016-03-16 14:30:34,709 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97929
+2016-03-16 14:30:34,709 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97930
+2016-03-16 14:30:34,709 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97931
+2016-03-16 14:30:34,709 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97932
+2016-03-16 14:30:34,709 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97933
+2016-03-16 14:30:34,709 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97934
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97935
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97936
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97937
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97938
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97939
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97940
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97941
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97942
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97943
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97944
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97945
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97946
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97947
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97948
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97949
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97950
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97951
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97952
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97953
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97954
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97955
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97956
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97957
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97958
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97959
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97960
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97961
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97962
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97963
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97964
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97965
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97966
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97967
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97968
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97969
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97970
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97971
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97972
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97973
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97974
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97975
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97976
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97977
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97978
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97979
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97980
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97981
+2016-03-16 14:30:34,717 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97982
+2016-03-16 14:30:34,725 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97983
+2016-03-16 14:30:34,725 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97984
+2016-03-16 14:30:34,725 [INFO] OnvifProxy.TyphoonCom - От Тайфуна пришли данные с несоответствующим номером команды , данные отброшены, как неклассифицированные
+2016-03-16 14:30:34,725 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97985
+2016-03-16 14:30:34,725 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97986
+2016-03-16 14:30:34,725 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97987
+2016-03-16 14:30:34,725 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97988
+2016-03-16 14:30:34,725 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97989
+2016-03-16 14:30:34,725 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97990
+2016-03-16 14:30:34,725 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97991
+2016-03-16 14:30:34,725 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97992
+2016-03-16 14:30:34,725 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97993
+2016-03-16 14:30:34,725 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97994
+2016-03-16 14:30:34,725 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97995
+2016-03-16 14:30:34,725 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97996
+2016-03-16 14:30:34,725 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97997
+2016-03-16 14:30:34,733 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97998
+2016-03-16 14:30:34,733 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 97999
+2016-03-16 14:30:34,733 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98000
+2016-03-16 14:30:34,733 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98001
+2016-03-16 14:30:34,733 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98002
+2016-03-16 14:30:34,733 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98003
+2016-03-16 14:30:34,733 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98004
+2016-03-16 14:30:34,733 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98005
+2016-03-16 14:30:34,733 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98006
+2016-03-16 14:30:34,733 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98007
+2016-03-16 14:30:34,741 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98008
+2016-03-16 14:30:34,741 [INFO] OnvifProxy.TyphoonCom - От Тайфуна пришли данные с несоответствующим номером команды , данные отброшены, как неклассифицированные
+2016-03-16 14:30:34,741 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98009
+2016-03-16 14:30:34,749 [INFO] OnvifProxy.TyphoonCom - От Тайфуна пришли данные с несоответствующим номером команды , данные отброшены, как неклассифицированные
+2016-03-16 14:30:34,749 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98010
+2016-03-16 14:30:34,773 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98011
+2016-03-16 14:30:34,781 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98012
+2016-03-16 14:30:34,781 [INFO] OnvifProxy.TyphoonCom - От Тайфуна пришли данные с несоответствующим номером команды , данные отброшены, как неклассифицированные
+2016-03-16 14:30:34,805 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98013
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98014
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - IOException - Не удается прочитать данные из транспортного соединения: EndReceive может вызываться только один раз для каждой асинхронной операции..
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98015
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98016
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98017
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98018
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98019
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98020
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98021
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98022
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98023
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98024
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98025
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98026
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98027
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98028
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98029
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98030
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98031
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98032
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98033
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98034
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98035
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98036
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98037
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98038
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98039
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98040
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98041
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98042
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98043
+2016-03-16 14:30:34,813 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98044
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98045
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98046
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98047
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98048
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98049
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98050
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98051
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98052
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98053
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98054
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98055
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98056
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98057
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98058
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98059
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98060
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98061
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98062
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98063
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98064
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98065
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98066
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98067
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98068
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98069
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98070
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98071
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98072
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98073
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98074
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98075
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98076
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98077
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98078
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98079
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98080
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98081
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98082
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98083
+2016-03-16 14:30:34,821 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98084
+2016-03-16 14:30:34,829 [INFO] OnvifProxy.TyphoonCom - От Тайфуна пришли данные с несоответствующим номером команды , данные отброшены, как неклассифицированные
+2016-03-16 14:30:34,829 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98085
+2016-03-16 14:30:34,829 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98086
+2016-03-16 14:30:34,837 [INFO] OnvifProxy.TyphoonCom - От Тайфуна пришли данные с несоответствующим номером команды , данные отброшены, как неклассифицированные
+2016-03-16 14:30:34,837 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98087
+2016-03-16 14:30:34,869 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98088
+2016-03-16 14:30:34,869 [INFO] OnvifProxy.TyphoonCom - От Тайфуна пришли данные с несоответствующим номером команды , данные отброшены, как неклассифицированные
+2016-03-16 14:30:34,893 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98089
+2016-03-16 14:30:34,893 [DEBUG] OnvifProxy.TyphoonCom - IOException - Не удается прочитать данные из транспортного соединения: EndReceive может вызываться только один раз для каждой асинхронной операции..
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98090
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98091
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98092
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98093
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98094
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98095
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98096
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98097
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98098
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98099
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98100
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98101
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98102
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98103
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98104
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98105
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98106
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98107
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98108
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98109
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98110
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98111
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98112
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98113
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98114
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98115
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98116
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98117
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98118
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98119
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98120
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98121
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98122
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98123
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98124
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98125
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98126
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98127
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98128
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98129
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98130
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98131
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98132
+2016-03-16 14:30:34,901 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98133
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98134
+2016-03-16 14:30:34,909 [INFO] OnvifProxy.TyphoonCom - От Тайфуна пришли данные с несоответствующим номером команды , данные отброшены, как неклассифицированные
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98135
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98136
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98137
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98138
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98139
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98140
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98141
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98142
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98143
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98144
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98145
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98146
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98147
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98148
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98149
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98150
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98151
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98152
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98153
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98154
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98155
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98156
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98157
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98158
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98159
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98160
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98161
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98162
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98163
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98164
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98165
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98166
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98167
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98168
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98169
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98170
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98171
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98172
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98173
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98174
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98175
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98176
+2016-03-16 14:30:34,909 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98177
+2016-03-16 14:30:34,917 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98178
+2016-03-16 14:30:34,917 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98179
+2016-03-16 14:30:34,917 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98180
+2016-03-16 14:30:34,917 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98181
+2016-03-16 14:30:34,917 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98182
+2016-03-16 14:30:34,925 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98183
+2016-03-16 14:30:34,926 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98184
+2016-03-16 14:30:34,926 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98185
+2016-03-16 14:30:34,925 [INFO] OnvifProxy.TyphoonCom - От Тайфуна пришли данные с несоответствующим номером команды , данные отброшены, как неклассифицированные
+2016-03-16 14:30:34,926 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98186
+2016-03-16 14:30:34,927 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98187
+2016-03-16 14:30:34,933 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98188
+2016-03-16 14:30:34,939 [INFO] OnvifProxy.TyphoonCom - От Тайфуна пришли данные с несоответствующим номером команды , данные отброшены, как неклассифицированные
+2016-03-16 14:30:34,939 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98189
+2016-03-16 14:30:34,950 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98190
+2016-03-16 14:30:34,950 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98191
+2016-03-16 14:30:34,950 [DEBUG] OnvifProxy.TyphoonCom - IOException - Не удается прочитать данные из транспортного соединения: EndReceive может вызываться только один раз для каждой асинхронной операции..
+2016-03-16 14:30:34,950 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98192
+2016-03-16 14:30:34,950 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98193
+2016-03-16 14:30:34,950 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98194
+2016-03-16 14:30:34,950 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98195
+2016-03-16 14:30:34,950 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98196
+2016-03-16 14:30:34,950 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98197
+2016-03-16 14:30:34,950 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98198
+2016-03-16 14:30:34,950 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98199
+2016-03-16 14:30:34,958 [INFO] OnvifProxy.TyphoonCom - От Тайфуна пришли данные с несоответствующим номером команды , данные отброшены, как неклассифицированные
+2016-03-16 14:30:34,958 [DEBUG] OnvifProxy.TyphoonCom - TestGetMsgs TestMsg.MsgID = 98200
+2016-03-16 14:39:53,612 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2016-03-16 14:39:54,175 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
 
-2016-03-15 11:24:26,574 [DEBUG] OnvifProxy.TyphoonCom - done?
-2016-03-15 11:24:26,862 [DEBUG] OnvifProxy.TyphoonCom - Done.
+2016-03-16 14:39:54,175 [DEBUG] OnvifProxy.TyphoonCom - done?
+2016-03-16 14:39:54,223 [DEBUG] OnvifProxy.TyphoonCom - Done.
 
-2016-03-15 11:24:27,309 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
-2016-03-15 11:24:29,759 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
-2016-03-15 11:24:30,015 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
-2016-03-15 11:24:30,015 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
-2016-03-15 11:24:34,676 [DEBUG] OnvifProxy.TyphoonCom - Host opened
-2016-03-15 11:24:34,676 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
-2016-03-15 11:26:23,049 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
-2016-03-15 11:26:23,578 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
-
-2016-03-15 11:26:23,578 [DEBUG] OnvifProxy.TyphoonCom - done?
-2016-03-15 11:26:23,626 [DEBUG] OnvifProxy.TyphoonCom - Done.
-
-2016-03-15 11:26:23,682 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
-2016-03-15 11:26:24,474 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
-2016-03-15 11:26:24,514 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
-2016-03-15 11:26:24,514 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
-2016-03-15 11:26:26,846 [DEBUG] OnvifProxy.TyphoonCom - Host opened
-2016-03-15 11:26:26,846 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
-2016-03-15 11:27:36,774 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
-2016-03-15 11:27:37,238 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
-
-2016-03-15 11:27:37,238 [DEBUG] OnvifProxy.TyphoonCom - done?
-2016-03-15 11:27:37,278 [DEBUG] OnvifProxy.TyphoonCom - Done.
-
-2016-03-15 11:27:37,326 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
-2016-03-15 11:27:38,030 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
-2016-03-15 11:27:38,070 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
-2016-03-15 11:27:38,070 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
-2016-03-15 11:27:40,411 [DEBUG] OnvifProxy.TyphoonCom - Host opened
-2016-03-15 11:27:40,411 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
-2016-03-15 11:29:18,034 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
-2016-03-15 11:29:18,596 [DEBUG] OnvifProxy.TyphoonCom - Connecting Typhoon...
-
-2016-03-15 11:29:18,596 [DEBUG] OnvifProxy.TyphoonCom - done?
-2016-03-15 11:29:18,636 [DEBUG] OnvifProxy.TyphoonCom - Done.
-
-2016-03-15 11:29:18,692 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
-2016-03-15 11:29:19,404 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
-2016-03-15 11:29:19,444 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
-2016-03-15 11:29:19,444 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
-2016-03-15 11:29:22,071 [DEBUG] OnvifProxy.TyphoonCom - Host opened
-2016-03-15 11:29:22,071 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
-2016-03-15 11:29:34,554 [DEBUG] OnvifProxy.TyphoonCom - Service1: GetVideoSources added to commandQueue
-2016-03-15 11:29:54,753 [DEBUG] OnvifProxy.TyphoonCom - IOException - Не удается прочитать данные из транспортного соединения: EndReceive может вызываться только один раз для каждой асинхронной операции..
+2016-03-16 14:39:54,279 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2016-03-16 14:39:55,103 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2016-03-16 14:39:55,151 [DEBUG] OnvifProxy.TyphoonCom - Begin openning host
+2016-03-16 14:39:55,151 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2016-03-16 14:39:57,860 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2016-03-16 14:39:57,860 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
