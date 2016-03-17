@@ -752,29 +752,19 @@ namespace OnvifProxy
                     case CapabilityCategory.Device:
                         if (confstr.Capabilities.Device != null)
                         {
-                            //------Треш угар и содомия далее-------------------
+                            //------Треш и угар далее-------------------
 
                             string ComStr = "<Capabilities><Device  xmlns=\u0022http://www.onvif.org/ver10/schema\u0022><IO><InputConnectors>0</InputConnectors></IO></Device></Capabilities>";
                             TyphoonCom.log.Debug("Service1: GetCapabilities added to commandQueue");
 
-                            byte[] tmp = TyphoonCom.FormCommand(200, 1, (TyphoonCom.MakeMem(ComStr)), 0);
 
-                            for (int a = 0; a < 4; a++)
-                            {
-                                TyphMsg.MessageID = TyphMsg.MessageID << 8;
-                                TyphMsg.MessageID += tmp[9 - a];
-                            }
-                            TyphMsg.byteMessageData = TyphoonCom.FormPacket(tmp);
-                            TyphoonMsgManager.EnqueueMsg(TyphMsg);
-                            //----------------------------------------------
-                            ConfigStruct tmpconfstr = new ConfigStruct();
-
-                            // дожидается ответа 4,5 секунды или возвращает нулл
-                            TyphMsg = TyphoonMsgManager.GetMsg(TyphMsg.MessageID);
+                            byte[] tmpp = TyphoonCom.MakeMem(ComStr);
+                            TyphMsg = TyphoonMsgManager.SendSyncMsg(200, 1, tmpp, 0);
 
                             if (TyphMsg == null) return null;// наверное надо бы fault выкинуть
-                            Buf = TyphoonCom.ParseMem(0, TyphMsg.stringMessageData);
 
+                            Buf = TyphoonCom.ParseMem(0, TyphMsg.stringMessageData);
+                            ConfigStruct tmpconfstr = new ConfigStruct();
                             String DataString = "<?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022 ?><ConfigStruct xmlns:xsd=\u0022http://www.w3.org/2001/XMLSchema\u0022 xmlns:xsi=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022>";
                             {
                                 DataString = String.Concat(DataString, "<IPAddr>", confstr.IPAddr, "</IPAddr>");
@@ -808,112 +798,173 @@ namespace OnvifProxy
                         //сформировать структуру на отдачу
                         if (confstr.Capabilities.Device != null)
                         {
-                            byte[] tmp = TyphoonCom.FormCommand(200, 4, null, 0);
-                            for (int a = 0; a < 4; a++)
+                            TyphMsg = TyphoonMsgManager.SendSyncMsg(4);
+
+                            if (TyphMsg == null) return getCapabilitiesResponse;
+                            Buf = TyphMsg.stringMessageData;
+
+                            if (Buf.Length == 12)
                             {
-                                TyphMsg.MessageID = TyphMsg.MessageID << 8;
-                                TyphMsg.MessageID += tmp[9 - a];
+                                byte[] b_rtpmulticast = new byte[4], b_rtp_tcp = new byte[4], b_rtp_rtsp_tcp = new byte[4], b_Buf;
+
+                                b_Buf = Encoding.ASCII.GetBytes(Buf);
+
+                                for (int t = 0; t < 4; t++)
+                                {
+                                    b_rtpmulticast[t] = b_Buf[t];
+                                    b_rtp_tcp[t] = b_Buf[t + 4];
+                                    b_rtp_rtsp_tcp[t] = b_Buf[t + 8];
+                                }
+
+                                getCapabilitiesResponse.Capabilities.Media = new MediaCapabilities();
+                                getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities = new RealTimeStreamingCapabilities();
+                                getCapabilitiesResponse.Capabilities.Media.XAddr = confstr.Capabilities.Media.XAddr;
+
+                                getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_RTSP_TCP = false;
+                                getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_RTSP_TCPSpecified = true;
+                                getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_TCP = false;
+                                getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_TCPSpecified = true;
+                                getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTPMulticast = false;
+                                getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTPMulticastSpecified = true;
+
+                                for (int t = 0; t < 4; t++)
+                                {
+                                    if (b_rtpmulticast[t] != 0)
+                                    {
+                                        getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTPMulticast = true;
+                                        getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTPMulticastSpecified = true;
+                                    }
+                                    if (b_rtp_tcp[t] != 0)
+                                    {
+                                        getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_TCP = true;
+                                        getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_TCPSpecified = true;
+                                    }
+                                    if (b_rtp_rtsp_tcp[t] != 0)
+                                    {
+                                        getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_RTSP_TCP = true;
+                                        getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_RTSP_TCPSpecified = true;
+                                    }
+                                }
+
+
                             }
-                            TyphoonMsg typhMsg = new TyphoonMsg(TyphoonMsgType.Request);
-                            typhMsg.byteMessageData = TyphoonCom.FormPacket(tmp);
-
-                            TyphoonMsgManager.EnqueueMsg(typhMsg);
-
+                            else
                             {
-                                do
-                                {
-                                    Thread.Sleep(1);
-                                } while (TyphoonMsgManager.queueResponceFromTyphoon.Count == 0);
-
-                                if (TyphoonMsgManager.queueResponceFromTyphoon.Count > 0)
-                                {
-                                    ConfigStruct tmpconfstr = new ConfigStruct();
-
-                                    try
-                                    {
-                                        //находим в очереди ответ с ID отправленного нами запроса
-                                        Buf = TyphoonMsgManager.queueResponceFromTyphoon.Single(TyphoonMessage => TyphoonMessage.Value.MessageID == TyphMsg.MessageID).Value.stringMessageData;
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        TyphoonCom.log.ErrorFormat("от Typhoon пришли сообщения с одинаковыми ID или нет ни одного сообщения с таким ID {0}", ex.Message);
-                                    }
-                                    //удаляем из очереди мессагу с ID отправленного нами запроса
-                                    try
-                                    {
-                                        TyphoonMsgManager.queueResponceFromTyphoon.TryRemove(TyphMsg.MessageID, out tmpmsg);
-                                        ////рихтуем данные 
-                                        if (Buf.Length == 12)
-                                        {
-                                            byte[] b_rtpmulticast = new byte[4], b_rtp_tcp = new byte[4], b_rtp_rtsp_tcp = new byte[4], b_Buf;
-
-                                            b_Buf = Encoding.ASCII.GetBytes(Buf);
-
-                                            for (int t = 0; t < 4; t++)
-                                            {
-                                                b_rtpmulticast[t] = b_Buf[t];
-                                                b_rtp_tcp[t] = b_Buf[t + 4];
-                                                b_rtp_rtsp_tcp[t] = b_Buf[t + 8];
-                                            }
-
-                                            getCapabilitiesResponse.Capabilities.Media = new MediaCapabilities();
-                                            getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities = new RealTimeStreamingCapabilities();
-                                            getCapabilitiesResponse.Capabilities.Media.XAddr = confstr.Capabilities.Media.XAddr;
-
-                                            getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_RTSP_TCP = false;
-                                            getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_RTSP_TCPSpecified = true;
-                                            getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_TCP = false;
-                                            getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_TCPSpecified = true;
-                                            getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTPMulticast = false;
-                                            getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTPMulticastSpecified = true;
-
-                                            for (int t = 0; t < 4; t++)
-                                            {
-                                                if (b_rtpmulticast[t] != 0)
-                                                {
-                                                    getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTPMulticast = true;
-                                                    getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTPMulticastSpecified = true;
-                                                }
-                                                if (b_rtp_tcp[t] != 0)
-                                                {
-                                                    getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_TCP = true;
-                                                    getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_TCPSpecified = true;
-                                                }
-                                                if (b_rtp_rtsp_tcp[t] != 0)
-                                                {
-                                                    getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_RTSP_TCP = true;
-                                                    getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_RTSP_TCPSpecified = true;
-                                                }
-                                            }
-
-
-                                        }
-                                        else
-                                        {
-                                            TyphoonCom.log.Debug("CapabilityCategory.Media - Тайфун вернул не 12 байт");
-                                            return null;
-                                        }
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        TyphoonCom.log.Error(ex.Message);
-                                    }
-
-                                }
-                                else
-                                {
-                                    Console.WriteLine("AddCommand returned false");
-                                }
+                                TyphoonCom.log.Debug("CapabilityCategory.Media - Тайфун вернул не 12 байт");
+                                return null;
                             }
-                            return getCapabilitiesResponse;
                         }
-                        else
-                        {
-                            // если нет такого раздела в config.xml
-                            // то возвращает Fault Code
-                            return null;
-                        }
+                        return getCapabilitiesResponse;
 
+
+                    #region
+
+                    //byte[] tmp = TyphoonCom.FormCommand(200, 4, null, 0);
+                            //for (int a = 0; a < 4; a++)
+                            //{
+                            //    TyphMsg.MessageID = TyphMsg.MessageID << 8;
+                            //    TyphMsg.MessageID += tmp[9 - a];
+                            //}
+                            //TyphoonMsg typhMsg = new TyphoonMsg(TyphoonMsgType.Request);
+                            //typhMsg.byteMessageData = TyphoonCom.FormPacket(tmp);
+
+                            //TyphoonMsgManager.EnqueueMsg(typhMsg);
+
+                        //    {
+                        //        do
+                        //        {
+                        //            Thread.Sleep(1);
+                        //        } while (TyphoonMsgManager.queueResponceFromTyphoon.Count == 0);
+
+                        //        if (TyphoonMsgManager.queueResponceFromTyphoon.Count > 0)
+                        //        {
+                        //            ConfigStruct tmpconfstr = new ConfigStruct();
+
+                        //            try
+                        //            {
+                        //                //находим в очереди ответ с ID отправленного нами запроса
+                        //                Buf = TyphoonMsgManager.queueResponceFromTyphoon.Single(TyphoonMessage => TyphoonMessage.Value.MessageID == TyphMsg.MessageID).Value.stringMessageData;
+                        //            }
+                        //            catch (Exception ex)
+                        //            {
+                        //                TyphoonCom.log.ErrorFormat("от Typhoon пришли сообщения с одинаковыми ID или нет ни одного сообщения с таким ID {0}", ex.Message);
+                        //            }
+                        //            //удаляем из очереди мессагу с ID отправленного нами запроса
+                        //            try
+                        //            {
+                        //                TyphoonMsgManager.queueResponceFromTyphoon.TryRemove(TyphMsg.MessageID, out tmpmsg);
+                        //                ////рихтуем данные 
+                        //                if (Buf.Length == 12)
+                        //                {
+                        //                    byte[] b_rtpmulticast = new byte[4], b_rtp_tcp = new byte[4], b_rtp_rtsp_tcp = new byte[4], b_Buf;
+
+                        //                    b_Buf = Encoding.ASCII.GetBytes(Buf);
+
+                        //                    for (int t = 0; t < 4; t++)
+                        //                    {
+                        //                        b_rtpmulticast[t] = b_Buf[t];
+                        //                        b_rtp_tcp[t] = b_Buf[t + 4];
+                        //                        b_rtp_rtsp_tcp[t] = b_Buf[t + 8];
+                        //                    }
+
+                        //                    getCapabilitiesResponse.Capabilities.Media = new MediaCapabilities();
+                        //                    getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities = new RealTimeStreamingCapabilities();
+                        //                    getCapabilitiesResponse.Capabilities.Media.XAddr = confstr.Capabilities.Media.XAddr;
+
+                        //                    getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_RTSP_TCP = false;
+                        //                    getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_RTSP_TCPSpecified = true;
+                        //                    getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_TCP = false;
+                        //                    getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_TCPSpecified = true;
+                        //                    getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTPMulticast = false;
+                        //                    getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTPMulticastSpecified = true;
+
+                        //                    for (int t = 0; t < 4; t++)
+                        //                    {
+                        //                        if (b_rtpmulticast[t] != 0)
+                        //                        {
+                        //                            getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTPMulticast = true;
+                        //                            getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTPMulticastSpecified = true;
+                        //                        }
+                        //                        if (b_rtp_tcp[t] != 0)
+                        //                        {
+                        //                            getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_TCP = true;
+                        //                            getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_TCPSpecified = true;
+                        //                        }
+                        //                        if (b_rtp_rtsp_tcp[t] != 0)
+                        //                        {
+                        //                            getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_RTSP_TCP = true;
+                        //                            getCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_RTSP_TCPSpecified = true;
+                        //                        }
+                        //                    }
+
+
+                        //                }
+                        //                else
+                        //                {
+                        //                    TyphoonCom.log.Debug("CapabilityCategory.Media - Тайфун вернул не 12 байт");
+                        //                    return null;
+                        //                }
+                        //            }
+                        //            catch (Exception ex)
+                        //            {
+                        //                TyphoonCom.log.Error(ex.Message);
+                        //            }
+
+                        //        }
+                        //        else
+                        //        {
+                        //            Console.WriteLine("AddCommand returned false");
+                        //        }
+                        //    }
+                        //    return getCapabilitiesResponse;
+                        //}
+                        //else
+                        //{
+                        //    // если нет такого раздела в config.xml
+                        //    // то возвращает Fault Code
+                        //    return null;
+                    //}
+                    #endregion
                     case CapabilityCategory.Events:
                         if (confstr.Capabilities.Events != null)
                         {

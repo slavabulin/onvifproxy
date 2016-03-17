@@ -917,9 +917,11 @@ namespace OnvifProxy
                             MediaUri nvtStreamUri = nvtClient.GetStreamUri(streamSetup, profileToken);
                             //потом отдать тайфуну
                             b_streamUri = MakeMem(nvtStreamUri.Uri);
+                            //-------------------------
                             typhmsg.byteMessageData = FormPacket(FormCommand(201, 5, b_streamUri, typhmsg.MessageID));
                             typhmsg.MessageType = TyphoonMsgType.Request;
                             TyphoonMsgManager.EnqueueMsg(typhmsg);
+                            //-------------------------
                             break;
                             #endregion
                         case 6:
@@ -1606,9 +1608,9 @@ namespace OnvifProxy
             //eventThread.IsBackground = true;
             //eventThread.Start();
 
-            Thread eventThread = new Thread(new ThreadStart(TyphoonMsgManager.TestGetMsgs));
-            eventThread.IsBackground = true;
-            eventThread.Start();
+            //Thread eventThread = new Thread(new ThreadStart(TyphoonMsgManager.TestGetMsgs));
+            //eventThread.IsBackground = true;
+            //eventThread.Start();
 
             //Thread eventThread = new Thread(new ThreadStart(TyphoonMsgManager.TestTyphoonMsgCreator));
             //eventThread.IsBackground = true;
@@ -1698,9 +1700,8 @@ namespace OnvifProxy
                     typhmsg.MessageID += tmp[9 - a];
                 }
 
-                TyphoonMsgManager.EnqueueMsg(typhmsg);//течет странно, как будто коллекция регулярно пухнет на некий дискрет
-
-                typhmsg = GetMsg(typhmsg.MessageID);//течет
+                TyphoonMsgManager.EnqueueMsg(typhmsg);
+                GetMsg(ref typhmsg);
                 
                 if (typhmsg != null)
                 {
@@ -1726,6 +1727,7 @@ namespace OnvifProxy
         // метод - засылалка, засовывает сформированную мессагу для тайфуна в очередь на отправку
         //---------------------------------------------------------------------------------------
         public static bool EnqueueMsg(TyphoonMsg typhmsg)
+        //private static bool EnqueueMsg(TyphoonMsg typhmsg)
         {
             if (typhmsg == null) return false;
             // у зонда MsgId всегда 0, у остальных от 1 до Uint.MaxValue
@@ -1791,9 +1793,10 @@ namespace OnvifProxy
         // таймаута), либо null если таймут произошел раньше. На входе ID мессаги с ответом, на 
         // выходе мессага с ответом либо null
         //---------------------------------------------------------------------------------------
-        public static TyphoonMsg GetMsg(uint MsgID)
+        public static void GetMsg(ref TyphoonMsg msg)//Этот не течет
         {
-            TyphoonMsg msg = new TyphoonMsg(TyphoonMsgType.Responce);
+            uint MsgID;
+            MsgID = msg.MessageID;
             CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
             CancellationToken token = cancelTokenSource.Token;
             Task<TyphoonMsg> task = new Task<TyphoonMsg>(() => TaskGetMsg(MsgID, token), token);
@@ -1805,6 +1808,23 @@ namespace OnvifProxy
             cancelTokenSource.Dispose();
             msg = task.Result;
             task.Dispose();            
+        }
+        public static TyphoonMsg GetMsg(uint MsgID)
+        {
+            TyphoonMsg msg = new TyphoonMsg(TyphoonMsgType.Responce);
+            //uint MsgID;
+            //MsgID = msg.MessageID;
+            CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
+            CancellationToken token = cancelTokenSource.Token;
+            Task<TyphoonMsg> task = new Task<TyphoonMsg>(() => TaskGetMsg(MsgID, token), token);
+
+            task.Start();
+            task.Wait(TYPHOON_RESPONSE_TIMEOUT);
+
+            cancelTokenSource.Cancel();
+            cancelTokenSource.Dispose();
+            msg = task.Result;
+            task.Dispose();
 
             return (msg != null) ? msg : null;
         }
@@ -1848,6 +1868,33 @@ namespace OnvifProxy
                 }                
             }
             return null;
+        }
+
+        public static TyphoonMsg SendSyncMsg(ushort ComNum, int SubComNum, byte[] Data, uint MessageID)
+        {
+            TyphoonMsg TyphMsg = new TyphoonMsg(TyphoonMsgType.Request);
+            
+            byte[] tmp = TyphoonCom.FormCommand(ComNum, SubComNum, Data, MessageID);
+
+            for (int a = 0; a < 4; a++)
+            {
+                TyphMsg.MessageID = TyphMsg.MessageID << 8;
+                TyphMsg.MessageID += tmp[9 - a];
+            }
+            TyphMsg.byteMessageData = TyphoonCom.FormPacket(tmp);
+            TyphoonMsgManager.EnqueueMsg(TyphMsg);
+
+            // дожидается ответа 4,5 секунды или возвращает нулл
+            GetMsg(ref TyphMsg);
+            
+            //if (TyphMsg == null) return null;// наверное надо бы fault выкинуть
+            return TyphMsg;
+        }
+        public static TyphoonMsg SendSyncMsg(int SubComNum)
+        {
+            TyphoonMsg TyphMsg = new TyphoonMsg(TyphoonMsgType.Request);
+            TyphMsg = SendSyncMsg(200, SubComNum, null, 0);
+            return TyphMsg;
         }
     }
 
