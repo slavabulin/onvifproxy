@@ -2550,21 +2550,24 @@ namespace OnvifProxy
             Console.WriteLine("GetProfile - token = " + ProfileToken);
 
             ///формируем команду GetProfiles
-            TyphoonMsg typhmsgreq = new TyphoonMsg(TyphoonMsgType.Request);
+            //TyphoonMsg typhmsgreq = new TyphoonMsg(TyphoonMsgType.Request);
             TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
 
-            byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null, 0))).Length];
-            tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null, 0));
-            for (int a = 0; a < 4; a++)
-            {
-                typhmsgreq.MessageID = typhmsgreq.MessageID << 8;
-                typhmsgreq.MessageID += tmpBuf[21 - a];
-            }
-            typhmsgreq.byteMessageData = tmpBuf;
-            ///добавляем в очередь на отправку
-            TyphoonMsgManager.EnqueueMsg(typhmsgreq);
+            //byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null, 0))).Length];
+            //tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null, 0));
+            //for (int a = 0; a < 4; a++)
+            //{
+            //    typhmsgreq.MessageID = typhmsgreq.MessageID << 8;
+            //    typhmsgreq.MessageID += tmpBuf[21 - a];
+            //}
+            //typhmsgreq.byteMessageData = tmpBuf;
+            /////добавляем в очередь на отправку
+            //TyphoonMsgManager.EnqueueMsg(typhmsgreq);
             
-            typhmsgresp = TyphoonMsgManager.GetMsg(typhmsgreq.MessageID);
+            //typhmsgresp = TyphoonMsgManager.GetMsg(typhmsgreq.MessageID);
+
+            typhmsgresp = TyphoonMsgManager.SendSyncMsg(2);
+
             if(typhmsgresp!=null)
             {
                 XmlConfig config = new XmlConfig();
@@ -2644,22 +2647,23 @@ namespace OnvifProxy
         public Media.GetProfilesResponse GetProfiles(Media.GetProfilesRequest request)
         {
             ///формируем запрос к тайфуну GetProfiles
-            TyphoonMsg typhsmgreq = new TyphoonMsg(TyphoonMsgType.Request);
+            //TyphoonMsg typhsmgreq = new TyphoonMsg(TyphoonMsgType.Request);
             TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
-           
 
 
-            byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null, 0))).Length];
-            tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null, 0));
-            typhsmgreq.byteMessageData = tmpBuf;
-            for (int a = 0; a < 4; a++)
-            {
-                typhsmgreq.MessageID = typhsmgreq.MessageID << 8;
-                typhsmgreq.MessageID += tmpBuf[21 - a];
-            }
-            TyphoonMsgManager.EnqueueMsg(typhsmgreq);
-            TyphoonCom.log.Debug("Service1: GetProfiles added to commandQueue");
-            typhmsgresp = TyphoonMsgManager.GetMsg(typhsmgreq.MessageID);
+
+            //byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null, 0))).Length];
+            //tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null, 0));
+            //typhsmgreq.byteMessageData = tmpBuf;
+            //for (int a = 0; a < 4; a++)
+            //{
+            //    typhsmgreq.MessageID = typhsmgreq.MessageID << 8;
+            //    typhsmgreq.MessageID += tmpBuf[21 - a];
+            //}
+            //TyphoonMsgManager.EnqueueMsg(typhsmgreq);
+            //TyphoonCom.log.Debug("Service1: GetProfiles added to commandQueue");
+            //typhmsgresp = TyphoonMsgManager.GetMsg(typhsmgreq.MessageID);
+            typhmsgresp = TyphoonMsgManager.SendSyncMsg(2);
 
             if(typhmsgresp!=null)
             {
@@ -3015,7 +3019,7 @@ namespace OnvifProxy
                            new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
                                new FaultCode("NoStreamSetupOrProfileToken", "http://www.onvif.org/ver10/error"))));
 
-            TyphoonMsg typhmsgreq = new TyphoonMsg(TyphoonMsgType.Request);
+            //TyphoonMsg typhmsgreq = new TyphoonMsg(TyphoonMsgType.Request);
             TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
 
             MediaUri mediauri = new MediaUri();
@@ -3058,18 +3062,23 @@ namespace OnvifProxy
             #endregion
             //---------------------------------------
 
-            byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 5, data, 0))).Length];
-            tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 5, data, 0));
+            //byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 5, data, 0))).Length];
+            //tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 5, data, 0));
 
-            for (int a = 0; a < 4; a++)
-            {
-                typhmsgreq.MessageID = typhmsgreq.MessageID << 8;
-                typhmsgreq.MessageID += tmpBuf[21 - a];
-            }
-            typhmsgreq.byteMessageData = tmpBuf;
+            //for (int a = 0; a < 4; a++)
+            //{
+            //    typhmsgreq.MessageID = typhmsgreq.MessageID << 8;
+            //    typhmsgreq.MessageID += tmpBuf[21 - a];
+            //}
+            //typhmsgreq.byteMessageData = tmpBuf;
 
-            TyphoonMsgManager.EnqueueMsg(typhmsgreq);
-            typhmsgresp = TyphoonMsgManager.GetMsg(typhmsgreq.MessageID);
+            //TyphoonMsgManager.EnqueueMsg(typhmsgreq);
+            //typhmsgresp = TyphoonMsgManager.GetMsg(typhmsgreq.MessageID);           
+            //typhmsgresp = typhmsgreq;
+            //TyphoonMsgManager.GetMsg(ref typhmsgresp);
+
+            typhmsgresp = TyphoonMsgManager.SendSyncMsg(200, 5, data, 0);
+
             if (typhmsgresp != null)
             {
                 Buf = typhmsgresp.stringMessageData;
@@ -3941,21 +3950,22 @@ namespace OnvifProxy
 
         public RecordingSummary GetRecordingSummary()
         {
-            TyphoonMsg typhmsgreq = new TyphoonMsg(TyphoonMsgType.Request);
-            TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
+            //TyphoonMsg typhmsgreq = new TyphoonMsg(TyphoonMsgType.Request);
+            //TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
 
-            byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 7, null, 0))).Length];
-            tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 7, null, 0));
+            //byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 7, null, 0))).Length];
+            //tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 7, null, 0));
 
-            for (int a = 0; a < 4; a++)
-            {
-                typhmsgreq.MessageID = typhmsgreq.MessageID << 8;
-                typhmsgreq.MessageID += tmpBuf[21 - a];
-            }
-            typhmsgreq.byteMessageData = tmpBuf;
+            //for (int a = 0; a < 4; a++)
+            //{
+            //    typhmsgreq.MessageID = typhmsgreq.MessageID << 8;
+            //    typhmsgreq.MessageID += tmpBuf[21 - a];
+            //}
+            //typhmsgreq.byteMessageData = tmpBuf;
 
-            TyphoonMsgManager.EnqueueMsg(typhmsgreq);
-            typhmsgresp = TyphoonMsgManager.GetMsg(typhmsgreq.MessageID);
+            //TyphoonMsgManager.EnqueueMsg(typhmsgreq);
+            //typhmsgresp = TyphoonMsgManager.GetMsg(typhmsgreq.MessageID);
+            TyphoonMsg typhmsgresp = TyphoonMsgManager.SendSyncMsg(7);
 
             if(typhmsgresp!=null)
             {
@@ -4211,21 +4221,23 @@ boolean(//Track[TrackType = “Video”])
         }
         public SearchState GetSearchState(string SearchToken)
         {
-            TyphoonMsg typhmsgreq = new TyphoonMsg(TyphoonMsgType.Request);
+            //TyphoonMsg typhmsgreq = new TyphoonMsg(TyphoonMsgType.Request);
             TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
 
-            byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 18, null, 0))).Length];
-            tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 18, null, 0));
+            //byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 18, null, 0))).Length];
+            //tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 18, null, 0));
 
-            for (int a = 0; a < 4; a++)
-            {
-                typhmsgreq.MessageID = typhmsgreq.MessageID << 8;
-                typhmsgreq.MessageID += tmpBuf[21 - a];
-            }
-            typhmsgreq.byteMessageData = tmpBuf;
+            //for (int a = 0; a < 4; a++)
+            //{
+            //    typhmsgreq.MessageID = typhmsgreq.MessageID << 8;
+            //    typhmsgreq.MessageID += tmpBuf[21 - a];
+            //}
+            //typhmsgreq.byteMessageData = tmpBuf;
 
-            TyphoonMsgManager.EnqueueMsg(typhmsgreq);
-            typhmsgresp = TyphoonMsgManager.GetMsg(typhmsgreq.MessageID);
+            //TyphoonMsgManager.EnqueueMsg(typhmsgreq);
+            //typhmsgresp = TyphoonMsgManager.GetMsg(typhmsgreq.MessageID);
+            typhmsgresp = TyphoonMsgManager.SendSyncMsg(18);
+
             if (typhmsgresp != null)
             {
                 throw new FaultException(new FaultReason("NoImplementedYet"),

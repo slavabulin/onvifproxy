@@ -43,12 +43,33 @@ namespace OnvifProxy
         public string GetDeviceInformation(out string Model, out string FirmwareVersion,
             out string SerialNumber, out string HardwareId)
         {
-            return base.Channel.GetDeviceInformation(out Model, out FirmwareVersion, out SerialNumber, out HardwareId);
+            try
+            {
+                return base.Channel.GetDeviceInformation(out Model, out FirmwareVersion, out SerialNumber, out HardwareId);
+            }
+            catch(Exception ex)
+            {
+                Model = FirmwareVersion = SerialNumber = HardwareId = String.Empty;
+            }
+            return String.Empty;
+            
         }
 
         public GetCapabilitiesResponse GetCapabilities(GetCapabilitiesRequest request)
         {
-            return base.Channel.GetCapabilities(request);
+            //йа заглушко!
+            //нужно авторизоваться при GetDeviceInformation
+            //на Axis'ах
+            try
+            {
+                return base.Channel.GetCapabilities(request);
+            }
+            catch (ProtocolException pe)
+            {
+
+            }
+            return new GetCapabilitiesResponse();
+            
         }
 
         public GetProfilesResponse GetProfiles(GetProfilesRequest request)

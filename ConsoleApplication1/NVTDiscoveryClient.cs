@@ -52,7 +52,6 @@ namespace OnvifProxy
                     //есть опасность, что ID пересекутся, MessageID надо сформировать по значению от счетчика внутри FormCommand
                     //создадим мессагу с ID счетчика
                     byte[] tmp = TyphoonCom.FormCommand(201, 1, FormNVTResponse(e.EndpointDiscoveryMetadata), 0);
-                    //byte[] tmp = TyphoonCom.FormCommand(201, 1, FormNVTResponse(e.EndpointDiscoveryMetadata), msgID);
                     //положим ID счетчика в typhmsg.MessageID
                     for (int a = 0; a < 4; a++)
                     {

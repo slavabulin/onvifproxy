@@ -81,6 +81,7 @@ namespace OnvifProxy
         private const int TYPHOON_CONNECTION_TIMEOUT = 10000;
         private const int TYPHOON_ZOND_PERIOD = 2000;
         private const int TYPHOON_CONNECTION_RESTART_TIMEOUT = 1000;
+        private const int TYPHOON_EVENT_TIMEOUT = 60000;
 
         public static void TyphoonComInit (object ip)
         {
@@ -606,12 +607,8 @@ namespace OnvifProxy
                             #region дернуть GetDeviceInformation() у NVTClient
                             ///дернуть GetDeviceInformation() у NVTClient
                             Console.WriteLine("SubCom - 2 - GetDeviceInformation");
-                            //Console.WriteLine("ID - {0}", typhmsg.MessageID);
-                            //
-                            //       Нормальный парсинг сделай!!!!!
-                            //
-                            //
-                            typhmsg.stringMessageData = typhmsg.stringMessageData.Remove(0, 4);
+
+                            typhmsg.stringMessageData = typhmsg.stringMessageData.Substring(typhmsg.stringMessageData.IndexOf("http://"));
 
                             try
                             {
@@ -698,14 +695,23 @@ namespace OnvifProxy
                             ///у NVTClient        
                             //---------------
                             Console.WriteLine("SubCom - 3 - GetMediaCapabilities");
-                            typhmsg.stringMessageData = typhmsg.stringMessageData.Remove(0, 4);
+
+                            if (TyphoonMsgManager.queueCommandsFromTyphoon.TryRemove(typhmsg.MessageID, out typhmsg))
+                            {
+                                Console.WriteLine("removing passed !");
+                            };
+
+                            typhmsg.stringMessageData = 
+                                typhmsg.stringMessageData.Substring(typhmsg.stringMessageData.IndexOf("http://"));
+
                             ptr = 0;
                             string xaddr, rtpmulticast, rtp_tcp, rtp_rtsp_tcp;
                             byte[] b_xaddr, b_rtpmulticast, b_rtp_tcp, b_rtp_rtsp_tcp;
 
                             try
                             {
-                                nvtClient = TyphoonCom.nvtClientCollection.Single(NVTServiceClient => NVTServiceClient.Endpoint.ListenUri == (new Uri(typhmsg.stringMessageData)));
+                                nvtClient = TyphoonCom.nvtClientCollection.Single(NVTServiceClient =>
+                                    NVTServiceClient.Endpoint.ListenUri == (new Uri(typhmsg.stringMessageData)));
                             }
                             catch (Exception ex)
                             {
@@ -724,6 +730,11 @@ namespace OnvifProxy
                             try
                             {
                                 nvtCapabilitiesResponse = nvtClient.GetCapabilities(new GetCapabilitiesRequest());
+                                if (nvtCapabilitiesResponse.Capabilities == null)
+                                {
+                                    nvtClientCollection.Remove(nvtClient);
+                                    break;
+                                }
                             }
                             catch (FaultException ex)
                             {
@@ -733,16 +744,20 @@ namespace OnvifProxy
 
 
                             xaddr = nvtCapabilitiesResponse.Capabilities.Media.XAddr;
-                            rtpmulticast = nvtCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTPMulticast.ToString();
-                            rtp_tcp = nvtCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_TCP.ToString();
-                            rtp_rtsp_tcp = nvtCapabilitiesResponse.Capabilities.Media.StreamingCapabilities.RTP_RTSP_TCP.ToString();
+                            rtpmulticast = nvtCapabilitiesResponse
+                                .Capabilities.Media.StreamingCapabilities.RTPMulticast.ToString();
+                            rtp_tcp = nvtCapabilitiesResponse
+                                .Capabilities.Media.StreamingCapabilities.RTP_TCP.ToString();
+                            rtp_rtsp_tcp = nvtCapabilitiesResponse
+                                .Capabilities.Media.StreamingCapabilities.RTP_RTSP_TCP.ToString();
 
                             b_xaddr = MakeMem(xaddr);
                             b_rtpmulticast = MakeMem(rtpmulticast);
                             b_rtp_tcp = MakeMem(rtp_tcp);
                             b_rtp_rtsp_tcp = MakeMem(rtp_rtsp_tcp);
 
-                            b_totalData = new byte[(b_xaddr.Length + b_rtpmulticast.Length + b_rtp_tcp.Length + b_rtp_rtsp_tcp.Length)];
+                            b_totalData = new byte[(b_xaddr.Length + b_rtpmulticast.Length
+                                + b_rtp_tcp.Length + b_rtp_rtsp_tcp.Length)];
 
                             for (int a = 0; a < b_xaddr.Length; a++)
                             {
@@ -769,9 +784,10 @@ namespace OnvifProxy
                             ptr += b_rtp_rtsp_tcp.Length;
                             //потом отдать тайфуну
                             //AddCommand(FormPacket(FormCommand(201, 3, b_totalData, typhMsg.MessageID)));
-                            typhmsg.byteMessageData = FormPacket(FormCommand(201, 3, b_totalData, typhmsg.MessageID));
-                            typhmsg.MessageType = TyphoonMsgType.Request;
-                            TyphoonMsgManager.EnqueueMsg(typhmsg);
+                            TyphoonMsgManager.SendAsyncMsg(201, 3, b_totalData, typhmsg.MessageID);
+                            //typhmsg.byteMessageData = FormPacket(FormCommand(201, 3, b_totalData, typhmsg.MessageID));
+                            //typhmsg.MessageType = TyphoonMsgType.Request;
+                            //TyphoonMsgManager.EnqueueMsg(typhmsg);
 
                             break;
                             #endregion
@@ -783,7 +799,8 @@ namespace OnvifProxy
                             typhmsg.stringMessageData = typhmsg.stringMessageData.Remove(0, 4);
                             try
                             {
-                                nvtClient = TyphoonCom.nvtClientCollection.Single(NVTServiceClient => NVTServiceClient.Endpoint.ListenUri == (new Uri(typhmsg.stringMessageData)));
+                                nvtClient = TyphoonCom.nvtClientCollection.Single(NVTServiceClient
+                                    => NVTServiceClient.Endpoint.ListenUri == (new Uri(typhmsg.stringMessageData)));
                             }
                             catch (Exception ex)
                             {
@@ -836,10 +853,8 @@ namespace OnvifProxy
                                 OutStr += "</Body></Envelope>";
                                 byte[] OutAr = MakeMem(OutStr);
                                 //потом отдать тайфуну
-                                //AddCommand(FormPacket(FormCommand(201, 4, OutAr, typhMsg.MessageID)));
-                                typhmsg.byteMessageData = FormPacket(FormCommand(201, 4, OutAr, typhmsg.MessageID));
-                                typhmsg.MessageType = TyphoonMsgType.Request;
-                                TyphoonMsgManager.EnqueueMsg(typhmsg);
+                                TyphoonMsgManager.SendAsyncMsg(201, 4, OutAr, typhmsg.MessageID);
+
                             }
 
                             break;
@@ -918,9 +933,10 @@ namespace OnvifProxy
                             //потом отдать тайфуну
                             b_streamUri = MakeMem(nvtStreamUri.Uri);
                             //-------------------------
-                            typhmsg.byteMessageData = FormPacket(FormCommand(201, 5, b_streamUri, typhmsg.MessageID));
-                            typhmsg.MessageType = TyphoonMsgType.Request;
-                            TyphoonMsgManager.EnqueueMsg(typhmsg);
+                            //typhmsg.byteMessageData = FormPacket(FormCommand(201, 5, b_streamUri, typhmsg.MessageID));
+                            //typhmsg.MessageType = TyphoonMsgType.Request;
+                            //TyphoonMsgManager.EnqueueMsg(typhmsg);
+                            TyphoonMsgManager.SendAsyncMsg(201, 5, b_streamUri, typhmsg.MessageID);
                             //-------------------------
                             break;
                             #endregion
@@ -964,7 +980,7 @@ namespace OnvifProxy
                             }
                             //------------------------------------------
                             //здесь добавим в EventStorage
-                            TyphoonEvent tevent = new TyphoonEvent(eventdata, 60000);
+                            TyphoonEvent tevent = new TyphoonEvent(eventdata, TYPHOON_EVENT_TIMEOUT);
                             EventStorage.AddEvent(tevent);
                             //------------------------------------------
                             //
@@ -1797,6 +1813,9 @@ namespace OnvifProxy
         {
             uint MsgID;
             MsgID = msg.MessageID;
+            
+            TyphoonCom.log.DebugFormat("MsgID- {0}", msg.MessageID.ToString());
+
             CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
             CancellationToken token = cancelTokenSource.Token;
             Task<TyphoonMsg> task = new Task<TyphoonMsg>(() => TaskGetMsg(MsgID, token), token);
@@ -1812,8 +1831,9 @@ namespace OnvifProxy
         public static TyphoonMsg GetMsg(uint MsgID)
         {
             TyphoonMsg msg = new TyphoonMsg(TyphoonMsgType.Responce);
-            //uint MsgID;
-            //MsgID = msg.MessageID;
+
+            TyphoonCom.log.DebugFormat("MsgID- {0}", msg.MessageID.ToString());
+
             CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
             CancellationToken token = cancelTokenSource.Token;
             Task<TyphoonMsg> task = new Task<TyphoonMsg>(() => TaskGetMsg(MsgID, token), token);
@@ -1835,22 +1855,28 @@ namespace OnvifProxy
         private static TyphoonMsg TaskGetMsg(uint MsgID, CancellationToken token)
         {
             TyphoonMsg typhMsg;
-            //Console.WriteLine("Current MsgID = {0}", MsgID);
+            int i = 0;
+
             while (!token.IsCancellationRequested)
             {
                 if (TyphoonMsgManager.queueResponceFromTyphoon.Count > 0)
                 {
-                    //Console.WriteLine("RespQueue count = {0}", TyphoonMsgManager.queueResponce_ex.Count);
                     try
                     {
                         if (TyphoonMsgManager.queueResponceFromTyphoon.TryRemove(MsgID, out typhMsg))
                         {
-                            //Console.WriteLine("Длина ResponceQueue = {0}", TyphoonMsgManager.queueResponce_ex.Count);
                             return typhMsg;
                         }
                         else
                         {
-                            Thread.Sleep(TYPHOON_CHECK_FOR_RESPONSE_PERIOD);
+                            if (i < 5)
+                            {
+                                Thread.Sleep(TYPHOON_CHECK_FOR_RESPONSE_PERIOD);
+                                i++;
+                            }
+                            else 
+                                break;
+                            
                         }                        
                     }
                     catch (ArgumentNullException ane)
@@ -1865,6 +1891,7 @@ namespace OnvifProxy
                 else
                 {
                     Thread.Sleep(TYPHOON_CHECK_FOR_RESPONSE_PERIOD);
+                    TyphoonCom.log.DebugFormat("no responce from typhoon - MsgID - {0}",MsgID);
                 }                
             }
             return null;
@@ -1895,6 +1922,26 @@ namespace OnvifProxy
             TyphoonMsg TyphMsg = new TyphoonMsg(TyphoonMsgType.Request);
             TyphMsg = SendSyncMsg(200, SubComNum, null, 0);
             return TyphMsg;
+        }
+        public static void SendAsyncMsg(ushort ComNum, int SubComNum, byte[] Data, uint MessageID)
+        {
+            TyphoonMsg TyphMsg = new TyphoonMsg(TyphoonMsgType.Request);
+
+            byte[] tmp = TyphoonCom.FormCommand(ComNum, SubComNum, Data, MessageID);
+
+            for (int a = 0; a < 4; a++)
+            {
+                TyphMsg.MessageID = TyphMsg.MessageID << 8;
+                TyphMsg.MessageID += tmp[9 - a];
+            }
+            TyphMsg.byteMessageData = TyphoonCom.FormPacket(tmp);
+            TyphoonMsgManager.EnqueueMsg(TyphMsg);
+
+            // дожидается ответа 4,5 секунды или возвращает нулл
+            //GetMsg(ref TyphMsg);
+
+            //if (TyphMsg == null) return null;// наверное надо бы fault выкинуть
+            //return TyphMsg;
         }
     }
 
