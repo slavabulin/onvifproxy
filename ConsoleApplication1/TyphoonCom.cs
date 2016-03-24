@@ -349,9 +349,11 @@ namespace OnvifProxy
         {
             if (TyphoonCom.flg_Connected)
             {
-                TyphoonMsg typhmsg = new TyphoonMsg(TyphoonMsgType.Zond);
-                typhmsg.byteMessageData = FormPacket(null);
-                TyphoonMsgManager.EnqueueMsg(typhmsg);
+                //TyphoonMsg typhmsg = new TyphoonMsg(TyphoonMsgType.Zond);
+                //typhmsg.byteMessageData = FormPacket(null);
+                //TyphoonMsgManager.EnqueueMsg(typhmsg);
+
+                TyphoonMsgManager.SendAsyncMsg(0, 0, null, 0);
             }
         }
 
@@ -389,8 +391,7 @@ namespace OnvifProxy
                
                 try
                 {
-                    typhmsg.byteMessageData = FormPacket(FormCommand(200, 3, tmpData, 0));
-                    TyphoonMsgManager.EnqueueMsg(typhmsg);
+                    TyphoonMsgManager.SendAsyncMsg(200, 3, tmpData, 0);
                 }
                 catch (Exception e)
                 {
@@ -1481,7 +1482,7 @@ namespace OnvifProxy
         #endregion
     }
 
-    public class TyphoonMsg : IDisposable//патамушта MessageTimeoutTimer - Disposable!!
+    public class TyphoonMsg : IDisposable
     {
         public UInt32 MessageID;
         public UInt32 MessageSubComNum;
@@ -1809,7 +1810,7 @@ namespace OnvifProxy
         // таймаута), либо null если таймут произошел раньше. На входе ID мессаги с ответом, на 
         // выходе мессага с ответом либо null
         //---------------------------------------------------------------------------------------
-        public static void GetMsg(ref TyphoonMsg msg)//Этот не течет
+        private static void GetMsg(ref TyphoonMsg msg)//Этот не течет
         {
             uint MsgID;
             MsgID = msg.MessageID;
@@ -1828,26 +1829,27 @@ namespace OnvifProxy
             msg = task.Result;
             task.Dispose();            
         }
-        public static TyphoonMsg GetMsg(uint MsgID)
-        {
-            TyphoonMsg msg = new TyphoonMsg(TyphoonMsgType.Responce);
 
-            TyphoonCom.log.DebugFormat("MsgID- {0}", msg.MessageID.ToString());
+        //public static TyphoonMsg GetMsg(uint MsgID)
+        //{
+        //    TyphoonMsg msg = new TyphoonMsg(TyphoonMsgType.Responce);
 
-            CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
-            CancellationToken token = cancelTokenSource.Token;
-            Task<TyphoonMsg> task = new Task<TyphoonMsg>(() => TaskGetMsg(MsgID, token), token);
+        //    TyphoonCom.log.DebugFormat("MsgID- {0}", msg.MessageID.ToString());
 
-            task.Start();
-            task.Wait(TYPHOON_RESPONSE_TIMEOUT);
+        //    CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
+        //    CancellationToken token = cancelTokenSource.Token;
+        //    Task<TyphoonMsg> task = new Task<TyphoonMsg>(() => TaskGetMsg(MsgID, token), token);
 
-            cancelTokenSource.Cancel();
-            cancelTokenSource.Dispose();
-            msg = task.Result;
-            task.Dispose();
+        //    task.Start();
+        //    task.Wait(TYPHOON_RESPONSE_TIMEOUT);
 
-            return (msg != null) ? msg : null;
-        }
+        //    cancelTokenSource.Cancel();
+        //    cancelTokenSource.Dispose();
+        //    msg = task.Result;
+        //    task.Dispose();
+
+        //    return (msg != null) ? msg : null;
+        //}
 
         //---------------------------------------------------------------------------------------
         // метод - таск для реализации чтения мессаги с таймаутом
@@ -1891,7 +1893,7 @@ namespace OnvifProxy
                 else
                 {
                     Thread.Sleep(TYPHOON_CHECK_FOR_RESPONSE_PERIOD);
-                    TyphoonCom.log.DebugFormat("no responce from typhoon - MsgID - {0}",MsgID);
+                    //TyphoonCom.log.DebugFormat("no responce from typhoon - MsgID - {0}",MsgID);
                 }                
             }
             return null;
@@ -1923,25 +1925,35 @@ namespace OnvifProxy
             TyphMsg = SendSyncMsg(200, SubComNum, null, 0);
             return TyphMsg;
         }
+        //---------------------------------------------------------------------------------------
+        // ничего не дожидается, отправляет сообщение и возвращает упраление сразу
+        //---------------------------------------------------------------------------------------
         public static void SendAsyncMsg(ushort ComNum, int SubComNum, byte[] Data, uint MessageID)
         {
-            TyphoonMsg TyphMsg = new TyphoonMsg(TyphoonMsgType.Request);
+            TyphoonMsg TyphMsg;
+            byte[] tmp;
 
-            byte[] tmp = TyphoonCom.FormCommand(ComNum, SubComNum, Data, MessageID);
-
-            for (int a = 0; a < 4; a++)
+            if(ComNum!=0)
             {
-                TyphMsg.MessageID = TyphMsg.MessageID << 8;
-                TyphMsg.MessageID += tmp[9 - a];
+                TyphMsg = new TyphoonMsg(TyphoonMsgType.Request);
+                tmp = TyphoonCom.FormCommand(ComNum, SubComNum, Data, MessageID);
+
+                for (int a = 0; a < 4; a++)
+                {
+                    TyphMsg.MessageID = TyphMsg.MessageID << 8;
+                    TyphMsg.MessageID += tmp[9 - a];
+                }
+                TyphMsg.byteMessageData = TyphoonCom.FormPacket(tmp);
             }
-            TyphMsg.byteMessageData = TyphoonCom.FormPacket(tmp);
+            else
+            {
+                //Form and send TyphoonZond
+                TyphMsg = new TyphoonMsg(TyphoonMsgType.Request);
+                TyphMsg.byteMessageData = TyphoonCom.FormPacket(null);
+            }
+
             TyphoonMsgManager.EnqueueMsg(TyphMsg);
-
-            // дожидается ответа 4,5 секунды или возвращает нулл
-            //GetMsg(ref TyphMsg);
-
-            //if (TyphMsg == null) return null;// наверное надо бы fault выкинуть
-            //return TyphMsg;
+            TyphMsg.Dispose();
         }
     }
 

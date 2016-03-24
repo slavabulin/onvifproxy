@@ -764,6 +764,7 @@ namespace OnvifProxy
                             if (TyphMsg == null) return null;// наверное надо бы fault выкинуть
 
                             Buf = TyphoonCom.ParseMem(0, TyphMsg.stringMessageData);
+                            TyphMsg.Dispose();
                             ConfigStruct tmpconfstr = new ConfigStruct();
                             String DataString = "<?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022 ?><ConfigStruct xmlns:xsd=\u0022http://www.w3.org/2001/XMLSchema\u0022 xmlns:xsi=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022>";
                             {
@@ -802,7 +803,7 @@ namespace OnvifProxy
 
                             if (TyphMsg == null) return getCapabilitiesResponse;
                             Buf = TyphMsg.stringMessageData;
-
+                            TyphMsg.Dispose();
                             if (Buf.Length == 12)
                             {
                                 byte[] b_rtpmulticast = new byte[4], b_rtp_tcp = new byte[4], b_rtp_rtsp_tcp = new byte[4], b_Buf;
@@ -2456,23 +2457,25 @@ namespace OnvifProxy
         {
             Media.GetVideoSourcesResponse getVideoSourcesResponse = new Media.GetVideoSourcesResponse();
           
-            TyphoonMsg typhmsgreq = new TyphoonMsg(TyphoonMsgType.Request);
+            //TyphoonMsg typhmsgreq = new TyphoonMsg(TyphoonMsgType.Request);
             TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
 
-            byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 6, null, 0)).Length)];
-            tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 6, null, 0));
+            //byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 6, null, 0)).Length)];
+            //tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 6, null, 0));
 
-            for (int a = 0; a < 4; a++)
-            {
-                typhmsgreq.MessageID = typhmsgreq.MessageID << 8;
-                typhmsgreq.MessageID += tmpBuf[21 - a];
-            }
-            typhmsgreq.byteMessageData = tmpBuf;
+            //for (int a = 0; a < 4; a++)
+            //{
+            //    typhmsgreq.MessageID = typhmsgreq.MessageID << 8;
+            //    typhmsgreq.MessageID += tmpBuf[21 - a];
+            //}
+            //typhmsgreq.byteMessageData = tmpBuf;
 
-            TyphoonMsgManager.EnqueueMsg(typhmsgreq);
+            //TyphoonMsgManager.EnqueueMsg(typhmsgreq);
 
-            TyphoonCom.log.Debug("Service1: GetVideoSources added to commandQueue");
-            typhmsgresp = TyphoonMsgManager.GetMsg(typhmsgreq.MessageID);
+            //TyphoonCom.log.Debug("Service1: GetVideoSources added to commandQueue");
+            //typhmsgresp = TyphoonMsgManager.GetMsg(typhmsgreq.MessageID);
+
+            typhmsgresp = TyphoonMsgManager.SendSyncMsg(6);
 
             if (typhmsgresp == null)
                 throw new FaultException(new FaultReason("arghh"),
@@ -2481,7 +2484,9 @@ namespace OnvifProxy
                                      new FaultCode("Operation not Permitted", "http://www.onvif.org/ver10/error")))); 
             
             string tmpStr = TyphoonCom.ParseMem(0, typhmsgresp.stringMessageData);
-            if (tmpStr == null) 
+            typhmsgresp.Dispose();
+
+            if (tmpStr == null)
                 throw new FaultException(new FaultReason("arghh!!!"),
                     new FaultCode("Sender",
                         new FaultCode("NotAuthorized", "http://www.onvif.org/ver10/error",
@@ -2574,6 +2579,7 @@ namespace OnvifProxy
                 Media.GetProfilesResponse mediaprofile = new Media.GetProfilesResponse();
 
                 string tmpStr = TyphoonCom.ParseMem(0, typhmsgresp.stringMessageData);
+                typhmsgresp.Dispose();
                 mediaprofile = config.ParseGetProfiles(tmpStr);
                 //----------
                 int tokennum = Convert.ToInt32(ProfileToken);
@@ -2673,7 +2679,7 @@ namespace OnvifProxy
 
                 string tmpStr = TyphoonCom.ParseMem(0, typhmsgresp.stringMessageData);
                 mediaprofile = config.ParseGetProfiles(tmpStr);
-
+                typhmsgresp.Dispose();
                 return mediaprofile;
             }
             else 
@@ -3083,11 +3089,13 @@ namespace OnvifProxy
             {
                 Buf = typhmsgresp.stringMessageData;
                 Buf = TyphoonCom.ParseMem(0, Buf);
+                typhmsgresp.Dispose();
                 mediauri.Uri = Buf;
                 return mediauri;
             }
             else
             {
+                typhmsgresp.Dispose();
                 throw new FaultException(new FaultReason("NoStreamUriFound"),
                        new FaultCode("Sender",
                            new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
@@ -3808,8 +3816,29 @@ namespace OnvifProxy
             MediaSourcesProvider.GetMediaSourcesResponse getmediasource = new MediaSourcesProvider.GetMediaSourcesResponse();
 
             //----------------------------------
-           
+            TyphoonMsg TyphMsg;
+            string formedstrign;
+            GetMediaSourcesResponse getMediaSourceResp = new GetMediaSourcesResponse();
 
+            TyphMsg = TyphoonMsgManager.SendSyncMsg(24);
+                        
+            using (MemoryStream ms = new MemoryStream())
+            {
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(GetMediaSourcesResponse));
+                try
+                {
+                    getMediaSourceResp = (GetMediaSourcesResponse)xmlSerializer.Deserialize(ms);
+                }
+                catch(SerializationException se)
+                {
+                    //
+                }
+                
+
+                StreamReader strread = new StreamReader(ms);
+                ms.Position = 0;
+                formedstrign = strread.ReadToEnd();
+            }
             //----------------------------------
 
             Media.GetVideoSourcesResponse videosources = new GetVideoSourcesResponse();
@@ -3970,6 +3999,7 @@ namespace OnvifProxy
             if(typhmsgresp!=null)
             {
                 string tmpstring = TyphoonCom.ParseMem(0, typhmsgresp.stringMessageData);
+                typhmsgresp.Dispose();
                 RecordingSummary recsumresponse = new RecordingSummary();
                    
                 try
@@ -4240,6 +4270,7 @@ boolean(//Track[TrackType = “Video”])
 
             if (typhmsgresp != null)
             {
+                typhmsgresp.Dispose();
                 throw new FaultException(new FaultReason("NoImplementedYet"),
                        new FaultCode("Sender",
                            new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",

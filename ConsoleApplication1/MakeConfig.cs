@@ -21,8 +21,8 @@ namespace OnvifProxy
         {
             String OutputString = "<?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022 ?>";
             GetProfilesResponse profile = new GetProfilesResponse();
-            
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(GetProfilesResponse));
+
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(GetProfilesResponse));//,"http://www.onvif.org/ver10/schema");
 
             OutputString = String.Concat(OutputString, InputString);
 
@@ -39,9 +39,10 @@ namespace OnvifProxy
                 }
                 finally
                 {
-                    ms.Close();
+                    ms.Close();                    
                 }
             }
+            //profile.Profiles[0].VideoSourceConfiguration.
             return profile;
         }
 

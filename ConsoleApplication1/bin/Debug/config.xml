@@ -133,7 +133,7 @@
         <FixedLayout>false</FixedLayout>
       </Display>
       <Recording>
-        <XAddr>&gt;http://172.16.32.149/onvif/recording_service</XAddr>
+        <XAddr>http://172.16.32.149/onvif/recording_service</XAddr>
         <ReceiverSource>false</ReceiverSource>
         <MediaProfileSource>false</MediaProfileSource>
         <DynamicRecordings>false</DynamicRecordings>

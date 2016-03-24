@@ -48,28 +48,33 @@ namespace OnvifProxy
             {
                 if (confstr.Capabilities.Device.XAddr != e.EndpointDiscoveryMetadata.ListenUris[0].OriginalString)
                 {
-                    TyphoonMsg msgToTyphoon = new TyphoonMsg(TyphoonMsgType.Request);
+                    //TyphoonMsg msgToTyphoon = new TyphoonMsg(TyphoonMsgType.Request);
                     //есть опасность, что ID пересекутся, MessageID надо сформировать по значению от счетчика внутри FormCommand
                     //создадим мессагу с ID счетчика
-                    byte[] tmp = TyphoonCom.FormCommand(201, 1, FormNVTResponse(e.EndpointDiscoveryMetadata), 0);
-                    //положим ID счетчика в typhmsg.MessageID
-                    for (int a = 0; a < 4; a++)
-                    {
-                        msgToTyphoon.MessageID = msgToTyphoon.MessageID << 8;
-                        msgToTyphoon.MessageID += tmp[9 - a];
-                    }
-                    //теперь заменим данные в мессаге на данные с msgID
-                    tmp = TyphoonCom.FormCommand(201, 1, FormNVTResponse(e.EndpointDiscoveryMetadata), msgID);
-                    msgToTyphoon.byteMessageData = TyphoonCom.FormPacket(tmp);
 
-                    Console.WriteLine("ClientFindProgressChanged typhmsg.MessageID = {0}", msgToTyphoon.MessageID);
-                    Console.WriteLine("ClientFindProgressChanged msgID = {0}", msgID);
-                    //отправим пакет, у которого typhmsg.MessageID отличается msgID
-                    //это нужно для того, чтобы Тайфун различал ответы на разные запросы (уточнить у Шарова)
-                    if(!TyphoonMsgManager.EnqueueMsg(msgToTyphoon))
-                    {
-                        Console.WriteLine("Об этом девайсе Тайфун не узнает ... Да и хрен с ним.");
-                    }
+                    //byte[] tmp = TyphoonCom.FormCommand(201, 1, FormNVTResponse(e.EndpointDiscoveryMetadata), 0);
+                    ////положим ID счетчика в typhmsg.MessageID
+                    //for (int a = 0; a < 4; a++)
+                    //{
+                    //    msgToTyphoon.MessageID = msgToTyphoon.MessageID << 8;
+                    //    msgToTyphoon.MessageID += tmp[9 - a];
+                    //}
+                    ////теперь заменим данные в мессаге на данные с msgID
+                    //tmp = TyphoonCom.FormCommand(201, 1, FormNVTResponse(e.EndpointDiscoveryMetadata), msgID);
+
+                    //msgToTyphoon.byteMessageData = TyphoonCom.FormPacket(tmp);
+
+                    //Console.WriteLine("ClientFindProgressChanged typhmsg.MessageID = {0}", msgToTyphoon.MessageID);
+                    //Console.WriteLine("ClientFindProgressChanged msgID = {0}", msgID);
+                    ////отправим пакет, у которого typhmsg.MessageID отличается msgID
+                    ////это нужно для того, чтобы Тайфун различал ответы на разные запросы (уточнить у Шарова)
+                    //if(!TyphoonMsgManager.EnqueueMsg(msgToTyphoon))
+                    //{
+                    //    Console.WriteLine("Об этом девайсе Тайфун не узнает ... Да и хрен с ним.");
+                    //}
+
+                    TyphoonMsgManager.SendAsyncMsg(201, 1, FormNVTResponse(e.EndpointDiscoveryMetadata), 0);
+
                 }
             }
             else
