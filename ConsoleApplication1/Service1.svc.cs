@@ -1734,6 +1734,8 @@ namespace OnvifProxy
         //----------------------------------------------------------------------------------------------------------
         public string GetDeviceInformation(out string Model, out string FirmwareVersion, out string SerialNumber, out string HardwareId)
         {
+            GetMediaSources(new GetMediaSourcesRequest());
+
             Model = "Model:SuperPuperModel";
             HardwareId = "HardwareId:xxxx";
             SerialNumber = "s/n:00000001";
@@ -3821,8 +3823,9 @@ namespace OnvifProxy
             GetMediaSourcesResponse getMediaSourceResp = new GetMediaSourcesResponse();
 
             TyphMsg = TyphoonMsgManager.SendSyncMsg(24);
+            TyphMsg.stringMessageData = TyphoonCom.ParseMem(0, TyphMsg.stringMessageData);
                         
-            using (MemoryStream ms = new MemoryStream())
+            using (MemoryStream ms = new MemoryStream(TyphMsg.byteMessageData))
             {
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(GetMediaSourcesResponse));
                 try
@@ -3832,6 +3835,10 @@ namespace OnvifProxy
                 catch(SerializationException se)
                 {
                     //
+                }
+                catch(Exception ex)
+                {
+                    return null;
                 }
                 
 
@@ -3864,7 +3871,7 @@ namespace OnvifProxy
                 getmediasource.MediaSource[i].Name[0].Value = videosources.VideoSources[i].token;
 
             }
-
+            #region
             //string formedstrign;
             //using (MemoryStream ms = new MemoryStream())
             //{
@@ -3895,6 +3902,7 @@ namespace OnvifProxy
              * \r\n  </MediaSource>
              * \r\n</GetMediaSourcesResponse>
              */
+            #endregion
             //----------------------------------
             return getmediasource;
         }
