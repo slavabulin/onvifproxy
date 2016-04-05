@@ -82,6 +82,7 @@ namespace OnvifProxy
         private const int TYPHOON_ZOND_PERIOD = 2000;
         private const int TYPHOON_CONNECTION_RESTART_TIMEOUT = 1000;
         private const int TYPHOON_EVENT_TIMEOUT = 60000;
+        private const int TYPHOON_COMMAND_BUFFER_LENGHT = 10240;
 
         public static void TyphoonComInit (object ip)
         {
@@ -91,7 +92,7 @@ namespace OnvifProxy
 
             if(nvtClientCollection ==null)nvtClientCollection = new Collection<NVTServiceClient>();
 
-            commandBuffer = new byte[10240];
+            commandBuffer = new byte[TYPHOON_COMMAND_BUFFER_LENGHT];
 
             //зарегистрировать только один обработчик на событие TyphoonDisconnect
             if (!flg_OnConnectionFailed)
@@ -260,12 +261,18 @@ namespace OnvifProxy
                     {
                         try
                         {
+                            
                             lock(locker)
-                            stream.BeginRead(commandBuffer,
+                            {
+
+                                commandBuffer = new byte[TYPHOON_COMMAND_BUFFER_LENGHT];
+                                stream.BeginRead(commandBuffer,
                                 0,
                                 commandBuffer.Length,
                                 PacketParse,
                                 stream);
+                            }
+                            
                         }
                         catch (Exception ex)//The buffer parameter is null.
                         {
@@ -294,6 +301,7 @@ namespace OnvifProxy
                             TyphoonMsgManager.queueRequestToTyphoon.ElementAt(0).Value.byteMessageData.Length);
                         TyphoonMsgManager.queueRequestToTyphoon.TryRemove(TyphoonMsgManager.queueRequestToTyphoon.ElementAt(0).Key,
                             out tmpmsg);
+                        tmpmsg.Dispose();
                     }
                     catch (ArgumentNullException ane)
                     {
@@ -340,8 +348,6 @@ namespace OnvifProxy
 
         #region
 
-
-
         //---------------------------------------------------------
         //колбек для таймера добавляющего зонд в очередь команд
         //---------------------------------------------------------
@@ -356,7 +362,6 @@ namespace OnvifProxy
                 TyphoonMsgManager.SendAsyncMsg(0, 0, null, 0);
             }
         }
-
 
         //---------------------------------------------------------
         //при коннекте к тайфуну кидает ему hello и собственны  IP, чтобы тайфун
@@ -401,7 +406,6 @@ namespace OnvifProxy
             }
         }
 
-
         //---------------------------------------------------------
         //колбек, разбирающий, что пришло на запрос, соответствие CRC
         //отделяет данные от зондов и взводит флаг flagConnected
@@ -411,7 +415,6 @@ namespace OnvifProxy
             PacketParseEx(ar);
             ev_CommandParseQuit.Set();
         }
-
 
         //---------------------------------------------------------
         // разбирает команды, пришедшие в пакете
@@ -428,13 +431,15 @@ namespace OnvifProxy
             {
                 try
                 {
-
                     switch (CommandBuff[intCommandPtr])//здесь эксепшен аут оф рэндж
                     {
                         case 0:
+                            #region
                             intCommandPtr += 2;
                             break;
+                            #endregion
                         case 200:
+                            #region
                             ///если номер команды 200 - это ответ на запросы от сервиса,
                             ///поместим данные в очередь ответов на запросы сервиса
                             tmpTyphMsg = new TyphoonMsg(TyphoonMsgType.Responce);
@@ -475,7 +480,9 @@ namespace OnvifProxy
                             TyphoonMsgManager.EnqueueMsg(tmpTyphMsg);
 
                             break;
+                            #endregion
                         case 201:
+                            #region
                             ///если 201 - запрос от тайфуна на действие
                             ///поместим данные в очередь запросов от тайфуна
                             //tmpTyphMsg = new TyphoonMsg_Ex(TyphoonMsgType.Request);
@@ -530,11 +537,14 @@ namespace OnvifProxy
                             thr_parseQueueCmd.Start();
 
                             break;
+                            #endregion
                         default:
+                            #region
                             ///если ни то ни другое - никуда эти данные не кладем
                             ///и идем дальше
                             ///а на сколько смещаться если?
-                            log.InfoFormat("От Тайфуна пришли данные с несоответствующим номером команды , данные отброшены, как неклассифицированные");
+                            log.InfoFormat("От Тайфуна пришли данные с несоответствующим "+
+                            "номером команды , данные отброшены, как неклассифицированные");
                             //
                             //byte[] tmpAr = new byte[4];
                             //for (int a = 0; a < 4; a++)
@@ -547,6 +557,7 @@ namespace OnvifProxy
                             ////////intCommandPtr = (uint)(CommandBuff.Length - 1);
                             //break;
                             return;
+                            #endregion
                     }
                 }
                 catch (Exception e)
@@ -557,11 +568,13 @@ namespace OnvifProxy
             else
             {
                 log.Error("CommandParse - на вход пришел ноль");
+                intCommandPtr = 0;
             }
             ///если не дошли до конца - продолжаем
-            if (intCommandPtr < CommandBuff.Length-1)
+            if (intCommandPtr < CommandBuff.Length-1)//если текущий номер ячейки массива меньше максимального номера ячейки в буфере, то
             {
                 TyphoonCom.log.Debug("слипшиеся команды");
+                intCommandPtr++;//сдвинем указатель и пиздуем далее
                 CommandParse(CommandBuff);
             }
             else
@@ -1077,7 +1090,6 @@ namespace OnvifProxy
             //---------------------------------------------------------
         }
 
-        
         private static void PacketParseEx(IAsyncResult ar)
         {
             uint datalength = 0;
@@ -1120,7 +1132,7 @@ namespace OnvifProxy
 
                 //создаю массив на данные без 4х байт общей длины пакета
                 //и без 1го байта crc чтобы посчитать crc8
-                Byte[] tmpBuff = new byte[datalength - 5];
+                Byte[] tmpBuff = new byte[datalength - 5];///////////////////////////OutOfMemory/////////////////////1830844769/////////////////////////////////////
 
                 //копирую туда данные из пакета
                 for (uint t = 0; t < (datalength - 5); t++)
@@ -1164,8 +1176,6 @@ namespace OnvifProxy
             }
         }
         
-
-
         //---------------------------------------------------------------------------------------
         // формирование команды для дальнейшего формирования пакета и отправки Тайфуну
         // на входе - номер команды и данные для неё, выход - массив байт для вставки в пакет
@@ -1267,8 +1277,6 @@ namespace OnvifProxy
             return Data_Command_Block;
         }
         
-   
-
         //---------------------------------------------------------------------------------------
         //формирование пакета содержащего команду для отправки его тайфуну
         //на входе массив данных сформированный в FormCommand, на выходе пакет
@@ -1340,8 +1348,6 @@ namespace OnvifProxy
             }
         }
 
-
-
         //---------------------------------------------------------------------------------------
         //преобразование Int32 в массив из 4 byte
         //---------------------------------------------------------------------------------------
@@ -1354,8 +1360,6 @@ namespace OnvifProxy
             }
             return ByteAr;
         }
-
-
 
         //---------------------------------------------------------------------------------------
         //преобразование массива из 4 byte в Int32
@@ -1372,7 +1376,6 @@ namespace OnvifProxy
             }
             return bytes;
         }
-
 
         //---------------------------------------------------------------------------------------
         //подсчет контрольной суммы по CRC8
@@ -1401,7 +1404,6 @@ namespace OnvifProxy
             }
             return Checksum;
         }
-
 
         //---------------------------------------------------------------------------------------
         //метод - хелпер, преобразующий строчку на входе в кусочек команды, в виде 
@@ -1439,7 +1441,6 @@ namespace OnvifProxy
 
             return unicode.GetBytes(OutStr);
         }
-
 
         //---------------------------------------------------------------------------------------
         // метод - хелпер,обратный MakeMem

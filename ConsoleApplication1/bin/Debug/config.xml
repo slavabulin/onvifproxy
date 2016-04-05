@@ -3,11 +3,7 @@
   <Scopes>
     <OnvifScope>
       <ScopeType>Fixed</ScopeType>
-      <Data>onvif://www.onvif.org/type/Network_Video_Transmitter</Data>
-    </OnvifScope>
-    <OnvifScope>
-      <ScopeType>Fixed</ScopeType>
-      <Data>onvif://www.onvif.org/type/Network_Video_Storage</Data>
+      <Data>onvif://www.onvif.org/type/NetworkVideoTransmitter</Data>
     </OnvifScope>
     <OnvifScope>
       <ScopeType>Fixed</ScopeType>
@@ -58,8 +54,8 @@
         <SystemLogging>false</SystemLogging>
         <FirmwareUpgrade>false</FirmwareUpgrade>
         <SupportedVersions>
-          <Major>2</Major>
-          <Minor>40</Minor>
+          <Major>1</Major>
+          <Minor>0</Minor>
         </SupportedVersions>
       </System>
       <IO>
@@ -133,7 +129,7 @@
         <FixedLayout>false</FixedLayout>
       </Display>
       <Recording>
-        <XAddr>http://172.16.32.149/onvif/recording_service</XAddr>
+        <XAddr>/onvif/device_service</XAddr>
         <ReceiverSource>false</ReceiverSource>
         <MediaProfileSource>false</MediaProfileSource>
         <DynamicRecordings>false</DynamicRecordings>
@@ -141,14 +137,14 @@
         <MaxStringLength>0</MaxStringLength>
       </Recording>
       <Search>
-        <XAddr>http://172.16.32.149/onvif/search_service</XAddr>
+        <XAddr>/onvif/device_service</XAddr>
         <MetadataSearch>false</MetadataSearch>
       </Search>
       <Replay>
-        <XAddr>http://172.16.32.149/onvif/replay_service</XAddr>
+        <XAddr>/onvif/device_service</XAddr>
       </Replay>
       <Receiver>
-        <XAddr>http://172.16.32.149/onvif/device_service</XAddr>
+        <XAddr>/onvif/device_service</XAddr>
         <RTP_Multicast>false</RTP_Multicast>
         <RTP_TCP>false</RTP_TCP>
         <RTP_RTSP_TCP>false</RTP_RTSP_TCP>

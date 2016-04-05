@@ -154,6 +154,13 @@ namespace OnvifProxy
 
                 mediaSource = new MediaSource();
 
+                //------testing purposes-----------------------
+                //if(mediaSource!=null)
+                //{
+                //    TestMediaSource mds = new TestMediaSource();
+                //}
+                //---------------------------------------------
+
                 TyphoonCom.log.DebugFormat("NetworkVideoTransmitter Service started at {0}", host.BaseAddresses.ElementAt(0));
 
                 Console.ForegroundColor = ConsoleColor.DarkGray;

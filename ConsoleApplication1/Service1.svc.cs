@@ -1734,7 +1734,7 @@ namespace OnvifProxy
         //----------------------------------------------------------------------------------------------------------
         public string GetDeviceInformation(out string Model, out string FirmwareVersion, out string SerialNumber, out string HardwareId)
         {
-            GetMediaSources(new GetMediaSourcesRequest());
+            //GetMediaSources(new GetMediaSourcesRequest());
 
             Model = "Model:SuperPuperModel";
             HardwareId = "HardwareId:xxxx";
@@ -3811,15 +3811,11 @@ namespace OnvifProxy
 
 
 
-    public partial class Service1 : MediaSourcesProvider.IMediaSourcesProvider//added
+    public partial class Service1 : MediaSourcesProvider.IMediaSourcesProvider
     {
         public MediaSourcesProvider.GetMediaSourcesResponse GetMediaSources(MediaSourcesProvider.GetMediaSourcesRequest request)
         {
-            MediaSourcesProvider.GetMediaSourcesResponse getmediasource = new MediaSourcesProvider.GetMediaSourcesResponse();
-
-            //----------------------------------
             TyphoonMsg TyphMsg;
-            string formedstrign;
             GetMediaSourcesResponse getMediaSourceResp = new GetMediaSourcesResponse();
 
             TyphMsg = TyphoonMsgManager.SendSyncMsg(24);
@@ -3834,77 +3830,72 @@ namespace OnvifProxy
                 }
                 catch(SerializationException se)
                 {
-                    //
-                }
-                catch(Exception ex)
-                {
                     return null;
-                }
-                
-
-                StreamReader strread = new StreamReader(ms);
-                ms.Position = 0;
-                formedstrign = strread.ReadToEnd();
+                }                
             }
-            //----------------------------------
-
-            Media.GetVideoSourcesResponse videosources = new GetVideoSourcesResponse();
-            videosources = GetVideoSources(null);
-
-            getmediasource.MediaSource = new MediaSourcesProvider.MediaSourceType[videosources.VideoSources.Length];
-            for (int i = 0; i < getmediasource.MediaSource.Length; i++)
-            {
-                
-                getmediasource.MediaSource[i] = new MediaSourceType();
-                getmediasource.MediaSource[i].Location = new MediaSourcesProvider.GeoCircle();
-                getmediasource.MediaSource[i].Location.Value = "someValue";//string geo coordinates
-                getmediasource.MediaSource[i].ONVIFBinding = new MediaSourcesProvider.ONVIFBindingType();
-                getmediasource.MediaSource[i].ONVIFBinding.Endpoint = new MediaSourcesProvider.EndpointType[1];//endpoint string, filled by me
-                //getmediasource.MediaSource[i].ONVIFBinding.Endpoint[0].
-                getmediasource.MediaSource[i].ONVIFBinding.MediaSourceToken = "someStringToken";
-                getmediasource.MediaSource[i].ONVIFBinding.ProfileToken = videosources.VideoSources[i].token;
-
-                getmediasource.MediaSource[i].token = "mediasourcetoken";
-                getmediasource.MediaSource[i].Name = new NameType[1];
-                getmediasource.MediaSource[i].Name[0] = new NameType();
-                getmediasource.MediaSource[i].Name[0].lang = "RU";
-                getmediasource.MediaSource[i].Name[0].Value = videosources.VideoSources[i].token;
-
-            }
+            TyphMsg.Dispose();
             #region
-            //string formedstrign;
-            //using (MemoryStream ms = new MemoryStream())
+            //MediaSourcesProvider.GetMediaSourcesResponse getmediasource = new MediaSourcesProvider.GetMediaSourcesResponse();
+            //Media.GetVideoSourcesResponse videosources = new GetVideoSourcesResponse();
+            //videosources = GetVideoSources(null);
+
+            //getmediasource.MediaSource = new MediaSourcesProvider.MediaSourceType[videosources.VideoSources.Length];
+            //for (int i = 0; i < getmediasource.MediaSource.Length; i++)
             //{
-            //    XmlSerializer xmlSerializer = new XmlSerializer(typeof(GetMediaSourcesResponse));
-            //    xmlSerializer.Serialize(ms, getmediasource);
-            //    StreamReader strread = new StreamReader(ms);
-            //    ms.Position = 0;
-            //    formedstrign = strread.ReadToEnd();
+                
+            //    getmediasource.MediaSource[i] = new MediaSourceType();
+            //    getmediasource.MediaSource[i].Location = new MediaSourcesProvider.GeoCircle();
+            //    getmediasource.MediaSource[i].Location.Value = "someValue";//string geo coordinates
+            //    getmediasource.MediaSource[i].ONVIFBinding = new MediaSourcesProvider.ONVIFBindingType();
+            //    getmediasource.MediaSource[i].ONVIFBinding.Endpoint = new MediaSourcesProvider.EndpointType[1];//endpoint string, filled by me
+            //    //getmediasource.MediaSource[i].ONVIFBinding.Endpoint[0].
+            //    getmediasource.MediaSource[i].ONVIFBinding.MediaSourceToken = "someStringToken";
+            //    getmediasource.MediaSource[i].ONVIFBinding.ProfileToken = videosources.VideoSources[i].token;
+
+            //    getmediasource.MediaSource[i].token = "mediasourcetoken";
+            //    getmediasource.MediaSource[i].Name = new NameType[1];
+            //    getmediasource.MediaSource[i].Name[0] = new NameType();
+            //    getmediasource.MediaSource[i].Name[0].lang = "RU";
+            //    getmediasource.MediaSource[i].Name[0].Value = videosources.VideoSources[i].token;
+
             //}
-            /*
-             <?xml version=\"1.0\"?>
-             * \r\n<GetMediaSourcesResponse xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">
-             * \r\n  <MediaSource token=\"mediasourcetoken\">
-             * \r\n    <ONVIFBinding xmlns=\"urn:ias:cvss:msp:1.0\">
-             * \r\n      <MediaSourceToken>someStringToken</MediaSourceToken>
-             * \r\n      <ProfileToken>2</ProfileToken>
-             * \r\n    </ONVIFBinding>
-             * \r\n    <Name xml:lang=\"RU\" xmlns=\"urn:ias:cvss:msp:1.0\">2</Name>
-             * \r\n    <Location xmlns=\"urn:ias:cvss:msp:1.0\">someValue</Location>
-             * \r\n  </MediaSource>
-             * \r\n  <MediaSource token=\"mediasourcetoken\">
-             * \r\n    <ONVIFBinding xmlns=\"urn:ias:cvss:msp:1.0\">
-             * \r\n      <MediaSourceToken>someStringToken</MediaSourceToken>
-             * \r\n      <ProfileToken>4</ProfileToken>
-             * \r\n    </ONVIFBinding>
-             * \r\n    <Name xml:lang=\"RU\" xmlns=\"urn:ias:cvss:msp:1.0\">4</Name>
-             * \r\n    <Location xmlns=\"urn:ias:cvss:msp:1.0\">someValue</Location>
-             * \r\n  </MediaSource>
-             * \r\n</GetMediaSourcesResponse>
-             */
-            #endregion
-            //----------------------------------
-            return getmediasource;
+            //#region
+            ////string formedstrign;
+            ////using (MemoryStream ms = new MemoryStream())
+            ////{
+            ////    XmlSerializer xmlSerializer = new XmlSerializer(typeof(GetMediaSourcesResponse));
+            ////    xmlSerializer.Serialize(ms, getmediasource);
+            ////    StreamReader strread = new StreamReader(ms);
+            ////    ms.Position = 0;
+            ////    formedstrign = strread.ReadToEnd();
+            ////}
+            ///*
+            // <?xml version=\"1.0\"?>
+            // * \r\n<GetMediaSourcesResponse xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">
+            // * \r\n  <MediaSource token=\"mediasourcetoken\">
+            // * \r\n    <ONVIFBinding xmlns=\"urn:ias:cvss:msp:1.0\">
+            // * \r\n      <MediaSourceToken>someStringToken</MediaSourceToken>
+            // * \r\n      <ProfileToken>2</ProfileToken>
+            // * \r\n    </ONVIFBinding>
+            // * \r\n    <Name xml:lang=\"RU\" xmlns=\"urn:ias:cvss:msp:1.0\">2</Name>
+            // * \r\n    <Location xmlns=\"urn:ias:cvss:msp:1.0\">someValue</Location>
+            // * \r\n  </MediaSource>
+            // * \r\n  <MediaSource token=\"mediasourcetoken\">
+            // * \r\n    <ONVIFBinding xmlns=\"urn:ias:cvss:msp:1.0\">
+            // * \r\n      <MediaSourceToken>someStringToken</MediaSourceToken>
+            // * \r\n      <ProfileToken>4</ProfileToken>
+            // * \r\n    </ONVIFBinding>
+            // * \r\n    <Name xml:lang=\"RU\" xmlns=\"urn:ias:cvss:msp:1.0\">4</Name>
+            // * \r\n    <Location xmlns=\"urn:ias:cvss:msp:1.0\">someValue</Location>
+            // * \r\n  </MediaSource>
+            // * \r\n</GetMediaSourcesResponse>
+            // */
+            //#endregion
+            ////----------------------------------
+            //return getmediasource;
+            #endregion      
+      
+            return getMediaSourceResp;
         }
 
         public MediaSourcesProvider.FindMediaSourcesResponse FindMediaSources(MediaSourcesProvider.FindMediaSourcesRequest request)
