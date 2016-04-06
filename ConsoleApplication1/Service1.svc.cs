@@ -3815,86 +3815,45 @@ namespace OnvifProxy
     {
         public MediaSourcesProvider.GetMediaSourcesResponse GetMediaSources(MediaSourcesProvider.GetMediaSourcesRequest request)
         {
-            TyphoonMsg TyphMsg;
+            int strtRef = 0, limit = 1, count = 0;
             GetMediaSourcesResponse getMediaSourceResp = new GetMediaSourcesResponse();
 
-            TyphMsg = TyphoonMsgManager.SendSyncMsg(24);
-            TyphMsg.stringMessageData = TyphoonCom.ParseMem(0, TyphMsg.stringMessageData);
-                        
-            using (MemoryStream ms = new MemoryStream(TyphMsg.byteMessageData))
+            if (request.StartReference != null && request.StartReference != "")
             {
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(GetMediaSourcesResponse));
                 try
                 {
-                    getMediaSourceResp = (GetMediaSourcesResponse)xmlSerializer.Deserialize(ms);
+                    strtRef = Convert.ToInt32(request.StartReference);
+                    if (strtRef < 0) strtRef = 0;
                 }
-                catch(SerializationException se)
+                catch(FormatException fe)
                 {
-                    return null;
+                    strtRef = 0;
+                }
+                catch(OverflowException oe)
+                {
+                    strtRef = 0;
                 }                
             }
-            TyphMsg.Dispose();
-            #region
-            //MediaSourcesProvider.GetMediaSourcesResponse getmediasource = new MediaSourcesProvider.GetMediaSourcesResponse();
-            //Media.GetVideoSourcesResponse videosources = new GetVideoSourcesResponse();
-            //videosources = GetVideoSources(null);
 
-            //getmediasource.MediaSource = new MediaSourcesProvider.MediaSourceType[videosources.VideoSources.Length];
-            //for (int i = 0; i < getmediasource.MediaSource.Length; i++)
-            //{
-                
-            //    getmediasource.MediaSource[i] = new MediaSourceType();
-            //    getmediasource.MediaSource[i].Location = new MediaSourcesProvider.GeoCircle();
-            //    getmediasource.MediaSource[i].Location.Value = "someValue";//string geo coordinates
-            //    getmediasource.MediaSource[i].ONVIFBinding = new MediaSourcesProvider.ONVIFBindingType();
-            //    getmediasource.MediaSource[i].ONVIFBinding.Endpoint = new MediaSourcesProvider.EndpointType[1];//endpoint string, filled by me
-            //    //getmediasource.MediaSource[i].ONVIFBinding.Endpoint[0].
-            //    getmediasource.MediaSource[i].ONVIFBinding.MediaSourceToken = "someStringToken";
-            //    getmediasource.MediaSource[i].ONVIFBinding.ProfileToken = videosources.VideoSources[i].token;
+            if(request.Limit > 0) limit = request.Limit;
 
-            //    getmediasource.MediaSource[i].token = "mediasourcetoken";
-            //    getmediasource.MediaSource[i].Name = new NameType[1];
-            //    getmediasource.MediaSource[i].Name[0] = new NameType();
-            //    getmediasource.MediaSource[i].Name[0].lang = "RU";
-            //    getmediasource.MediaSource[i].Name[0].Value = videosources.VideoSources[i].token;
 
-            //}
-            //#region
-            ////string formedstrign;
-            ////using (MemoryStream ms = new MemoryStream())
-            ////{
-            ////    XmlSerializer xmlSerializer = new XmlSerializer(typeof(GetMediaSourcesResponse));
-            ////    xmlSerializer.Serialize(ms, getmediasource);
-            ////    StreamReader strread = new StreamReader(ms);
-            ////    ms.Position = 0;
-            ////    formedstrign = strread.ReadToEnd();
-            ////}
-            ///*
-            // <?xml version=\"1.0\"?>
-            // * \r\n<GetMediaSourcesResponse xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">
-            // * \r\n  <MediaSource token=\"mediasourcetoken\">
-            // * \r\n    <ONVIFBinding xmlns=\"urn:ias:cvss:msp:1.0\">
-            // * \r\n      <MediaSourceToken>someStringToken</MediaSourceToken>
-            // * \r\n      <ProfileToken>2</ProfileToken>
-            // * \r\n    </ONVIFBinding>
-            // * \r\n    <Name xml:lang=\"RU\" xmlns=\"urn:ias:cvss:msp:1.0\">2</Name>
-            // * \r\n    <Location xmlns=\"urn:ias:cvss:msp:1.0\">someValue</Location>
-            // * \r\n  </MediaSource>
-            // * \r\n  <MediaSource token=\"mediasourcetoken\">
-            // * \r\n    <ONVIFBinding xmlns=\"urn:ias:cvss:msp:1.0\">
-            // * \r\n      <MediaSourceToken>someStringToken</MediaSourceToken>
-            // * \r\n      <ProfileToken>4</ProfileToken>
-            // * \r\n    </ONVIFBinding>
-            // * \r\n    <Name xml:lang=\"RU\" xmlns=\"urn:ias:cvss:msp:1.0\">4</Name>
-            // * \r\n    <Location xmlns=\"urn:ias:cvss:msp:1.0\">someValue</Location>
-            // * \r\n  </MediaSource>
-            // * \r\n</GetMediaSourcesResponse>
-            // */
-            //#endregion
-            ////----------------------------------
-            //return getmediasource;
-            #endregion      
-      
+            if((MediaSource.MediaSourceList.Count-strtRef)<limit)
+            {
+                count = MediaSource.MediaSourceList.Count - strtRef;
+            }
+            else
+            {
+                count = limit;
+            }
+
+            getMediaSourceResp.MediaSource = new MediaSourceType[count];
+
+            for (int e = strtRef; e < (strtRef+count); e++)
+            {
+                getMediaSourceResp.MediaSource[e] = MediaSource.MediaSourceList[e];
+            }
+            
             return getMediaSourceResp;
         }
 
@@ -3902,10 +3861,10 @@ namespace OnvifProxy
         {
             return new MediaSourcesProvider.FindMediaSourcesResponse();
         }
-
-
+        
         public MediaSourcesProvider.GetSearchResultsResponse GetSearchResults(MediaSourcesProvider.GetSearchResultsRequest request)
         {
+            MediaSourcesProvider.GetSearchResultsResponse resp = new MediaSourcesProvider.GetSearchResultsResponse();
             return new MediaSourcesProvider.GetSearchResultsResponse();
         }
 
@@ -3978,21 +3937,6 @@ namespace OnvifProxy
 
         public RecordingSummary GetRecordingSummary()
         {
-            //TyphoonMsg typhmsgreq = new TyphoonMsg(TyphoonMsgType.Request);
-            //TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
-
-            //byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 7, null, 0))).Length];
-            //tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 7, null, 0));
-
-            //for (int a = 0; a < 4; a++)
-            //{
-            //    typhmsgreq.MessageID = typhmsgreq.MessageID << 8;
-            //    typhmsgreq.MessageID += tmpBuf[21 - a];
-            //}
-            //typhmsgreq.byteMessageData = tmpBuf;
-
-            //TyphoonMsgManager.EnqueueMsg(typhmsgreq);
-            //typhmsgresp = TyphoonMsgManager.GetMsg(typhmsgreq.MessageID);
             TyphoonMsg typhmsgresp = TyphoonMsgManager.SendSyncMsg(7);
 
             if(typhmsgresp!=null)

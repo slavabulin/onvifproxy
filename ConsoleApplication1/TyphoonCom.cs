@@ -344,8 +344,7 @@ namespace OnvifProxy
             }
             while (flg_SendToNet);
         }
-
-
+        
         #region
 
         //---------------------------------------------------------

@@ -44,7 +44,7 @@ namespace OnvifProxy
 
         public static Guid uuid;
 
-        private static MediaSource mediaSource;
+        //private static MediaSource mediaSource;
 
         public static void Main(string[] args)
         {
@@ -152,10 +152,10 @@ namespace OnvifProxy
                 ev_RebootEnded.Set();
                 FlagHostThreadReboot.Start = false;
 
-                mediaSource = new MediaSource();
-
+                //MediaSource = new MediaSource();
+                MediaSource.RenewTimer.Start();
                 //------testing purposes-----------------------
-                //if(mediaSource!=null)
+                //if (mediaSource != null)
                 //{
                 //    TestMediaSource mds = new TestMediaSource();
                 //}
@@ -217,7 +217,7 @@ namespace OnvifProxy
             //Thread.Sleep(10000);
             //Console.WriteLine("Got command to reboot host.");
             object LockObj = new object();
-            mediaSource = null;
+            //mediaSource = null;
 
             try
             {
@@ -228,7 +228,8 @@ namespace OnvifProxy
                     {
                         try
                         {
-                            host.Close();
+                            MediaSource.RenewTimer.Stop();
+                            host.Close();                            
                             TyphoonCom.log.Debug("Host closed");
                         }
                         catch (Exception e)
