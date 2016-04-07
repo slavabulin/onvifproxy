@@ -2542,36 +2542,12 @@ namespace OnvifProxy
             
         }
 
-
-        //переделать хорошо!!!!!!!!!!!1
-        //uncomment me!!!
         public Media.Profile GetProfile(string ProfileToken)
         {
-            /*
-             * формируем запрос к тайфуну
-             * дожидаемся ответа
-             * заполняем Profile
-             * возвращаем Profile
-             * 
-             * */
             Console.WriteLine("GetProfile - token = " + ProfileToken);
 
             ///формируем команду GetProfiles
-            //TyphoonMsg typhmsgreq = new TyphoonMsg(TyphoonMsgType.Request);
             TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
-
-            //byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null, 0))).Length];
-            //tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null, 0));
-            //for (int a = 0; a < 4; a++)
-            //{
-            //    typhmsgreq.MessageID = typhmsgreq.MessageID << 8;
-            //    typhmsgreq.MessageID += tmpBuf[21 - a];
-            //}
-            //typhmsgreq.byteMessageData = tmpBuf;
-            /////добавляем в очередь на отправку
-            //TyphoonMsgManager.EnqueueMsg(typhmsgreq);
-            
-            //typhmsgresp = TyphoonMsgManager.GetMsg(typhmsgreq.MessageID);
 
             typhmsgresp = TyphoonMsgManager.SendSyncMsg(2);
 
@@ -2598,79 +2574,13 @@ namespace OnvifProxy
             {
                 return null;
             }
-            //Console.WriteLine("GetProfile - token = " + ProfileToken);
-            /////формируем команду GetProfiles
-            //byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null, 0))).Length];
-            //tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null, 0));
-            /////добавляем в очередь на отправку
-            //TyphoonCom.AddCommand(tmpBuf);
-
-            /////создаем структуру под конфиг
-            //XmlConfig config = new XmlConfig();
-            //Media.GetProfilesResponse mediaprofile = new Media.GetProfilesResponse();
-
-            //do
-            //{
-            //    Thread.Sleep(1);
-            //} while (TyphoonCom.queueResponce.Count == 0);
-
-            //if (TyphoonCom.queueResponce.Count > 0)
-            //{
-            //    ///извлекаем MessageID из созданной команды
-            //    ///и кладем в TyphMsg.MessageID, чтобы потом 
-            //    ///по нему найти ответ в очереди ответов
-            //    TyphoonMsg TyphMsg = new TyphoonMsg(TyphoonMsgType.);
-            //    for (int a = 0; a < 4; a++)
-            //    {
-            //        TyphMsg.MessageID = TyphMsg.MessageID << 8;
-            //        TyphMsg.MessageID += tmpBuf[21 - a];
-            //    }
-            //    try
-            //    {
-            //        TyphMsg.MessageData = TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID).MessageData;
-            //        TyphoonCom.queueResponce.Remove(TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID));
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        TyphoonCom.log.Error(ex.Message);
-            //    }
-            //    string tmpStr = TyphoonCom.ParseMem(0, TyphMsg.MessageData);
-            //    mediaprofile = config.ParseGetProfiles(tmpStr);
-            //    //----------
-            //    int tokennum = Convert.ToInt32(ProfileToken);
-            //    if (tokennum > mediaprofile.Profiles.Length || tokennum < 1)
-            //        throw new FaultException(new FaultReason("NoProfile"),
-            //               new FaultCode("Sender",
-            //                   new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
-            //                       new FaultCode("NoProfile", "http://www.onvif.org/ver10/error"))));
-            //    //----------
-
-            //    return mediaprofile.Profiles[tokennum - 1];
-            //}
-            //TyphoonCom.log.DebugFormat("GetProfile - TyphoonCom.queueResponce.Count = {0}", TyphoonCom.queueResponce.Count);
-            //return null;//leave me
         }
 
-        //uncomment me!!!
         public Media.GetProfilesResponse GetProfiles(Media.GetProfilesRequest request)
         {
             ///формируем запрос к тайфуну GetProfiles
-            //TyphoonMsg typhsmgreq = new TyphoonMsg(TyphoonMsgType.Request);
             TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
 
-
-
-            //byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null, 0))).Length];
-            //tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 2, null, 0));
-            //typhsmgreq.byteMessageData = tmpBuf;
-            //for (int a = 0; a < 4; a++)
-            //{
-            //    typhsmgreq.MessageID = typhsmgreq.MessageID << 8;
-            //    typhsmgreq.MessageID += tmpBuf[21 - a];
-            //}
-            //TyphoonMsgManager.EnqueueMsg(typhsmgreq);
-            //TyphoonCom.log.Debug("Service1: GetProfiles added to commandQueue");
-            //typhmsgresp = TyphoonMsgManager.GetMsg(typhsmgreq.MessageID);
             typhmsgresp = TyphoonMsgManager.SendSyncMsg(2);
 
             if(typhmsgresp!=null)
@@ -3778,7 +3688,6 @@ namespace OnvifProxy
             return null;
         }
     }
-
     public class NetInterfaceStruct
     {
         private string interfaceToken;
@@ -3808,9 +3717,6 @@ namespace OnvifProxy
 
         }
     }
-
-
-
     public partial class Service1 : MediaSourcesProvider.IMediaSourcesProvider
     {
         public MediaSourcesProvider.GetMediaSourcesResponse GetMediaSources(MediaSourcesProvider.GetMediaSourcesRequest request)
