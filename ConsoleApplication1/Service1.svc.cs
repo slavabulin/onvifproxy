@@ -3771,12 +3771,16 @@ namespace OnvifProxy
         public MediaSourcesProvider.GetSearchResultsResponse GetSearchResults(MediaSourcesProvider.GetSearchResultsRequest request)
         {
             MediaSourcesProvider.GetSearchResultsResponse resp = new MediaSourcesProvider.GetSearchResultsResponse();
-            return new MediaSourcesProvider.GetSearchResultsResponse();
+            return resp;
         }
 
         public MediaSourcesProvider.GetUpdatesResponse GetUpdates(MediaSourcesProvider.GetUpdatesRequest request)
         {
-            return new MediaSourcesProvider.GetUpdatesResponse();
+            MediaSourcesProvider.GetUpdatesResponse resp = new GetUpdatesResponse();
+            //request.
+            Guid updatetoken = Guid.NewGuid();
+            resp.UpdateToken = updatetoken.ToString();
+            return resp;
         }
     }
     public partial class Service1 : ReplayService.IReplayPort//added        
