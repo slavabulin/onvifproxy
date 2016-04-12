@@ -1735,6 +1735,8 @@ namespace OnvifProxy
         public string GetDeviceInformation(out string Model, out string FirmwareVersion, out string SerialNumber, out string HardwareId)
         {
             //GetMediaSources(new GetMediaSourcesRequest());
+            //FindRecordings(new FindRecordingsRequest());
+
 
             Model = "Model:SuperPuperModel";
             HardwareId = "HardwareId:xxxx";
@@ -3895,188 +3897,230 @@ namespace OnvifProxy
 
         public FindRecordingsResponse FindRecordings(FindRecordingsRequest request)
         {
-            //string a = FilterParser.ParseExpression(@" BOOlean(//Source[Location = “mylocation”]) and boolean(//Track[TrackType = “Video”]) not boolean(//Track[TrackType = “Operator”]) ");
-            string a = FilterParser.ParseExpression(request.Scope.RecordingInformationFilter);
+            //---------------------------------------------------------------------------------------
+            //request = new FindRecordingsRequest();
 
-            #region
-            /*
-             Dialect=http://www.onvif.org/ver10/tse/searchFilter 
-[1] Expression ::= BoolExpr | Expression 'and' Expression 
-  | Expression 'or' Expression | '('Expression')' | 
-'not''('Expression')' 
-[2] BoolExpr ::= 'boolean''('PathExpr')' | 'contains''(' ElementPath ',' 
-'"' String '"' ')'  
-[3] PathExpr ::= '//SimpleItem' NodeTest | '//ElementItem' NodeTest | 
-  ElementTest 
-[4] NodeTest ::= '['AttrExpr']' 
-[5] AttrExpr ::= NameComp | ValueComp | AttrExpr 'and' AttrExpr | AttrExpr 
-'or' AttrExpr | 'not''(AttrExpr')' 
-[6] NameComp ::= NameAttr'=''"'String'"' 
-[7] ValueComp ::= ValueAttr Operator '"'String'"' 
-[8] Operator ::= '=' | '!=' | '<' | '<=' | '>' | '>=' 
-[9] NameAttr ::= '@Name' 
-[10] ValueAttr ::= '@Value' 
-[11] ElementTest ::= '/' ElementPath '['NodeComp']'  
-[12] ElementPath ::= ElementName ElementName* 
-[13] ElementName ::= '/' String 
-[14] NodeComp ::= NodeName Operator '"' String '"' 
-[15] NodeName ::= '@' String | String 
-             * 
-             * Example of an XPath expression used to find recordings from the basement where there is at 
-least one track containing video: 
-boolean(//Source[Location = “Basement”]) and 
-boolean(//Track[TrackType = “Video”])
-             */
-            /*
-            request.Scope.RecordingInformationFilter = @"(  BOOlean(//Source[Location = “mylocation”]) and boolean(//Track[TrackType = “Video”]) not boolean(//Track[TrackType = “Operator”]))  ";
-            var xpathList = new List<string>();
-            //[1]
-            string pattern = @"( and )|( or )|( not )";
-            string[] match = Regex.Split(request.Scope.RecordingInformationFilter.ToLower(), pattern);
+
+            //request.KeepAliveTime = "60S";
+            //request.MaxMatches = 10;
+            //request.Scope = new SearchScope();
+            //request.Scope.IncludedRecordings = new string[1];
+            //request.Scope.IncludedRecordings[0] = "MyIncludedRecording";
+            //request.Scope.IncludedSources = new SourceReference[1];
+            //request.Scope.IncludedSources[0] = new SourceReference();
+            //request.Scope.IncludedSources[0].Token = "MySourceToken";
+            //request.Scope.IncludedSources[0].Type = "MySourceType";
+            //request.Scope.RecordingInformationFilter = "boolean(//Source[Location = “Basement”]) and boolean(//Track[TrackType = “Video”])";
+
+            string formedstring;
+            FindRecordingsResponse resp;
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(FindRecordingsRequest));
+                xmlSerializer.Serialize(ms, request);
+                StreamReader strread = new StreamReader(ms);
+                ms.Position = 0;
+                formedstring = strread.ReadToEnd();
+            }
+
+            using(TyphoonMsg TyphMsg = new TyphoonMsg(TyphoonMsgType.Request))
+            {
+                TyphoonMsgManager.SendSyncMsg(200, 10, TyphoonCom.MakeMem(formedstring), 0);
+                if (TyphMsg == null || TyphMsg.stringMessageData == "") return null;
+                resp = new FindRecordingsResponse(TyphoonCom.ParseMem(0,TyphMsg.stringMessageData));
+            }
+            return resp;
+
+            //---------------------------------------------------------------------------------------
+
+
+
+
+//            //request.Scope.IncludedSources[0].
+//            //request.Scope.IncludedRecordings[0].
+//            //string a = FilterParser.ParseExpression(@" BOOlean(//Source[Location = “mylocation”]) and boolean(//Track[TrackType = “Video”]) not boolean(//Track[TrackType = “Operator”]) ");
+//            string a = FilterParser.ParseExpression(request.Scope.RecordingInformationFilter);
+
+//            #region
+//            /*
+//             Dialect=http://www.onvif.org/ver10/tse/searchFilter 
+//[1] Expression ::= BoolExpr | Expression 'and' Expression 
+//  | Expression 'or' Expression | '('Expression')' | 
+//'not''('Expression')' 
+//[2] BoolExpr ::= 'boolean''('PathExpr')' | 'contains''(' ElementPath ',' 
+//'"' String '"' ')'  
+//[3] PathExpr ::= '//SimpleItem' NodeTest | '//ElementItem' NodeTest | 
+//  ElementTest 
+//[4] NodeTest ::= '['AttrExpr']' 
+//[5] AttrExpr ::= NameComp | ValueComp | AttrExpr 'and' AttrExpr | AttrExpr 
+//'or' AttrExpr | 'not''(AttrExpr')' 
+//[6] NameComp ::= NameAttr'=''"'String'"' 
+//[7] ValueComp ::= ValueAttr Operator '"'String'"' 
+//[8] Operator ::= '=' | '!=' | '<' | '<=' | '>' | '>=' 
+//[9] NameAttr ::= '@Name' 
+//[10] ValueAttr ::= '@Value' 
+//[11] ElementTest ::= '/' ElementPath '['NodeComp']'  
+//[12] ElementPath ::= ElementName ElementName* 
+//[13] ElementName ::= '/' String 
+//[14] NodeComp ::= NodeName Operator '"' String '"' 
+//[15] NodeName ::= '@' String | String 
+//             * 
+//             * Example of an XPath expression used to find recordings from the basement where there is at 
+//least one track containing video: 
+//boolean(//Source[Location = “Basement”]) and 
+//boolean(//Track[TrackType = “Video”])
+//             */
+//            /*
+//            request.Scope.RecordingInformationFilter = @"(  BOOlean(//Source[Location = “mylocation”]) and boolean(//Track[TrackType = “Video”]) not boolean(//Track[TrackType = “Operator”]))  ";
+//            var xpathList = new List<string>();
+//            //[1]
+//            string pattern = @"( and )|( or )|( not )";
+//            string[] match = Regex.Split(request.Scope.RecordingInformationFilter.ToLower(), pattern);
             
 
-            string[] matchtmp = new string[match.Length];
-            for(int i=0; i<match.Length; i++)
-            {
-                match[i] = match[i].Trim();
-                if (match[i] == "and" || match[i] == "or" || match[i] == "not")
-                {
-                    matchtmp[i] = match[i];
-                    continue;
-                }
+//            string[] matchtmp = new string[match.Length];
+//            for(int i=0; i<match.Length; i++)
+//            {
+//                match[i] = match[i].Trim();
+//                if (match[i] == "and" || match[i] == "or" || match[i] == "not")
+//                {
+//                    matchtmp[i] = match[i];
+//                    continue;
+//                }
         
-                matchtmp[i] = match[i];
-                matchtmp[i] = matchtmp[i].Trim();
-                if (matchtmp[i].StartsWith("(") && matchtmp[i].EndsWith(")"))
-                {
-                    matchtmp[i] = matchtmp[i].Remove(matchtmp[i].Length - 1, 1).Remove(0, 1);
-                    matchtmp[i] = matchtmp[i].Trim();
-                }
-                //[2]
-                if (matchtmp[i].StartsWith("boolean"))
-                {
-                    //[3]
-                    //'PathExpr'//просто передать XPath?
-                    matchtmp[i] = matchtmp[i].Remove(0, 7);
-                    matchtmp[i] = matchtmp[i].Trim();
-                    matchtmp[i] = matchtmp[i].TrimEnd(')');
-                    matchtmp[i] = matchtmp[i].TrimStart('(');
-                    matchtmp[i] = matchtmp[i].Replace('\u201C', '\'');//left qoutation mark
-                    matchtmp[i] = matchtmp[i].Replace('\u201D', '\'');//right qoutation mark
-                    if (matchtmp[i].StartsWith("//"))
-                    {//check [4]
-                        //if()
-                        matchtmp[i] = matchtmp[i].Insert(2, "a:");
-                        matchtmp[i] = matchtmp[i].Replace("[", "[a:");
-                        //
-                    }
-                    else
-                        if (matchtmp[i].StartsWith("/"))
-                        { //check [11]
-                            //
-                        }
-                        else throw new ArgumentException();
-                }
-                else
-                    if (match[i].StartsWith("contains"))
-                    {
-                        //(' ElementPath ',' '"' String '"' ')//просто передать XPath?
-                        matchtmp[i] = match[i].Remove(0, 8);
-                        matchtmp[i] = matchtmp[i].TrimEnd().TrimEnd(')');
-                        matchtmp[i] = matchtmp[i].TrimStart().TrimStart('(');
-                    }
-                    else
-                        throw new ArgumentException("Argument", "Filter doesnt suit the rules");
-            }
-            */
-            #endregion
-            ////TODO : get all recordings from Typhoon and place it in recInfo
-            RecordingInformation recInfo = new RecordingInformation();
-            recInfo.EarliestRecording = System.DateTime.Now;
-            recInfo.EarliestRecordingSpecified = true;
-            recInfo.LatestRecording = System.DateTime.Now;
-            recInfo.RecordingStatus = RecordingStatus.Stopped;
-            recInfo.RecordingToken = Guid.NewGuid().ToString();
-            recInfo.Source = new RecordingSourceInformation();
-            recInfo.Source.Address = "sourceaddress";
-            recInfo.Source.SourceId = "2";
-            recInfo.Track = new TrackInformation[2];
-            recInfo.Track[0] = new TrackInformation();
-            recInfo.Track[0].TrackType = TrackType.Video;
-            recInfo.Track[0].TrackToken = "tracktoken1";
+//                matchtmp[i] = match[i];
+//                matchtmp[i] = matchtmp[i].Trim();
+//                if (matchtmp[i].StartsWith("(") && matchtmp[i].EndsWith(")"))
+//                {
+//                    matchtmp[i] = matchtmp[i].Remove(matchtmp[i].Length - 1, 1).Remove(0, 1);
+//                    matchtmp[i] = matchtmp[i].Trim();
+//                }
+//                //[2]
+//                if (matchtmp[i].StartsWith("boolean"))
+//                {
+//                    //[3]
+//                    //'PathExpr'//просто передать XPath?
+//                    matchtmp[i] = matchtmp[i].Remove(0, 7);
+//                    matchtmp[i] = matchtmp[i].Trim();
+//                    matchtmp[i] = matchtmp[i].TrimEnd(')');
+//                    matchtmp[i] = matchtmp[i].TrimStart('(');
+//                    matchtmp[i] = matchtmp[i].Replace('\u201C', '\'');//left qoutation mark
+//                    matchtmp[i] = matchtmp[i].Replace('\u201D', '\'');//right qoutation mark
+//                    if (matchtmp[i].StartsWith("//"))
+//                    {//check [4]
+//                        //if()
+//                        matchtmp[i] = matchtmp[i].Insert(2, "a:");
+//                        matchtmp[i] = matchtmp[i].Replace("[", "[a:");
+//                        //
+//                    }
+//                    else
+//                        if (matchtmp[i].StartsWith("/"))
+//                        { //check [11]
+//                            //
+//                        }
+//                        else throw new ArgumentException();
+//                }
+//                else
+//                    if (match[i].StartsWith("contains"))
+//                    {
+//                        //(' ElementPath ',' '"' String '"' ')//просто передать XPath?
+//                        matchtmp[i] = match[i].Remove(0, 8);
+//                        matchtmp[i] = matchtmp[i].TrimEnd().TrimEnd(')');
+//                        matchtmp[i] = matchtmp[i].TrimStart().TrimStart('(');
+//                    }
+//                    else
+//                        throw new ArgumentException("Argument", "Filter doesnt suit the rules");
+//            }
+//            */
+//            #endregion
+//            ////TODO : get all recordings from Typhoon and place it in recInfo
+//            RecordingInformation recInfo = new RecordingInformation();
+//            recInfo.EarliestRecording = System.DateTime.Now;
+//            recInfo.EarliestRecordingSpecified = true;
+//            recInfo.LatestRecording = System.DateTime.Now;
+//            recInfo.RecordingStatus = RecordingStatus.Stopped;
+//            recInfo.RecordingToken = Guid.NewGuid().ToString();
+//            recInfo.Source = new RecordingSourceInformation();
+//            recInfo.Source.Address = "sourceaddress";
+//            recInfo.Source.SourceId = "2";
+//            recInfo.Track = new TrackInformation[2];
+//            recInfo.Track[0] = new TrackInformation();
+//            recInfo.Track[0].TrackType = TrackType.Video;
+//            recInfo.Track[0].TrackToken = "tracktoken1";
 
-            recInfo.Track[1] = new TrackInformation();
-            recInfo.Track[1].TrackType = TrackType.Audio;
-            recInfo.Track[1].TrackToken = "tracktoken2";
-            recInfo.Source.Location = "mylocation";
-            recInfo.Content = "mycontent";
+//            recInfo.Track[1] = new TrackInformation();
+//            recInfo.Track[1].TrackType = TrackType.Audio;
+//            recInfo.Track[1].TrackToken = "tracktoken2";
+//            recInfo.Source.Location = "mylocation";
+//            recInfo.Content = "mycontent";
 
-            string formedstrign;
+//            string formedstrign;
 
-            using(MemoryStream ms =new MemoryStream())
-            {
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(RecordingInformation));
-                try
-                {
-                    var namespaces = new XmlSerializerNamespaces();
-                    namespaces.Add("tt", "http://www.onvif.org/ver10/schema");
+//            using(MemoryStream ms =new MemoryStream())
+//            {
+//                XmlSerializer xmlSerializer = new XmlSerializer(typeof(RecordingInformation));
+//                try
+//                {
+//                    var namespaces = new XmlSerializerNamespaces();
+//                    namespaces.Add("tt", "http://www.onvif.org/ver10/schema");
 
-                    xmlSerializer.Serialize(ms, recInfo);                    
-                    StreamReader strread = new StreamReader(ms);
-                    ms.Position = 0;
-                    formedstrign = strread.ReadToEnd();
-                }
-                catch (InvalidOperationException iox)
-                {
-                    throw iox;
-                }
-                catch (IOException ioex)
-                {
-                    throw ioex;
-                }
-                catch (OutOfMemoryException oomex)
-                {
-                    throw oomex;
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-            }
+//                    xmlSerializer.Serialize(ms, recInfo);                    
+//                    StreamReader strread = new StreamReader(ms);
+//                    ms.Position = 0;
+//                    formedstrign = strread.ReadToEnd();
+//                }
+//                catch (InvalidOperationException iox)
+//                {
+//                    throw iox;
+//                }
+//                catch (IOException ioex)
+//                {
+//                    throw ioex;
+//                }
+//                catch (OutOfMemoryException oomex)
+//                {
+//                    throw oomex;
+//                }
+//                catch (Exception ex)
+//                {
+//                    throw ex;
+//                }
+//            }
 
-            XmlDocument doc = new XmlDocument();
+//            XmlDocument doc = new XmlDocument();
 
-            doc.LoadXml(formedstrign.ToLower().Trim());
-            XmlElement xRoot = doc.DocumentElement;
-            XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
-            nsmgr.AddNamespace("tt", "http://www.onvif.org/ver10/schema");
+//            doc.LoadXml(formedstrign.ToLower().Trim());
+//            XmlElement xRoot = doc.DocumentElement;
+//            XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
+//            nsmgr.AddNamespace("tt", "http://www.onvif.org/ver10/schema");
 
-            Boolean total;
-            XPathNavigator navigator = doc.CreateNavigator();
+//            Boolean total;
+//            XPathNavigator navigator = doc.CreateNavigator();
 
-            try
-            {
-                if(a!="")
-                {
-                    XPathExpression expr = navigator.Compile(a);
-                    expr.SetContext(nsmgr);
-                    total = (bool)navigator.Evaluate(expr);
-                }else
-                {
-                    throw new ArgumentException();
-                }
+//            try
+//            {
+//                if(a!="")
+//                {
+//                    XPathExpression expr = navigator.Compile(a);
+//                    expr.SetContext(nsmgr);
+//                    total = (bool)navigator.Evaluate(expr);
+//                }else
+//                {
+//                    throw new ArgumentException();
+//                }
                 
-            }
-            catch (System.Xml.XPath.XPathException xpex)
-            {
-                throw xpex;
-            }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
+//            }
+//            catch (System.Xml.XPath.XPathException xpex)
+//            {
+//                throw xpex;
+//            }
+//            catch(Exception ex)
+//            {
+//                throw ex;
+//            }
 
-            return new FindRecordingsResponse();
+//            return new FindRecordingsResponse();
         }
 
         public GetRecordingSearchResultsResponse GetRecordingSearchResults(GetRecordingSearchResultsRequest request)
