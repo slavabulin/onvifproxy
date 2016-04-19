@@ -10,9 +10,9 @@ using System.Text;
 using System.Xml;
 using System.ServiceModel.Description;
 using System.ServiceModel.Discovery;
-using System.Web.Services.Protocols; //ддя соап-документс-сеттингс
+using System.Web.Services.Protocols; 
 using System.Web.Services.Description;
-using System.Runtime.InteropServices; // added to set system time&date
+using System.Runtime.InteropServices;
 using System.ServiceModel.Channels;
 using System.Net;
 using Microsoft.Win32;
@@ -31,7 +31,6 @@ namespace OnvifProxy
 {
     // ПРИМЕЧАНИЕ. Команду "Переименовать" в меню "Рефакторинг" можно использовать для одновременного изменения имени класса "Service1" в коде, SVC-файле и файле конфигурации.
     [ServiceBehavior(AddressFilterMode = AddressFilterMode.Any,
-        //IncludeExceptionDetailInFaults = true,//debug v otvete clientu
         InstanceContextMode = InstanceContextMode.Single)]
 
 
@@ -45,9 +44,9 @@ namespace OnvifProxy
         Event.IPausableSubscriptionManager,
         Event.INotificationConsumer,
         Event.PullPointSubscription,
-        MediaSourcesProvider.IMediaSourcesProvider,//added
-        ReplayService.IReplayPort,//added
-        RecordingSearch.ISearchPort//added
+        MediaSourcesProvider.IMediaSourcesProvider,
+        ReplayService.IReplayPort,
+        RecordingSearch.ISearchPort
     {
         public GetServicesResponse UnauthorizedAccessFault()
         {
@@ -2456,28 +2455,11 @@ namespace OnvifProxy
                                 new FaultCode("ActionNotSupported", "http://www.onvif.org/ver10/error",
                                     new FaultCode("ActionNotSupported", "http://www.onvif.org/ver10/error")))); 
         }
-        //uncomment me!!!
         public Media.GetVideoSourcesResponse GetVideoSources(Media.GetVideoSourcesRequest request)
         {
             Media.GetVideoSourcesResponse getVideoSourcesResponse = new Media.GetVideoSourcesResponse();
           
-            //TyphoonMsg typhmsgreq = new TyphoonMsg(TyphoonMsgType.Request);
             TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
-
-            //byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 6, null, 0)).Length)];
-            //tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 6, null, 0));
-
-            //for (int a = 0; a < 4; a++)
-            //{
-            //    typhmsgreq.MessageID = typhmsgreq.MessageID << 8;
-            //    typhmsgreq.MessageID += tmpBuf[21 - a];
-            //}
-            //typhmsgreq.byteMessageData = tmpBuf;
-
-            //TyphoonMsgManager.EnqueueMsg(typhmsgreq);
-
-            //TyphoonCom.log.Debug("Service1: GetVideoSources added to commandQueue");
-            //typhmsgresp = TyphoonMsgManager.GetMsg(typhmsgreq.MessageID);
 
             typhmsgresp = TyphoonMsgManager.SendSyncMsg(6);
 
@@ -2931,16 +2913,13 @@ namespace OnvifProxy
 
         public Media.MediaUri GetStreamUri(Media.StreamSetup StreamSetup, string ProfileToken)
         {
-            //ConfigStruct confstr = new ConfigStruct();
-            //XmlConfig conf = new XmlConfig();
-            if(StreamSetup==null||ProfileToken==null)
+            if (StreamSetup == null || ProfileToken == null) 
                 throw new FaultException(new FaultReason("NoStreamSetupOrProfileToken"),
                        new FaultCode("Sender",
                            new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
                                new FaultCode("NoStreamSetupOrProfileToken", "http://www.onvif.org/ver10/error"))));
 
-            //TyphoonMsg typhmsgreq = new TyphoonMsg(TyphoonMsgType.Request);
-            TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
+            
 
             MediaUri mediauri = new MediaUri();
             string Buf = null;
@@ -2953,7 +2932,7 @@ namespace OnvifProxy
             byte[] b_profileToken = Encoding.Convert(Encoding.Unicode, Encoding.ASCII, TyphoonCom.MakeMem(ProfileToken));
 
             uint datalen = (uint)b_profileToken.Length + (uint)b_protocol.Length + (uint)b_stream.Length;
-            #region
+            #region data preparation
             byte[] b_datalen = TyphoonCom.Int32toByteAr(datalen);
 
             byte[] data = new byte[datalen];
@@ -2982,39 +2961,25 @@ namespace OnvifProxy
             #endregion
             //---------------------------------------
 
-            //byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 5, data, 0))).Length];
-            //tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 5, data, 0));
-
-            //for (int a = 0; a < 4; a++)
-            //{
-            //    typhmsgreq.MessageID = typhmsgreq.MessageID << 8;
-            //    typhmsgreq.MessageID += tmpBuf[21 - a];
-            //}
-            //typhmsgreq.byteMessageData = tmpBuf;
-
-            //TyphoonMsgManager.EnqueueMsg(typhmsgreq);
-            //typhmsgresp = TyphoonMsgManager.GetMsg(typhmsgreq.MessageID);           
-            //typhmsgresp = typhmsgreq;
-            //TyphoonMsgManager.GetMsg(ref typhmsgresp);
-
-            typhmsgresp = TyphoonMsgManager.SendSyncMsg(200, 5, data, 0);
-
-            if (typhmsgresp != null)
+            using(TyphoonMsg typhmsgresp = TyphoonMsgManager.SendSyncMsg(200, 5, data, 0))
             {
-                Buf = typhmsgresp.stringMessageData;
-                Buf = TyphoonCom.ParseMem(0, Buf);
-                typhmsgresp.Dispose();
-                mediauri.Uri = Buf;
-                return mediauri;
+                if (typhmsgresp != null)
+                {
+                    Buf = typhmsgresp.stringMessageData;
+                    Buf = TyphoonCom.ParseMem(0, Buf);
+                    mediauri.Uri = Buf;
+                    return mediauri;
+                }
+                else
+                {
+                    throw new FaultException(new FaultReason("NoStreamUriFound"),
+                           new FaultCode("Sender",
+                               new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
+                                   new FaultCode("NoStreamUriFound", "http://www.onvif.org/ver10/error"))));
+                }
             }
-            else
-            {
-                typhmsgresp.Dispose();
-                throw new FaultException(new FaultReason("NoStreamUriFound"),
-                       new FaultCode("Sender",
-                           new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
-                               new FaultCode("NoStreamUriFound", "http://www.onvif.org/ver10/error"))));
-            }
+
+            
         }
 
         public void StartMulticastStreaming(string ProfileToken)
@@ -3032,7 +2997,6 @@ namespace OnvifProxy
             throw new NotImplementedException();
         }
 
-        //uncomment me!!!
         public Media.MediaUri GetSnapshotUri(string ProfileToken)
         {
             ///* 
@@ -3141,8 +3105,6 @@ namespace OnvifProxy
             return null;
         }
 //--------------------------EventHandling--------------------------------------------------------------------
-        
-        
         public Event.SubscribeResponse1 Subscribe(Event.SubscribeRequest request)
         {
             Helper hlp = new Helper();
@@ -3723,32 +3685,32 @@ namespace OnvifProxy
     {
         public MediaSourcesProvider.GetMediaSourcesResponse GetMediaSources(MediaSourcesProvider.GetMediaSourcesRequest request)
         {
-            int strtRef = 0, limit = 1, count = 0;
+            int startRef = 0, limit = 1, count = 0;
             GetMediaSourcesResponse getMediaSourceResp = new GetMediaSourcesResponse();
 
-            if (request.StartReference != null && request.StartReference != "")
+            if (!string.IsNullOrEmpty(request.StartReference))
             {
                 try
                 {
-                    strtRef = Convert.ToInt32(request.StartReference);
-                    if (strtRef < 0) strtRef = 0;
+                    startRef = Convert.ToInt32(request.StartReference);
+                    if (startRef < 0) startRef = 0;
                 }
                 catch(FormatException fe)
                 {
-                    strtRef = 0;
+                    startRef = 0;
                 }
                 catch(OverflowException oe)
                 {
-                    strtRef = 0;
+                    startRef = 0;
                 }                
             }
 
             if(request.Limit > 0) limit = request.Limit;
 
 
-            if((MediaSource.MediaSourceList.Count-strtRef)<limit)
+            if((MediaSource.MediaSourceList.Count-startRef)<limit)
             {
-                count = MediaSource.MediaSourceList.Count - strtRef;
+                count = MediaSource.MediaSourceList.Count - startRef;
             }
             else
             {
@@ -3757,10 +3719,11 @@ namespace OnvifProxy
 
             getMediaSourceResp.MediaSource = new MediaSourceType[count];
 
-            for (int e = strtRef; e < (strtRef+count); e++)
+            for (int e = startRef; e < (startRef+count); e++)
             {
                 getMediaSourceResp.MediaSource[e] = MediaSource.MediaSourceList[e];
             }
+            getMediaSourceResp.UpdateToken = Guid.NewGuid().ToString();
             
             return getMediaSourceResp;
         }
@@ -3779,7 +3742,14 @@ namespace OnvifProxy
         public MediaSourcesProvider.GetUpdatesResponse GetUpdates(MediaSourcesProvider.GetUpdatesRequest request)
         {
             MediaSourcesProvider.GetUpdatesResponse resp = new GetUpdatesResponse();
-            //request.
+            
+            resp.Update = new UpdateType[MediaSource.MediaSourceList.Count];
+            for(int t=0;t<MediaSource.MediaSourceList.Count;t++)
+            {
+                resp.Update[t].MediaSource = MediaSource.MediaSourceList[t];
+                resp.Update[t].MediaSourceToken = MediaSource.MediaSourceList[t].token;
+            }
+
             Guid updatetoken = Guid.NewGuid();
             resp.UpdateToken = updatetoken.ToString();
             return resp;
@@ -3868,7 +3838,7 @@ namespace OnvifProxy
                 }
                 catch(Exception ex)
                 {
-                    throw new FaultException(new FaultReason("WrongGetRecordingSummaryRecievedFromTyphoon"),
+                    throw new FaultException(new FaultReason("Wrong GetRecordingSummary Recieved From Typhoon"),
                        new FaultCode("Sender",
                            new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
                                new FaultCode("WrongGetRecordingSummaryRecievedFromTyphoon", "http://www.onvif.org/ver10/error"))));
@@ -3878,7 +3848,7 @@ namespace OnvifProxy
             }
             else
             {
-                throw new FaultException(new FaultReason("NoGetRecordingSummaryRecievedFromTyphoon"),
+                throw new FaultException(new FaultReason("No GetRecordingSummary Recieved From Typhoon"),
                        new FaultCode("Sender",
                            new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
                                new FaultCode("NoGetRecordingSummaryRecievedFromTyphoon", "http://www.onvif.org/ver10/error"))));
@@ -3898,19 +3868,6 @@ namespace OnvifProxy
         public FindRecordingsResponse FindRecordings(FindRecordingsRequest request)
         {
             //---------------------------------------------------------------------------------------
-            //request = new FindRecordingsRequest();
-
-
-            //request.KeepAliveTime = "60S";
-            //request.MaxMatches = 10;
-            //request.Scope = new SearchScope();
-            //request.Scope.IncludedRecordings = new string[1];
-            //request.Scope.IncludedRecordings[0] = "MyIncludedRecording";
-            //request.Scope.IncludedSources = new SourceReference[1];
-            //request.Scope.IncludedSources[0] = new SourceReference();
-            //request.Scope.IncludedSources[0].Token = "MySourceToken";
-            //request.Scope.IncludedSources[0].Type = "MySourceType";
-            //request.Scope.RecordingInformationFilter = "boolean(//Source[Location = “Basement”]) and boolean(//Track[TrackType = “Video”])";
 
             string formedstring;
             FindRecordingsResponse resp;
@@ -3927,13 +3884,17 @@ namespace OnvifProxy
             using(TyphoonMsg TyphMsg = new TyphoonMsg(TyphoonMsgType.Request))
             {
                 TyphoonMsgManager.SendSyncMsg(200, 10, TyphoonCom.MakeMem(formedstring), 0);
-                if (TyphMsg == null || TyphMsg.stringMessageData == "") return null;
+                if (TyphMsg == null || string.IsNullOrEmpty(TyphMsg.stringMessageData))
+                    throw new FaultException(new FaultReason("No Recordings Found"),
+                          new FaultCode("Sender",
+                              new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("NoRecordingsFound", "http://www.onvif.org/ver10/error"))));
                 resp = new FindRecordingsResponse(TyphoonCom.ParseMem(0,TyphMsg.stringMessageData));
             }
             return resp;
 
             //---------------------------------------------------------------------------------------
-
+            #region Junk
 
 
 
@@ -4120,7 +4081,8 @@ namespace OnvifProxy
 //                throw ex;
 //            }
 
-//            return new FindRecordingsResponse();
+            //            return new FindRecordingsResponse();
+            #endregion
         }
 
         public GetRecordingSearchResultsResponse GetRecordingSearchResults(GetRecordingSearchResultsRequest request)

@@ -21,8 +21,7 @@ namespace Media
     [System.ServiceModel.ServiceContractAttribute(Namespace = "http://www.onvif.org/ver10/media/wsdl",
         ConfigurationName = "Media"),
      XmlSerializerFormat,
-     //OnvifProxy.DispatchByBodyElementBehavior
-    OnvifProxy.SecurityContractBehavior] //my addition
+    OnvifProxy.SecurityContractBehavior]
 
     public interface IMedia
     {

@@ -131,28 +131,15 @@ namespace OnvifProxy
                 TyphoonCom.log.Debug("Begin openning host");
                 lock (LockObj)
                 {
-                    
                     TyphoonCom.log.DebugFormat("host.State - {0}",host.State.ToString());
                     host.Open();   
-                 
-                    //-----------------
-                    //foreach (ChannelDispatcherBase dispatcher in host.ChannelDispatchers)
-                    //{
-                    //    if (dispatcher != null && dispatcher.Listener != null && dispatcher.Listener.Uri != null && dispatcher.Listener.Uri.Port != null)
-                    //    {
-                    //        if (dispatcher.State == CommunicationState.Opened&& dispatcher.Listener.Uri.Port==3702)
-                    //            TyphoonCom.log.DebugFormat(dispatcher.Listener.Uri.Port.ToString());
-                            
-                    //    }
-                    //}
-                    //-----------------
                 }
                 TyphoonCom.log.Debug("Host opened");
                 FlagHostThreadReboot.Ended = true;
                 ev_RebootEnded.Set();
                 FlagHostThreadReboot.Start = false;
 
-                //MediaSource = new MediaSource();
+
                 MediaSource.RenewTimer.Start();
                 //------testing purposes-----------------------
                 //if (mediaSource != null)
@@ -398,18 +385,13 @@ namespace OnvifProxy
                     ReplayServiceEndpoint,//added
                     RecordingSearchEndPoint;//added
 
-            //EndpointDiscoveryBehavior DeviceServiceBehavior = new EndpointDiscoveryBehavior();
             EndpointDiscoveryBehavior MediaServiceBehavior = new EndpointDiscoveryBehavior();
             EndpointDiscoveryBehavior NotificationProducerServiceBehavior = new EndpointDiscoveryBehavior();
             EndpointDiscoveryBehavior EventPortTypeServiceBehavior = new EndpointDiscoveryBehavior();
             EndpointDiscoveryBehavior SubscriptionManagerServiceBehavior = new EndpointDiscoveryBehavior();
             EndpointDiscoveryBehavior PullPointSubscriptionServiceBehavior = new EndpointDiscoveryBehavior();
             EndpointDiscoveryBehavior udpAnnouncementEndpointBehavior = new EndpointDiscoveryBehavior();
-
             EndpointDiscoveryBehavior ReplayServiceBehavior = new EndpointDiscoveryBehavior();
-            //---------------------------------
-            //HttpErrorsAttribute HttpErrorBehavior = new HttpErrorsAttribute();
-            //---------------------------------
             
             UdpAnnouncementEndpoint udpAnnouncementEndpoint;
             UdpDiscoveryEndpoint udpDiscoveryEndpoint;
@@ -464,9 +446,6 @@ namespace OnvifProxy
                     typeof(Device.IDevice),
                     binding,
                     "/onvif/device_service");
-                    //---------------------------------------
-                    //DeviceServiceEndpoint.Behaviors.Add(HttpErrorBehavior);
-                    //---------------------------------------
 
                     MediaServiceEndpoint = host.AddServiceEndpoint(
                     typeof(Media.IMedia),
