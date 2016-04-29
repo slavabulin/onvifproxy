@@ -129,7 +129,12 @@ namespace OnvifProxy
 
             intPacketPtr = 0;
             ev_TyphComStoped.Reset();
-            log.Debug("Connecting Typhoon...\n");
+
+            //log.Debug("Connecting Typhoon...\n");
+
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("Connecting Typhoon...");
+            Console.ResetColor();
 
             Thread thr_Connect = new Thread(new ThreadStart(Connect));//в этом потоке будет происходить общение с Тайфуном
             thr_Connect.IsBackground = true;
@@ -146,7 +151,8 @@ namespace OnvifProxy
             ev_TyphComStoped.Set();
 
             Console.ForegroundColor = ConsoleColor.DarkRed;
-            log.Debug("Connection Failed");
+            Console.WriteLine("Typhoon connection failed");
+            //log.Debug("Connection Failed");
             Console.ResetColor();
 
             if (client != null)

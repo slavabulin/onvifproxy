@@ -2967,6 +2967,7 @@ namespace OnvifProxy
                 {
                     Buf = typhmsgresp.stringMessageData;
                     Buf = TyphoonCom.ParseMem(0, Buf);
+                    
                     mediauri.Uri = Buf;
                     return mediauri;
                 }
@@ -3876,21 +3877,42 @@ namespace OnvifProxy
             {
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(FindRecordingsRequest));
                 xmlSerializer.Serialize(ms, request);
+
                 StreamReader strread = new StreamReader(ms);
                 ms.Position = 0;
                 formedstring = strread.ReadToEnd();
             }
+            TyphoonMsg TyphMsg = new TyphoonMsg(TyphoonMsgType.Request);
 
-            using(TyphoonMsg TyphMsg = new TyphoonMsg(TyphoonMsgType.Request))
+            using (TyphMsg = TyphoonMsgManager.SendSyncMsg(200, 10, TyphoonCom.MakeMem(formedstring), 0))
             {
-                TyphoonMsgManager.SendSyncMsg(200, 10, TyphoonCom.MakeMem(formedstring), 0);
                 if (TyphMsg == null || string.IsNullOrEmpty(TyphMsg.stringMessageData))
                     throw new FaultException(new FaultReason("No Recordings Found"),
                           new FaultCode("Sender",
                               new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
                                   new FaultCode("NoRecordingsFound", "http://www.onvif.org/ver10/error"))));
-                resp = new FindRecordingsResponse(TyphoonCom.ParseMem(0,TyphMsg.stringMessageData));
+
+                resp = new FindRecordingsResponse();
+                TyphMsg.stringMessageData = TyphoonCom.ParseMem(0, TyphMsg.stringMessageData);
+                
+                using(MemoryStream ms2 = new MemoryStream(TyphMsg.byteMessageData))
+                {
+                    XmlSerializer xmlserializer2 = new XmlSerializer(typeof(FindRecordingsResponse), "http://www.onvif.org/ver10/schema");
+                    
+                    try
+                    {
+                        resp = (FindRecordingsResponse)xmlserializer2.Deserialize(ms2);
+                    }
+                    catch(InvalidOperationException)
+                    {
+                        throw new FaultException(new FaultReason("No Recordings Found"),
+                          new FaultCode("Sender",
+                              new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("NoRecordingsFound", "http://www.onvif.org/ver10/error"))));
+                    }
+                }
             }
+
             return resp;
 
             //---------------------------------------------------------------------------------------
@@ -4087,7 +4109,59 @@ namespace OnvifProxy
 
         public GetRecordingSearchResultsResponse GetRecordingSearchResults(GetRecordingSearchResultsRequest request)
         {
-            return new GetRecordingSearchResultsResponse();
+            string formedstring;
+            GetRecordingSearchResultsResponse resp;
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(GetRecordingSearchResultsRequest));
+                try
+                {
+                    xmlSerializer.Serialize(ms, request);
+                    StreamReader strread = new StreamReader(ms);
+                    ms.Position = 0;
+                    formedstring = strread.ReadToEnd();
+                }
+                catch(ApplicationException ex)
+                {
+                    throw new FaultException(new FaultReason("No RecordingSearchResults"),
+                          new FaultCode("Sender",
+                              new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("NoRecordingsFound", "http://www.onvif.org/ver10/error"))));
+                }
+                    
+                
+            }
+
+            TyphoonMsg TyphMsg = new TyphoonMsg(TyphoonMsgType.Request);
+
+            using (TyphMsg = TyphoonMsgManager.SendSyncMsg(200, 11, TyphoonCom.MakeMem(formedstring), 0))
+            {
+                if (TyphMsg == null || string.IsNullOrEmpty(TyphMsg.stringMessageData))
+                    throw new FaultException(new FaultReason("No Recordings Found"),
+                          new FaultCode("Sender",
+                              new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("NoRecordingsFound", "http://www.onvif.org/ver10/error"))));
+
+                TyphMsg.stringMessageData = TyphoonCom.ParseMem(0, TyphMsg.stringMessageData);
+                using (MemoryStream ms2 = new MemoryStream(TyphMsg.byteMessageData))
+                {
+                    XmlSerializer xmlserializer2 = new XmlSerializer(typeof(GetRecordingSearchResultsResponse), "http://www.onvif.org/ver10/schema");
+
+                    try
+                    {
+                        resp = (GetRecordingSearchResultsResponse)xmlserializer2.Deserialize(ms2);
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        throw new FaultException(new FaultReason("No RecordingSearchResults"),
+                          new FaultCode("Sender",
+                              new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("NoRecordingsFound", "http://www.onvif.org/ver10/error"))));
+                    }
+                }
+            }
+            return resp;
         }
 
         public FindEventsResponse FindEvents(FindEventsRequest request)
@@ -4110,36 +4184,51 @@ namespace OnvifProxy
         }
         public SearchState GetSearchState(string SearchToken)
         {
-            //TyphoonMsg typhmsgreq = new TyphoonMsg(TyphoonMsgType.Request);
+            string formedstring;
+
+
+
+            GetRecordingSearchResultsResponse resp;
+
+            //using (MemoryStream ms = new MemoryStream())
+            //{
+            //    XmlSerializer xmlSerializer = new XmlSerializer(typeof(GetRecordingSearchResultsRequest));
+            //    try
+            //    {
+            //        xmlSerializer.Serialize(ms, request);
+            //        StreamReader strread = new StreamReader(ms);
+            //        ms.Position = 0;
+            //        formedstring = strread.ReadToEnd();
+            //    }
+            //    catch (ApplicationException ex)
+            //    {
+            //        throw new FaultException(new FaultReason("No RecordingSearchResults"),
+            //              new FaultCode("Sender",
+            //                  new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
+            //                      new FaultCode("NoRecordingsFound", "http://www.onvif.org/ver10/error"))));
+            //    }
+
+
+            //}
+
+            TyphoonMsg TyphMsg = new TyphoonMsg(TyphoonMsgType.Request);
             TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
 
-            //byte[] tmpBuf = new byte[(TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 18, null, 0))).Length];
-            //tmpBuf = TyphoonCom.FormPacket(TyphoonCom.FormCommand(200, 18, null, 0));
+            TyphMsg = TyphoonMsgManager.SendSyncMsg(18);
 
-            //for (int a = 0; a < 4; a++)
+            //if (TyphMsg != null)
             //{
-            //    typhmsgreq.MessageID = typhmsgreq.MessageID << 8;
-            //    typhmsgreq.MessageID += tmpBuf[21 - a];
-            //}
-            //typhmsgreq.byteMessageData = tmpBuf;
-
-            //TyphoonMsgManager.EnqueueMsg(typhmsgreq);
-            //typhmsgresp = TyphoonMsgManager.GetMsg(typhmsgreq.MessageID);
-            typhmsgresp = TyphoonMsgManager.SendSyncMsg(18);
-
-            if (typhmsgresp != null)
-            {
-                typhmsgresp.Dispose();
-                throw new FaultException(new FaultReason("NoImplementedYet"),
-                       new FaultCode("Sender",
-                           new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
-                               new FaultCode("NoImplementedYet", "http://www.onvif.org/ver10/error"))));
+            //    TyphMsg.Dispose();
+            //    throw new FaultException(new FaultReason("NoImplementedYet"),
+            //           new FaultCode("Sender",
+            //               new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
+            //                   new FaultCode("NoImplementedYet", "http://www.onvif.org/ver10/error"))));
                 
-            }
-            else
-            {
+            //}
+            //else
+            //{
                 return SearchState.Unknown;
-            }         
+            //}         
             
         }
         public System.DateTime EndSearch(string SearchToken)
