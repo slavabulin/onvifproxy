@@ -77,7 +77,6 @@ namespace OnvifProxy
         {
             XmlDocument doc = new XmlDocument();
             doc.LoadXml("<tds:Capabilities xmlns:tds = 'http://www.onvif.org/ver10/device/wsdl'><tds:Network/><tds:Security/><tds:System/></tds:Capabilities>");
-            //if (request == null) return new GetServicesResponse();
             ConfigStruct confstr = new ConfigStruct();
             XmlConfig conf = new XmlConfig();
 
@@ -1735,6 +1734,12 @@ namespace OnvifProxy
         {
             //GetMediaSources(new GetMediaSourcesRequest());
             //FindRecordings(new FindRecordingsRequest());
+          //  while(true)
+            {
+                GetRecordingSearchResults(new GetRecordingSearchResultsRequest());
+                Thread.Sleep(1);
+            }
+            
 
 
             Model = "Model:SuperPuperModel";
@@ -3824,14 +3829,22 @@ namespace OnvifProxy
 
             if(typhmsgresp!=null)
             {
+                //////typhmsgresp.stringMessageData = TyphoonCom.ParseMem(0, typhmsgresp.stringMessageData);
+                //////typhmsgresp.stringMessageData.Replace("GetRecordingSummaryResponse", "RecordingSummary");
                 string tmpstring = TyphoonCom.ParseMem(0, typhmsgresp.stringMessageData);
-                typhmsgresp.Dispose();
+                tmpstring = tmpstring.Replace("<?xml version=\u00221.0\u0022 encoding=\u0022UTF-8\u0022?>", "");//<?xml version=\"1.0\" encoding=\"UTF-8\"?>
                 RecordingSummary recsumresponse = new RecordingSummary();
                    
                 try
                 {
+                    //////using(MemoryStream ms = new MemoryStream(typhmsgresp.byteMessageData))
+                    //////{
+                    //////    XmlSerializer serializer = new XmlSerializer(typeof(RecordingSummary));
+                    //////    recsumresponse = (RecordingSummary)serializer.Deserialize(ms);
+                    //////}
                     XmlDocument doc = new XmlDocument();
                     doc.LoadXml(tmpstring);
+
 
                     recsumresponse.DataFrom = System.DateTime.Parse(doc.FirstChild.FirstChild["DataFrom"].InnerText);
                     recsumresponse.DataUntil = System.DateTime.Parse(doc.FirstChild.FirstChild["DataUntil"].InnerText);
@@ -3843,6 +3856,10 @@ namespace OnvifProxy
                        new FaultCode("Sender",
                            new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
                                new FaultCode("WrongGetRecordingSummaryRecievedFromTyphoon", "http://www.onvif.org/ver10/error"))));
+                }
+                finally
+                {
+                    typhmsgresp.Dispose();
                 }
                                
                 return recsumresponse;
@@ -4111,9 +4128,55 @@ namespace OnvifProxy
         {
             string formedstring;
             GetRecordingSearchResultsResponse resp;
-
+            //resp.ResultList.RecordingInformation[0].
             using (MemoryStream ms = new MemoryStream())
             {
+                #region
+                //////////-----------------------------------------------
+                ////////resp = new GetRecordingSearchResultsResponse();
+                ////////resp.ResultList = new FindRecordingResultList();
+                ////////resp.ResultList.RecordingInformation = new RecordingInformation[1];
+                ////////resp.ResultList.SearchState = SearchState.Searching;
+                ////////resp.ResultList.RecordingInformation[0] = new RecordingInformation();
+                ////////resp.ResultList.RecordingInformation[0].RecordingToken = "reco_token";
+                ////////resp.ResultList.RecordingInformation[0].LatestRecording = System.DateTime.Now;
+                ////////resp.ResultList.RecordingInformation[0].LatestRecordingSpecified = true;
+                ////////resp.ResultList.RecordingInformation[0].RecordingStatus = RecordingStatus.Recording;
+                
+                ////////resp.ResultList.RecordingInformation[0].Source = new RecordingSourceInformation();
+                ////////resp.ResultList.RecordingInformation[0].Source.Description = "source_desc";
+                ////////resp.ResultList.RecordingInformation[0].Source.Location = "source_location";
+                ////////resp.ResultList.RecordingInformation[0].Source.Name = "source_name";
+                ////////resp.ResultList.RecordingInformation[0].Source.SourceId = "source_ID";
+                ////////resp.ResultList.RecordingInformation[0].Track = new TrackInformation[1];
+                ////////resp.ResultList.RecordingInformation[0].Track[0] = new TrackInformation();
+                ////////resp.ResultList.RecordingInformation[0].Track[0] = new TrackInformation();
+                ////////resp.ResultList.RecordingInformation[0].Track[0].DataFrom = System.DateTime.Now;
+                ////////resp.ResultList.RecordingInformation[0].Track[0].DataTo = System.DateTime.Now;
+                ////////resp.ResultList.RecordingInformation[0].Track[0].Description = "track_desc";
+                ////////resp.ResultList.RecordingInformation[0].Track[0].TrackToken = "track_token";
+                ////////resp.ResultList.RecordingInformation[0].Track[0].TrackType = TrackType.Video;
+
+                ////////XmlSerializer xmlSerializer = new XmlSerializer(typeof(GetRecordingSearchResultsResponse),
+                ////////        "http://www.onvif.org/ver10/schema");
+                ////////try
+                ////////{
+                ////////    xmlSerializer.Serialize(ms, resp);
+                ////////    StreamReader strread = new StreamReader(ms);
+                ////////    ms.Position = 0;
+                ////////    formedstring = strread.ReadToEnd();
+                ////////}
+                ////////catch (ApplicationException ex)
+                ////////{
+                ////////    throw new FaultException(new FaultReason("No RecordingSearchResults"),
+                ////////          new FaultCode("Sender",
+                ////////              new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
+                ////////                  new FaultCode("NoRecordingsFound", "http://www.onvif.org/ver10/error"))));
+                ////////}
+
+                //---------------------
+                #endregion
+
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(GetRecordingSearchResultsRequest));
                 try
                 {
@@ -4122,7 +4185,7 @@ namespace OnvifProxy
                     ms.Position = 0;
                     formedstring = strread.ReadToEnd();
                 }
-                catch(ApplicationException ex)
+                catch (ApplicationException ex)
                 {
                     throw new FaultException(new FaultReason("No RecordingSearchResults"),
                           new FaultCode("Sender",
@@ -4140,14 +4203,14 @@ namespace OnvifProxy
                 if (TyphMsg == null || string.IsNullOrEmpty(TyphMsg.stringMessageData))
                     throw new FaultException(new FaultReason("No Recordings Found"),
                           new FaultCode("Sender",
-                              new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
+                              new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
                                   new FaultCode("NoRecordingsFound", "http://www.onvif.org/ver10/error"))));
 
                 TyphMsg.stringMessageData = TyphoonCom.ParseMem(0, TyphMsg.stringMessageData);
                 using (MemoryStream ms2 = new MemoryStream(TyphMsg.byteMessageData))
                 {
-                    XmlSerializer xmlserializer2 = new XmlSerializer(typeof(GetRecordingSearchResultsResponse), "http://www.onvif.org/ver10/schema");
-
+                    XmlSerializer xmlserializer2 = new XmlSerializer(typeof(GetRecordingSearchResultsResponse),
+                        "http://www.onvif.org/ver10/schema");
                     try
                     {
                         resp = (GetRecordingSearchResultsResponse)xmlserializer2.Deserialize(ms2);
@@ -4156,7 +4219,7 @@ namespace OnvifProxy
                     {
                         throw new FaultException(new FaultReason("No RecordingSearchResults"),
                           new FaultCode("Sender",
-                              new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
+                              new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
                                   new FaultCode("NoRecordingsFound", "http://www.onvif.org/ver10/error"))));
                     }
                 }

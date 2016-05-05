@@ -50,6 +50,7 @@ private static void Process(object ipaddr) - stream.WriteByte(0); - как обойтись
 
 
 ToDo:
+- берет ip с первой карточки(у шарова)
 - дорефакторить TyphoonMsgManager
 - для Axis'ов с новой прошивкой требуется пароль/логин на GetDeviceInformation
 - при месседжах больше MTU не досылает оставшуюся часть сообщения

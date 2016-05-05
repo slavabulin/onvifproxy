@@ -300,7 +300,7 @@ namespace OnvifProxy
             //поднимаем сервис на этом адресе
             if (interfacename != null && ipmgmnt.GetDHCPIP(interfacename) != null)
             {
-                confstr.IPAddr = ipmgmnt.GetDHCPIP(interfacename);                
+                confstr.IPAddr = ipmgmnt.GetDHCPIP(interfacename);
             }
             //и пишем себе в конфиг
             //чтобы поменять все адреса сервисов
