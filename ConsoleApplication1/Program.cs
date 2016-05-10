@@ -339,9 +339,7 @@ namespace OnvifProxy
 
             //--------------------------
             HttpTransportBindingElement httpTransportBindingElement = new HttpTransportBindingElement();
-            httpTransportBindingElement.KeepAliveEnabled = false;
-            //Console.WriteLine("httpTransportBindingElement.MaxBufferSize - {0}", httpTransportBindingElement.MaxBufferSize);
-            
+            httpTransportBindingElement.KeepAliveEnabled = false;            
             //httpTransportBindingElement.AuthenticationScheme = AuthenticationSchemes.Basic;//RFC2617
 
             HttpsTransportBindingElement httpsTransportBindingElement = new HttpsTransportBindingElement();
@@ -524,7 +522,7 @@ namespace OnvifProxy
                     ReplayServiceEndpoint.Contract.Name = "ReplayService";
                     ReplayServiceEndpoint.Contract.Namespace = "http://www.onvif.org/ver10/replay/wsdl";
 
-                    RecordingSearchEndPoint.Contract.Name = "RecocdingSearchService";
+                    RecordingSearchEndPoint.Contract.Name = "RecordingSearchService";
                     RecordingSearchEndPoint.Contract.Namespace = "http://www.onvif.org/ver10/search/wsdl";
 
                     //----------------------------------------------------------------------------------

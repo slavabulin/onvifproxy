@@ -266,23 +266,38 @@ namespace OnvifProxy
                     while (stream.DataAvailable)
                     {
                         try
-                        {
-                            
+                        {   
                             lock(locker)
                             {
-
                                 commandBuffer = new byte[TYPHOON_COMMAND_BUFFER_LENGHT];
                                 stream.BeginRead(commandBuffer,
                                 0,
                                 commandBuffer.Length,
                                 PacketParse,
                                 stream);
-                            }
-                            
+                            }                            
                         }
-                        catch (Exception ex)//The buffer parameter is null.
+                        catch (IOException ioe)
                         {
-                            log.DebugFormat("stream.BeginRead - Exception {0}", ex.Message);
+                            log.DebugFormat("stream.BeginRead - IOException {0}", ioe.Message);
+                            if (!flg_ConnectionFailedActive) OnTyphoonDisconnect();
+                            break;
+                        }
+                        catch (ArgumentException ae)
+                        {
+                            log.DebugFormat("stream.BeginRead - ArgumentException {0}", ae.Message);
+                            if (!flg_ConnectionFailedActive) OnTyphoonDisconnect();
+                            break;
+                        }
+                        catch (ObjectDisposedException ode)
+                        {
+                            log.DebugFormat("stream.BeginRead - ObjectDisposedException {0}", ode.Message);
+                            if (!flg_ConnectionFailedActive) OnTyphoonDisconnect();
+                            break;
+                        }
+                        catch (NotSupportedException nse)
+                        {
+                            log.DebugFormat("stream.BeginRead - NotSupportedException {0}", nse.Message);
                             if (!flg_ConnectionFailedActive) OnTyphoonDisconnect();
                             break;
                         }

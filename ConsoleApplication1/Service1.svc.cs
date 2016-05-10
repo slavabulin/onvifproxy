@@ -204,12 +204,12 @@ namespace OnvifProxy
                 getServicesResponse.Service[2].Version.Major = 2;
                 getServicesResponse.Service[2].Version.Minor = 4;
 
-                getServicesResponse.Service[3] = new Device.Service();
-                getServicesResponse.Service[3].XAddr = "http://" + confstr.IPAddr + "/onvif/msp_service";
-                getServicesResponse.Service[3].Namespace = "urn:ias:cvss:msp:1.0";
-                getServicesResponse.Service[3].Version = new OnvifVersion();
-                getServicesResponse.Service[3].Version.Major = 1;
-                getServicesResponse.Service[3].Version.Minor = 0;
+                getServicesResponse.Service[5] = new Device.Service();
+                getServicesResponse.Service[5].XAddr = "http://" + confstr.IPAddr + "/onvif/msp_service";
+                getServicesResponse.Service[5].Namespace = "urn:ias:cvss:msp:1.0";
+                getServicesResponse.Service[5].Version = new OnvifVersion();
+                getServicesResponse.Service[5].Version.Major = 1;
+                getServicesResponse.Service[5].Version.Minor = 0;
                 
                 getServicesResponse.Service[4] = new Device.Service();
                 getServicesResponse.Service[4].XAddr = "http://" + confstr.IPAddr + "/onvif/replay_service";
@@ -218,14 +218,21 @@ namespace OnvifProxy
                 getServicesResponse.Service[4].Version.Major = 2;
                 getServicesResponse.Service[4].Version.Minor = 4;
 
-                getServicesResponse.Service[5] = new Device.Service();
-                getServicesResponse.Service[5].XAddr = "http://" + confstr.IPAddr + "/onvif/recordingsearch_service";
-                getServicesResponse.Service[5].Namespace = "http://www.onvif.org/ver10/search/wsdl";
-                getServicesResponse.Service[5].Version = new OnvifVersion();
-                getServicesResponse.Service[5].Version.Major = 2;
-                getServicesResponse.Service[5].Version.Minor = 4;
-                getServicesResponse.Service[5].Capabilities =
+                getServicesResponse.Service[3] = new Device.Service();
+                getServicesResponse.Service[3].XAddr = "http://" + confstr.IPAddr + "/onvif/recordingsearch_service";
+                getServicesResponse.Service[3].Namespace = "http://www.onvif.org/ver10/search/wsdl";
+                getServicesResponse.Service[3].Version = new OnvifVersion();
+                getServicesResponse.Service[3].Version.Major = 2;
+                getServicesResponse.Service[3].Version.Minor = 4;
+                getServicesResponse.Service[3].Capabilities =
                 new XmlDocument().CreateElement("cap", "Capabilities", "http://www.onvif.org/ver10/search/wsdl");
+                /*
+                 * RecordingSearch.Capabilities caps = new RecordingSearch.Capabilities();
+            caps.MetadataSearch = false;
+            caps.GeneralStartEvents = false;
+            caps.GeneralStartEventsSpecified = true;
+            caps.MetadataSearchSpecified = true;
+                 */
 
                 return getServicesResponse;
             }
@@ -3752,6 +3759,7 @@ namespace OnvifProxy
             resp.Update = new UpdateType[MediaSource.MediaSourceList.Count];
             for(int t=0;t<MediaSource.MediaSourceList.Count;t++)
             {
+                resp.Update[t] = new UpdateType();
                 resp.Update[t].MediaSource = MediaSource.MediaSourceList[t];
                 resp.Update[t].MediaSourceToken = MediaSource.MediaSourceList[t].token;
             }
@@ -3875,7 +3883,46 @@ namespace OnvifProxy
 
         public RecordingInformation GetRecordingInformation(string RecordingToken)
         {
-            return new RecordingInformation();
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<?xml version=\u00221.0\u0022 encoding=\u0022UTF-8\u0022?>");
+            sb.Append("<GetRecordingInformationRequest>");
+            sb.Append("<RecordingToken>");
+            sb.Append(RecordingToken);
+            sb.Append("</RecordingToken>");
+            sb.Append("</GetRecordingInformationRequest>");
+            RecordingInformation resp = new RecordingInformation();
+            TyphoonMsg TyphMsg = new TyphoonMsg(TyphoonMsgType.Request);
+            using (TyphMsg = TyphoonMsgManager.SendSyncMsg(200, 8, TyphoonCom.MakeMem(sb.ToString()), 0))
+            {
+                if (TyphMsg == null || string.IsNullOrEmpty(TyphMsg.stringMessageData))
+                    throw new FaultException(new FaultReason("No Recordings Information Found"),
+                          new FaultCode("Sender",
+                              new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("NoRecordingsFound", "http://www.onvif.org/ver10/error"))));
+
+                TyphMsg.stringMessageData = TyphoonCom.ParseMem(0, TyphMsg.stringMessageData);
+                using (MemoryStream ms2 = new MemoryStream(TyphMsg.byteMessageData))
+                {
+                    XmlSerializer xmlserializer2 = new XmlSerializer(typeof(RecordingInformation),
+                        "http://www.onvif.org/ver10/schema");
+                    try
+                    {
+                        resp = (RecordingInformation)xmlserializer2.Deserialize(ms2);
+                        return resp;
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        {
+                            throw new FaultException(new FaultReason("No RecordingInformationSearchResults"),
+                          new FaultCode("Sender",
+                              new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("NoRecordingsFound", "http://www.onvif.org/ver10/error"))));
+                        }
+
+                    }
+                }
+            }
+            //return new RecordingInformation();
         }
 
         public GetMediaAttributesResponse GetMediaAttributes(GetMediaAttributesRequest request)
@@ -4128,7 +4175,6 @@ namespace OnvifProxy
         {
             string formedstring;
             GetRecordingSearchResultsResponse resp;
-            //resp.ResultList.RecordingInformation[0].
             using (MemoryStream ms = new MemoryStream())
             {
                 #region
@@ -4211,20 +4257,30 @@ namespace OnvifProxy
                 {
                     XmlSerializer xmlserializer2 = new XmlSerializer(typeof(GetRecordingSearchResultsResponse),
                         "http://www.onvif.org/ver10/schema");
+                    //XmlSerializer faultserializer = new XmlSerializer(typeof(FaultCode));
                     try
                     {
                         resp = (GetRecordingSearchResultsResponse)xmlserializer2.Deserialize(ms2);
+                        return resp;
                     }
                     catch (InvalidOperationException)
                     {
-                        throw new FaultException(new FaultReason("No RecordingSearchResults"),
+                        //try
+                        //{
+                        //    FaultException fault = (FaultException)faultserializer.Deserialize(ms2);
+                        //    throw fault;
+                        //}
+                        //catch (InvalidOperationException)
+                        {
+                            throw new FaultException(new FaultReason("No RecordingSearchResults"),
                           new FaultCode("Sender",
                               new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
                                   new FaultCode("NoRecordingsFound", "http://www.onvif.org/ver10/error"))));
+                        }
+                        
                     }
                 }
             }
-            return resp;
         }
 
         public FindEventsResponse FindEvents(FindEventsRequest request)
@@ -4247,56 +4303,85 @@ namespace OnvifProxy
         }
         public SearchState GetSearchState(string SearchToken)
         {
-            string formedstring;
+            //string formedstring;
 
+            //SearchState resp;
 
+            //TyphoonMsg TyphMsg = new TyphoonMsg(TyphoonMsgType.Request);
 
-            GetRecordingSearchResultsResponse resp;
-
-            //using (MemoryStream ms = new MemoryStream())
+            //using (TyphMsg = TyphoonMsgManager.SendSyncMsg(18))
             //{
-            //    XmlSerializer xmlSerializer = new XmlSerializer(typeof(GetRecordingSearchResultsRequest));
-            //    try
-            //    {
-            //        xmlSerializer.Serialize(ms, request);
-            //        StreamReader strread = new StreamReader(ms);
-            //        ms.Position = 0;
-            //        formedstring = strread.ReadToEnd();
-            //    }
-            //    catch (ApplicationException ex)
-            //    {
-            //        throw new FaultException(new FaultReason("No RecordingSearchResults"),
+            //    if (TyphMsg == null || string.IsNullOrEmpty(TyphMsg.stringMessageData))
+            //        throw new FaultException(new FaultReason("No Recordings Found"),
             //              new FaultCode("Sender",
             //                  new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
             //                      new FaultCode("NoRecordingsFound", "http://www.onvif.org/ver10/error"))));
+
+            //    TyphMsg.stringMessageData = TyphoonCom.ParseMem(0, TyphMsg.stringMessageData);
+
+            //    using (MemoryStream ms2 = new MemoryStream(TyphMsg.byteMessageData))
+            //    {
+            //        XmlSerializer xmlserializer2 = new XmlSerializer(typeof(FindRecordingsResponse), "http://www.onvif.org/ver10/schema");
+
+            //        try
+            //        {
+            //            //resp = (FindRecordingsResponse)xmlserializer2.Deserialize(ms2);
+            //        }
+            //        catch (InvalidOperationException)
+            //        {
+            //            throw new FaultException(new FaultReason("No Recordings Found"),
+            //              new FaultCode("Sender",
+            //                  new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
+            //                      new FaultCode("NoRecordingsFound", "http://www.onvif.org/ver10/error"))));
+            //        }
             //    }
-
-
             //}
-
-            TyphoonMsg TyphMsg = new TyphoonMsg(TyphoonMsgType.Request);
-            TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
-
-            TyphMsg = TyphoonMsgManager.SendSyncMsg(18);
-
-            //if (TyphMsg != null)
-            //{
-            //    TyphMsg.Dispose();
-            //    throw new FaultException(new FaultReason("NoImplementedYet"),
-            //           new FaultCode("Sender",
-            //               new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
-            //                   new FaultCode("NoImplementedYet", "http://www.onvif.org/ver10/error"))));
-                
-            //}
-            //else
-            //{
                 return SearchState.Unknown;
-            //}         
-            
         }
         public System.DateTime EndSearch(string SearchToken)
         {
-            return new System.DateTime();
+            System.DateTime resp = System.DateTime.Now;
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<?xml version=\u00221.0\u0022 encoding=\u0022UTF-8\u0022?>");
+            sb.Append("<EndSearchRequest>");
+            sb.Append("<SearchToken>");
+            sb.Append(SearchToken);
+            sb.Append("</SearchToken>");
+            sb.Append("</EndSearchRequest>");
+
+            TyphoonMsg TyphMsg = new TyphoonMsg(TyphoonMsgType.Request);
+            using (TyphMsg = TyphoonMsgManager.SendSyncMsg(200, 19, TyphoonCom.MakeMem(sb.ToString()), 0))
+            {
+                if (TyphMsg == null || string.IsNullOrEmpty(TyphMsg.stringMessageData))
+                    throw new FaultException(new FaultReason("No SearchJob Found"),
+                          new FaultCode("Sender",
+                              new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("NoRecordingsFound", "http://www.onvif.org/ver10/error"))));
+
+                TyphMsg.stringMessageData = TyphoonCom.ParseMem(0, TyphMsg.stringMessageData);
+
+                using (MemoryStream ms2 = new MemoryStream(TyphMsg.byteMessageData))
+                {
+                    XmlSerializer xmlserializer2 = new XmlSerializer(typeof(FindRecordingsResponse), "http://www.onvif.org/ver10/schema");
+
+                    try
+                    {
+                        resp = (System.DateTime)xmlserializer2.Deserialize(ms2);
+                        return resp;
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        throw new FaultException(new FaultReason("The search token is invalid."),
+                          new FaultCode("Sender",
+                              new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("Invalid Token", "http://www.onvif.org/ver10/error"))));
+                    }
+                }
+            }
+
+
+            //return new System.DateTime();
         }
         public FindMetadataResponse FindMetadata(FindMetadataRequest request)
         {
