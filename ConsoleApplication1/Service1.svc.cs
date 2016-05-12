@@ -153,7 +153,7 @@ namespace OnvifProxy
                             "RemoteDiscovery='false' SystemBackup='false' SystemLogging='false' " +
                             "FirmwareUpgrade='true' HttpFirmwareUpgrade='false' HttpSystemBackup='false' " +
                             "HttpSystemLogging='false' HttpSupportInformation='false' /> " +
-                            "<tds:MiscCapabilities AuxiliaryCommands='' /> " +
+                            //"<tds:MiscCapabilities AuxiliaryCommands='' /> " +
                             "</tds:Capabilities> ";
                         //----------------------------
                         doc.LoadXml(tmpstr);
@@ -1742,10 +1742,10 @@ namespace OnvifProxy
             //GetMediaSources(new GetMediaSourcesRequest());
             //FindRecordings(new FindRecordingsRequest());
           //  while(true)
-            {
-                GetRecordingSearchResults(new GetRecordingSearchResultsRequest());
-                Thread.Sleep(1);
-            }
+            //{
+            //    GetRecordingSearchResults(new GetRecordingSearchResultsRequest());
+            //    Thread.Sleep(1);
+            //}
             
 
 
@@ -3755,9 +3755,9 @@ namespace OnvifProxy
         public MediaSourcesProvider.GetUpdatesResponse GetUpdates(MediaSourcesProvider.GetUpdatesRequest request)
         {
             MediaSourcesProvider.GetUpdatesResponse resp = new GetUpdatesResponse();
-            
+
             resp.Update = new UpdateType[MediaSource.MediaSourceList.Count];
-            for(int t=0;t<MediaSource.MediaSourceList.Count;t++)
+            for (int t = 0; t < MediaSource.MediaSourceList.Count; t++)
             {
                 resp.Update[t] = new UpdateType();
                 resp.Update[t].MediaSource = MediaSource.MediaSourceList[t];
@@ -4357,7 +4357,7 @@ namespace OnvifProxy
                     throw new FaultException(new FaultReason("No SearchJob Found"),
                           new FaultCode("Sender",
                               new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
-                                  new FaultCode("NoRecordingsFound", "http://www.onvif.org/ver10/error"))));
+                                  new FaultCode("NoSearchFound", "http://www.onvif.org/ver10/error"))));
 
                 TyphMsg.stringMessageData = TyphoonCom.ParseMem(0, TyphMsg.stringMessageData);
 

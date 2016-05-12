@@ -183,7 +183,8 @@ namespace OnvifProxy
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Port #80 is busy  - AddressAccessDeniedException raised - {0}", aade.Message);
                 Console.ResetColor();
-                Console.ReadLine();
+                Program.RebootHost();
+                //Console.ReadLine();
             }
             catch (CommunicationException e)
             {
@@ -357,8 +358,14 @@ namespace OnvifProxy
 
             //--------------------------
             CustomBinding binding3 = new CustomBinding(
-                new TextMessageEncodingBindingElement(MessageVersion.Soap12WSAddressing10, Encoding.UTF8),
+                //new TextMessageEncodingBindingElement(MessageVersion.Soap12WSAddressing10, Encoding.UTF8),
+                new TextMessageEncodingBindingElement(MessageVersion.Soap12, Encoding.UTF8),
                 httpTransportBindingElement);
+            //WSHttpBinding binding3 = new WSHttpBinding();
+            //WSHttpSecurity whSecurity = binding3.Security;
+            //whSecurity.Mode = SecurityMode.None;
+
+
              CustomBinding bindingReplay = new CustomBinding(
                 new TextMessageEncodingBindingElement(MessageVersion.Soap12WSAddressing10, Encoding.UTF8),
                 httpTransportBindingElement);
@@ -518,6 +525,7 @@ namespace OnvifProxy
 
                     MediaSourceProviderServiceEndpoint.Contract.Name = "MediaSourceProvider";//added
                     MediaSourceProviderServiceEndpoint.Contract.Namespace = "urn:ias:cvss:msp:1.0";//added
+                    //MediaSourceProviderServiceEndpoint.Behaviors[0].
 
                     ReplayServiceEndpoint.Contract.Name = "ReplayService";
                     ReplayServiceEndpoint.Contract.Namespace = "http://www.onvif.org/ver10/replay/wsdl";
