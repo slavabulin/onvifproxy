@@ -25,6 +25,7 @@ using System.Xml.XPath;
 using System.Text.RegularExpressions;
 using RecordingSearch;
 using MediaSourcesProvider;
+using ReplayService;
 
 
 namespace OnvifProxy
@@ -217,6 +218,8 @@ namespace OnvifProxy
                 getServicesResponse.Service[4].Version = new OnvifVersion();
                 getServicesResponse.Service[4].Version.Major = 2;
                 getServicesResponse.Service[4].Version.Minor = 4;
+                getServicesResponse.Service[4].Capabilities = new XmlDocument().CreateElement("cap", "Capabilities", "http://www.onvif.org/ver10/replay/wsdl");
+                //getServicesResponse.Service[4].Capabilities.
 
                 getServicesResponse.Service[3] = new Device.Service();
                 getServicesResponse.Service[3].XAddr = "http://" + confstr.IPAddr + "/onvif/recordingsearch_service";
@@ -3737,7 +3740,7 @@ namespace OnvifProxy
                 getMediaSourceResp.MediaSource[e] = MediaSource.MediaSourceList[e];
             }
             getMediaSourceResp.UpdateToken = Guid.NewGuid().ToString();
-            
+            //getMediaSourceResp.MediaSource[0].ONVIFBinding.
             return getMediaSourceResp;
         }
 
@@ -3756,24 +3759,25 @@ namespace OnvifProxy
         {
             MediaSourcesProvider.GetUpdatesResponse resp = new GetUpdatesResponse();
 
-            resp.Update = new UpdateType[MediaSource.MediaSourceList.Count];
-            for (int t = 0; t < MediaSource.MediaSourceList.Count; t++)
-            {
-                resp.Update[t] = new UpdateType();
-                resp.Update[t].MediaSource = MediaSource.MediaSourceList[t];
-                resp.Update[t].MediaSourceToken = MediaSource.MediaSourceList[t].token;
-            }
+            //resp.Update = new UpdateType[MediaSource.MediaSourceList.Count];
+            //for (int t = 0; t < MediaSource.MediaSourceList.Count; t++)
+            //{
+            //    resp.Update[t] = new UpdateType();
+            //    resp.Update[t].MediaSource = MediaSource.MediaSourceList[t];
+            //    resp.Update[t].MediaSourceToken = MediaSource.MediaSourceList[t].token;
+            //}
 
-            Guid updatetoken = Guid.NewGuid();
-            resp.UpdateToken = updatetoken.ToString();
+            //Guid updatetoken = Guid.NewGuid();
+            //resp.UpdateToken = updatetoken.ToString();
+            resp.HasMoreUpdates = false;
             return resp;
         }
     }
     public partial class Service1 : ReplayService.IReplayPort//added        
     {
-        public ReplayService.Capabilities GetReplayServiceCapabilities()
+        ReplayService.Capabilities ReplayService.IReplayPort.GetServiceCapabilities()
         {
-            Console.WriteLine("GetReplayServiceCapabilities called");
+            Console.WriteLine("ReplayService.IReplayPort.GetServiceCapabilities called");
             return new ReplayService.Capabilities();
         }
         public ReplayService.GetReplayUriResponse GetReplayUri(ReplayService.GetReplayUriRequest request)
@@ -4343,12 +4347,9 @@ namespace OnvifProxy
             System.DateTime resp = System.DateTime.Now;
 
             StringBuilder sb = new StringBuilder();
-            sb.Append("<?xml version=\u00221.0\u0022 encoding=\u0022UTF-8\u0022?>");
-            sb.Append("<EndSearchRequest>");
-            sb.Append("<SearchToken>");
+            sb.Append("<?xml version=\u00221.0\u0022 encoding=\u0022UTF-8\u0022?><EndSearchRequest><SearchToken>");
             sb.Append(SearchToken);
-            sb.Append("</SearchToken>");
-            sb.Append("</EndSearchRequest>");
+            sb.Append("</SearchToken></EndSearchRequest>");
 
             TyphoonMsg TyphMsg = new TyphoonMsg(TyphoonMsgType.Request);
             using (TyphMsg = TyphoonMsgManager.SendSyncMsg(200, 19, TyphoonCom.MakeMem(sb.ToString()), 0))
@@ -4363,7 +4364,7 @@ namespace OnvifProxy
 
                 using (MemoryStream ms2 = new MemoryStream(TyphMsg.byteMessageData))
                 {
-                    XmlSerializer xmlserializer2 = new XmlSerializer(typeof(FindRecordingsResponse), "http://www.onvif.org/ver10/schema");
+                    XmlSerializer xmlserializer2 = new XmlSerializer(typeof(System.DateTime), "http://www.onvif.org/ver10/schema");
 
                     try
                     {
@@ -4379,17 +4380,16 @@ namespace OnvifProxy
                     }
                 }
             }
-
-
-            //return new System.DateTime();
         }
         public FindMetadataResponse FindMetadata(FindMetadataRequest request)
         {
-            return new FindMetadataResponse();
+            //return new FindMetadataResponse();
+            throw new NotImplementedException();
         }
         public GetMetadataSearchResultsResponse GetMetadataSearchResults(GetMetadataSearchResultsRequest request)
         {
-            return new GetMetadataSearchResultsResponse();
+            //return new GetMetadataSearchResultsResponse();
+            throw new NotImplementedException();
         }
     }
      

@@ -141,7 +141,7 @@
         <MetadataSearch>false</MetadataSearch>
       </Search>
       <Replay>
-        <XAddr>/onvif/device_service</XAddr>
+        <XAddr>/onvif/replay_service</XAddr>
       </Replay>
       <Receiver>
         <XAddr>/onvif/device_service</XAddr>
