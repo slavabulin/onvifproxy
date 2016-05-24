@@ -3841,19 +3841,12 @@ namespace OnvifProxy
 
             if(typhmsgresp!=null)
             {
-                //////typhmsgresp.stringMessageData = TyphoonCom.ParseMem(0, typhmsgresp.stringMessageData);
-                //////typhmsgresp.stringMessageData.Replace("GetRecordingSummaryResponse", "RecordingSummary");
                 string tmpstring = TyphoonCom.ParseMem(0, typhmsgresp.stringMessageData);
-                tmpstring = tmpstring.Replace("<?xml version=\u00221.0\u0022 encoding=\u0022UTF-8\u0022?>", "");//<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+                tmpstring = tmpstring.Replace("<?xml version=\u00221.0\u0022 encoding=\u0022UTF-8\u0022?>", "");
                 RecordingSummary recsumresponse = new RecordingSummary();
                    
                 try
                 {
-                    //////using(MemoryStream ms = new MemoryStream(typhmsgresp.byteMessageData))
-                    //////{
-                    //////    XmlSerializer serializer = new XmlSerializer(typeof(RecordingSummary));
-                    //////    recsumresponse = (RecordingSummary)serializer.Deserialize(ms);
-                    //////}
                     XmlDocument doc = new XmlDocument();
                     doc.LoadXml(tmpstring);
 
