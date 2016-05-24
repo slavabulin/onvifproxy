@@ -3782,8 +3782,67 @@ namespace OnvifProxy
         }
         public ReplayService.GetReplayUriResponse GetReplayUri(ReplayService.GetReplayUriRequest request)
         {
-            Console.WriteLine("GetReplayUri called");
-            return new ReplayService.GetReplayUriResponse();
+            string formedstring;
+            GetReplayUriResponse resp;
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(GetReplayUriRequest));
+                try
+                {
+                    xmlSerializer.Serialize(ms, request);
+                    StreamReader strread = new StreamReader(ms);
+                    ms.Position = 0;
+                    formedstring = strread.ReadToEnd();
+                }
+                catch (ApplicationException ex)
+                {
+                    throw new FaultException(new FaultReason("No ReplayUri Results"),
+                          new FaultCode("Sender",
+                              new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("NoReplayUriFound", "http://www.onvif.org/ver10/error"))));
+                }
+            }
+
+            TyphoonMsg TyphMsg = new TyphoonMsg(TyphoonMsgType.Request);
+
+            using (TyphMsg = TyphoonMsgManager.SendSyncMsg(200, 21, TyphoonCom.MakeMem(formedstring), 0))
+            {
+                if (TyphMsg == null || string.IsNullOrEmpty(TyphMsg.stringMessageData))
+                    throw new FaultException(new FaultReason("No ReplayUri Found"),
+                          new FaultCode("Sender",
+                              new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("NoReplayUriFound", "http://www.onvif.org/ver10/error"))));
+
+                TyphMsg.stringMessageData = TyphoonCom.ParseMem(0, TyphMsg.stringMessageData);
+                using (MemoryStream ms2 = new MemoryStream(TyphMsg.byteMessageData))
+                {
+                    XmlSerializer xmlserializer2 = new XmlSerializer(typeof(GetReplayUriResponse),
+                        "http://www.onvif.org/ver10/schema");
+                    //XmlSerializer faultserializer = new XmlSerializer(typeof(FaultCode));
+                    try
+                    {
+                        resp = (GetReplayUriResponse)xmlserializer2.Deserialize(ms2);
+                        return resp;
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        //try
+                        //{
+                        //    FaultException fault = (FaultException)faultserializer.Deserialize(ms2);
+                        //    throw fault;
+                        //}
+                        //catch (InvalidOperationException)
+                        {
+                            throw new FaultException(new FaultReason("No ReplayUri"),
+                          new FaultCode("Sender",
+                              new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("NoReplayUriFound", "http://www.onvif.org/ver10/error"))));
+                        }
+
+                    }
+                }
+            }
         }
         public ReplayService.ReplayConfiguration GetReplayConfiguration()
         {
