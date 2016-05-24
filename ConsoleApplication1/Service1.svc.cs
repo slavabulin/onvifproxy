@@ -2543,36 +2543,42 @@ namespace OnvifProxy
 
         public Media.Profile GetProfile(string ProfileToken)
         {
+
+
             Console.WriteLine("GetProfile - token = " + ProfileToken);
 
             ///формируем команду GetProfiles
             TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
 
             typhmsgresp = TyphoonMsgManager.SendSyncMsg(2);
+            if (typhmsgresp == null) throw new FaultException(new FaultReason("NoProfile"),
+                            new FaultCode("Sender",
+                                new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
+                                    new FaultCode("NoProfile", "http://www.onvif.org/ver10/error"))));
+           
 
-            if(typhmsgresp!=null)
+
+            XmlConfig config = new XmlConfig();
+            Media.GetProfilesResponse mediaprofile = new Media.GetProfilesResponse();
+
+            string tmpStr = TyphoonCom.ParseMem(0, typhmsgresp.stringMessageData);
+            typhmsgresp.Dispose();
+            mediaprofile = config.ParseGetProfiles(tmpStr);
+
+            int tokennum = Convert.ToInt32(ProfileToken);
+
+            foreach (Profile profile in mediaprofile.Profiles)
             {
-                XmlConfig config = new XmlConfig();
-                Media.GetProfilesResponse mediaprofile = new Media.GetProfilesResponse();
-
-                string tmpStr = TyphoonCom.ParseMem(0, typhmsgresp.stringMessageData);
-                typhmsgresp.Dispose();
-                mediaprofile = config.ParseGetProfiles(tmpStr);
-                //----------
-                int tokennum = Convert.ToInt32(ProfileToken);
-                if (tokennum > mediaprofile.Profiles.Length || tokennum < 1)
-                    throw new FaultException(new FaultReason("NoProfile"),
-                           new FaultCode("Sender",
-                               new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
-                                   new FaultCode("NoProfile", "http://www.onvif.org/ver10/error"))));
-                //----------
-
-                return mediaprofile.Profiles[tokennum - 1];
+                if (profile.token == tokennum.ToString())
+                {
+                    return profile;
+                }
             }
-            else
-            {
-                return null;
-            }
+            throw new FaultException(new FaultReason("NoProfile"),
+                      new FaultCode("Sender",
+                          new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
+                              new FaultCode("NoProfile", "http://www.onvif.org/ver10/error"))));
+
         }
 
         public Media.GetProfilesResponse GetProfiles(Media.GetProfilesRequest request)
@@ -3777,8 +3783,8 @@ namespace OnvifProxy
     {
         ReplayService.Capabilities ReplayService.IReplayPort.GetServiceCapabilities()
         {
-            Console.WriteLine("ReplayService.IReplayPort.GetServiceCapabilities called");
-            return new ReplayService.Capabilities();
+            ReplayService.Capabilities caps = new ReplayService.Capabilities();
+            return caps;
         }
         public ReplayService.GetReplayUriResponse GetReplayUri(ReplayService.GetReplayUriRequest request)
         {
