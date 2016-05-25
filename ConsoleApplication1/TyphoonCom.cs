@@ -75,7 +75,7 @@ namespace OnvifProxy
         private static UInt32 msgIDCounter;
         private static WSHttpBinding binding;
         private static NVTServiceClient nvtClient;
-        private static System.Collections.ObjectModel.Collection<NVTServiceClient> nvtClientCollection = null;
+        private static System.Collections.ObjectModel.Collection<NVTServiceClient> nvtClientCollection;// = null;
 
         private const int TYPHOON_PORT_NUM = 7520;
         private const int TYPHOON_CONNECTION_TIMEOUT = 10000;
@@ -1708,9 +1708,9 @@ namespace OnvifProxy
                         }
                     }
                 }
-                catch (Exception ex)
+                catch (ApplicationException ex)
                 {
-                    throw ex;
+                    throw;
                 }
                 //counter++;
                 tmpMsg = null;

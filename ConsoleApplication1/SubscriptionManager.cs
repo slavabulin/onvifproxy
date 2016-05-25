@@ -39,7 +39,7 @@ namespace OnvifProxy
         
     }
 
-    public class bnSubscriber
+    public class bnSubscriber : IDisposable
     {
         public string Addr = null;
         public double Timeout = 0;
@@ -50,11 +50,43 @@ namespace OnvifProxy
                     new TextMessageEncodingBindingElement(MessageVersion.Soap12WSAddressing10, Encoding.UTF8),
                     new HttpTransportBindingElement());
 
-        private static ChannelFactory<INotificationConsumer> myChannelFactory = new ChannelFactory<INotificationConsumer>(binding);
-        
+        private static ChannelFactory<INotificationConsumer> myChannelFactory =
+            new ChannelFactory<INotificationConsumer>(binding);//:IDisposable
+
         public INotificationConsumer channel;
 
-        public System.Timers.Timer SubscriberTimeoutTimer;
+        public System.Timers.Timer SubscriberTimeoutTimer;//:IDisposable
+
+        //----implementing IDisposable-------------------
+        private bool _isDisposed = false;
+
+        public void Dispose()
+        {
+            Dispose(true);
+            //MessageTimeoutTimer.Dispose();
+            GC.SuppressFinalize(this);//чтобы при ошибке не вывалиться в деструктор
+        }
+        protected virtual void Dispose(bool isDisposing)
+        {
+            if (this._isDisposed)
+                return;
+
+            if (isDisposing)
+            {
+                // Release only managed resources.
+                myChannelFactory.Close();
+                SubscriberTimeoutTimer.Close();
+            }
+            // Always release unmanaged resources here.
+
+            // Indicate that the object has been disposed.
+            this._isDisposed = true;
+        }
+        ~bnSubscriber()
+        {
+            Dispose(false);
+        }
+        //-----------------------------------------------
 
         public bnSubscriber(string addr, double timeout, int eventtype)
         {
@@ -62,7 +94,7 @@ namespace OnvifProxy
             {
                 throw new Exception("wrong data for subscriber");
             }
-            
+
             if (SubscriberTimeoutTimer == null)
             {
                 SubscriberTimeoutTimer = new System.Timers.Timer(timeout);
@@ -78,9 +110,9 @@ namespace OnvifProxy
             Timeout = timeout;
             Eventtype = eventtype;
             id = Guid.NewGuid();
-            
+
             channel = myChannelFactory.CreateChannel(new EndpointAddress(Addr));
-        }      
+        }
 
         private void OnSubscriptionTimeoutEvent(object source, ElapsedEventArgs e)
         {
@@ -103,11 +135,41 @@ namespace OnvifProxy
         public uint Eventtype;
     }
 
-    public class TyphoonEvent
+    public class TyphoonEvent : IDisposable
     {
         public EventData eventData;
         public System.DateTime eventTime;
-        public System.Timers.Timer EventTimeoutTimer;
+        public System.Timers.Timer EventTimeoutTimer;//:IDisposable
+
+        //----implementing IDisposable-------------------
+        private bool _isDisposed = false;
+        public void Dispose()
+        {
+            Dispose(true);
+            //MessageTimeoutTimer.Dispose();
+            GC.SuppressFinalize(this);//чтобы при ошибке не вывалиться в деструктор
+        }
+        protected virtual void Dispose(bool isDisposing)
+        {
+            if (this._isDisposed)
+                return;
+
+            if (isDisposing)
+            {
+                // Release only managed resources.
+                EventTimeoutTimer.Close();
+            }
+            // Always release unmanaged resources here.
+
+            // Indicate that the object has been disposed.
+            this._isDisposed = true;
+        }
+        ~TyphoonEvent()
+        {
+            Dispose(false);
+        }
+        //-----------------------------------------------
+
 
         public TyphoonEvent(EventData curData, double timeout)
         {
@@ -156,7 +218,6 @@ namespace OnvifProxy
     public static class EventStorage
     {
         public static Collection<TyphoonEvent> storage = new Collection<TyphoonEvent>();
-        //public static ConcurrentDictionary<TyphoonEvent.,TyphoonEvent> storage = new ConcurrentBag<TyphoonEvent>();
 
         public static void AddEvent(TyphoonEvent typhoonEvent)
         {
@@ -165,15 +226,47 @@ namespace OnvifProxy
         }
     }
 
-    public class ppSubscriber
+    public class ppSubscriber : IDisposable
     {
         public string Addr;
         public Event.FilterType Filter;
-        public System.Timers.Timer SubscriberTimeoutTimer;
+        public System.Timers.Timer SubscriberTimeoutTimer;//:IDisposable
         Guid guid;
-        private ServiceHost servhost;
+        private ServiceHost servhost;//:IDisposable
         private double timeout = 60000;//минута в миллисекундах
         private Uri[] addr = new Uri[1];
+        
+        //----implementing IDisposable-------------------
+        private bool _isDisposed = false;
+
+        public void Dispose()
+        {
+            Dispose(true);
+            //MessageTimeoutTimer.Dispose();
+            GC.SuppressFinalize(this);//чтобы при ошибке не вывалиться в деструктор
+        }
+        protected virtual void Dispose(bool isDisposing)
+        {
+            if (this._isDisposed)
+                return;
+
+            if (isDisposing)
+            {
+                // Release only managed resources.
+                SubscriberTimeoutTimer.Close();
+                servhost.Close();
+                servhost = null;
+            }
+            // Always release unmanaged resources here.
+
+            // Indicate that the object has been disposed.
+            this._isDisposed = true;
+        }
+        ~ppSubscriber()
+        {
+            Dispose(false);
+        }
+        //-----------------------------------------------
 
         public ppSubscriber(Event.FilterType filter)
         {
@@ -235,7 +328,7 @@ namespace OnvifProxy
                 new ppSubscriber(filter);
                 
             }
-            catch (Exception ex)
+            catch (ApplicationException ex)
             {
                 Console.WriteLine("additional service host openning failed - {0}", ex.Message);
                 Console.WriteLine("another try ...");
@@ -285,7 +378,8 @@ namespace OnvifProxy
         }
     }
 
-    public class PullPointNotificationService : IPullPointService
+    //public class PullPointNotificationService : IPullPointService
+    public sealed class PullPointNotificationService : IPullPointService
     {
         void Event.PullPointSubscription.SetSynchronizationPoint()
         {

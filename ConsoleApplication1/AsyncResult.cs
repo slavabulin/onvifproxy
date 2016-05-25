@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace OnvifProxy
 {
-    abstract class AsyncResult : IAsyncResult
+    abstract class AsyncResult : IAsyncResult, IDisposable
     {
         AsyncCallback callback;
         bool completedSynchronously;
@@ -18,6 +18,36 @@ namespace OnvifProxy
         object state;
         object thisLock;
 
+        //------------------------------------------
+        private bool _isDisposed = false;
+        public void Dispose()
+        {
+            Dispose(true);
+            //MessageTimeoutTimer.Dispose();
+            GC.SuppressFinalize(this);//чтобы при ошибке не вывалиться в деструктор
+        }
+        protected virtual void Dispose(bool isDisposing)
+        {
+            if (this._isDisposed)
+                return;
+
+            if (isDisposing)
+            {
+                // Release only managed resources.
+                AsyncWaitHandle.Dispose();
+                manualResetEvent.Dispose();
+
+            }
+            // Always release unmanaged resources here.
+
+            // Indicate that the object has been disposed.
+            this._isDisposed = true;
+        }
+        ~AsyncResult()
+        {
+            Dispose(false);
+        }
+        //------------------------------------------
         protected AsyncResult(AsyncCallback callback, object state)
         {
             this.callback = callback;

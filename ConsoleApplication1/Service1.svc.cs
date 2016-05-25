@@ -167,10 +167,10 @@ namespace OnvifProxy
                     {
                         TyphoonCom.log.DebugFormat("GetServices - Error");
                     }
-                    finally
-                    {
-                        ms.Close();
-                    }
+                    //finally
+                    //{
+                    //    ms.Close();
+                    //}
                 }
                 //-----------
 
@@ -467,16 +467,16 @@ namespace OnvifProxy
                 catch (SerializationException g)
                 {
                     Console.WriteLine("Не могу десериализовать файл конфигурации; " + g.Message);
-                    throw g;
+                    throw;
                 }
-                catch (Exception ex)
+                catch (ApplicationException ex)
                 {
-                    throw ex;
+                    throw;
                 }
-                finally
-                {
-                    fs.Close();
-                }
+                //finally
+                //{
+                //    fs.Close();
+                //}
             }
         }
 
@@ -547,7 +547,7 @@ namespace OnvifProxy
                  }
                      catch(FaultException fe)
                  {
-                     throw fe;
+                     throw;
                  }
                  catch (Exception ex)
                  {
@@ -589,13 +589,13 @@ namespace OnvifProxy
                 }
                 catch (FaultException fe)
                 {
-                    throw fe;
+                    throw;
                 }
-                catch (Exception ex)
+                catch (ApplicationException ex)
                 {
                     TyphoonCom.log.Debug("DeleteUsers threw exception while deserializing pwd.xml - {0}", ex);
                 }
-                fs.Dispose();
+                //fs.Dispose();
 
                 using (TextWriter writer = new StreamWriter("pwd.xml"))
                 {
@@ -681,12 +681,12 @@ namespace OnvifProxy
                             }
                         }
                     }
-                    fs.Dispose();
+                    //fs.Dispose();
                     using (TextWriter writer = new StreamWriter("pwd.xml"))
                     {
                         try
                         {
-                            if (userlistfromfile == null) throw new Exception();//not to erase pwd.xml
+                            if (userlistfromfile == null) throw new ApplicationException();//not to erase pwd.xml
                             xmlSerializer.Serialize(writer, userlistfromfile);
                         }
                         catch (Exception ex)
@@ -701,9 +701,9 @@ namespace OnvifProxy
                 }
                 catch(FaultException fe)
                 {
-                    throw fe;
+                    throw;
                 }
-                catch (Exception exc)
+                catch (ApplicationException exc)
                 {
                     TyphoonCom.log.DebugFormat("SetUser - nonserialization exception - {0}", exc.Message);
                 }
@@ -2516,10 +2516,10 @@ namespace OnvifProxy
                     Console.WriteLine("Не могу десериализовать GetVideoSources; " + g.Message);
                     return null;
                 }
-                finally
-                {
-                    ms.Close();
-                }
+                //finally
+                //{
+                //    ms.Close();
+                //}
             }
                 
             return getVideoSourcesResponse;
@@ -2934,9 +2934,7 @@ namespace OnvifProxy
                 throw new FaultException(new FaultReason("NoStreamSetupOrProfileToken"),
                        new FaultCode("Sender",
                            new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
-                               new FaultCode("NoStreamSetupOrProfileToken", "http://www.onvif.org/ver10/error"))));
-
-            
+                               new FaultCode("NoStreamSetupOrProfileToken", "http://www.onvif.org/ver10/error"))));            
 
             MediaUri mediauri = new MediaUri();
             string Buf = null;
@@ -2949,7 +2947,9 @@ namespace OnvifProxy
             byte[] b_profileToken = Encoding.Convert(Encoding.Unicode, Encoding.ASCII, TyphoonCom.MakeMem(ProfileToken));
 
             uint datalen = (uint)b_profileToken.Length + (uint)b_protocol.Length + (uint)b_stream.Length;
+
             #region data preparation
+            //---------------------------------------
             byte[] b_datalen = TyphoonCom.Int32toByteAr(datalen);
 
             byte[] data = new byte[datalen];
@@ -3224,15 +3224,15 @@ namespace OnvifProxy
                 ConfigStruct confstr = new ConfigStruct();
                 XmlConfig conf = new XmlConfig();
 
-                confstr = conf.Read();               
-                
+                confstr = conf.Read();
+
                 if (request.Filter == null)
                 {
                     XmlDocument doc = new XmlDocument();
                     doc.LoadXml("<zero/>");
                     request.Filter = new Event.FilterType();
                     request.Filter.Any = new System.Xml.XmlElement[1];
-                    request.Filter.Any[0] = doc.DocumentElement; 
+                    request.Filter.Any[0] = doc.DocumentElement;
                 }
                 //if (ppSubscriptionManager.SubscribersCollection.ContainsKey(request.Filter))
                 //{
@@ -3241,26 +3241,28 @@ namespace OnvifProxy
                 //    ppsubs.SubscriberTimeoutTimer.Interval = ppsubs.SubscriberTimeoutTimer.Interval + 60000;
                 //}
                 //else
+                using (ppsubs = new ppSubscriber(request.Filter))
                 {
                     //иначе просто создадим сервис с запрашиваемым фильтром
-                    ppsubs = new ppSubscriber(request.Filter);
+                    ;
                     if (request.InitialTerminationTime != null)
                     {
                         ppsubs.SubscriberTimeoutTimer.Interval = hlp.ParseTermTime(request.InitialTerminationTime);
                     }
-                }
-                
 
-                Event.CreatePullPointSubscriptionResponse PullPointSubscriptionResponse = new Event.CreatePullPointSubscriptionResponse();
-                PullPointSubscriptionResponse.SubscriptionReference = new Event.EndpointReferenceType();
-                PullPointSubscriptionResponse.SubscriptionReference.Address = new Event.AttributedURIType();
-                //PullPointSubscriptionResponse.SubscriptionReference.Address.Value = confstr.Capabilities.Events.XAddr + "/bn_subscription_manager";
-                PullPointSubscriptionResponse.SubscriptionReference.Address.Value = ppsubs.Addr;
-                TimeSpan timeSpan = new TimeSpan(0, 0, 0, 0, (int)hlp.ParseTermTime(request.InitialTerminationTime));//некорректно приведение double в int
-                PullPointSubscriptionResponse.TerminationTime = System.DateTime.UtcNow.Add(timeSpan);
-                PullPointSubscriptionResponse.CurrentTime = System.DateTime.UtcNow;
-                
-                return PullPointSubscriptionResponse;
+
+
+                    Event.CreatePullPointSubscriptionResponse PullPointSubscriptionResponse = new Event.CreatePullPointSubscriptionResponse();
+                    PullPointSubscriptionResponse.SubscriptionReference = new Event.EndpointReferenceType();
+                    PullPointSubscriptionResponse.SubscriptionReference.Address = new Event.AttributedURIType();
+                    //PullPointSubscriptionResponse.SubscriptionReference.Address.Value = confstr.Capabilities.Events.XAddr + "/bn_subscription_manager";
+                    PullPointSubscriptionResponse.SubscriptionReference.Address.Value = ppsubs.Addr;
+                    TimeSpan timeSpan = new TimeSpan(0, 0, 0, 0, (int)hlp.ParseTermTime(request.InitialTerminationTime));//некорректно приведение double в int
+                    PullPointSubscriptionResponse.TerminationTime = System.DateTime.UtcNow.Add(timeSpan);
+                    PullPointSubscriptionResponse.CurrentTime = System.DateTime.UtcNow;
+
+                    return PullPointSubscriptionResponse;
+                }
             }
             return null;
         }

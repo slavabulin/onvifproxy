@@ -40,7 +40,7 @@ namespace OnvifProxy
             }
             catch (ArgumentNullException e)
             {
-                throw e;
+                throw;
             }
             if (message.Headers.Action == null)
             {
@@ -158,7 +158,7 @@ namespace OnvifProxy
                                 }
                                 catch (ArgumentNullException ane)
                                 {
-                                    throw ane;
+                                    throw;
                                 }
                             }
                         }
@@ -365,15 +365,11 @@ namespace OnvifProxy
                 catch (SerializationException g)
                 {
                     Console.WriteLine("Не могу десериализовать файл конфигурации; " + g.Message);
-                    throw g;
+                    throw;
                 }
-                catch (Exception ex)
+                catch (ApplicationException ex)
                 {
-                    throw ex;
-                }
-                finally
-                {
-                    fs.Close();
+                    throw;
                 }
             }
         }

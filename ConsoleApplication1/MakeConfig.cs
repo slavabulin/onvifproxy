@@ -37,10 +37,10 @@ namespace OnvifProxy
                     Console.WriteLine("Не могу десериализовать файл конфигурации; " + g.Message);
                     return null;
                 }
-                finally
-                {
-                    ms.Close();                    
-                }
+                //finally
+                //{
+                //    ms.Close();                    
+                //}
             }
             //profile.Profiles[0].VideoSourceConfiguration.
             return profile;
@@ -449,10 +449,10 @@ namespace OnvifProxy
                     {
                         Console.WriteLine("Не могу сериализовать файл конфигурации; ");
                     }
-                    finally
-                    {
-                        writer.Close();
-                    }
+                    //finally
+                    //{
+                    //    writer.Close();
+                    //}
                 }
             }
             else
@@ -479,13 +479,13 @@ namespace OnvifProxy
                     {
                         Console.WriteLine("Не могу десериализовать файл конфигурации; " + g.Message);
                         //return null;
-                        throw g;
+                        throw;
                     }
                     
-                    finally
-                    {
-                        fs.Close();
-                    }
+                    //finally
+                    //{
+                    //    fs.Close();
+                    //}
                 }
             }
             catch (FileNotFoundException fnf)
@@ -544,10 +544,10 @@ namespace OnvifProxy
                         Console.WriteLine("Не могу десериализовать файл конфигурации; " + g.Message);
                         return null;
                     }
-                    finally
-                    {
-                        ms.Close();
-                    }
+                    //finally
+                    //{
+                    //    ms.Close();
+                    //}
                 }
             }
             return cfgStruct;

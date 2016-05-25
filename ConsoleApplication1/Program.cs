@@ -189,7 +189,7 @@ namespace OnvifProxy
             catch (CommunicationException e)
             {
                 Console.WriteLine(e.Message);
-                throw e;
+                throw;
             }
             catch (TimeoutException e)
             {
@@ -272,7 +272,7 @@ namespace OnvifProxy
                 }
                 catch (FaultException fe)
                 {
-                    throw fe;
+                    throw;
                 }
                 catch (Exception ex)
                 {

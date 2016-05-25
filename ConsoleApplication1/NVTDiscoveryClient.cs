@@ -8,16 +8,46 @@ using System.Threading;
 
 namespace OnvifProxy
 {
-    class NVTDiscoClient
+    class NVTDiscoClient : IDisposable
     {
 
-        private DiscoveryClient discoveryClient;
+        private DiscoveryClient discoveryClient;//IDisposable
         private UdpDiscoveryEndpoint discEP;
         private FindCriteria findCriteria;
         private XmlConfig conf;
         private ConfigStruct confstr;
         private uint msgID;
 
+        //----implementing IDisposable-------------------
+        private bool _isDisposed = false;
+
+        public void Dispose()
+        {
+            Dispose(true);
+            //MessageTimeoutTimer.Dispose();
+            GC.SuppressFinalize(this);//чтобы при ошибке не вывалиться в деструктор
+        }
+        protected virtual void Dispose(bool isDisposing)
+        {
+            if (this._isDisposed)
+                return;
+
+            if (isDisposing)
+            {
+                // Release only managed resources.
+                discoveryClient.Close();
+
+            }
+            // Always release unmanaged resources here.
+
+            // Indicate that the object has been disposed.
+            this._isDisposed = true;
+        }
+        ~NVTDiscoClient()
+        {
+            Dispose(false);
+        }
+        //-----------------------------------------------
         public NVTDiscoClient(uint MsgID)
         {
             //---------------------------------------------- 
@@ -42,7 +72,7 @@ namespace OnvifProxy
         }
 
         void ClientFindProgressChanged(object sender, FindProgressChangedEventArgs e)
-        {            
+        {
             Console.WriteLine("Found NVTService endpoint at {0}\n", e.EndpointDiscoveryMetadata.ListenUris[0].OriginalString);
             if (confstr != null)
             {
@@ -73,7 +103,7 @@ namespace OnvifProxy
 
             this.discoveryClient.FindCompleted -= ClientFindCompleted;
             this.discoveryClient.FindProgressChanged -= ClientFindProgressChanged;
-            this.discoveryClient.Close();            
+            this.discoveryClient.Close();
             this.discoveryClient = null;
             this.discEP = null;
             findCriteria = null;
@@ -91,7 +121,7 @@ namespace OnvifProxy
             char[] tmpAr = new char[4];
             byte[] b_address, b_scopes, b_xAddrs, b_metadata;
             string OutStr = null;
-            
+
             Encoding unicode = Encoding.Unicode;
             Encoding cp1251 = Encoding.GetEncoding(1251);
 
