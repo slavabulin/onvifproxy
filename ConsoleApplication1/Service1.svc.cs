@@ -2215,10 +2215,13 @@ namespace OnvifProxy
                         }
                         dnsInformation.SearchDomain = ((string)objMO["DNSDomain"]).Split(' ');
                     }
-                    catch (Exception ex)
+                    catch (ApplicationException aex)
                     {
-                        TyphoonCom.log.DebugFormat(ex.Message);
-                        return null;
+                        TyphoonCom.log.DebugFormat(aex.Message);
+                        throw new FaultException(new FaultReason("NoDNS"),
+                      new FaultCode("Sender",
+                          new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
+                              new FaultCode("NoDNS", "http://www.onvif.org/ver10/error"))));
                     }
                 }
             }
@@ -2542,34 +2545,27 @@ namespace OnvifProxy
         }
 
         public Media.Profile GetProfile(string ProfileToken)
-        {
-
-
-            Console.WriteLine("GetProfile - token = " + ProfileToken);
+        {         
+            TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
+            Media.GetProfilesResponse mediaprofile = new Media.GetProfilesResponse();
+            XmlConfig config = new XmlConfig();
 
             ///формируем команду GetProfiles
-            TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
+            using(typhmsgresp = TyphoonMsgManager.SendSyncMsg(2))
+            {
+                if (typhmsgresp == null || String.IsNullOrEmpty(typhmsgresp.stringMessageData))
+                    throw new FaultException(new FaultReason("NoProfile"),
+                        new FaultCode("Sender",
+                            new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
+                                new FaultCode("NoProfile", "http://www.onvif.org/ver10/error"))));                
 
-            typhmsgresp = TyphoonMsgManager.SendSyncMsg(2);
-            if (typhmsgresp == null) throw new FaultException(new FaultReason("NoProfile"),
-                            new FaultCode("Sender",
-                                new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
-                                    new FaultCode("NoProfile", "http://www.onvif.org/ver10/error"))));
-           
-
-
-            XmlConfig config = new XmlConfig();
-            Media.GetProfilesResponse mediaprofile = new Media.GetProfilesResponse();
-
-            string tmpStr = TyphoonCom.ParseMem(0, typhmsgresp.stringMessageData);
-            typhmsgresp.Dispose();
-            mediaprofile = config.ParseGetProfiles(tmpStr);
-
-            int tokennum = Convert.ToInt32(ProfileToken);
+                typhmsgresp.stringMessageData = TyphoonCom.ParseMem(0, typhmsgresp.stringMessageData);
+                mediaprofile = config.ParseGetProfiles(typhmsgresp.stringMessageData);
+            }
 
             foreach (Profile profile in mediaprofile.Profiles)
             {
-                if (profile.token == tokennum.ToString())
+                if (profile.token == ProfileToken)
                 {
                     return profile;
                 }
