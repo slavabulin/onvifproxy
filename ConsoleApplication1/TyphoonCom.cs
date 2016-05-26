@@ -1642,9 +1642,9 @@ namespace OnvifProxy
         static TyphoonMsgManager()
         {
             ////for testing;
-            //Thread eventThread = new Thread(new ThreadStart(TyphoonMsgManager.TestEventPuller));
-            //eventThread.IsBackground = true;
-            //eventThread.Start();
+            Thread eventThread = new Thread(new ThreadStart(TyphoonMsgManager.TestEventPuller));
+            eventThread.IsBackground = true;
+            eventThread.Start();
 
             //Thread eventThread = new Thread(new ThreadStart(TyphoonMsgManager.TestGetMsgs));
             //eventThread.IsBackground = true;
@@ -1667,53 +1667,52 @@ namespace OnvifProxy
             bool rettryadd = false;
             //uint counter = uint.MaxValue - 100;
             byte[] tmp;
+            TyphoonMsg tmpMsg;
             while (true)
             {
 
-                TyphoonMsg tmpMsg = new TyphoonMsg(TyphoonMsgType.Command);
-
-                tmp = TyphoonCom.FormCommand(200, 1, null, 0);
-                for (int a = 0; a < 4; a++)
+                using (tmpMsg = new TyphoonMsg(TyphoonMsgType.Command))
                 {
-                    tmpMsg.MessageID = tmpMsg.MessageID << 8;
-                    tmpMsg.MessageID += tmp[9 - a];
-                }
-
-                tmpMsg.byteMessageData = new byte[] { 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 };
-                tmpMsg.MessageSubComNum = 6;
-                //tmpMsg.MessageID = 0;
-
-                //if (counter == uint.MaxValue) counter = uint.MinValue;
-                //tmpMsg.MessageID = counter;
-
-                try
-                {
-                    //rettryadd = queueCommandsFromTyphoon.TryAdd(tmpMsg.MessageID, tmpMsg);
-                    rettryadd = TyphoonMsgManager.EnqueueMsg(tmpMsg);
-                    if (rettryadd)
+                    tmp = TyphoonCom.FormCommand(200, 1, null, 0);
+                    for (int a = 0; a < 4; a++)
                     {
-                        TyphoonCom.log.DebugFormat("Fake event counter - msg number - {0}, msgs in queue - {1}",
-                            tmpMsg.MessageID, queueCommandsFromTyphoon.Count.ToString());
+                        tmpMsg.MessageID = tmpMsg.MessageID << 8;
+                        tmpMsg.MessageID += tmp[9 - a];
                     }
-                    else
+
+                    tmpMsg.byteMessageData = new byte[] { 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 };
+                    tmpMsg.MessageSubComNum = 6;
+                    //tmpMsg.MessageID = 0;
+
+                    //if (counter == uint.MaxValue) counter = uint.MinValue;
+                    //tmpMsg.MessageID = counter;
+
+                    try
                     {
-                        if (queueCommandsFromTyphoon.TryGetValue(tmpMsg.MessageID, out tmpMsg))
+                        rettryadd = TyphoonMsgManager.EnqueueMsg(tmpMsg);
+                        if (rettryadd)
                         {
-                            Console.WriteLine("Message already exist - {0}", tmpMsg.MessageID);
-                            break;
+                            TyphoonCom.log.DebugFormat("Fake event counter - msg number - {0}, msgs in queue - {1}",
+                                tmpMsg.MessageID, queueCommandsFromTyphoon.Count.ToString());
                         }
                         else
                         {
-                            throw new Exception();
+                            if (queueCommandsFromTyphoon.TryGetValue(tmpMsg.MessageID, out tmpMsg))
+                            {
+                                Console.WriteLine("Message already exist - {0}", tmpMsg.MessageID);
+                                break;
+                            }
+                            else
+                            {
+                                throw new ApplicationException();
+                            }
                         }
                     }
+                    catch (ApplicationException ex)
+                    {
+                        throw;
+                    }
                 }
-                catch (ApplicationException ex)
-                {
-                    throw;
-                }
-                //counter++;
-                tmpMsg = null;
             }
         }
 

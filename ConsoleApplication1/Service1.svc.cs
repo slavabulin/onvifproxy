@@ -3126,7 +3126,10 @@ namespace OnvifProxy
         public Event.SubscribeResponse1 Subscribe(Event.SubscribeRequest request)
         {
             Helper hlp = new Helper();
-            if (request != null && request.Subscribe != null && request.Subscribe.ConsumerReference != null && request.Subscribe.ConsumerReference.Address != null)
+            if (request != null
+                && request.Subscribe != null 
+                && request.Subscribe.ConsumerReference != null 
+                && request.Subscribe.ConsumerReference.Address != null)
             {
                 OnvifProxy.bnSubscriptionManager.AddSubscriber(new bnSubscriber(request.Subscribe.ConsumerReference.Address.Value,
                     hlp.ParseTermTime(request.Subscribe.InitialTerminationTime),

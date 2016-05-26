@@ -28,7 +28,6 @@ namespace OnvifProxy
 {
     public static class bnSubscriptionManager
     {
-        //public static Dictionary<Guid, bnSubscriber> SubscribersCollection = new Dictionary<Guid, bnSubscriber>();
         public static ConcurrentDictionary<Guid, bnSubscriber> SubscribersCollection = new ConcurrentDictionary<Guid, bnSubscriber>();
 
         public static void AddSubscriber(bnSubscriber subscriber)
@@ -90,9 +89,11 @@ namespace OnvifProxy
 
         public bnSubscriber(string addr, double timeout, int eventtype)
         {
-            if ((addr == null) || (timeout <= 0) || (eventtype <= 0))
+            if ((addr == null) 
+                || (timeout <= 0) 
+                || (eventtype <= 0))
             {
-                throw new Exception("wrong data for subscriber");
+                throw new ApplicationException("wrong data for subscriber");
             }
 
             if (SubscriberTimeoutTimer == null)
@@ -124,6 +125,7 @@ namespace OnvifProxy
             bnSubscriber subs;
             ((IClientChannel)channel).Close();
             bnSubscriptionManager.SubscribersCollection.TryRemove(this.id, out subs);
+            subs.Dispose();
             Console.WriteLine("one basic notification subscriber deleted, subs number = {0}", OnvifProxy.bnSubscriptionManager.SubscribersCollection.Count);
         }
     }
@@ -193,6 +195,7 @@ namespace OnvifProxy
 
         private void OnSubscriptionTimeoutEvent(object source, ElapsedEventArgs e)
         {
+            TyphoonEvent _evnt = null;
             lock (((ICollection)EventStorage.storage).SyncRoot)
             {
                 try
@@ -202,7 +205,9 @@ namespace OnvifProxy
                         if (evnt == this)
                         {
                             EventStorage.storage.Remove(evnt);
+                            _evnt = evnt;
                             Console.WriteLine("TyphoonEvent.OnSubscriptionTimeoutEvent - event removed");
+                            break;                            
                         }
                     }
                 }
@@ -212,6 +217,7 @@ namespace OnvifProxy
                     TyphoonCom.log.DebugFormat("TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - {0}", ioe.Message);
                 }
             }
+            if(_evnt!=null)_evnt.Dispose();
         }
     }
 
@@ -353,6 +359,7 @@ namespace OnvifProxy
                 {
                     ppSubscriptionManager.SubscribersCollection.TryRemove(this.Filter, out tmpsubs);
                     servhost.Close();
+                    tmpsubs.Dispose();
                     Console.WriteLine("one pull-point subscriber deleted, subs number = {0}", OnvifProxy.ppSubscriptionManager.SubscribersCollection.Count);
                 }
                 
