@@ -73,7 +73,6 @@ namespace OnvifProxy
             if (isDisposing)
             {
                 // Release only managed resources.
-                myChannelFactory.Close();
                 SubscriberTimeoutTimer.Close();
             }
             // Always release unmanaged resources here.
@@ -112,6 +111,7 @@ namespace OnvifProxy
             Eventtype = eventtype;
             id = Guid.NewGuid();
 
+            //myChannelFactory.
             channel = myChannelFactory.CreateChannel(new EndpointAddress(Addr));
         }
 
@@ -195,19 +195,26 @@ namespace OnvifProxy
 
         private void OnSubscriptionTimeoutEvent(object source, ElapsedEventArgs e)
         {
-            TyphoonEvent _evnt = null;
             lock (((ICollection)EventStorage.storage).SyncRoot)
             {
                 try
                 {
-                    foreach (TyphoonEvent evnt in EventStorage.storage)
+                    //foreach (TyphoonEvent evnt in EventStorage.storage)
+                    //{
+                    //    if (evnt == this)
+                    //    {
+                    //        EventStorage.storage.Remove(evnt);
+                    //        Console.WriteLine("TyphoonEvent.OnSubscriptionTimeoutEvent - event removed");
+                    //        break;
+                    //    }
+                    //}
+
+                    for (int y = 0; y < EventStorage.storage.Count; y++)
                     {
-                        if (evnt == this)
+                        if (EventStorage.storage.ElementAt<TyphoonEvent>(y) == this)
                         {
-                            EventStorage.storage.Remove(evnt);
-                            _evnt = evnt;
+                            EventStorage.storage.RemoveAt(y);
                             Console.WriteLine("TyphoonEvent.OnSubscriptionTimeoutEvent - event removed");
-                            break;                            
                         }
                     }
                 }
@@ -217,7 +224,6 @@ namespace OnvifProxy
                     TyphoonCom.log.DebugFormat("TyphoonEvent - OnSubscriptionTimeoutEvent - exception raised - {0}", ioe.Message);
                 }
             }
-            if(_evnt!=null)_evnt.Dispose();
         }
     }
 

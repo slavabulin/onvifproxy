@@ -24,7 +24,6 @@ namespace OnvifProxy
         public void Dispose()
         {
             Dispose(true);
-            //MessageTimeoutTimer.Dispose();
             GC.SuppressFinalize(this);//чтобы при ошибке не вывалиться в деструктор
         }
         protected virtual void Dispose(bool isDisposing)
@@ -36,7 +35,6 @@ namespace OnvifProxy
             {
                 // Release only managed resources.
                 discoveryClient.Close();
-
             }
             // Always release unmanaged resources here.
 
