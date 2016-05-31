@@ -22,6 +22,11 @@ namespace OnvifProxy
     {
         Dictionary<string, List<XmlQualifiedName>> dispatchDictionary;
         string defaultOperationName;
+        FaultException fault = new FaultException(new FaultReason("UnauthorizedAccessFault"),
+                            new FaultCode("Sender",
+                                new FaultCode("ActionNotSupported", "http://www.onvif.org/ver10/error",
+                                    new FaultCode("UnauthorizedAccessFault", "http://www.onvif.org/ver10/error"))));
+
 
         public SecurityOperationSelector(Dictionary<string, List<XmlQualifiedName>> dispatchDictionary, string defaultOperationName)
         {
@@ -71,7 +76,9 @@ namespace OnvifProxy
                     secheader.Token.Username = navigator.Value;
                     navigator.MoveToParent();
                 }
-                else return null;
+                else
+                    return null;
+
                 if (navigator.MoveToChild("Password", "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"))
                 {
                     secheader.Token.Password = navigator.Value;
@@ -84,19 +91,24 @@ namespace OnvifProxy
                     }
                     navigator.MoveToParent();
                 }
-                else return null;
+                else
+                    return null;
+
                 if (navigator.MoveToChild("Nonce", "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"))
                 {
                     secheader.Token.Nonce = navigator.Value;
                     navigator.MoveToParent();
                 }
-                else return null;
+                else
+                    return null;
+
                 if (navigator.MoveToChild("Created", "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"))
                 {
                     secheader.Token.Created = navigator.Value;
                     navigator.MoveToParent();
                 }
-                else return null;
+                else
+                    return null;
                 return secheader;
             }
             return null;
@@ -104,20 +116,31 @@ namespace OnvifProxy
 
         public string SelectOperation(ref System.ServiceModel.Channels.Message message)
         {
+            bool methodExistInMethodList = false;
             //!!!!can leak here (in message1, message2)!!!!!
-            using (MessageBuffer buffer = message.CreateBufferedCopy(Int32.MaxValue))
+            using (MessageBuffer buffer = message.CreateBufferedCopy(Int32.MaxValue))//IDisposable
             {
                 List<XmlQualifiedName> methodList = new List<XmlQualifiedName>();
                 Usertype usertypefromfile = Usertype.wrongpass;
 
-                Message msgcopy2 = buffer.CreateMessage();//
-                XmlDictionaryReader bodyReader = msgcopy2.GetReaderAtBodyContents();
+                Message msgcopy2 = buffer.CreateMessage();//IDisposable
+                XmlDictionaryReader bodyReader = msgcopy2.GetReaderAtBodyContents();//IDisposable
                 XmlQualifiedName lookupQName = new XmlQualifiedName(bodyReader.LocalName, bodyReader.NamespaceURI);
-                Message msgcopy1 = CreateMessageCopy(message, bodyReader);// using
+                Message msgcopy1 = CreateMessageCopy(message, bodyReader);//IDisposable
 
                 Security secheader = new Security();
                 secheader.Token = new UsernameToken();
-                secheader = GetCredsFromMessageBuffer(buffer);
+
+                //try
+                //{
+                    secheader = GetCredsFromMessageBuffer(buffer);
+                //}
+                //catch(FaultException fe)
+                //{
+                //    //throw;
+                //    return "ActionNotSupported";
+                //}
+                
                 #region check if there is security header
                 if (secheader != null)
                 {
@@ -170,7 +193,8 @@ namespace OnvifProxy
                     {
                         //credentials are wrong
                         message = msgcopy1;
-                        return null;
+                        //return null;
+                        throw fault;
                     }
                     #endregion check if creds are wright
                 }
@@ -190,23 +214,24 @@ namespace OnvifProxy
                             //string tmpstring = methodname.Namespace + "/" + methodname.Name;
                             if (methodname == lookupQName)
                             {
+                                methodExistInMethodList = true;
                                 message = msgcopy1;
-                                return methodname.Name;
+                                return methodname.Name;                                
                             }
                         }
                         //
                     }
                     catch (ArgumentNullException ane)
                     {
-                        return null;
-                        //return "UnauthorizedAccessFault";
+                        throw fault;
                     }
 
                     //---------------------------------
-
                     message = msgcopy1;
-                    return null;
-                    //return "UnauthorizedAccessFault";
+                    //return null;
+                    //message = null;
+                    return "UnauthorizedAccessFault";
+
 
                 #endregion check if there is security header
 

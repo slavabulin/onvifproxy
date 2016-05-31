@@ -32,7 +32,8 @@ namespace OnvifProxy
 {
     // ПРИМЕЧАНИЕ. Команду "Переименовать" в меню "Рефакторинг" можно использовать для одновременного изменения имени класса "Service1" в коде, SVC-файле и файле конфигурации.
     [ServiceBehavior(AddressFilterMode = AddressFilterMode.Any,
-        InstanceContextMode = InstanceContextMode.Single)]
+        InstanceContextMode = InstanceContextMode.Single,
+        IncludeExceptionDetailInFaults = true)]
 
 
     public partial class Service1 : Device.IDevice,
@@ -42,20 +43,28 @@ namespace OnvifProxy
         Event.IPullPoint,
         Event.ICreatePullPoint,
         Event.SubscriptionManager,
-        Event.IPausableSubscriptionManager,
+        //Event.IPausableSubscriptionManager,
         Event.INotificationConsumer,
         Event.PullPointSubscription,
         MediaSourcesProvider.IMediaSourcesProvider,
         ReplayService.IReplayPort,
         RecordingSearch.ISearchPort
     {
-        public GetServicesResponse UnauthorizedAccessFault()
+        public void UnauthorizedAccessFault()
         {
             throw new FaultException(new FaultReason("The requested operation is not permitted by the device"),
                           new FaultCode("Sender",
                               new FaultCode("NotAuthorized", "http://www.onvif.org/ver10/error",
                                   new FaultCode("Operation not Permitted", "http://www.onvif.org/ver10/error"))));
         }
+
+        //void IMedia.UnauthorizedAccessFault()
+        //{
+        //    throw new FaultException(new FaultReason("The requested operation is not permitted by the device"),
+        //                  new FaultCode("Sender",
+        //                      new FaultCode("NotAuthorized", "http://www.onvif.org/ver10/error",
+        //                          new FaultCode("Operation not Permitted", "http://www.onvif.org/ver10/error"))));
+        //}
         //---------------------------------------------------
         // added to set system time&date
         [DllImport("kernel32.dll", SetLastError = true)]
@@ -3155,6 +3164,7 @@ namespace OnvifProxy
                     subscr.SubscribeResponse.TerminationTime = tmptime.AddMilliseconds(1000);
                 }
                 subscr.SubscribeResponse.TerminationTimeSpecified = true;
+
                 return subscr;
             }
             else
@@ -3175,7 +3185,8 @@ namespace OnvifProxy
 
         Event.Capabilities Event.IEventPortType.GetServiceCapabilities()
         {
-            throw new NotImplementedException();
+            Event.Capabilities caps = new Event.Capabilities();
+            return caps;
         }
 
         public Event.GetEventPropertiesResponse GetEventProperties(Event.GetEventPropertiesRequest request)
@@ -3204,8 +3215,8 @@ namespace OnvifProxy
             geteventprop.TopicExpressionDialect = new string[2];
             geteventprop.TopicExpressionDialect[0] = "http://www.onvif.org/ver10/tev/topicExpression/ConcreteSet";
             //geteventprop.TopicExpressionDialect[0] = "http://www.onvif.org/ver10/tev/topicExpression/SimpleSet";
-            //geteventprop.TopicExpressionDialect[1] = "http://docs.oasis-open.org/wsn/t-1/TopicExpression/Concrete";
-            geteventprop.TopicExpressionDialect[1] = "http://docs.oasis-open.org/wsn/t-1/TopicExpression/Simple";
+            geteventprop.TopicExpressionDialect[1] = "http://docs.oasis-open.org/wsn/t-1/TopicExpression/Concrete";
+            //geteventprop.TopicExpressionDialect[1] = "http://docs.oasis-open.org/wsn/t-1/TopicExpression/Simple";
 
             geteventprop.MessageContentFilterDialect = new string[1];
             geteventprop.MessageContentFilterDialect[0] = "http://www.onvif.org/ver10/tev/messageContentFilter/ItemFilter";
@@ -3270,13 +3281,16 @@ namespace OnvifProxy
             return null;
         }
 
+        //Event.RenewResponse1 Event.IPausableSubscriptionManager.Renew(Event.RenewRequest request)
         public Event.RenewResponse1 Renew(Event.RenewRequest request)
         {
+            OperationContext context = OperationContext.Current;
             Helper hlp = new Helper();
             if (request != null && request.Renew != null && request.Renew.
                 TerminationTime!= null )
             { 
-                string address = GetIP();
+                //request.Renew.
+                string address = GetIP(context);
                 int fl = 0;
                 foreach (bnSubscriber subscriber in bnSubscriptionManager.SubscribersCollection.Values)
                 {
@@ -3297,36 +3311,42 @@ namespace OnvifProxy
                 //если нет - вернем fault
                 if (fl == 0)
                 {
-                    docs.oasisopen.org.wsn.b2.UnacceptableTerminationTimeFaultType uttft = new docs.oasisopen.org.wsn.b2.UnacceptableTerminationTimeFaultType();
-                    uttft.Nodes = new XmlNode[8];
-                    XmlDocument doc = new XmlDocument();
-                    string str = "<Timestamp xmlns='http://docs.oasis-open.org/wsrf/bf-2'>" + System.DateTime.UtcNow.ToString("s") + "</Timestamp>";
-                    doc.LoadXml(str);
-                    uttft.Nodes[0] = doc.FirstChild;
-                    str = "<Originator xmlns='http://docs.oasis-open.org/wsrf/bf-2'>" + "<Address xmlns = 'http://www.w3.org/2005/08/addressing'>" + Program.uuid + "</Address>" + "</Originator>";
-                    doc.LoadXml(str);
-                    uttft.Nodes[1] = doc.FirstChild;
-                    str = "<ErrorCode  xmlns='http://docs.oasis-open.org/wsrf/bf-2' dialect='anyURI'/>";
-                    doc.LoadXml(str);
-                    uttft.Nodes[2] = doc.FirstChild;
-                    str = "<Description xmlns='http://docs.oasis-open.org/wsrf/bf-2'/>";
-                    doc.LoadXml(str);
-                    uttft.Nodes[3] = doc.FirstChild;
-                    str = "<FaultCause xmlns='http://docs.oasis-open.org/wsrf/bf-2'><someitem xmlns = 'somenamespace'/></FaultCause>";
-                    doc.LoadXml(str);
-                    uttft.Nodes[4] = doc.FirstChild;
-                    str = "<MinimumTime xmlns='http://docs.oasis-open.org/wsn/b-2'>" + System.DateTime.MinValue.ToString("s") + "</MinimumTime>";
-                    doc.LoadXml(str);
-                    uttft.Nodes[5] = doc.FirstChild;
-                    str = "<MaximumTime xmlns='http://docs.oasis-open.org/wsn/b-2'>" + System.DateTime.MaxValue.ToString("s") + "</MaximumTime>";
-                    doc.LoadXml(str);
-                    uttft.Nodes[6] = doc.FirstChild;
-                    //str = "<Action xmlns='http://www.w3.org/2005/08/adressing'>" + "http://www.w3.org/2005/08/addressing/soap/fault" + "</Action>";
+                    #region
+                    //docs.oasisopen.org.wsn.b2.UnacceptableTerminationTimeFaultType uttft = new docs.oasisopen.org.wsn.b2.UnacceptableTerminationTimeFaultType();
+                    //uttft.Nodes = new XmlNode[8];
+                    //XmlDocument doc = new XmlDocument();
+                    //string str = "<Timestamp xmlns='http://docs.oasis-open.org/wsrf/bf-2'>" + System.DateTime.UtcNow.ToString("s") + "</Timestamp>";
                     //doc.LoadXml(str);
-                    //uttft.Nodes[7] = doc.FirstChild;//http://docs.oasis-open.org/wsn/fault
-                    FaultException fe = new FaultException<docs.oasisopen.org.wsn.b2.UnacceptableTerminationTimeFaultType>(uttft, new FaultReason("no such subscriber"), new FaultCode("Sender"), "http://www.w3.org/2005/08/addressing/soap/fault");
-                    //FaultException fe = new FaultException<docs.oasisopen.org.wsn.b2.UnacceptableTerminationTimeFaultType>(uttft, new FaultReason("no such subscriber"), new FaultCode("faultcodename"), "http://docs.oasis-open.org/wsn/fault");
-                    throw fe;
+                    //uttft.Nodes[0] = doc.FirstChild;
+                    //str = "<Originator xmlns='http://docs.oasis-open.org/wsrf/bf-2'>" + "<Address xmlns = 'http://www.w3.org/2005/08/addressing'>" + Program.uuid + "</Address>" + "</Originator>";
+                    //doc.LoadXml(str);
+                    //uttft.Nodes[1] = doc.FirstChild;
+                    //str = "<ErrorCode  xmlns='http://docs.oasis-open.org/wsrf/bf-2' dialect='anyURI'/>";
+                    //doc.LoadXml(str);
+                    //uttft.Nodes[2] = doc.FirstChild;
+                    //str = "<Description xmlns='http://docs.oasis-open.org/wsrf/bf-2'/>";
+                    //doc.LoadXml(str);
+                    //uttft.Nodes[3] = doc.FirstChild;
+                    //str = "<FaultCause xmlns='http://docs.oasis-open.org/wsrf/bf-2'><someitem xmlns = 'somenamespace'/></FaultCause>";
+                    //doc.LoadXml(str);
+                    //uttft.Nodes[4] = doc.FirstChild;
+                    //str = "<MinimumTime xmlns='http://docs.oasis-open.org/wsn/b-2'>" + System.DateTime.MinValue.ToString("s") + "</MinimumTime>";
+                    //doc.LoadXml(str);
+                    //uttft.Nodes[5] = doc.FirstChild;
+                    //str = "<MaximumTime xmlns='http://docs.oasis-open.org/wsn/b-2'>" + System.DateTime.MaxValue.ToString("s") + "</MaximumTime>";
+                    //doc.LoadXml(str);
+                    //uttft.Nodes[6] = doc.FirstChild;
+                    ////str = "<Action xmlns='http://www.w3.org/2005/08/adressing'>" + "http://www.w3.org/2005/08/addressing/soap/fault" + "</Action>";
+                    ////doc.LoadXml(str);
+                    ////uttft.Nodes[7] = doc.FirstChild;//http://docs.oasis-open.org/wsn/fault
+                    //FaultException fe = new FaultException<docs.oasisopen.org.wsn.b2.UnacceptableTerminationTimeFaultType>(uttft, new FaultReason("no such subscriber"), new FaultCode("Sender"), "http://www.w3.org/2005/08/addressing/soap/fault");
+                    ////FaultException fe = new FaultException<docs.oasisopen.org.wsn.b2.UnacceptableTerminationTimeFaultType>(uttft, new FaultReason("no such subscriber"), new FaultCode("faultcodename"), "http://docs.oasis-open.org/wsn/fault");
+                    //throw fe;
+                    #endregion
+                    throw new FaultException(new FaultReason("ResourceUnknownFault"),
+                      new FaultCode("Sender",
+                          new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                              new FaultCode("ResourceUnknownFault", "http://www.onvif.org/ver10/error"))));
                 }
 
                 Event.RenewResponse renewResponse = new Event.RenewResponse();
@@ -3349,6 +3369,90 @@ namespace OnvifProxy
             return null;
         }
 
+
+        //Event.RenewResponse1 Event.SubscriptionManager.Renew(Event.RenewRequest request)
+        //{
+        //    Helper hlp = new Helper();
+        //    if (request != null && request.Renew != null && request.Renew.
+        //        TerminationTime != null)
+        //    {
+        //        string address = GetIP();
+        //        int fl = 0;
+        //        foreach (bnSubscriber subscriber in bnSubscriptionManager.SubscribersCollection.Values)
+        //        {
+        //            if (TrimIP(subscriber.Addr) == address)
+        //            {
+        //                if (hlp.ParseTermTime(request.Renew.TerminationTime) >= 0)
+        //                {
+        //                    subscriber.SubscriberTimeoutTimer.Interval = hlp.ParseTermTime(request.Renew.TerminationTime);
+        //                }
+        //                else
+        //                {
+        //                    subscriber.SubscriberTimeoutTimer.Interval = 1;
+        //                }
+        //                fl++;
+        //            }
+        //        }
+        //        //проверка наличия подписчика в коллекции
+        //        //если нет - вернем fault
+        //        if (fl == 0)
+        //        {
+        //            //docs.oasisopen.org.wsn.b2.UnacceptableTerminationTimeFaultType uttft = new docs.oasisopen.org.wsn.b2.UnacceptableTerminationTimeFaultType();
+        //            //uttft.Nodes = new XmlNode[8];
+        //            //XmlDocument doc = new XmlDocument();
+        //            //string str = "<Timestamp xmlns='http://docs.oasis-open.org/wsrf/bf-2'>" + System.DateTime.UtcNow.ToString("s") + "</Timestamp>";
+        //            //doc.LoadXml(str);
+        //            //uttft.Nodes[0] = doc.FirstChild;
+        //            //str = "<Originator xmlns='http://docs.oasis-open.org/wsrf/bf-2'>" + "<Address xmlns = 'http://www.w3.org/2005/08/addressing'>" + Program.uuid + "</Address>" + "</Originator>";
+        //            //doc.LoadXml(str);
+        //            //uttft.Nodes[1] = doc.FirstChild;
+        //            //str = "<ErrorCode  xmlns='http://docs.oasis-open.org/wsrf/bf-2' dialect='anyURI'/>";
+        //            //doc.LoadXml(str);
+        //            //uttft.Nodes[2] = doc.FirstChild;
+        //            //str = "<Description xmlns='http://docs.oasis-open.org/wsrf/bf-2'/>";
+        //            //doc.LoadXml(str);
+        //            //uttft.Nodes[3] = doc.FirstChild;
+        //            //str = "<FaultCause xmlns='http://docs.oasis-open.org/wsrf/bf-2'><someitem xmlns = 'somenamespace'/></FaultCause>";
+        //            //doc.LoadXml(str);
+        //            //uttft.Nodes[4] = doc.FirstChild;
+        //            //str = "<MinimumTime xmlns='http://docs.oasis-open.org/wsn/b-2'>" + System.DateTime.MinValue.ToString("s") + "</MinimumTime>";
+        //            //doc.LoadXml(str);
+        //            //uttft.Nodes[5] = doc.FirstChild;
+        //            //str = "<MaximumTime xmlns='http://docs.oasis-open.org/wsn/b-2'>" + System.DateTime.MaxValue.ToString("s") + "</MaximumTime>";
+        //            //doc.LoadXml(str);
+        //            //uttft.Nodes[6] = doc.FirstChild;
+        //            ////str = "<Action xmlns='http://www.w3.org/2005/08/adressing'>" + "http://www.w3.org/2005/08/addressing/soap/fault" + "</Action>";
+        //            ////doc.LoadXml(str);
+        //            ////uttft.Nodes[7] = doc.FirstChild;//http://docs.oasis-open.org/wsn/fault
+        //            //FaultException fe = new FaultException<docs.oasisopen.org.wsn.b2.UnacceptableTerminationTimeFaultType>(uttft, new FaultReason("no such subscriber"), new FaultCode("Sender"), "http://www.w3.org/2005/08/addressing/soap/fault");
+        //            ////FaultException fe = new FaultException<docs.oasisopen.org.wsn.b2.UnacceptableTerminationTimeFaultType>(uttft, new FaultReason("no such subscriber"), new FaultCode("faultcodename"), "http://docs.oasis-open.org/wsn/fault");
+        //            //throw fe;
+
+        //            throw new FaultException(new FaultReason("ResourceUnknownFault"),
+        //              new FaultCode("Sender",
+        //                  new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+        //                      new FaultCode("ResourceUnknownFault", "http://www.onvif.org/ver10/error"))));
+        //        }
+
+        //        Event.RenewResponse renewResponse = new Event.RenewResponse();
+        //        renewResponse.CurrentTime = System.DateTime.Now;
+        //        System.DateTime tmptime = new System.DateTime();
+        //        tmptime = renewResponse.CurrentTime;
+        //        double mlscnds = hlp.ParseTermTime(request.Renew.TerminationTime);
+        //        if (mlscnds >= 0)
+        //        {
+        //            renewResponse.TerminationTime = tmptime.AddMilliseconds(mlscnds);
+        //        }
+        //        else
+        //        {
+        //            renewResponse.TerminationTime = tmptime.AddMilliseconds(1000);
+        //        }
+        //        renewResponse.CurrentTimeSpecified = true;
+
+        //        return new Event.RenewResponse1(renewResponse);
+        //    }
+        //    return null;
+        //}
 
         //private double ParseTermTime(string termtime)
         //{
@@ -3467,37 +3571,57 @@ namespace OnvifProxy
             return tmp2;
         }
 
-
-        private string GetIP()
+        private string GetIP(OperationContext context)
         {
-            OperationContext context = OperationContext.Current;
-            MessageProperties prop = context.IncomingMessageProperties;           
+            //OperationContext context = OperationContext.Current;
+            //return OperationContext.Current.Channel.RemoteAddress.Uri.Host;
+            //return context.Channel.RemoteAddress.Uri.Host;
 
-            RemoteEndpointMessageProperty endpoint =
+            using (MessageProperties prop = context.IncomingMessageProperties)//IDisposable   
+            {
+                RemoteEndpointMessageProperty endpoint =
                prop[RemoteEndpointMessageProperty.Name] as RemoteEndpointMessageProperty;
 
-            string ip = endpoint.Address;
+                string ip = endpoint.Address;
 
-            return ip;
-
+                return ip;
+            }
         }
 
         public Event.UnsubscribeResponse1 Unsubscribe(Event.UnsubscribeRequest request)
         {
+            OperationContext context = OperationContext.Current;
+
+            bool containsRequestSubscriber = false;
+            string address;
+
+            
             if (request != null && request.Unsubscribe != null)
             {
-                string address = GetIP();
-
+                address = GetIP(context);
+                
                 foreach (bnSubscriber subscriber in bnSubscriptionManager.SubscribersCollection.Values)
                 {
                     if (TrimIP(subscriber.Addr) == address)
                     {
                         subscriber.SubscriberTimeoutTimer.Interval = 1;
+                        containsRequestSubscriber = true;
                     }
                 }
-                return new Event.UnsubscribeResponse1();
+                if (containsRequestSubscriber)
+                {
+                    return new Event.UnsubscribeResponse1();
+                }
+                else
+                {
+                    throw new FaultException(new FaultReason("ResourceUnknownFault"),
+                          new FaultCode("Sender",
+                              new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("ResourceUnknownFault", "http://www.onvif.org/ver10/error"))));
+                }              
             }
             return null;
+            
         }
 
         public Event.GetMessagesResponse1 GetMessages(Event.GetMessagesRequest request)

@@ -202,6 +202,7 @@ namespace OnvifProxy
             catch (Exception e)
             {
                 Console.WriteLine("!!!!! - {0}",e.Message);
+                Console.ReadLine();
             }
         }
 

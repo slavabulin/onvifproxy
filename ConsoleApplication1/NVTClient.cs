@@ -79,7 +79,13 @@ namespace OnvifProxy
 
 
         #region
-
+        public void UnauthorizedAccessFault()
+        {
+            throw new FaultException(new FaultReason("The requested operation is not permitted by the device"),
+                          new FaultCode("Sender",
+                              new FaultCode("NotAuthorized", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("Operation not Permitted", "http://www.onvif.org/ver10/error"))));
+        }
         public void ActionNotSupported()
         {
             throw new FaultException(new FaultReason("ActionNotSupported"),

@@ -38,13 +38,22 @@ namespace Media
 
         // CODEGEN: Параметр "VideoSources" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         //---------------------------------------------------------------------------------
-        [System.ServiceModel.OperationContractAttribute(ReplyAction = "*", Action = "*"),
+        [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
         OnvifProxy.SecurityOperationBehavoir("ActionNotSupported", "http://www.onvif.org/ver10/media/wsdl", 3)]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "ActionNotSupported")]
         void ActionNotSupported();
+
+
+        [System.ServiceModel.OperationContractAttribute(ReplyAction = "*", Action = "*"),
+        OnvifProxy.SecurityOperationBehavoir("UnauthorizedAccessFault", "http://www.onvif.org/ver10/media/wsdl", 0)]
+        [System.ServiceModel.XmlSerializerFormatAttribute()]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name = "UnauthorizedAccessFault")]
+        void UnauthorizedAccessFault();
         //---------------------------------------------------------------------------------
 
         [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"/*, Action = "*"*/),
@@ -12231,6 +12240,13 @@ namespace Media
         //    GetServiceCapabilitiesResponse1 retVal = ((IMedia)(this)).GetServiceCapabilities(inValue);
         //    return retVal.GetServiceCapabilitiesResponse;
         //}
+        public void UnauthorizedAccessFault()
+        {
+            throw new FaultException(new FaultReason("The requested operation is not permitted by the device"),
+                          new FaultCode("Sender",
+                              new FaultCode("NotAuthorized", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("Operation not Permitted", "http://www.onvif.org/ver10/error"))));
+        }
         public void ActionNotSupported()
         {
             throw new FaultException(new FaultReason("ActionNotSupported"),
