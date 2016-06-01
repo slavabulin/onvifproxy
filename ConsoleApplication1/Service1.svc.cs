@@ -46,7 +46,7 @@ namespace OnvifProxy
         //Event.IPausableSubscriptionManager,
         Event.INotificationConsumer,
         Event.PullPointSubscription,
-        MediaSourcesProvider.IMediaSourcesProvider,
+        //MediaSourcesProvider.IMediaSourcesProvider,
         ReplayService.IReplayPort,
         RecordingSearch.ISearchPort
     {
@@ -57,7 +57,32 @@ namespace OnvifProxy
                               new FaultCode("NotAuthorized", "http://www.onvif.org/ver10/error",
                                   new FaultCode("Operation not Permitted", "http://www.onvif.org/ver10/error"))));
         }
+        public string GetDeviceInformation(out string Model, out string FirmwareVersion, out string SerialNumber, out string HardwareId)
+        {
+            //GetMediaSources(new GetMediaSourcesRequest());
+            //FindRecordings(new FindRecordingsRequest());
+            //  while(true)
+            //{
+            //    GetRecordingSearchResults(new GetRecordingSearchResultsRequest());
+            //    Thread.Sleep(1);
+            //}
 
+            MediaSourcesProvider.GetMediaSourcesRequest request = new GetMediaSourcesRequest();
+            request.Limit = 10;
+            request.StartReference = "0";
+            GetMediaSources(request);
+            //---------------------------------------------------
+
+
+
+            Model = "Model:SuperPuperModel";
+            HardwareId = "HardwareId:xxxx";
+            SerialNumber = "s/n:00000001";
+            FirmwareVersion = "f/v:0.0.0.1";
+
+            return "Evs";
+        }
+        
         //void IMedia.UnauthorizedAccessFault()
         //{
         //    throw new FaultException(new FaultReason("The requested operation is not permitted by the device"),
@@ -285,8 +310,6 @@ namespace OnvifProxy
                 return new GetScopesResponse();
             }
         }
-
-
         public SetScopesResponse SetScopes(SetScopesRequest request)
         {
             XmlConfig conf = new XmlConfig();
@@ -355,8 +378,6 @@ namespace OnvifProxy
                 return new SetScopesResponse();
             }
         }
-
-
         public AddScopesResponse AddScopes(AddScopesRequest request)
         {
             XmlConfig conf = new XmlConfig();
@@ -1749,25 +1770,7 @@ namespace OnvifProxy
             return (new StartSystemRestoreResponse());
         }
         //----------------------------------------------------------------------------------------------------------
-        public string GetDeviceInformation(out string Model, out string FirmwareVersion, out string SerialNumber, out string HardwareId)
-        {
-            //GetMediaSources(new GetMediaSourcesRequest());
-            //FindRecordings(new FindRecordingsRequest());
-          //  while(true)
-            //{
-            //    GetRecordingSearchResults(new GetRecordingSearchResultsRequest());
-            //    Thread.Sleep(1);
-            //}
-            
-
-
-            Model = "Model:SuperPuperModel";
-            HardwareId = "HardwareId:xxxx";
-            SerialNumber = "s/n:00000001";
-            FirmwareVersion = "f/v:0.0.0.1";
-
-            return "Evs";
-        }
+        
 
         //--------------------
         //public System.DateTime ParseAsUtc(string logDate, string timezoneName)
@@ -3573,17 +3576,11 @@ namespace OnvifProxy
 
         private string GetIP(OperationContext context)
         {
-            //OperationContext context = OperationContext.Current;
-            //return OperationContext.Current.Channel.RemoteAddress.Uri.Host;
-            //return context.Channel.RemoteAddress.Uri.Host;
-
             using (MessageProperties prop = context.IncomingMessageProperties)//IDisposable   
             {
                 RemoteEndpointMessageProperty endpoint =
-               prop[RemoteEndpointMessageProperty.Name] as RemoteEndpointMessageProperty;
-
+                    prop[RemoteEndpointMessageProperty.Name] as RemoteEndpointMessageProperty;
                 string ip = endpoint.Address;
-
                 return ip;
             }
         }
@@ -3832,7 +3829,7 @@ namespace OnvifProxy
     {
         public MediaSourcesProvider.GetMediaSourcesResponse GetMediaSources(MediaSourcesProvider.GetMediaSourcesRequest request)
         {
-            int startRef = 0, limit = 1, count = 0;
+            int startRef = 0, limit = 1, mediaSourcesLeftToSend = 0;
             GetMediaSourcesResponse getMediaSourceResp = new GetMediaSourcesResponse();
 
             if (!string.IsNullOrEmpty(request.StartReference))
@@ -3842,11 +3839,11 @@ namespace OnvifProxy
                     startRef = Convert.ToInt32(request.StartReference);
                     if (startRef < 0) startRef = 0;
                 }
-                catch(FormatException fe)
+                catch(FormatException)
                 {
                     startRef = 0;
                 }
-                catch(OverflowException oe)
+                catch(OverflowException)
                 {
                     startRef = 0;
                 }                
@@ -3855,23 +3852,27 @@ namespace OnvifProxy
             if(request.Limit > 0) limit = request.Limit;
 
 
-            if((MediaSource.MediaSourceList.Count-startRef)<limit)
+            if ((MediaSource.MediaSourceList.Count - startRef) < limit)
             {
-                count = MediaSource.MediaSourceList.Count - startRef;
+                mediaSourcesLeftToSend = MediaSource.MediaSourceList.Count - startRef;
             }
             else
             {
-                count = limit;
+                mediaSourcesLeftToSend = limit;
             }
 
-            getMediaSourceResp.MediaSource = new MediaSourceType[count];
+            getMediaSourceResp.MediaSource = new MediaSourceType[mediaSourcesLeftToSend];
 
-            for (int e = startRef; e < (startRef+count); e++)
+            for (int e = startRef; e < (startRef+mediaSourcesLeftToSend); e++)
             {
                 getMediaSourceResp.MediaSource[e] = MediaSource.MediaSourceList[e];
+                getMediaSourceResp.UpdateToken += "*" + getMediaSourceResp.MediaSource[e].token;
             }
-            getMediaSourceResp.UpdateToken = Guid.NewGuid().ToString();
-            //getMediaSourceResp.MediaSource[0].ONVIFBinding.
+            //getMediaSourceResp.UpdateToken = Guid.NewGuid().ToString();
+            //MediaSource
+
+            MediaSource.GetUpdatesOfMediaSourceLIst(getMediaSourceResp.UpdateToken);
+
             return getMediaSourceResp;
         }
 
@@ -3900,6 +3901,8 @@ namespace OnvifProxy
 
             //Guid updatetoken = Guid.NewGuid();
             //resp.UpdateToken = updatetoken.ToString();
+
+            //MediaSource.MediaSourceList[0].
             resp.HasMoreUpdates = false;
             return resp;
         }

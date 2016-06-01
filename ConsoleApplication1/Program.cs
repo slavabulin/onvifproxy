@@ -128,12 +128,6 @@ namespace OnvifProxy
             object LockObj = new object();
             try
             {
-                //TyphoonCom.log.Debug("Begin openning host");
-
-                //Console.ForegroundColor = ConsoleColor.DarkGray;
-                //Console.WriteLine("Waiting for Typhoon...");
-                //Console.ResetColor();
-
                 lock (LockObj)
                 {
                     TyphoonCom.log.DebugFormat("host.State - {0}",host.State.ToString());
@@ -143,7 +137,6 @@ namespace OnvifProxy
                 FlagHostThreadReboot.Ended = true;
                 ev_RebootEnded.Set();
                 FlagHostThreadReboot.Start = false;
-
 
                 MediaSource.RenewTimer.Start();
                 //------testing purposes-----------------------

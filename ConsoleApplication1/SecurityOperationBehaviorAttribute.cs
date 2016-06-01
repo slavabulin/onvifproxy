@@ -34,35 +34,38 @@ namespace OnvifProxy
 
         public SecurityOperationBehavoirAttribute(string name, string ns, int usertype)
         {
-            adminList.Add(new XmlQualifiedName(name, ns));
-            switch (usertype)
-            {
-                case 0:
-                    break;
-                case 1:
-                    operatorList.Add(new XmlQualifiedName(name, ns));
-                    break;
-                case 2:
-                    operatorList.Add(new XmlQualifiedName(name, ns));
-                    userList.Add(new XmlQualifiedName(name, ns));
-                    break;
-                case 3:
-                    operatorList.Add(new XmlQualifiedName(name, ns));
-                    userList.Add(new XmlQualifiedName(name, ns));
-                    anonList.Add(new XmlQualifiedName(name, ns));
-                    break;
-                default:
-                    break;
-            }
+            //-------------------------------------------------------------
+
+            //adminList.Add(new XmlQualifiedName(name, ns));
+            //switch (usertype)
+            //{
+            //    case 0:
+            //        break;
+            //    case 1:
+            //        operatorList.Add(new XmlQualifiedName(name, ns));
+            //        break;
+            //    case 2:
+            //        operatorList.Add(new XmlQualifiedName(name, ns));
+            //        userList.Add(new XmlQualifiedName(name, ns));
+            //        break;
+            //    case 3:
+            //        operatorList.Add(new XmlQualifiedName(name, ns));
+            //        userList.Add(new XmlQualifiedName(name, ns));
+            //        anonList.Add(new XmlQualifiedName(name, ns));
+            //        break;
+            //    default:
+            //        break;
+            //}
 
             //-------------------------------------------------------------
             // отключение авторизации ws-usertokenname
             // чтобы включить авторизацию обратно - закоментить
             // всё что ниже и раскоментить всё что выше
-            //adminList.Add(new XmlQualifiedName(name, ns));
-            //operatorList.Add(new XmlQualifiedName(name, ns));
-            //userList.Add(new XmlQualifiedName(name, ns));
-            //anonList.Add(new XmlQualifiedName(name, ns));
+            //-------------------------------------------------------------
+            adminList.Add(new XmlQualifiedName(name, ns));
+            operatorList.Add(new XmlQualifiedName(name, ns));
+            userList.Add(new XmlQualifiedName(name, ns));
+            anonList.Add(new XmlQualifiedName(name, ns));
             //------------------------------------------------------------- 
         }
 

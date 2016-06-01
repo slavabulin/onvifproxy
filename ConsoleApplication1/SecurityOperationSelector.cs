@@ -116,7 +116,7 @@ namespace OnvifProxy
 
         public string SelectOperation(ref System.ServiceModel.Channels.Message message)
         {
-            bool methodExistInMethodList = false;
+            //bool methodExistInMethodList = false;
             //!!!!can leak here (in message1, message2)!!!!!
             using (MessageBuffer buffer = message.CreateBufferedCopy(Int32.MaxValue))//IDisposable
             {
@@ -130,17 +130,8 @@ namespace OnvifProxy
 
                 Security secheader = new Security();
                 secheader.Token = new UsernameToken();
+                secheader = GetCredsFromMessageBuffer(buffer);
 
-                //try
-                //{
-                    secheader = GetCredsFromMessageBuffer(buffer);
-                //}
-                //catch(FaultException fe)
-                //{
-                //    //throw;
-                //    return "ActionNotSupported";
-                //}
-                
                 #region check if there is security header
                 if (secheader != null)
                 {
@@ -193,7 +184,6 @@ namespace OnvifProxy
                     {
                         //credentials are wrong
                         message = msgcopy1;
-                        //return null;
                         throw fault;
                     }
                     #endregion check if creds are wright
@@ -214,7 +204,7 @@ namespace OnvifProxy
                             //string tmpstring = methodname.Namespace + "/" + methodname.Name;
                             if (methodname == lookupQName)
                             {
-                                methodExistInMethodList = true;
+                                //methodExistInMethodList = true;
                                 message = msgcopy1;
                                 return methodname.Name;                                
                             }

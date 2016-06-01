@@ -1018,11 +1018,8 @@ namespace OnvifProxy
                                 //здесь добавим в EventStorage
                                 using (TyphoonEvent tevent = new TyphoonEvent(eventdata, TYPHOON_EVENT_TIMEOUT))
                                 {
-                                    //log.DebugFormat("eventCollectionLenght before adding - {0}", EventStorage.storage.Count);
                                     EventStorage.AddEvent(tevent);
-                                    //log.DebugFormat("eventCollectionLenght after dispose - {0}", EventStorage.storage.Count);
-                                }
-
+                                }                                
                                 //------------------------------------------
                                 //
                                 object objj = new object();
@@ -1058,7 +1055,7 @@ namespace OnvifProxy
                                                     XmlSerializer serializer = new XmlSerializer(typeof(Event.Notify));
                                                     try
                                                     {
-                                                        notify.Notify = (Event.Notify)serializer.Deserialize(ms);  //                                          
+                                                        notify.Notify = (Event.Notify)serializer.Deserialize(ms);
                                                     }
                                                     catch (Exception ex)
                                                     {
