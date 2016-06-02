@@ -3866,12 +3866,14 @@ namespace OnvifProxy
             for (int e = startRef; e < (startRef+mediaSourcesLeftToSend); e++)
             {
                 getMediaSourceResp.MediaSource[e] = MediaSource.MediaSourceList[e];
-                getMediaSourceResp.UpdateToken += "*" + getMediaSourceResp.MediaSource[e].token;
             }
-            //getMediaSourceResp.UpdateToken = Guid.NewGuid().ToString();
-            //MediaSource
 
-            MediaSource.GetUpdatesOfMediaSourceLIst(getMediaSourceResp.UpdateToken);
+            foreach(MediaSourceType mSource in MediaSource.MediaSourceList)
+            {
+                getMediaSourceResp.UpdateToken += "*" + mSource.token;
+            }
+            
+            //MediaSource.GetUpdatesOfMediaSourceList(getMediaSourceResp.UpdateToken);
 
             return getMediaSourceResp;
         }
@@ -3889,20 +3891,25 @@ namespace OnvifProxy
 
         public MediaSourcesProvider.GetUpdatesResponse GetUpdates(MediaSourcesProvider.GetUpdatesRequest request)
         {
+            int startRef = 0, limit = 1, mediaSourcesLeftToSend = 0;
+
             MediaSourcesProvider.GetUpdatesResponse resp = new GetUpdatesResponse();
 
-            //resp.Update = new UpdateType[MediaSource.MediaSourceList.Count];
-            //for (int t = 0; t < MediaSource.MediaSourceList.Count; t++)
-            //{
-            //    resp.Update[t] = new UpdateType();
-            //    resp.Update[t].MediaSource = MediaSource.MediaSourceList[t];
-            //    resp.Update[t].MediaSourceToken = MediaSource.MediaSourceList[t].token;
-            //}
+            MediaSourceType[] MediaSourceArr = MediaSource.GetUpdatesOfMediaSourceList(request.UpdateToken);
+            if (MediaSourceArr == null)
+                return null;
 
-            //Guid updatetoken = Guid.NewGuid();
-            //resp.UpdateToken = updatetoken.ToString();
+            resp.Update = new UpdateType[MediaSourceArr.Length];
 
-            //MediaSource.MediaSourceList[0].
+            for (int t = 0; t < MediaSourceArr.Length; t++)
+            {
+                resp.Update[t] = new UpdateType();
+                resp.Update[t].MediaSource = MediaSourceArr[t];
+                resp.Update[t].MediaSourceToken = MediaSourceArr[t].token;
+            }
+
+            //resp.UpdateToken = MediaSource.MediaSourceList.//updatetoken.ToString();
+
             resp.HasMoreUpdates = false;
             return resp;
         }
