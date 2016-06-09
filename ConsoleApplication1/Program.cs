@@ -341,29 +341,27 @@ namespace OnvifProxy
             httpsTransportBindingElement.RequireClientCertificate = true;
 
             CustomBinding binding = new CustomBinding(
-                    //new TextMessageEncodingBindingElement(MessageVersion.Soap12WSAddressing10, Encoding.UTF8),
                     new TextMessageEncodingBindingElement(MessageVersion.Soap12, Encoding.UTF8),
                     httpTransportBindingElement);
             CustomBinding binding1 = new CustomBinding(
                     new TextMessageEncodingBindingElement(MessageVersion.Soap12WSAddressing10, Encoding.UTF8),
-                    //new TextMessageEncodingBindingElement(MessageVersion.Soap12, Encoding.UTF8),
                     httpTransportBindingElement);
             WSDualHttpBinding binding2 = new WSDualHttpBinding(WSDualHttpSecurityMode.None);
 
             //--------------------------
             CustomBinding binding3 = new CustomBinding(
-                //new TextMessageEncodingBindingElement(MessageVersion.Soap12WSAddressing10, Encoding.UTF8),
                 new TextMessageEncodingBindingElement(MessageVersion.Soap12, Encoding.UTF8),
                 httpTransportBindingElement);
-            //WSHttpBinding binding3 = new WSHttpBinding();
-            //WSHttpSecurity whSecurity = binding3.Security;
-            //whSecurity.Mode = SecurityMode.None;
-
-
-             CustomBinding bindingReplay = new CustomBinding(
+            
+            CustomBinding bindingReplay = new CustomBinding(
                 new TextMessageEncodingBindingElement(MessageVersion.Soap12WSAddressing10, Encoding.UTF8),
                 httpTransportBindingElement);
+
             CustomBinding bindingRecSearch = new CustomBinding(
+                new TextMessageEncodingBindingElement(MessageVersion.Soap12WSAddressing10, Encoding.UTF8),
+                httpTransportBindingElement);
+
+            CustomBinding bindingPTZ = new CustomBinding(
                 new TextMessageEncodingBindingElement(MessageVersion.Soap12WSAddressing10, Encoding.UTF8),
                 httpTransportBindingElement);
             //--------------------------
@@ -372,9 +370,9 @@ namespace OnvifProxy
             binding1.Namespace = "http://www.onvif.org/ver10/event/wsdl";
             binding2.Namespace = "http://www.onvif.org/ver10/event/wsdl";
 
-            binding3.Namespace = "urn:ias:cvss:msp:1.0";//added
-            bindingReplay.Namespace = "http://www.onvif.org/ver10/replay/wsdl";//added
-            bindingRecSearch.Namespace = "http://www.onvif.org/ver10/search/wsdl";//added
+            binding3.Namespace = "urn:ias:cvss:msp:1.0";
+            bindingReplay.Namespace = "http://www.onvif.org/ver10/replay/wsdl";
+            bindingRecSearch.Namespace = "http://www.onvif.org/ver10/search/wsdl";
             //--------------------------
 
             ServiceDiscoveryBehavior serviceDiscoveryBehavior = new ServiceDiscoveryBehavior();
@@ -385,9 +383,10 @@ namespace OnvifProxy
                     EventPortTypeServiceEndpoint,
                     SubscriptionManagerServiceEndpoint,
                     PullPointSubscriptionServiceEndpoint,
-                    MediaSourceProviderServiceEndpoint,//added
-                    ReplayServiceEndpoint,//added
-                    RecordingSearchEndPoint;//added
+                    MediaSourceProviderServiceEndpoint,
+                    ReplayServiceEndpoint,
+                    RecordingSearchEndPoint,
+                    PTZEndpoint;
 
             EndpointDiscoveryBehavior MediaServiceBehavior = new EndpointDiscoveryBehavior();
             EndpointDiscoveryBehavior NotificationProducerServiceBehavior = new EndpointDiscoveryBehavior();
@@ -396,6 +395,7 @@ namespace OnvifProxy
             EndpointDiscoveryBehavior PullPointSubscriptionServiceBehavior = new EndpointDiscoveryBehavior();
             EndpointDiscoveryBehavior udpAnnouncementEndpointBehavior = new EndpointDiscoveryBehavior();
             EndpointDiscoveryBehavior ReplayServiceBehavior = new EndpointDiscoveryBehavior();
+            EndpointDiscoveryBehavior PTZServiceBehavior = new EndpointDiscoveryBehavior();
             
             UdpAnnouncementEndpoint udpAnnouncementEndpoint;
             UdpDiscoveryEndpoint udpDiscoveryEndpoint;
@@ -442,6 +442,7 @@ namespace OnvifProxy
                 PullPointSubscriptionServiceBehavior.Enabled = false;
 
                 ReplayServiceBehavior.Enabled = false;
+                PTZServiceBehavior.Enabled = false;
                 //------------------------------
                 // Add endpoints to the service
                 try
@@ -497,6 +498,11 @@ namespace OnvifProxy
                         typeof(RecordingSearch.ISearchPort),
                         bindingRecSearch,
                         "/onvif/recordingsearch_service");
+
+                    PTZEndpoint = host.AddServiceEndpoint(
+                        typeof(PTZ.IPTZ),
+                        bindingPTZ,
+                        "/onvif/ptz_service");
                     
 
                     DeviceServiceEndpoint.Contract.Name = "NetworkVideoTransmitter";
@@ -517,15 +523,17 @@ namespace OnvifProxy
                     PullPointSubscriptionServiceEndpoint.Contract.Name = "PullPointSubscription";
                     PullPointSubscriptionServiceEndpoint.Contract.Namespace = "http://www.onvif.org/ver10/events/wsdl";
 
-                    MediaSourceProviderServiceEndpoint.Contract.Name = "MediaSourceProvider";//added
-                    MediaSourceProviderServiceEndpoint.Contract.Namespace = "urn:ias:cvss:msp:1.0";//added
-                    //MediaSourceProviderServiceEndpoint.Behaviors[0].
+                    MediaSourceProviderServiceEndpoint.Contract.Name = "MediaSourceProvider";
+                    MediaSourceProviderServiceEndpoint.Contract.Namespace = "urn:ias:cvss:msp:1.0";
 
                     ReplayServiceEndpoint.Contract.Name = "ReplayService";
                     ReplayServiceEndpoint.Contract.Namespace = "http://www.onvif.org/ver10/replay/wsdl";
 
                     RecordingSearchEndPoint.Contract.Name = "RecordingSearchService";
                     RecordingSearchEndPoint.Contract.Namespace = "http://www.onvif.org/ver10/search/wsdl";
+
+                    PTZEndpoint.Contract.Name = "PTZService";
+                    PTZEndpoint.Contract.Namespace = "http://www.onvif.org/ver20/ptz/wsdl";
 
                     //----------------------------------------------------------------------------------
                     //если размер отсылаемого пакета больше 1518 байт, например слишком много скопов, 
@@ -580,6 +588,7 @@ namespace OnvifProxy
                     MediaSourceProviderServiceEndpoint = null;
                     ReplayServiceEndpoint = null;
                     RecordingSearchEndPoint = null;
+                    PTZEndpoint = null;
                 }
                 catch (NullReferenceException e)
                 {
@@ -596,6 +605,7 @@ namespace OnvifProxy
                     MediaSourceProviderServiceEndpoint = null;
                     ReplayServiceEndpoint = null;
                     RecordingSearchEndPoint = null;
+                    PTZEndpoint = null;
                 }   
                 return host;
             }

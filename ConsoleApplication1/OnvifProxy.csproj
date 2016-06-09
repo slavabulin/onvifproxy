@@ -117,6 +117,7 @@
     <Compile Include="CustomMessageFormatter.cs" />
     <Compile Include="IEvent.cs" />
     <Compile Include="IMediaSourcesProvider.cs" />
+    <Compile Include="IPTZ.cs" />
     <Compile Include="IRecordingSearch.cs" />
     <Compile Include="IReplayService.cs" />
     <Compile Include="MediaSourceList.cs" />

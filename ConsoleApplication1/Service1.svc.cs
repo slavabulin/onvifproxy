@@ -43,12 +43,8 @@ namespace OnvifProxy
         Event.IPullPoint,
         Event.ICreatePullPoint,
         Event.SubscriptionManager,
-        //Event.IPausableSubscriptionManager,
         Event.INotificationConsumer,
-        Event.PullPointSubscription,
-        //MediaSourcesProvider.IMediaSourcesProvider,
-        ReplayService.IReplayPort,
-        RecordingSearch.ISearchPort
+        Event.PullPointSubscription
     {
         public void UnauthorizedAccessFault()
         {
@@ -188,7 +184,6 @@ namespace OnvifProxy
                             "RemoteDiscovery='false' SystemBackup='false' SystemLogging='false' " +
                             "FirmwareUpgrade='true' HttpFirmwareUpgrade='false' HttpSystemBackup='false' " +
                             "HttpSystemLogging='false' HttpSupportInformation='false' /> " +
-                            //"<tds:MiscCapabilities AuxiliaryCommands='' /> " +
                             "</tds:Capabilities> ";
                         //----------------------------
                         doc.LoadXml(tmpstr);
@@ -201,16 +196,13 @@ namespace OnvifProxy
                     {
                         TyphoonCom.log.DebugFormat("GetServices - Error");
                     }
-                    //finally
-                    //{
-                    //    ms.Close();
-                    //}
                 }
                 //-----------
 
                 GetServicesResponse getServicesResponse = new GetServicesResponse();
-                //getServicesResponse.Service = new Device.Service[4];
-                getServicesResponse.Service = new Device.Service[6];
+                
+                //getServicesResponse.Service = new Device.Service[6];
+                getServicesResponse.Service = new Device.Service[7];
 
                 getServicesResponse.Service[0] = new Device.Service();
                 getServicesResponse.Service[0].XAddr = "http://" + confstr.IPAddr + "/onvif/device_service";
@@ -225,7 +217,6 @@ namespace OnvifProxy
                 }
 
                 getServicesResponse.Service[1] = new Device.Service();
-                //getServicesResponse.Service[1].XAddr = "http://" + confstr.IPAddr + "/onvif/event_service";
                 getServicesResponse.Service[1].XAddr = confstr.Capabilities.Events.XAddr;
                 getServicesResponse.Service[1].Namespace = "http://www.onvif.org/ver10/events/wsdl";
                 getServicesResponse.Service[1].Version = new OnvifVersion();
@@ -239,22 +230,6 @@ namespace OnvifProxy
                 getServicesResponse.Service[2].Version.Major = 2;
                 getServicesResponse.Service[2].Version.Minor = 4;
 
-                getServicesResponse.Service[5] = new Device.Service();
-                getServicesResponse.Service[5].XAddr = "http://" + confstr.IPAddr + "/onvif/msp_service";
-                getServicesResponse.Service[5].Namespace = "urn:ias:cvss:msp:1.0";
-                getServicesResponse.Service[5].Version = new OnvifVersion();
-                getServicesResponse.Service[5].Version.Major = 1;
-                getServicesResponse.Service[5].Version.Minor = 0;
-                
-                getServicesResponse.Service[4] = new Device.Service();
-                getServicesResponse.Service[4].XAddr = "http://" + confstr.IPAddr + "/onvif/replay_service";
-                getServicesResponse.Service[4].Namespace = "http://www.onvif.org/ver10/replay/wsdl";
-                getServicesResponse.Service[4].Version = new OnvifVersion();
-                getServicesResponse.Service[4].Version.Major = 2;
-                getServicesResponse.Service[4].Version.Minor = 4;
-                getServicesResponse.Service[4].Capabilities = new XmlDocument().CreateElement("cap", "Capabilities", "http://www.onvif.org/ver10/replay/wsdl");
-                //getServicesResponse.Service[4].Capabilities.
-
                 getServicesResponse.Service[3] = new Device.Service();
                 getServicesResponse.Service[3].XAddr = "http://" + confstr.IPAddr + "/onvif/recordingsearch_service";
                 getServicesResponse.Service[3].Namespace = "http://www.onvif.org/ver10/search/wsdl";
@@ -263,13 +238,29 @@ namespace OnvifProxy
                 getServicesResponse.Service[3].Version.Minor = 4;
                 getServicesResponse.Service[3].Capabilities =
                 new XmlDocument().CreateElement("cap", "Capabilities", "http://www.onvif.org/ver10/search/wsdl");
-                /*
-                 * RecordingSearch.Capabilities caps = new RecordingSearch.Capabilities();
-            caps.MetadataSearch = false;
-            caps.GeneralStartEvents = false;
-            caps.GeneralStartEventsSpecified = true;
-            caps.MetadataSearchSpecified = true;
-                 */
+
+                getServicesResponse.Service[4] = new Device.Service();
+                getServicesResponse.Service[4].XAddr = "http://" + confstr.IPAddr + "/onvif/replay_service";
+                getServicesResponse.Service[4].Namespace = "http://www.onvif.org/ver10/replay/wsdl";
+                getServicesResponse.Service[4].Version = new OnvifVersion();
+                getServicesResponse.Service[4].Version.Major = 2;
+                getServicesResponse.Service[4].Version.Minor = 4;
+                getServicesResponse.Service[4].Capabilities = new XmlDocument().CreateElement("cap", "Capabilities", "http://www.onvif.org/ver10/replay/wsdl");
+
+                getServicesResponse.Service[5] = new Device.Service();
+                getServicesResponse.Service[5].XAddr = "http://" + confstr.IPAddr + "/onvif/msp_service";
+                getServicesResponse.Service[5].Namespace = "urn:ias:cvss:msp:1.0";
+                getServicesResponse.Service[5].Version = new OnvifVersion();
+                getServicesResponse.Service[5].Version.Major = 1;
+                getServicesResponse.Service[5].Version.Minor = 0;
+
+                getServicesResponse.Service[6] = new Device.Service();
+                getServicesResponse.Service[6].XAddr = "http://" + confstr.IPAddr + "/onvif/ptz_service";
+                getServicesResponse.Service[6].Namespace = "http://www.onvif.org/ver20/ptz/wsdl";
+                getServicesResponse.Service[6].Version = new OnvifVersion();
+                getServicesResponse.Service[6].Version.Major = 1;
+                getServicesResponse.Service[6].Version.Minor = 0;
+            
 
                 return getServicesResponse;
             }
@@ -3683,148 +3674,6 @@ namespace OnvifProxy
         //    return SerializeRequest(messageVersion, parameters);
         //}
     }
-
-
-    public class IPmgmnt
-    {
-        public void SetIP(object netInterfaceStruct)
-        {
-            Thread.Sleep(10);
-            //((NetInterfaceStruct)netInterfaceStruct).;
-            ManagementClass objMC = new ManagementClass("Win32_NetworkAdapterConfiguration");
-            ManagementObjectCollection objMOC = objMC.GetInstances();
-            Device.NetworkInterface[] networkInterface = new Device.NetworkInterface[objMOC.Count];
-            string subnet_mask = null;
-
-
-            foreach (ManagementObject objMO in objMOC)
-            {
-                if ((string)objMO["ServiceName"] == ((NetInterfaceStruct)netInterfaceStruct).InterfaceToken)
-                {
-                    if (((NetInterfaceStruct)netInterfaceStruct).NetworkInterface.IPv4.DHCP == true)
-                    {
-                        try
-                        {
-                            ManagementBaseObject newEnableDHCP = objMO.InvokeMethod("EnableDHCP", null, null);
-                        }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine("Failed to setup network interface - {0}", e.Message);
-                        }
-                    }
-                    else
-                    {
-                        try
-                        {
-                            ManagementBaseObject newIP = objMO.GetMethodParameters("EnableStatic");
-                            //преобразуем маску из вида инт в стринг
-                            uint mask = 0;
-                            if (((NetInterfaceStruct)netInterfaceStruct).NetworkInterface.IPv4.Manual != null)
-                            {
-                                for (int s = 0; s < ((NetInterfaceStruct)netInterfaceStruct).NetworkInterface.IPv4.Manual[0].PrefixLength; s++)
-                                {
-                                    mask = mask >> 1;
-                                    mask += 2147483648;
-                                }
-
-                                byte[] b_mask = new byte[4];
-                                for (int i = 0; i < 4; i++)
-                                {
-                                    b_mask[i] = (byte)(mask >> 8 * (3 - i));
-                                }
-                                subnet_mask = b_mask[0].ToString() + "."
-                                    + b_mask[1].ToString() + "."
-                                    + b_mask[2].ToString() + "."
-                                    + b_mask[3].ToString();
-                                //запихиваем в параметры метода
-                                newIP["IPAddress"] = new string[] { ((NetInterfaceStruct)netInterfaceStruct).NetworkInterface.IPv4.Manual[0].Address };
-                                newIP["SubnetMask"] = new string[] { subnet_mask };
-                                //и дергаем метод
-                                objMO.InvokeMethod("EnableStatic", newIP, null);
-                            }
-
-                            XmlConfig conf = new XmlConfig();
-                            ConfigStruct confstr = new ConfigStruct();
-                            confstr = conf.Read();
-                            confstr.IPAddr = ((NetInterfaceStruct)netInterfaceStruct).NetworkInterface.IPv4.Manual[0].Address;
-                            conf.Write(confstr);
-
-                        }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine("Failed to setup network interface - {0}", e.Message);
-                            //return false;
-                        }
-                    }
-
-                }
-            }
-
-            //return true;
-        }
-        public string GetDHCPIP(object interfacename)
-        {
-            if (interfacename != null)
-            {
-                ManagementClass objMC = new ManagementClass("Win32_NetworkAdapterConfiguration");
-                ManagementObjectCollection objMOC = objMC.GetInstances();
-
-                foreach (ManagementObject objMO in objMOC)
-                {
-
-                    if ((bool)objMO["IPEnabled"] == true && 
-                        (bool)objMO["DHCPEnabled"] == true&&
-                        (string)objMO["ServiceName"] == (string)interfacename)
-                    {
-                        return ((string[])objMO["IPAddress"])[0];
-                    }
-                }
-            }
-            return null;            
-        }
-        public string UseDHCP()
-        {
-            ManagementClass objMC = new ManagementClass("Win32_NetworkAdapterConfiguration");
-            ManagementObjectCollection objMOC = objMC.GetInstances();
-            
-            foreach (ManagementObject objMO in objMOC)
-            {
-                if((bool)objMO["DHCPEnabled"]==true)
-                    return (string)objMO["ServiceName"];
-            }
-
-            return null;
-        }
-    }
-    public class NetInterfaceStruct
-    {
-        private string interfaceToken;
-        private NetworkInterfaceSetConfiguration networkInterface;
-        public string InterfaceToken
-        {
-            get
-            {
-                return interfaceToken;
-            }
-            set
-            {
-                interfaceToken = value;
-            }
-
-        }
-        public NetworkInterfaceSetConfiguration NetworkInterface
-        {
-            get
-            {
-                return networkInterface;
-            }
-            set
-            {
-                networkInterface = value;
-            }
-
-        }
-    }
     public partial class Service1 : MediaSourcesProvider.IMediaSourcesProvider
     {
         public MediaSourcesProvider.GetMediaSourcesResponse GetMediaSources(MediaSourcesProvider.GetMediaSourcesRequest request)
@@ -3868,11 +3717,14 @@ namespace OnvifProxy
                 getMediaSourceResp.MediaSource[e] = MediaSource.MediaSourceList[e];
             }
 
-            foreach(MediaSourceType mSource in MediaSource.MediaSourceList)
+            if(!String.IsNullOrWhiteSpace(request.StartReference))
             {
-                getMediaSourceResp.UpdateToken += "*" + mSource.token;
+                //тогда надо возвращать UpdateToken
+                foreach (MediaSourceType mSource in MediaSource.MediaSourceList)
+                {
+                    getMediaSourceResp.UpdateToken += "*" + mSource.token;
+                }
             }
-            
             //MediaSource.GetUpdatesOfMediaSourceList(getMediaSourceResp.UpdateToken);
 
             return getMediaSourceResp;
@@ -3907,14 +3759,12 @@ namespace OnvifProxy
                 resp.Update[t].MediaSource = MediaSourceArr[t];
                 resp.Update[t].MediaSourceToken = MediaSourceArr[t].token;
             }
-
-            //resp.UpdateToken = MediaSource.MediaSourceList.//updatetoken.ToString();
-
+            
             resp.HasMoreUpdates = false;
             return resp;
         }
     }
-    public partial class Service1 : ReplayService.IReplayPort//added        
+    public partial class Service1 : ReplayService.IReplayPort
     {
         ReplayService.Capabilities ReplayService.IReplayPort.GetServiceCapabilities()
         {
@@ -3995,7 +3845,7 @@ namespace OnvifProxy
             Console.WriteLine("SetReplayConfiguration called");
         }
     }
-    public partial class Service1 : RecordingSearch.ISearchPort//added
+    public partial class Service1 : RecordingSearch.ISearchPort
     {
         public RecordingSearch.Capabilities GetRecordingServiceCapabilities()
         {
@@ -4585,7 +4435,256 @@ namespace OnvifProxy
             throw new NotImplementedException();
         }
     }
-     
+    public partial class Service1 : PTZ.IPTZ
+    {
+        PTZ.Capabilities PTZ.IPTZ.GetServiceCapabilities()
+        {
+            throw new NotImplementedException();
+        }
+        PTZ.GetNodesResponse PTZ.IPTZ.GetNodes(PTZ.GetNodesRequest request)
+        {
+            throw new NotImplementedException();
+        }
+        PTZ.PTZNode PTZ.IPTZ.GetNode(string NodeToken)
+        {
+            throw new NotImplementedException();
+        }
+        PTZ.PTZConfiguration PTZ.IPTZ.GetConfiguration(string PTZConfigurationToken)
+        {
+            throw new NotImplementedException();
+        }
+        PTZ.GetConfigurationsResponse PTZ.IPTZ.GetConfigurations(PTZ.GetConfigurationsRequest request)
+        {
+            throw new NotImplementedException();
+        }
+        void PTZ.IPTZ.SetConfiguration(PTZ.PTZConfiguration PTZConfiguration, bool ForcePersistence)
+        {
+            throw new NotImplementedException();
+        }
+        PTZ.PTZConfigurationOptions PTZ.IPTZ.GetConfigurationOptions(string ConfigurationToken)
+        {
+            throw new NotImplementedException();
+        }
+        string PTZ.IPTZ.SendAuxiliaryCommand(string ProfileToken, string AuxiliaryData)
+        {
+            throw new NotImplementedException();
+        }
+        PTZ.GetPresetsResponse PTZ.IPTZ.GetPresets(PTZ.GetPresetsRequest request)
+        {
+            throw new NotImplementedException();
+        }
+        PTZ.SetPresetResponse PTZ.IPTZ.SetPreset(PTZ.SetPresetRequest request)
+        {
+            throw new NotImplementedException();
+        }
+        void PTZ.IPTZ.RemovePreset(string ProfileToken, string PresetToken)
+        {
+            throw new NotImplementedException();
+        }
+        void PTZ.IPTZ.GotoPreset(string ProfileToken, string PresetToken, PTZ.PTZSpeed Speed)
+        {
+            throw new NotImplementedException();
+        }
+        void PTZ.IPTZ.GotoHomePosition(string ProfileToken, PTZ.PTZSpeed Speed)
+        {
+            throw new NotImplementedException();
+        }
+        void PTZ.IPTZ.SetHomePosition(string ProfileToken)
+        {
+            throw new NotImplementedException();
+        }
+        PTZ.ContinuousMoveResponse PTZ.IPTZ.ContinuousMove(PTZ.ContinuousMoveRequest request)
+        {
+            throw new NotImplementedException();
+        }
+        void PTZ.IPTZ.RelativeMove(string ProfileToken, PTZ.PTZVector Translation, PTZ.PTZSpeed Speed)
+        {
+            throw new NotImplementedException();
+        }
+        PTZ.PTZStatus PTZ.IPTZ.GetStatus(string ProfileToken)
+        {
+            throw new NotImplementedException();
+        }
+        void PTZ.IPTZ.AbsoluteMove(string ProfileToken, PTZ.PTZVector Position, PTZ.PTZSpeed Speed)
+        {
+            throw new NotImplementedException();
+        }
+        void PTZ.IPTZ.Stop(string ProfileToken, bool PanTilt, bool Zoom)
+        {
+            throw new NotImplementedException();
+        }
+        PTZ.GetPresetToursResponse PTZ.IPTZ.GetPresetTours(PTZ.GetPresetToursRequest request)
+        {
+            throw new NotImplementedException();
+        }
+        PTZ.PresetTour PTZ.IPTZ.GetPresetTour(string ProfileToken, string PresetTourToken)
+        {
+            throw new NotImplementedException();
+        }
+        PTZ.PTZPresetTourOptions PTZ.IPTZ.GetPresetTourOptions(string ProfileToken, string PresetTourToken)
+        {
+            throw new NotImplementedException();
+        }
+        string PTZ.IPTZ.CreatePresetTour(string ProfileToken)
+        {
+            throw new NotImplementedException();
+        }
+        void PTZ.IPTZ.ModifyPresetTour(string ProfileToken, PTZ.PresetTour PresetTour)
+        {
+            throw new NotImplementedException();
+        }
+        void PTZ.IPTZ.OperatePresetTour(string ProfileToken, string PresetTourToken, PTZ.PTZPresetTourOperation Operation)
+        {
+            throw new NotImplementedException();
+        }
+        void PTZ.IPTZ.RemovePresetTour(string ProfileToken, string PresetTourToken)
+        {
+            throw new NotImplementedException();
+        }
+        PTZ.GetCompatibleConfigurationsResponse PTZ.IPTZ.GetCompatibleConfigurations(PTZ.GetCompatibleConfigurationsRequest request)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class IPmgmnt
+    {
+        public void SetIP(object netInterfaceStruct)
+        {
+            Thread.Sleep(10);
+            //((NetInterfaceStruct)netInterfaceStruct).;
+            ManagementClass objMC = new ManagementClass("Win32_NetworkAdapterConfiguration");
+            ManagementObjectCollection objMOC = objMC.GetInstances();
+            Device.NetworkInterface[] networkInterface = new Device.NetworkInterface[objMOC.Count];
+            string subnet_mask = null;
 
+
+            foreach (ManagementObject objMO in objMOC)
+            {
+                if ((string)objMO["ServiceName"] == ((NetInterfaceStruct)netInterfaceStruct).InterfaceToken)
+                {
+                    if (((NetInterfaceStruct)netInterfaceStruct).NetworkInterface.IPv4.DHCP == true)
+                    {
+                        try
+                        {
+                            ManagementBaseObject newEnableDHCP = objMO.InvokeMethod("EnableDHCP", null, null);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine("Failed to setup network interface - {0}", e.Message);
+                        }
+                    }
+                    else
+                    {
+                        try
+                        {
+                            ManagementBaseObject newIP = objMO.GetMethodParameters("EnableStatic");
+                            //преобразуем маску из вида инт в стринг
+                            uint mask = 0;
+                            if (((NetInterfaceStruct)netInterfaceStruct).NetworkInterface.IPv4.Manual != null)
+                            {
+                                for (int s = 0; s < ((NetInterfaceStruct)netInterfaceStruct).NetworkInterface.IPv4.Manual[0].PrefixLength; s++)
+                                {
+                                    mask = mask >> 1;
+                                    mask += 2147483648;
+                                }
+
+                                byte[] b_mask = new byte[4];
+                                for (int i = 0; i < 4; i++)
+                                {
+                                    b_mask[i] = (byte)(mask >> 8 * (3 - i));
+                                }
+                                subnet_mask = b_mask[0].ToString() + "."
+                                    + b_mask[1].ToString() + "."
+                                    + b_mask[2].ToString() + "."
+                                    + b_mask[3].ToString();
+                                //запихиваем в параметры метода
+                                newIP["IPAddress"] = new string[] { ((NetInterfaceStruct)netInterfaceStruct).NetworkInterface.IPv4.Manual[0].Address };
+                                newIP["SubnetMask"] = new string[] { subnet_mask };
+                                //и дергаем метод
+                                objMO.InvokeMethod("EnableStatic", newIP, null);
+                            }
+
+                            XmlConfig conf = new XmlConfig();
+                            ConfigStruct confstr = new ConfigStruct();
+                            confstr = conf.Read();
+                            confstr.IPAddr = ((NetInterfaceStruct)netInterfaceStruct).NetworkInterface.IPv4.Manual[0].Address;
+                            conf.Write(confstr);
+
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine("Failed to setup network interface - {0}", e.Message);
+                            //return false;
+                        }
+                    }
+
+                }
+            }
+
+            //return true;
+        }
+        public string GetDHCPIP(object interfacename)
+        {
+            if (interfacename != null)
+            {
+                ManagementClass objMC = new ManagementClass("Win32_NetworkAdapterConfiguration");
+                ManagementObjectCollection objMOC = objMC.GetInstances();
+
+                foreach (ManagementObject objMO in objMOC)
+                {
+
+                    if ((bool)objMO["IPEnabled"] == true &&
+                        (bool)objMO["DHCPEnabled"] == true &&
+                        (string)objMO["ServiceName"] == (string)interfacename)
+                    {
+                        return ((string[])objMO["IPAddress"])[0];
+                    }
+                }
+            }
+            return null;
+        }
+        public string UseDHCP()
+        {
+            ManagementClass objMC = new ManagementClass("Win32_NetworkAdapterConfiguration");
+            ManagementObjectCollection objMOC = objMC.GetInstances();
+
+            foreach (ManagementObject objMO in objMOC)
+            {
+                if ((bool)objMO["DHCPEnabled"] == true)
+                    return (string)objMO["ServiceName"];
+            }
+
+            return null;
+        }
+    }
+    public class NetInterfaceStruct
+    {
+        private string interfaceToken;
+        private NetworkInterfaceSetConfiguration networkInterface;
+        public string InterfaceToken
+        {
+            get
+            {
+                return interfaceToken;
+            }
+            set
+            {
+                interfaceToken = value;
+            }
+
+        }
+        public NetworkInterfaceSetConfiguration NetworkInterface
+        {
+            get
+            {
+                return networkInterface;
+            }
+            set
+            {
+                networkInterface = value;
+            }
+
+        }
+    }
 }
 
