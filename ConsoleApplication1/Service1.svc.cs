@@ -4443,7 +4443,7 @@ namespace OnvifProxy
         }
         PTZ.GetNodesResponse PTZ.IPTZ.GetNodes(PTZ.GetNodesRequest request)
         {
-            throw new NotImplementedException();
+            return new PTZ.GetNodesResponse();
         }
         PTZ.PTZNode PTZ.IPTZ.GetNode(string NodeToken)
         {
