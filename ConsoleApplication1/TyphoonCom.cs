@@ -839,7 +839,7 @@ namespace OnvifProxy
                                     nvtClient = TyphoonCom.nvtClientCollection.Single(NVTServiceClient
                                         => NVTServiceClient.Endpoint.ListenUri == (new Uri(typhmsg.stringMessageData)));
                                 }
-                                catch (Exception ex)
+                                catch (ApplicationException ex)
                                 {
                                     nvtClient = new NVTServiceClient(binding, (new EndpointAddress(typhmsg.stringMessageData)));
                                     if (nvtClient != null)

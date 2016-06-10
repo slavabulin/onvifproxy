@@ -19,14 +19,14 @@ namespace OnvifProxy
     {
         public GetProfilesResponse ParseGetProfiles(String InputString)
         {
-            String OutputString = "<?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022 ?>";
+            //String OutputString = "<?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022 ?>";
             GetProfilesResponse profile = new GetProfilesResponse();
 
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(GetProfilesResponse));//,"http://www.onvif.org/ver10/schema");
 
-            OutputString = String.Concat(OutputString, InputString);
+            //OutputString = String.Concat(OutputString, InputString);
 
-            using (Stream ms = new MemoryStream(Encoding.UTF8.GetBytes(OutputString)))
+            using (Stream ms = new MemoryStream(Encoding.UTF8.GetBytes(InputString)))
             {
                 try
                 {
@@ -37,12 +37,7 @@ namespace OnvifProxy
                     Console.WriteLine("Не могу десериализовать файл конфигурации; " + g.Message);
                     return null;
                 }
-                //finally
-                //{
-                //    ms.Close();                    
-                //}
             }
-            //profile.Profiles[0].VideoSourceConfiguration.
             return profile;
         }
 
