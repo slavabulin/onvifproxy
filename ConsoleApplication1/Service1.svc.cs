@@ -4471,7 +4471,7 @@ namespace OnvifProxy
 
             //    using (var fs = new FileStream("PTZGetNodes.txt", FileMode.OpenOrCreate))
             //    {
-            //        XmlSerializer xmlSerializer = new XmlSerializer(typeof(PTZ.GetNodesResponse));
+            //        XmlSerializer xmlSerializer = new XmlSerializer(typeof(PTZ.GetNodesResponse), "http://www.onvif.org/ver10/schema");
 
             //        try
             //        {
@@ -4503,28 +4503,10 @@ namespace OnvifProxy
                                   new FaultCode("No PTZNodes returned", "http://www.onvif.org/ver10/error"))));
 
                 PTZ.GetNodesResponse resp = new PTZ.GetNodesResponse();
-                //typhmsg.stringMessageData = "<?xml version=\u00221.0\u0022 encoding=\u0022UTF-8\u0022 ?>"
-                //    +"<GetNodesResponse xmlns:xsi=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022 "
-                //    +"xmlns:xsd=\u0022http://www.w3.org/2001/XMLSchema\u0022 "
-                //    + "xmlns=\u0022http://www.onvif.org/ver20/ptz/wsdl\u0022 >"
-                //    + "<PTZNode xmlns=\u0022http://www.onvif.org/ver10/schema\u0022 "
-                //    +"token=\u00223\u0022 FixedHomePosition=\u0022true\u0022>"
-                //    +"<Name xmlns=\u0022http://www.onvif.org/ver20/ptz/wsdl\u0022>Camera 3</Name>"
-                //    +"<SupportedPTZSpaces xmlns=\u0022http://www.onvif.org/ver20/ptz/wsdl\u0022>Camera 3"
-                //    +"<ContinuousPanTiltVelocitySpace xmlns=\u0022http://www.onvif.org/ver20/ptz/wsdl\u0022>"
-                //    +"<SpaceURI xmlns=\u0022http://www.onvif.org/ver20/ptz/wsdl\u0022>"
-                //    +"http://www.onvif.org/ver10/tptz/PanTiltSpaces/VelocityGenericSpace</SpaceURI>"
-                //    +"<XRange xmlns=\u0022http://www.onvif.org/ver20/ptz/wsdl\u0022>"
-                //    +"<Min xmlns=\u0022http://www.onvif.org/ver20/ptz/wsdl\u0022>-1.0</Min>"
-                //    +"<Max xmlns=\u0022http://www.onvif.org/ver20/ptz/wsdl\u0022>1.0</Max></XRange>"
-                //    +"<YRange xmlns=\u0022http://www.onvif.org/ver20/ptz/wsdl\u0022>"
-                //    +"<Min xmlns=\u0022http://www.onvif.org/ver20/ptz/wsdl\u0022>-1.0</Min>"
-                //    +"<Max xmlns=\u0022http://www.onvif.org/ver20/ptz/wsdl\u0022>1.0</Max></YRange>"
-                //    +"</ContinuousPanTiltVelocitySpace><ContinuousZoomVelocitySpace "
-                //    +"xmlns=\u0022http://www.onvif.org/ver20/ptz/wsdl\u0022><SpaceURI xmlns=\u0022http://www.onvif.org/ver20/ptz/wsdl\u0022>http://www.onvif.org/ver10/tptz/ZoomSpaces/VelocityGenericSpace</SpaceURI><XRange xmlns=\u0022http://www.onvif.org/ver20/ptz/wsdl\u0022><Min xmlns=\u0022http://www.onvif.org/ver20/ptz/wsdl\u0022>-1.0</Min><Max xmlns=\u0022http://www.onvif.org/ver20/ptz/wsdl\u0022>1.0</Max></XRange></ContinuousZoomVelocitySpace></SupportedPTZSpaces><MaximumNumberOfPresets xmlns=\u0022http://www.onvif.org/ver20/ptz/wsdl\u0022>0</MaximumNumberOfPresets><HomeSupported xmlns=\u0022http://www.onvif.org/ver20/ptz/wsdl\u0022>false</HomeSupported></PTZNode></GetNodesResponse>";
+                
                 using (var ms = new MemoryStream(typhmsg.byteMessageData))
                 {
-                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(PTZ.GetNodesResponse));
+                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(PTZ.GetNodesResponse), "http://www.onvif.org/ver10/schema");
 
                     try
                     {
@@ -4543,11 +4525,74 @@ namespace OnvifProxy
         }
         PTZ.PTZNode PTZ.IPTZ.GetNode(string NodeToken)
         {
-            throw new NotImplementedException();
+            PTZ.GetNodesResponse nodesResp = ((PTZ.IPTZ)this).GetNodes(new PTZ.GetNodesRequest());
+            if(nodesResp!=null)
+            {
+              foreach(PTZ.PTZNode node in nodesResp.PTZNode)
+              {
+                  if (node.token == NodeToken)
+                      return node;
+              }
+            }
+            throw new FaultException(new FaultReason("No such PTZNode on the device"),
+                           new FaultCode("Sender",
+                               new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                   new FaultCode("NoEntity", "http://www.onvif.org/ver10/error"))));
         }
         PTZ.PTZConfiguration PTZ.IPTZ.GetConfiguration(string PTZConfigurationToken)
         {
+            
+
+            PTZ.PTZConfiguration config = new PTZ.PTZConfiguration();
+            config.DefaultAbsolutePantTiltPositionSpace = "DefaultAbsolutePantTiltPositionSpace";
+            config.DefaultAbsoluteZoomPositionSpace = "DefaultAbsoluteZoomPositionSpace";
+            config.DefaultContinuousPanTiltVelocitySpace = "DefaultContinuousPanTiltVelocitySpace";
+            config.DefaultContinuousZoomVelocitySpace = "DefaultContinuousZoomVelocitySpace";
+            config.DefaultPTZSpeed = new PTZ.PTZSpeed();
+            config.DefaultPTZSpeed.PanTilt = new PTZ.Vector2D();
+            config.DefaultPTZSpeed.PanTilt.space = "space";
+            config.DefaultPTZSpeed.PanTilt.x = 100;
+            config.DefaultPTZSpeed.PanTilt.y = 100;
+
+            config.DefaultPTZTimeout = "DefaultPTZTimeout";
+            config.DefaultRelativePanTiltTranslationSpace = "DefaultRelativePanTiltTranslationSpace";
+            config.DefaultRelativeZoomTranslationSpace = "DefaultRelativeZoomTranslationSpace";
+            config.Name = "configuration-name";
+            config.NodeToken = "NodeToken";
+            config.PanTiltLimits = new PTZ.PanTiltLimits();
+            config.PanTiltLimits.Range = new PTZ.Space2DDescription();
+            config.PanTiltLimits.Range.URI = "URI";
+            config.PanTiltLimits.Range.XRange = new PTZ.FloatRange();
+            config.PanTiltLimits.Range.XRange.Max = 100;
+            config.PanTiltLimits.Range.XRange.Min = -100;
+            config.PanTiltLimits.Range.YRange = new PTZ.FloatRange();
+            config.PanTiltLimits.Range.XRange.Max = 100;
+            config.PanTiltLimits.Range.XRange.Min = -100;
+
+            config.token = "token";
+            config.ZoomLimits = new PTZ.ZoomLimits();
+            config.ZoomLimits.Range = new PTZ.Space1DDescription();
+            config.ZoomLimits.Range.URI = "URI";
+            config.ZoomLimits.Range.XRange = new PTZ.FloatRange();
+            config.ZoomLimits.Range.XRange.Max = 100;
+            config.ZoomLimits.Range.XRange.Min = -100;
+
+            {
+                using (var fs = new FileStream("GetConfiguration.txt", FileMode.OpenOrCreate))
+                {
+                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(PTZ.PTZConfiguration), "http://www.onvif.org/ver10/schema");
+
+                    try
+                    {
+                        xmlSerializer.Serialize(fs, config);
+                    }
+                    finally
+                    { }
+                }
+                config = null;
+            }
             throw new NotImplementedException();
+            
         }
         PTZ.GetConfigurationsResponse PTZ.IPTZ.GetConfigurations(PTZ.GetConfigurationsRequest request)
         {
@@ -4559,7 +4604,126 @@ namespace OnvifProxy
         }
         PTZ.PTZConfigurationOptions PTZ.IPTZ.GetConfigurationOptions(string ConfigurationToken)
         {
-            throw new NotImplementedException();
+            
+            #region
+            //options.PTZTimeout = new PTZ.DurationRange();
+            //options.PTZTimeout.Max = "maxtimeout";
+            //options.PTZTimeout.Min = "mintimeout";
+            //options.Spaces = new PTZ.PTZSpaces();
+            //options.Spaces.AbsolutePanTiltPositionSpace = new PTZ.Space2DDescription[1];
+            //options.Spaces.AbsolutePanTiltPositionSpace[0] = new PTZ.Space2DDescription();
+            //options.Spaces.AbsolutePanTiltPositionSpace[0].URI = "URI";
+            //options.Spaces.AbsolutePanTiltPositionSpace[0].XRange = new PTZ.FloatRange();
+            //options.Spaces.AbsolutePanTiltPositionSpace[0].XRange.Max = 100;
+            //options.Spaces.AbsolutePanTiltPositionSpace[0].XRange.Min = -100;
+
+            //options.Spaces.AbsoluteZoomPositionSpace = new PTZ.Space1DDescription[1];
+            //options.Spaces.AbsoluteZoomPositionSpace[0] = new PTZ.Space1DDescription();
+            //options.Spaces.AbsoluteZoomPositionSpace[0].URI = "uri";
+            //options.Spaces.AbsoluteZoomPositionSpace[0].XRange = new PTZ.FloatRange();
+            //options.Spaces.AbsoluteZoomPositionSpace[0].XRange.Max = 100;
+            //options.Spaces.AbsoluteZoomPositionSpace[0].XRange.Min = -100;
+
+            //options.Spaces.ContinuousPanTiltVelocitySpace = new PTZ.Space2DDescription[1];
+            //options.Spaces.ContinuousPanTiltVelocitySpace[0] = new PTZ.Space2DDescription();
+            //options.Spaces.ContinuousPanTiltVelocitySpace[0].URI = "uri";
+            //options.Spaces.ContinuousPanTiltVelocitySpace[0].XRange = new PTZ.FloatRange();
+            //options.Spaces.ContinuousPanTiltVelocitySpace[0].XRange.Max = 100;
+            //options.Spaces.ContinuousPanTiltVelocitySpace[0].XRange.Min = -100;
+
+            //options.Spaces.ContinuousZoomVelocitySpace = new PTZ.Space1DDescription[1];
+            //options.Spaces.ContinuousZoomVelocitySpace[0] = new PTZ.Space1DDescription();
+            //options.Spaces.ContinuousZoomVelocitySpace[0].URI = "uri";
+            //options.Spaces.ContinuousZoomVelocitySpace[0].XRange = new PTZ.FloatRange();
+            //options.Spaces.ContinuousZoomVelocitySpace[0].XRange.Max = 100;
+            //options.Spaces.ContinuousZoomVelocitySpace[0].XRange.Min = -100;
+
+            //options.Spaces.PanTiltSpeedSpace = new PTZ.Space1DDescription[1];
+            //options.Spaces.PanTiltSpeedSpace[0] = new PTZ.Space1DDescription();
+            //options.Spaces.PanTiltSpeedSpace[0].URI = "uri";
+            //options.Spaces.PanTiltSpeedSpace[0].XRange = new PTZ.FloatRange();
+            //options.Spaces.PanTiltSpeedSpace[0].XRange.Max = 100;
+            //options.Spaces.PanTiltSpeedSpace[0].XRange.Min = -100;
+
+            //options.Spaces.RelativePanTiltTranslationSpace = new PTZ.Space2DDescription[1];
+            //options.Spaces.RelativePanTiltTranslationSpace[0] = new PTZ.Space2DDescription();
+            //options.Spaces.RelativePanTiltTranslationSpace[0].URI = "uri";
+            //options.Spaces.RelativePanTiltTranslationSpace[0].XRange = new PTZ.FloatRange();
+            //options.Spaces.RelativePanTiltTranslationSpace[0].XRange.Max = 100;
+            //options.Spaces.RelativePanTiltTranslationSpace[0].XRange.Min = -100;
+
+            //options.Spaces.RelativeZoomTranslationSpace = new PTZ.Space1DDescription[1];
+            //options.Spaces.RelativeZoomTranslationSpace[0] = new PTZ.Space1DDescription();
+            //options.Spaces.RelativeZoomTranslationSpace[0].URI = "uri";
+            //options.Spaces.RelativeZoomTranslationSpace[0].XRange = new PTZ.FloatRange();
+            //options.Spaces.RelativeZoomTranslationSpace[0].XRange.Max = 100;
+            //options.Spaces.RelativeZoomTranslationSpace[0].XRange.Min = -100;
+
+            //options.Spaces.ZoomSpeedSpace = new PTZ.Space1DDescription[1];
+            //options.Spaces.ZoomSpeedSpace[0] = new PTZ.Space1DDescription();
+            //options.Spaces.ZoomSpeedSpace[0].URI = "uri";
+            //options.Spaces.ZoomSpeedSpace[0].XRange = new PTZ.FloatRange();
+            //options.Spaces.ZoomSpeedSpace[0].XRange.Max = 100;
+            //options.Spaces.ZoomSpeedSpace[0].XRange.Min = -100;
+
+            //options.PTControlDirection = new PTZ.PTControlDirectionOptions();
+            //options.PTControlDirection.EFlip = new PTZ.EFlipOptions();
+            //options.PTControlDirection.EFlip.Mode = new PTZ.EFlipMode[1];
+            //options.PTControlDirection.EFlip.Mode[0] = new PTZ.EFlipMode();
+            //options.PTControlDirection.Reverse = new PTZ.ReverseOptions();
+            //options.PTControlDirection.Reverse.Mode = new PTZ.ReverseMode[1];
+            //options.PTControlDirection.Reverse.Mode[0] = new PTZ.ReverseMode();
+
+
+            //using (var fs = new FileStream("GetConfigurationOptions.txt", FileMode.OpenOrCreate))
+            //{
+            //    XmlSerializer xmlSerializer = new XmlSerializer(typeof(PTZ.PTZConfigurationOptions), "http://www.onvif.org/ver10/schema");
+
+            //    try
+            //    {
+            //        xmlSerializer.Serialize(fs, options);
+            //    }
+            //    finally
+            //    { }
+            //}
+            #endregion
+            TyphoonMsg typhmsg = new TyphoonMsg(TyphoonMsgType.Request);
+            using (typhmsg = TyphoonMsgManager.SendSyncMsg(200, 26, TyphoonCom.MakeMem(ConfigurationToken), 0))
+            {
+                if (typhmsg == null)
+                    throw new FaultException(new FaultReason("No PTZNodes returned"),
+                          new FaultCode("Sender",
+                              new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("No PTZNodes returned", "http://www.onvif.org/ver10/error"))));
+
+                typhmsg.stringMessageData = TyphoonCom.ParseMem(0, typhmsg.stringMessageData);
+
+                if (String.IsNullOrWhiteSpace(typhmsg.stringMessageData))
+                    throw new FaultException(new FaultReason("No PTZNodes returned"),
+                          new FaultCode("Sender",
+                              new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("No PTZNodes returned", "http://www.onvif.org/ver10/error"))));
+
+                PTZ.PTZConfigurationOptions options = new PTZ.PTZConfigurationOptions();
+
+                using (var ms = new MemoryStream(typhmsg.byteMessageData))
+                {
+                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(PTZ.PTZConfigurationOptions), "http://www.onvif.org/ver10/schema");
+
+                    try
+                    {
+                        options = (PTZ.PTZConfigurationOptions)xmlSerializer.Deserialize(ms);
+                    }
+                    catch (SerializationException)
+                    {
+                        throw new FaultException(new FaultReason("No PTZNodes returned"),
+                          new FaultCode("Sender",
+                              new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("No PTZNodes returned", "http://www.onvif.org/ver10/error"))));
+                    }
+                }
+                return options;
+            }
         }
         string PTZ.IPTZ.SendAuxiliaryCommand(string ProfileToken, string AuxiliaryData)
         {
@@ -4591,7 +4755,45 @@ namespace OnvifProxy
         }
         PTZ.ContinuousMoveResponse PTZ.IPTZ.ContinuousMove(PTZ.ContinuousMoveRequest request)
         {
-            throw new NotImplementedException();
+            string tempstring = null;
+            using (var ms = new MemoryStream())
+            {
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(PTZ.ContinuousMoveRequest), "http://www.onvif.org/ver10/schema");
+
+                try
+                {
+                    xmlSerializer.Serialize(ms, request);
+                    StreamReader strread = new StreamReader(ms);
+                    ms.Position = 0;
+                    tempstring = strread.ReadToEnd();
+                    if(String.IsNullOrWhiteSpace(tempstring))
+                        throw new FaultException(new FaultReason("ContinuousMoveSerializationException"),
+                          new FaultCode("Sender",
+                              new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("ContinuousMoveSerializationException", "http://www.onvif.org/ver10/error"))));
+
+                }
+                catch(SerializationException)
+                {
+                    throw new FaultException(new FaultReason("ContinuousMoveSerializationException"),
+                          new FaultCode("Sender",
+                              new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("ContinuousMoveSerializationException", "http://www.onvif.org/ver10/error"))));
+                }
+            }
+            TyphoonMsg typhmsg = new TyphoonMsg(TyphoonMsgType.Request);
+            using (typhmsg = TyphoonMsgManager.SendSyncMsg(200, 27, TyphoonCom.MakeMem(tempstring), 0))
+            {
+                if (typhmsg == null || string.IsNullOrEmpty(typhmsg.stringMessageData))
+                    throw new FaultException(new FaultReason("ContinuousMoveSerializationException"),
+                          new FaultCode("Sender",
+                              new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("ContinuousMoveSerializationException", "http://www.onvif.org/ver10/error"))));
+
+                typhmsg.stringMessageData = TyphoonCom.ParseMem(0, typhmsg.stringMessageData);
+                //
+            }
+            return null;
         }
         void PTZ.IPTZ.RelativeMove(string ProfileToken, PTZ.PTZVector Translation, PTZ.PTZSpeed Speed)
         {
