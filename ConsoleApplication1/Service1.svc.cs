@@ -494,10 +494,6 @@ namespace OnvifProxy
                 {
                     throw;
                 }
-                //finally
-                //{
-                //    fs.Close();
-                //}
             }
         }
 
@@ -743,7 +739,7 @@ namespace OnvifProxy
         //uncomment me!!!
         public GetCapabilitiesResponse GetCapabilities(GetCapabilitiesRequest request)
         {
-            TyphoonMsg tmpmsg;
+            //TyphoonMsg tmpmsg;
             if (request != null)
             {
                 //Console.WriteLine("entering GetCapabilities");
@@ -1507,7 +1503,7 @@ namespace OnvifProxy
                                 networkInterface[a].Info.MTU = (int)objMO["MTU"];
                             }                            
                         }
-                        catch (Exception e)
+                        catch (ApplicationException)
                         { }
 
                         networkInterface[a].IPv4 = new Device.IPv4NetworkInterface();
@@ -1673,7 +1669,7 @@ namespace OnvifProxy
 
                             ReturnedN = objMO.InvokeMethod("SetGateways", SetGWparam, null);
                         }
-                        catch (Exception e)
+                        catch (ApplicationException)
                         {
                             return null;
                         }
@@ -1816,7 +1812,7 @@ namespace OnvifProxy
                     fl = OnvifProxy.Service1.SetSystemTime(ref systime);
 
                 }
-                catch (FaultException fe)
+                catch (FaultException)
                 {
                     throw;
                 }
@@ -2034,7 +2030,7 @@ namespace OnvifProxy
                     {
                         GW.IPv4Address = (string[])objMO["DefaultIPGateway"];
                     }
-                    catch (Exception e)
+                    catch (ApplicationException)
                     {
                         return null;
                     }
@@ -3743,7 +3739,7 @@ namespace OnvifProxy
 
         public MediaSourcesProvider.GetUpdatesResponse GetUpdates(MediaSourcesProvider.GetUpdatesRequest request)
         {
-            int startRef = 0, limit = 1, mediaSourcesLeftToSend = 0;
+            //int startRef = 0, limit = 1, mediaSourcesLeftToSend = 0;
 
             MediaSourcesProvider.GetUpdatesResponse resp = new GetUpdatesResponse();
 
@@ -3786,7 +3782,7 @@ namespace OnvifProxy
                     ms.Position = 0;
                     formedstring = strread.ReadToEnd();
                 }
-                catch (ApplicationException ex)
+                catch (ApplicationException)
                 {
                     throw new FaultException(new FaultReason("No ReplayUri Results"),
                           new FaultCode("Sender",
@@ -3795,9 +3791,9 @@ namespace OnvifProxy
                 }
             }
 
-            TyphoonMsg TyphMsg = new TyphoonMsg(TyphoonMsgType.Request);
+            //TyphoonMsg TyphMsg = new TyphoonMsg(TyphoonMsgType.Request);
 
-            using (TyphMsg = TyphoonMsgManager.SendSyncMsg(200, 21, TyphoonCom.MakeMem(formedstring), 0))
+            using (TyphoonMsg TyphMsg = TyphoonMsgManager.SendSyncMsg(200, 21, TyphoonCom.MakeMem(formedstring), 0))
             {
                 if (TyphMsg == null || string.IsNullOrEmpty(TyphMsg.stringMessageData))
                     throw new FaultException(new FaultReason("No ReplayUri Found"),
@@ -3905,7 +3901,7 @@ namespace OnvifProxy
                     recsumresponse.DataUntil = System.DateTime.Parse(doc.FirstChild.FirstChild["DataUntil"].InnerText);
                     recsumresponse.NumberRecordings = Int16.Parse(doc.FirstChild.FirstChild["NumberRecordings"].InnerText);                    
                 }
-                catch(Exception ex)
+                catch(ApplicationException)
                 {
                     throw new FaultException(new FaultReason("Wrong GetRecordingSummary Recieved From Typhoon"),
                        new FaultCode("Sender",
@@ -4278,7 +4274,7 @@ namespace OnvifProxy
                     ms.Position = 0;
                     formedstring = strread.ReadToEnd();
                 }
-                catch (ApplicationException ex)
+                catch (ApplicationException)
                 {
                     throw new FaultException(new FaultReason("No RecordingSearchResults"),
                           new FaultCode("Sender",
@@ -4289,9 +4285,9 @@ namespace OnvifProxy
                 
             }
 
-            TyphoonMsg TyphMsg = new TyphoonMsg(TyphoonMsgType.Request);
+            //TyphoonMsg TyphMsg = new TyphoonMsg(TyphoonMsgType.Request);
 
-            using (TyphMsg = TyphoonMsgManager.SendSyncMsg(200, 11, TyphoonCom.MakeMem(formedstring), 0))
+            using (TyphoonMsg TyphMsg = TyphoonMsgManager.SendSyncMsg(200, 11, TyphoonCom.MakeMem(formedstring), 0))
             {
                 if (TyphMsg == null || string.IsNullOrEmpty(TyphMsg.stringMessageData))
                     throw new FaultException(new FaultReason("No Recordings Found"),
@@ -4758,11 +4754,11 @@ namespace OnvifProxy
             string tempstring = null;
             using (var ms = new MemoryStream())
             {
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(PTZ.ContinuousMoveRequest), "http://www.onvif.org/ver10/schema");
+                XmlSerializer RequestSerializer = new XmlSerializer(typeof(PTZ.ContinuousMoveRequest), "http://www.onvif.org/ver10/schema");
 
                 try
                 {
-                    xmlSerializer.Serialize(ms, request);
+                    RequestSerializer.Serialize(ms, request);
                     StreamReader strread = new StreamReader(ms);
                     ms.Position = 0;
                     tempstring = strread.ReadToEnd();
@@ -4781,8 +4777,8 @@ namespace OnvifProxy
                                   new FaultCode("ContinuousMoveSerializationException", "http://www.onvif.org/ver10/error"))));
                 }
             }
-            TyphoonMsg typhmsg = new TyphoonMsg(TyphoonMsgType.Request);
-            using (typhmsg = TyphoonMsgManager.SendSyncMsg(200, 27, TyphoonCom.MakeMem(tempstring), 0))
+            
+            using (TyphoonMsg typhmsg = TyphoonMsgManager.SendSyncMsg(200, 27, TyphoonCom.MakeMem(tempstring), 0))
             {
                 if (typhmsg == null || string.IsNullOrEmpty(typhmsg.stringMessageData))
                     throw new FaultException(new FaultReason("ContinuousMoveSerializationException"),
@@ -4791,9 +4787,38 @@ namespace OnvifProxy
                                   new FaultCode("ContinuousMoveSerializationException", "http://www.onvif.org/ver10/error"))));
 
                 typhmsg.stringMessageData = TyphoonCom.ParseMem(0, typhmsg.stringMessageData);
-                //
+
+                PTZ.ContinuousMoveResponse resp = null;
+
+                using (MemoryStream ms2 = new MemoryStream(typhmsg.byteMessageData))
+                {
+                    XmlSerializer xmlserializer2 = new XmlSerializer(typeof(PTZ.ContinuousMoveResponse), "http://www.onvif.org/ver10/schema");
+
+                    try
+                    {
+                        resp = (PTZ.ContinuousMoveResponse)xmlserializer2.Deserialize(ms2);
+                    }
+                    catch (SerializationException)
+                    {
+                        throw new FaultException(new FaultReason("SerializationContiniousMoveException"),
+                          new FaultCode("Sender",
+                              new FaultCode("InvalidArgVa", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("SerializationContiniousMoveException", "http://www.onvif.org/ver10/error"))));
+                    }                   
+                }
+
+                if (resp != null)
+                {
+                    return resp;
+                }
+                else
+                {
+                    throw new FaultException(new FaultReason("ContiniousMoveException"),
+                      new FaultCode("Sender",
+                          new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                              new FaultCode("ContiniousMoveException", "http://www.onvif.org/ver10/error"))));
+                }
             }
-            return null;
         }
         void PTZ.IPTZ.RelativeMove(string ProfileToken, PTZ.PTZVector Translation, PTZ.PTZSpeed Speed)
         {
@@ -4801,7 +4826,34 @@ namespace OnvifProxy
         }
         PTZ.PTZStatus PTZ.IPTZ.GetStatus(string ProfileToken)
         {
-            throw new NotImplementedException();
+            using (TyphoonMsg typhmsg = TyphoonMsgManager.SendSyncMsg(200, 29, TyphoonCom.MakeMem(ProfileToken), 0))
+            {
+                if (typhmsg == null || string.IsNullOrEmpty(typhmsg.stringMessageData))
+                    throw new FaultException(new FaultReason("GetStatusSerializationException"),
+                          new FaultCode("Sender",
+                              new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("GetStatusSerializationException", "http://www.onvif.org/ver10/error"))));
+
+                typhmsg.stringMessageData = TyphoonCom.ParseMem(0, typhmsg.stringMessageData);
+                PTZ.PTZStatus resp = null;
+                using (MemoryStream ms2 = new MemoryStream(typhmsg.byteMessageData))
+                {
+                    XmlSerializer xmlserializer2 = new XmlSerializer(typeof(PTZ.ContinuousMoveResponse), "http://www.onvif.org/ver10/schema");
+
+                    try
+                    {
+                        resp = (PTZ.PTZStatus)xmlserializer2.Deserialize(ms2);
+                    }
+                    catch (SerializationException)
+                    {
+                        throw new FaultException(new FaultReason("SerializationContiniousMoveException"),
+                          new FaultCode("Sender",
+                              new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("SerializationContiniousMoveException", "http://www.onvif.org/ver10/error"))));
+                    }
+                }
+            }
+            return null;
         }
         void PTZ.IPTZ.AbsoluteMove(string ProfileToken, PTZ.PTZVector Position, PTZ.PTZSpeed Speed)
         {
@@ -4809,7 +4861,81 @@ namespace OnvifProxy
         }
         void PTZ.IPTZ.Stop(string ProfileToken, bool PanTilt, bool Zoom)
         {
-            throw new NotImplementedException();
+            Stop stop = new Stop();
+            stop.ProfileToken = ProfileToken;
+            stop.PanTilt = PanTilt;
+            stop.Zoom = Zoom;
+
+            string tempstring = null;
+            using (var ms = new MemoryStream())
+            {
+                XmlSerializer RequestSerializer = new XmlSerializer(typeof(Stop), "http://www.onvif.org/ver10/schema");
+
+                try
+                {
+                    RequestSerializer.Serialize(ms, stop);
+                    StreamReader strread = new StreamReader(ms);
+                    ms.Position = 0;
+                    tempstring = strread.ReadToEnd();
+                    if (String.IsNullOrWhiteSpace(tempstring))
+                        throw new FaultException(new FaultReason("StopSerializationException"),
+                          new FaultCode("Sender",
+                              new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("ContinuousMoveSerializationException", "http://www.onvif.org/ver10/error"))));
+
+                }
+                catch (SerializationException)
+                {
+                    throw new FaultException(new FaultReason("ContinuousMoveSerializationException"),
+                          new FaultCode("Sender",
+                              new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("StopSerializationException", "http://www.onvif.org/ver10/error"))));
+                }
+            }
+
+            using (TyphoonMsg typhmsg = TyphoonMsgManager.SendSyncMsg(200, 28, TyphoonCom.MakeMem(tempstring), 0))
+            {
+                if (typhmsg == null || string.IsNullOrEmpty(typhmsg.stringMessageData))
+                    throw new FaultException(new FaultReason("StopSerializationException"),
+                          new FaultCode("Sender",
+                              new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("StopSerializationException", "http://www.onvif.org/ver10/error"))));
+
+                typhmsg.stringMessageData = TyphoonCom.ParseMem(0, typhmsg.stringMessageData);
+
+                Stop resp = null;
+
+                using (MemoryStream ms2 = new MemoryStream(typhmsg.byteMessageData))
+                {
+                    XmlSerializer xmlserializer2 = new XmlSerializer(typeof(Stop), "http://www.onvif.org/ver10/schema");
+
+                    try
+                    {
+                        resp = (Stop)xmlserializer2.Deserialize(ms2);
+                    }
+                    catch (SerializationException)
+                    {
+                        throw new FaultException(new FaultReason("SerializationContiniousMoveException"),
+                          new FaultCode("Sender",
+                              new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("SerializationContiniousMoveException", "http://www.onvif.org/ver10/error"))));
+                    }
+                }
+
+                if (resp != null)
+                {
+                    return;
+                }
+                else
+                {
+                    throw new FaultException(new FaultReason("ContiniousMoveException"),
+                      new FaultCode("Sender",
+                          new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                              new FaultCode("ContiniousMoveException", "http://www.onvif.org/ver10/error"))));
+                }
+            }
+
+
         }
         PTZ.GetPresetToursResponse PTZ.IPTZ.GetPresetTours(PTZ.GetPresetToursRequest request)
         {
@@ -4983,6 +5109,13 @@ namespace OnvifProxy
             }
 
         }
+    }
+    [Serializable()]
+    public class Stop
+    {
+        public string ProfileToken;
+        public bool PanTilt;
+        public bool Zoom;
     }
 }
 

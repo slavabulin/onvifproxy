@@ -114,6 +114,7 @@
   <ItemGroup>
     <Compile Include="AdaptersInfo.cs" />
     <Compile Include="AsyncResult.cs" />
+    <Compile Include="CustomException.cs" />
     <Compile Include="CustomMessageFormatter.cs" />
     <Compile Include="IEvent.cs" />
     <Compile Include="IMediaSourcesProvider.cs" />

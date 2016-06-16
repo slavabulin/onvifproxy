@@ -170,7 +170,7 @@ namespace OnvifProxy
                                         }
                                     }
                                 }
-                                catch (ArgumentNullException ane)
+                                catch (ArgumentNullException)
                                 {
                                     throw;
                                 }
@@ -209,18 +209,15 @@ namespace OnvifProxy
                                 return methodname.Name;                                
                             }
                         }
-                        //
                     }
-                    catch (ArgumentNullException ane)
+                    catch (ArgumentNullException)
                     {
                         throw fault;
                     }
 
                     //---------------------------------
                     message = msgcopy1;
-                    //return null;
-                    //message = null;
-                    return "UnauthorizedAccessFault";
+                    return "UnauthorizedAccessFault";//Fault Method Name
 
 
                 #endregion check if there is security header

@@ -47,7 +47,7 @@ namespace OnvifProxy
             {
                 return base.Channel.GetDeviceInformation(out Model, out FirmwareVersion, out SerialNumber, out HardwareId);
             }
-            catch(Exception ex)
+            catch(ApplicationException ex)
             {
                 Model = FirmwareVersion = SerialNumber = HardwareId = String.Empty;
             }

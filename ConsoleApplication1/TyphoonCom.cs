@@ -303,7 +303,7 @@ namespace OnvifProxy
                         }
                     }
                 }
-                catch (Exception ex)//The buffer parameter is null.
+                catch (ApplicationException ex)//The buffer parameter is null.
                 {
                     log.DebugFormat("stream.DataAvailable - Exception {0}", ex.Message);
                     if (!flg_ConnectionFailedActive) OnTyphoonDisconnect();
@@ -580,9 +580,9 @@ namespace OnvifProxy
                             #endregion
                     }
                 }
-                catch (Exception e)
+                catch (ApplicationException e)
                 {
-                    log.ErrorFormat(e.Message);
+                    log.ErrorFormat("CommandParse - ", e.Message);
                 }
             }
             else
@@ -610,7 +610,7 @@ namespace OnvifProxy
         private static void ParseQueueCmd()
         {
             TyphoonMsg typhmsg, tmpmsg ;
-            bnSubscriber subs;
+            //bnSubscriber subs;
             Object obj = new object();
             binding = new WSHttpBinding(SecurityMode.None);
 
@@ -652,7 +652,7 @@ namespace OnvifProxy
                                     nvtClient = TyphoonCom.nvtClientCollection.Single(NVTServiceClient =>
                                         NVTServiceClient.Endpoint.ListenUri == (new Uri(typhmsg.stringMessageData)));
                                 }
-                                catch (Exception ex)
+                                catch (ApplicationException)
                                 {
                                     nvtClient = new NVTServiceClient(binding, (new EndpointAddress(typhmsg.stringMessageData)));
                                     if (nvtClient != null)
@@ -673,7 +673,7 @@ namespace OnvifProxy
                                 {
                                     manufacturer = nvtClient.GetDeviceInformation(out model, out firmware, out serial, out hardwareid);
                                 }
-                                catch (FaultException ex)
+                                catch (FaultException)
                                 {
                                     log.ErrorFormat("failed to GetDeviceInformation from {0}", typhmsg.stringMessageData);
                                     break;
@@ -750,7 +750,7 @@ namespace OnvifProxy
                                     nvtClient = TyphoonCom.nvtClientCollection.Single(NVTServiceClient =>
                                         NVTServiceClient.Endpoint.ListenUri == (new Uri(typhmsg.stringMessageData)));
                                 }
-                                catch (Exception ex)
+                                catch (ApplicationException)
                                 {
                                     nvtClient = new NVTServiceClient(binding, (new EndpointAddress(typhmsg.stringMessageData)));
                                     if (nvtClient != null)
@@ -773,7 +773,7 @@ namespace OnvifProxy
                                         break;
                                     }
                                 }
-                                catch (FaultException ex)
+                                catch (FaultException)
                                 {
                                     log.ErrorFormat("failed to GetCapabilities from {0}", typhmsg.stringMessageData);
                                     break;
@@ -839,7 +839,7 @@ namespace OnvifProxy
                                     nvtClient = TyphoonCom.nvtClientCollection.Single(NVTServiceClient
                                         => NVTServiceClient.Endpoint.ListenUri == (new Uri(typhmsg.stringMessageData)));
                                 }
-                                catch (ApplicationException ex)
+                                catch (ApplicationException)
                                 {
                                     nvtClient = new NVTServiceClient(binding, (new EndpointAddress(typhmsg.stringMessageData)));
                                     if (nvtClient != null)
@@ -858,7 +858,7 @@ namespace OnvifProxy
                                 {
                                     nvtProfilesResponse = nvtClient.GetProfiles(new GetProfilesRequest());
                                 }
-                                catch (FaultException ex)
+                                catch (FaultException)
                                 {
                                     log.ErrorFormat("failed to GetProfiles from {0}", typhmsg.stringMessageData);
                                     break;
@@ -918,7 +918,7 @@ namespace OnvifProxy
                                 {
                                     nvtClient = TyphoonCom.nvtClientCollection.Single(NVTServiceClient => NVTServiceClient.Endpoint.ListenUri == (new Uri(xaddrs)));
                                 }
-                                catch (Exception ex)
+                                catch (ApplicationException)
                                 {
                                     nvtClient = new NVTServiceClient(binding, (new EndpointAddress(xaddrs)));
                                     if (nvtClient != null)
@@ -1057,7 +1057,7 @@ namespace OnvifProxy
                                                     {
                                                         notify.Notify = (Event.Notify)serializer.Deserialize(ms);
                                                     }
-                                                    catch (Exception ex)
+                                                    catch (ApplicationException ex)
                                                     {
                                                         Console.WriteLine("TyphoonCom: Event: Не могу сериализовать " + ex.Message);
                                                     }
@@ -1068,7 +1068,7 @@ namespace OnvifProxy
                                                 }
                                                 catch (ApplicationException ex)
                                                 {
-                                                    log.Warn(ex.Message.ToString());
+                                                    log.DebugFormat("ParseQueueCmd - ", ex.Message.ToString());                                                    
                                                 }
                                             }
                                         }                                         
@@ -1076,11 +1076,11 @@ namespace OnvifProxy
                                     catch (InvalidOperationException ioe)
                                     {
                                         //try to form notify again
-                                        Console.WriteLine("пыщыпщпыщ");
+                                        log.DebugFormat("ParseQueueCmd - ", ioe.Message.ToString());
                                     }
-                                    catch (Exception ex)
+                                    catch (ApplicationException ex)
                                     {
-                                        log.Warn(ex.Message.ToString());
+                                        log.WarnFormat("ParseQueueCmd - ", ex.Message.ToString());
                                     }
 
                                 }
@@ -1102,17 +1102,12 @@ namespace OnvifProxy
                     }
                     catch (InvalidOperationException ioe)
                     {
-                        log.DebugFormat("InvalidOperationException - {0}", ioe.Message);
+                        log.DebugFormat("ParseQueueCmd - InvalidOperationException - {0}", ioe.Message);
                     }
                     catch (NullReferenceException nre)
                     {
-                        log.DebugFormat("NullReferenceException - {0}", nre.Message);
+                        log.DebugFormat("ParseQueueCmd - NullReferenceException - {0}", nre.Message);
                     }
-                    //finally
-                    //{
-                    //    //typhmsg.Dispose();
-                    //    //tmpmsg.Dispose();
-                    //}
                 }
                 
                 Thread.Sleep(1);
@@ -1136,18 +1131,18 @@ namespace OnvifProxy
             }
             catch (ArgumentException ae)
             {
-                Console.WriteLine("ArgumentException - {0}",ae.Message);
-                log.DebugFormat("ArgumentException - {0}", ae.Message);
+                log.DebugFormat("PacketParseEx - {0}", ae.Message);
+                return;
             }
             catch (IOException ae)
             {
-                Console.WriteLine("IOException - {0}", ae.Message);
-                log.DebugFormat("IOException - {0}", ae.Message);
+                log.DebugFormat("PacketParseEx - {0}", ae.Message);
+                return;
             }
             catch (ObjectDisposedException ae)
             {
-                Console.WriteLine("ObjectDisposedException - {0}", ae.Message);
                 log.DebugFormat("ObjectDisposedException - {0}", ae.Message);
+                return;
             }
 
             if (flg)
@@ -1163,7 +1158,7 @@ namespace OnvifProxy
 
                 //создаю массив на данные без 4х байт общей длины пакета
                 //и без 1го байта crc чтобы посчитать crc8
-                Byte[] tmpBuff = new byte[datalength - 5];///////////////////////////OutOfMemory/////////////////////1830844769/////////////////////////////////////
+                Byte[] tmpBuff = new byte[datalength - 5];
 
                 //копирую туда данные из пакета
                 for (uint t = 0; t < (datalength - 5); t++)
@@ -1715,8 +1710,9 @@ namespace OnvifProxy
                             }
                         }
                     }
-                    catch (ApplicationException ex)
+                    catch (ApplicationException ae)
                     {
+                        TyphoonCom.log.DebugFormat("TestEventPuller - ", ae.Message);
                         throw;
                     }
                 }
@@ -1912,7 +1908,7 @@ namespace OnvifProxy
                     {
                         TyphoonCom.log.ErrorFormat("TyphoonMsgManager.TaskGetMsg() - TryRemove - Key=null {0}", ane.Message);
                     }
-                    catch (Exception ex)
+                    catch (ApplicationException ex)
                     {
                         TyphoonCom.log.ErrorFormat("TyphoonMsgManager.TaskGetMsg() - TryRemove - {0}", ex.Message);
                     }

@@ -547,7 +547,7 @@ namespace OnvifProxy
             if ((termtime.ToCharArray())[0] == 'P')
             {
                 //ветка xsd:duration
-                int indofS, indofM, indofH, indofT, indofD, indofMn, indofY;
+                int indofS, indofM, indofH, indofT,/* indofD, indofMn, */indofY;
                 indofS = termtime.IndexOf('S');
                 indofM = termtime.IndexOf('M');
                 indofH = termtime.IndexOf('H');
