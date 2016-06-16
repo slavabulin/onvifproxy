@@ -379,7 +379,7 @@ namespace OnvifProxy
                     Console.WriteLine("Не могу десериализовать файл конфигурации; " + g.Message);
                     throw;
                 }
-                catch (ApplicationException ex)
+                catch (Exception ex)
                 {
                     throw;
                 }

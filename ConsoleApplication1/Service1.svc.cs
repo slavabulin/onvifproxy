@@ -490,7 +490,7 @@ namespace OnvifProxy
                     Console.WriteLine("Не могу десериализовать файл конфигурации; " + g.Message);
                     throw;
                 }
-                catch (ApplicationException ex)
+                catch (Exception ex)
                 {
                     throw;
                 }
@@ -608,7 +608,7 @@ namespace OnvifProxy
                 {
                     throw;
                 }
-                catch (ApplicationException ex)
+                catch (Exception ex)
                 {
                     TyphoonCom.log.Debug("DeleteUsers threw exception while deserializing pwd.xml - {0}", ex);
                 }
@@ -703,7 +703,7 @@ namespace OnvifProxy
                     {
                         try
                         {
-                            if (userlistfromfile == null) throw new ApplicationException();//not to erase pwd.xml
+                            if (userlistfromfile == null) throw new Exception();//not to erase pwd.xml
                             xmlSerializer.Serialize(writer, userlistfromfile);
                         }
                         catch (Exception ex)
@@ -720,7 +720,7 @@ namespace OnvifProxy
                 {
                     throw;
                 }
-                catch (ApplicationException exc)
+                catch (Exception exc)
                 {
                     TyphoonCom.log.DebugFormat("SetUser - nonserialization exception - {0}", exc.Message);
                 }
@@ -1503,7 +1503,7 @@ namespace OnvifProxy
                                 networkInterface[a].Info.MTU = (int)objMO["MTU"];
                             }                            
                         }
-                        catch (ApplicationException)
+                        catch (Exception)
                         { }
 
                         networkInterface[a].IPv4 = new Device.IPv4NetworkInterface();
@@ -1669,7 +1669,7 @@ namespace OnvifProxy
 
                             ReturnedN = objMO.InvokeMethod("SetGateways", SetGWparam, null);
                         }
-                        catch (ApplicationException)
+                        catch (Exception)
                         {
                             return null;
                         }
@@ -2030,7 +2030,7 @@ namespace OnvifProxy
                     {
                         GW.IPv4Address = (string[])objMO["DefaultIPGateway"];
                     }
-                    catch (ApplicationException)
+                    catch (Exception)
                     {
                         return null;
                     }
@@ -2214,7 +2214,7 @@ namespace OnvifProxy
                         }
                         dnsInformation.SearchDomain = ((string)objMO["DNSDomain"]).Split(' ');
                     }
-                    catch (ApplicationException aex)
+                    catch (Exception aex)
                     {
                         TyphoonCom.log.DebugFormat(aex.Message);
                         throw new FaultException(new FaultReason("NoDNS"),
@@ -3782,7 +3782,7 @@ namespace OnvifProxy
                     ms.Position = 0;
                     formedstring = strread.ReadToEnd();
                 }
-                catch (ApplicationException)
+                catch (Exception)
                 {
                     throw new FaultException(new FaultReason("No ReplayUri Results"),
                           new FaultCode("Sender",
@@ -3901,7 +3901,7 @@ namespace OnvifProxy
                     recsumresponse.DataUntil = System.DateTime.Parse(doc.FirstChild.FirstChild["DataUntil"].InnerText);
                     recsumresponse.NumberRecordings = Int16.Parse(doc.FirstChild.FirstChild["NumberRecordings"].InnerText);                    
                 }
-                catch(ApplicationException)
+                catch(Exception)
                 {
                     throw new FaultException(new FaultReason("Wrong GetRecordingSummary Recieved From Typhoon"),
                        new FaultCode("Sender",
@@ -4255,7 +4255,7 @@ namespace OnvifProxy
                 ////////    ms.Position = 0;
                 ////////    formedstring = strread.ReadToEnd();
                 ////////}
-                ////////catch (ApplicationException ex)
+                ////////catch (Exception ex)
                 ////////{
                 ////////    throw new FaultException(new FaultReason("No RecordingSearchResults"),
                 ////////          new FaultCode("Sender",
@@ -4274,7 +4274,7 @@ namespace OnvifProxy
                     ms.Position = 0;
                     formedstring = strread.ReadToEnd();
                 }
-                catch (ApplicationException)
+                catch (Exception)
                 {
                     throw new FaultException(new FaultReason("No RecordingSearchResults"),
                           new FaultCode("Sender",
@@ -4838,22 +4838,22 @@ namespace OnvifProxy
                 PTZ.PTZStatus resp = null;
                 using (MemoryStream ms2 = new MemoryStream(typhmsg.byteMessageData))
                 {
-                    XmlSerializer xmlserializer2 = new XmlSerializer(typeof(PTZ.ContinuousMoveResponse), "http://www.onvif.org/ver10/schema");
+                    XmlSerializer xmlserializer2 = new XmlSerializer(typeof(PTZ.PTZStatus), "http://www.onvif.org/ver10/schema");
 
                     try
                     {
                         resp = (PTZ.PTZStatus)xmlserializer2.Deserialize(ms2);
                     }
-                    catch (SerializationException)
+                    catch (InvalidOperationException)
                     {
                         throw new FaultException(new FaultReason("SerializationContiniousMoveException"),
                           new FaultCode("Sender",
                               new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
                                   new FaultCode("SerializationContiniousMoveException", "http://www.onvif.org/ver10/error"))));
                     }
+                    return resp;
                 }
             }
-            return null;
         }
         void PTZ.IPTZ.AbsoluteMove(string ProfileToken, PTZ.PTZVector Position, PTZ.PTZSpeed Speed)
         {

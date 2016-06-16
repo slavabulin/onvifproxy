@@ -303,7 +303,7 @@ namespace OnvifProxy
                         }
                     }
                 }
-                catch (ApplicationException ex)//The buffer parameter is null.
+                catch (Exception ex)//The buffer parameter is null.
                 {
                     log.DebugFormat("stream.DataAvailable - Exception {0}", ex.Message);
                     if (!flg_ConnectionFailedActive) OnTyphoonDisconnect();
@@ -580,7 +580,7 @@ namespace OnvifProxy
                             #endregion
                     }
                 }
-                catch (ApplicationException e)
+                catch (Exception e)
                 {
                     log.ErrorFormat("CommandParse - ", e.Message);
                 }
@@ -652,7 +652,7 @@ namespace OnvifProxy
                                     nvtClient = TyphoonCom.nvtClientCollection.Single(NVTServiceClient =>
                                         NVTServiceClient.Endpoint.ListenUri == (new Uri(typhmsg.stringMessageData)));
                                 }
-                                catch (ApplicationException)
+                                catch (Exception)
                                 {
                                     nvtClient = new NVTServiceClient(binding, (new EndpointAddress(typhmsg.stringMessageData)));
                                     if (nvtClient != null)
@@ -750,7 +750,7 @@ namespace OnvifProxy
                                     nvtClient = TyphoonCom.nvtClientCollection.Single(NVTServiceClient =>
                                         NVTServiceClient.Endpoint.ListenUri == (new Uri(typhmsg.stringMessageData)));
                                 }
-                                catch (ApplicationException)
+                                catch (Exception)
                                 {
                                     nvtClient = new NVTServiceClient(binding, (new EndpointAddress(typhmsg.stringMessageData)));
                                     if (nvtClient != null)
@@ -839,7 +839,7 @@ namespace OnvifProxy
                                     nvtClient = TyphoonCom.nvtClientCollection.Single(NVTServiceClient
                                         => NVTServiceClient.Endpoint.ListenUri == (new Uri(typhmsg.stringMessageData)));
                                 }
-                                catch (ApplicationException)
+                                catch (Exception)
                                 {
                                     nvtClient = new NVTServiceClient(binding, (new EndpointAddress(typhmsg.stringMessageData)));
                                     if (nvtClient != null)
@@ -918,7 +918,7 @@ namespace OnvifProxy
                                 {
                                     nvtClient = TyphoonCom.nvtClientCollection.Single(NVTServiceClient => NVTServiceClient.Endpoint.ListenUri == (new Uri(xaddrs)));
                                 }
-                                catch (ApplicationException)
+                                catch (Exception)
                                 {
                                     nvtClient = new NVTServiceClient(binding, (new EndpointAddress(xaddrs)));
                                     if (nvtClient != null)
@@ -1057,7 +1057,7 @@ namespace OnvifProxy
                                                     {
                                                         notify.Notify = (Event.Notify)serializer.Deserialize(ms);
                                                     }
-                                                    catch (ApplicationException ex)
+                                                    catch (Exception ex)
                                                     {
                                                         Console.WriteLine("TyphoonCom: Event: Не могу сериализовать " + ex.Message);
                                                     }
@@ -1066,7 +1066,7 @@ namespace OnvifProxy
                                                 {
                                                     subscriber.channel.Notify(notify);
                                                 }
-                                                catch (ApplicationException ex)
+                                                catch (Exception ex)
                                                 {
                                                     log.DebugFormat("ParseQueueCmd - ", ex.Message.ToString());                                                    
                                                 }
@@ -1078,7 +1078,7 @@ namespace OnvifProxy
                                         //try to form notify again
                                         log.DebugFormat("ParseQueueCmd - ", ioe.Message.ToString());
                                     }
-                                    catch (ApplicationException ex)
+                                    catch (Exception ex)
                                     {
                                         log.WarnFormat("ParseQueueCmd - ", ex.Message.ToString());
                                     }
@@ -1706,11 +1706,11 @@ namespace OnvifProxy
                             }
                             else
                             {
-                                throw new ApplicationException();
+                                throw new Exception();
                             }
                         }
                     }
-                    catch (ApplicationException ae)
+                    catch (Exception ae)
                     {
                         TyphoonCom.log.DebugFormat("TestEventPuller - ", ae.Message);
                         throw;
@@ -1908,7 +1908,7 @@ namespace OnvifProxy
                     {
                         TyphoonCom.log.ErrorFormat("TyphoonMsgManager.TaskGetMsg() - TryRemove - Key=null {0}", ane.Message);
                     }
-                    catch (ApplicationException ex)
+                    catch (Exception ex)
                     {
                         TyphoonCom.log.ErrorFormat("TyphoonMsgManager.TaskGetMsg() - TryRemove - {0}", ex.Message);
                     }

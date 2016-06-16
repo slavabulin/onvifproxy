@@ -92,7 +92,7 @@ namespace OnvifProxy
                 || (timeout <= 0) 
                 || (eventtype <= 0))
             {
-                throw new ApplicationException("wrong data for subscriber");
+                throw new Exception("wrong data for subscriber");
             }
 
             if (SubscriberTimeoutTimer == null)
@@ -340,7 +340,7 @@ namespace OnvifProxy
                 new ppSubscriber(filter);
                 
             }
-            catch (ApplicationException ex)
+            catch (Exception ex)
             {
                 Console.WriteLine("additional service host openning failed - {0}", ex.Message);
                 Console.WriteLine("another try ...");
