@@ -364,6 +364,10 @@ namespace OnvifProxy
             CustomBinding bindingPTZ = new CustomBinding(
                 new TextMessageEncodingBindingElement(MessageVersion.Soap12WSAddressing10, Encoding.UTF8),
                 httpTransportBindingElement);
+
+            CustomBinding bindingImaging = new CustomBinding(
+                new TextMessageEncodingBindingElement(MessageVersion.Soap12WSAddressing10, Encoding.UTF8),
+                httpTransportBindingElement);
             //--------------------------
             //binding
             binding.Namespace = "http://www.onvif.org/ver10/device/wsdl";
@@ -373,6 +377,7 @@ namespace OnvifProxy
             binding3.Namespace = "urn:ias:cvss:msp:1.0";
             bindingReplay.Namespace = "http://www.onvif.org/ver10/replay/wsdl";
             bindingRecSearch.Namespace = "http://www.onvif.org/ver10/search/wsdl";
+            bindingImaging.Namespace = "http://www.onvif.org/ver20/imaging/wsdl";
             //--------------------------
 
             ServiceDiscoveryBehavior serviceDiscoveryBehavior = new ServiceDiscoveryBehavior();
@@ -386,7 +391,8 @@ namespace OnvifProxy
                     MediaSourceProviderServiceEndpoint,
                     ReplayServiceEndpoint,
                     RecordingSearchEndPoint,
-                    PTZEndpoint;
+                    PTZEndpoint,
+                    ImagingEndpoint;
 
             EndpointDiscoveryBehavior MediaServiceBehavior = new EndpointDiscoveryBehavior();
             EndpointDiscoveryBehavior NotificationProducerServiceBehavior = new EndpointDiscoveryBehavior();
@@ -396,6 +402,7 @@ namespace OnvifProxy
             EndpointDiscoveryBehavior udpAnnouncementEndpointBehavior = new EndpointDiscoveryBehavior();
             EndpointDiscoveryBehavior ReplayServiceBehavior = new EndpointDiscoveryBehavior();
             EndpointDiscoveryBehavior PTZServiceBehavior = new EndpointDiscoveryBehavior();
+            EndpointDiscoveryBehavior ImagingServiceBehavior = new EndpointDiscoveryBehavior();
             
             UdpAnnouncementEndpoint udpAnnouncementEndpoint;
             UdpDiscoveryEndpoint udpDiscoveryEndpoint;
@@ -443,6 +450,7 @@ namespace OnvifProxy
 
                 ReplayServiceBehavior.Enabled = false;
                 PTZServiceBehavior.Enabled = false;
+                ImagingServiceBehavior.Enabled = false;
                 //------------------------------
                 // Add endpoints to the service
                 try
@@ -503,6 +511,11 @@ namespace OnvifProxy
                         typeof(PTZ.IPTZ),
                         bindingPTZ,
                         "/onvif/ptz_service");
+
+                    ImagingEndpoint = host.AddServiceEndpoint(
+                        typeof(Imaging.IImagingPort),
+                        bindingImaging,
+                        "/onvif/imaging_service");
                     
 
                     DeviceServiceEndpoint.Contract.Name = "NetworkVideoTransmitter";
@@ -534,6 +547,9 @@ namespace OnvifProxy
 
                     PTZEndpoint.Contract.Name = "PTZService";
                     PTZEndpoint.Contract.Namespace = "http://www.onvif.org/ver20/ptz/wsdl";
+
+                    ImagingEndpoint.Contract.Name = "ImagingService";
+                    ImagingEndpoint.Contract.Namespace = "http://www.onvif.org/ver20/imaging/wsdl";
 
                     //----------------------------------------------------------------------------------
                     //если размер отсылаемого пакета больше 1518 байт, например слишком много скопов, 
@@ -589,6 +605,7 @@ namespace OnvifProxy
                     ReplayServiceEndpoint = null;
                     RecordingSearchEndPoint = null;
                     PTZEndpoint = null;
+                    ImagingEndpoint = null;
                 }
                 catch (NullReferenceException e)
                 {
@@ -606,6 +623,7 @@ namespace OnvifProxy
                     ReplayServiceEndpoint = null;
                     RecordingSearchEndPoint = null;
                     PTZEndpoint = null;
+                    ImagingEndpoint = null;
                 }   
                 return host;
             }

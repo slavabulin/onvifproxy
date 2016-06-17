@@ -26,6 +26,7 @@ using System.Text.RegularExpressions;
 using RecordingSearch;
 using MediaSourcesProvider;
 using ReplayService;
+using Imaging;
 
 
 namespace OnvifProxy
@@ -201,8 +202,7 @@ namespace OnvifProxy
 
                 GetServicesResponse getServicesResponse = new GetServicesResponse();
                 
-                //getServicesResponse.Service = new Device.Service[6];
-                getServicesResponse.Service = new Device.Service[7];
+                getServicesResponse.Service = new Device.Service[8];
 
                 getServicesResponse.Service[0] = new Device.Service();
                 getServicesResponse.Service[0].XAddr = "http://" + confstr.IPAddr + "/onvif/device_service";
@@ -260,7 +260,14 @@ namespace OnvifProxy
                 getServicesResponse.Service[6].Version = new OnvifVersion();
                 getServicesResponse.Service[6].Version.Major = 1;
                 getServicesResponse.Service[6].Version.Minor = 0;
-            
+
+                getServicesResponse.Service[7] = new Device.Service();
+                getServicesResponse.Service[7].XAddr = "http://" + confstr.IPAddr + "/onvif/imaging_service";
+                getServicesResponse.Service[7].Namespace = "http://www.onvif.org/ver20/imaging/wsdl";
+                getServicesResponse.Service[7].Version = new OnvifVersion();
+                getServicesResponse.Service[7].Version.Major = 1;
+                getServicesResponse.Service[7].Version.Minor = 0;
+                getServicesResponse.Service[7].Capabilities = new XmlDocument().CreateElement("cap", "Capabilities", "http://www.onvif.org/ver20/imaging/wsdl");
 
                 return getServicesResponse;
             }
@@ -4435,7 +4442,16 @@ namespace OnvifProxy
     {
         PTZ.Capabilities PTZ.IPTZ.GetServiceCapabilities()
         {
-            throw new NotImplementedException();
+            PTZ.Capabilities caps = new PTZ.Capabilities();
+            caps.EFlip = false;
+            caps.EFlipSpecified = true;
+            caps.Reverse = false;
+            caps.ReverseSpecified = true;
+            caps.MoveStatus = false;
+            caps.StatusPosition = false;
+            caps.GetCompatibleConfigurations = false;
+            return caps;
+
         }
         PTZ.GetNodesResponse PTZ.IPTZ.GetNodes(PTZ.GetNodesRequest request)
         {
@@ -4539,59 +4555,75 @@ namespace OnvifProxy
         {
             
 
-            PTZ.PTZConfiguration config = new PTZ.PTZConfiguration();
-            config.DefaultAbsolutePantTiltPositionSpace = "DefaultAbsolutePantTiltPositionSpace";
-            config.DefaultAbsoluteZoomPositionSpace = "DefaultAbsoluteZoomPositionSpace";
-            config.DefaultContinuousPanTiltVelocitySpace = "DefaultContinuousPanTiltVelocitySpace";
-            config.DefaultContinuousZoomVelocitySpace = "DefaultContinuousZoomVelocitySpace";
-            config.DefaultPTZSpeed = new PTZ.PTZSpeed();
-            config.DefaultPTZSpeed.PanTilt = new PTZ.Vector2D();
-            config.DefaultPTZSpeed.PanTilt.space = "space";
-            config.DefaultPTZSpeed.PanTilt.x = 100;
-            config.DefaultPTZSpeed.PanTilt.y = 100;
+            //PTZ.PTZConfiguration config = new PTZ.PTZConfiguration();
+            //config.DefaultAbsolutePantTiltPositionSpace = "DefaultAbsolutePantTiltPositionSpace";
+            //config.DefaultAbsoluteZoomPositionSpace = "DefaultAbsoluteZoomPositionSpace";
+            //config.DefaultContinuousPanTiltVelocitySpace = "DefaultContinuousPanTiltVelocitySpace";
+            //config.DefaultContinuousZoomVelocitySpace = "DefaultContinuousZoomVelocitySpace";
+            //config.DefaultPTZSpeed = new PTZ.PTZSpeed();
+            //config.DefaultPTZSpeed.PanTilt = new PTZ.Vector2D();
+            //config.DefaultPTZSpeed.PanTilt.space = "space";
+            //config.DefaultPTZSpeed.PanTilt.x = 100;
+            //config.DefaultPTZSpeed.PanTilt.y = 100;
 
-            config.DefaultPTZTimeout = "DefaultPTZTimeout";
-            config.DefaultRelativePanTiltTranslationSpace = "DefaultRelativePanTiltTranslationSpace";
-            config.DefaultRelativeZoomTranslationSpace = "DefaultRelativeZoomTranslationSpace";
-            config.Name = "configuration-name";
-            config.NodeToken = "NodeToken";
-            config.PanTiltLimits = new PTZ.PanTiltLimits();
-            config.PanTiltLimits.Range = new PTZ.Space2DDescription();
-            config.PanTiltLimits.Range.URI = "URI";
-            config.PanTiltLimits.Range.XRange = new PTZ.FloatRange();
-            config.PanTiltLimits.Range.XRange.Max = 100;
-            config.PanTiltLimits.Range.XRange.Min = -100;
-            config.PanTiltLimits.Range.YRange = new PTZ.FloatRange();
-            config.PanTiltLimits.Range.XRange.Max = 100;
-            config.PanTiltLimits.Range.XRange.Min = -100;
+            //config.DefaultPTZTimeout = "DefaultPTZTimeout";
+            //config.DefaultRelativePanTiltTranslationSpace = "DefaultRelativePanTiltTranslationSpace";
+            //config.DefaultRelativeZoomTranslationSpace = "DefaultRelativeZoomTranslationSpace";
+            //config.Name = "configuration-name";
+            //config.NodeToken = "NodeToken";
+            //config.PanTiltLimits = new PTZ.PanTiltLimits();
+            //config.PanTiltLimits.Range = new PTZ.Space2DDescription();
+            //config.PanTiltLimits.Range.URI = "URI";
+            //config.PanTiltLimits.Range.XRange = new PTZ.FloatRange();
+            //config.PanTiltLimits.Range.XRange.Max = 100;
+            //config.PanTiltLimits.Range.XRange.Min = -100;
+            //config.PanTiltLimits.Range.YRange = new PTZ.FloatRange();
+            //config.PanTiltLimits.Range.XRange.Max = 100;
+            //config.PanTiltLimits.Range.XRange.Min = -100;
 
-            config.token = "token";
-            config.ZoomLimits = new PTZ.ZoomLimits();
-            config.ZoomLimits.Range = new PTZ.Space1DDescription();
-            config.ZoomLimits.Range.URI = "URI";
-            config.ZoomLimits.Range.XRange = new PTZ.FloatRange();
-            config.ZoomLimits.Range.XRange.Max = 100;
-            config.ZoomLimits.Range.XRange.Min = -100;
+            //config.token = "token";
+            //config.ZoomLimits = new PTZ.ZoomLimits();
+            //config.ZoomLimits.Range = new PTZ.Space1DDescription();
+            //config.ZoomLimits.Range.URI = "URI";
+            //config.ZoomLimits.Range.XRange = new PTZ.FloatRange();
+            //config.ZoomLimits.Range.XRange.Max = 100;
+            //config.ZoomLimits.Range.XRange.Min = -100;
 
+            //{
+            //    using (var fs = new FileStream("GetConfiguration.txt", FileMode.OpenOrCreate))
+            //    {
+            //        XmlSerializer xmlSerializer = new XmlSerializer(typeof(PTZ.PTZConfiguration), "http://www.onvif.org/ver10/schema");
+
+            //        try
+            //        {
+            //            xmlSerializer.Serialize(fs, config);
+            //        }
+            //        finally
+            //        { }
+            //    }
+            //    config = null;
+            //}
+            //throw new NotImplementedException();
+
+            PTZ.GetConfigurationsResponse ConfigResp = ((PTZ.IPTZ)this).GetConfigurations(new PTZ.GetConfigurationsRequest());
+
+            if (ConfigResp != null)
             {
-                using (var fs = new FileStream("GetConfiguration.txt", FileMode.OpenOrCreate))
+                foreach (PTZ.PTZConfiguration config in ConfigResp.PTZConfiguration)
                 {
-                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(PTZ.PTZConfiguration), "http://www.onvif.org/ver10/schema");
-
-                    try
-                    {
-                        xmlSerializer.Serialize(fs, config);
-                    }
-                    finally
-                    { }
+                    if (config.token == PTZConfigurationToken)
+                        return config;
                 }
-                config = null;
             }
-            throw new NotImplementedException();
+            throw new FaultException(new FaultReason("PTZConfigurationToken"),
+                           new FaultCode("Sender",
+                               new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                   new FaultCode("PTZConfigurationToken", "http://www.onvif.org/ver10/error"))));
             
         }
         PTZ.GetConfigurationsResponse PTZ.IPTZ.GetConfigurations(PTZ.GetConfigurationsRequest request)
         {
+            #region
             //PTZ.GetConfigurationsResponse resp0 = new PTZ.GetConfigurationsResponse();
             //resp0.PTZConfiguration = new PTZ.PTZConfiguration[1];
             //resp0.PTZConfiguration[0] = new PTZ.PTZConfiguration();
@@ -4642,7 +4674,7 @@ namespace OnvifProxy
             //    }
             //    resp0 = null;
             //}
-
+            #endregion
 
             using (TyphoonMsg typhmsg = TyphoonMsgManager.SendSyncMsg(30))
             {
@@ -4674,11 +4706,11 @@ namespace OnvifProxy
                     return resp;
                 }
             }
-            //throw new NotImplementedException();
+
         }
         void PTZ.IPTZ.SetConfiguration(PTZ.PTZConfiguration PTZConfiguration, bool ForcePersistence)
-        {
-            throw new NotImplementedException();
+        { 
+            return;//краткость - сестра
         }
         PTZ.PTZConfigurationOptions PTZ.IPTZ.GetConfigurationOptions(string ConfigurationToken)
         {
@@ -5052,6 +5084,46 @@ namespace OnvifProxy
             throw new NotImplementedException();
         }
     }
+    public partial class Service1 : Imaging.IImagingPort
+    {
+        Imaging.Capabilities Imaging.IImagingPort.GetServiceCapabilities()
+        {
+            Imaging.Capabilities resp = new Imaging.Capabilities();
+            resp.ImageStabilization = false;
+            resp.ImageStabilizationSpecified = true;
+            return resp;
+        }
+        Imaging.ImagingSettings20 Imaging.IImagingPort.GetImagingSettings(string VideoSourceToken)
+        {
+            throw new NotImplementedException();
+        }
+        void Imaging.IImagingPort.SetImagingSettings(string VideoSourceToken,
+            Imaging.ImagingSettings20 ImagingSettings,
+            bool ForcePersistence)
+        {
+            throw new NotImplementedException();
+        }
+        Imaging.ImagingOptions20 Imaging.IImagingPort.GetOptions(string VideoSourceToken)
+        {
+            throw new NotImplementedException();
+        }
+        void Imaging.IImagingPort.Move(string VideoSourceToken, FocusMove Focus)
+        {
+            throw new NotImplementedException();
+        }
+        Imaging.MoveOptions20 Imaging.IImagingPort.GetMoveOptions(string VideoSourceToken)
+        {
+            throw new NotImplementedException();
+        }
+        void Imaging.IImagingPort.Stop(string VideoSourceToken)
+        {
+            throw new NotImplementedException();
+        }
+        Imaging.ImagingStatus20 Imaging.IImagingPort.GetStatus(string VideoSourceToken)
+        {
+            throw new NotImplementedException();
+        }
+    }
     public class IPmgmnt
     {
         public void SetIP(object netInterfaceStruct)
@@ -5199,5 +5271,6 @@ namespace OnvifProxy
         public bool PanTilt;
         public bool Zoom;
     }
+
 }
 
