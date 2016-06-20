@@ -124,7 +124,7 @@ namespace OnvifProxy
                 //иначе пересоздавать
                 RebootHost();
             }
-
+            WaitHandle[] handlesToReboot = new WaitHandle[] { Program.ev_RebootHost, TyphoonCom.ev_TyphComStoped };
             object LockObj = new object();
             try
             {
@@ -152,7 +152,7 @@ namespace OnvifProxy
                 Console.WriteLine("NetworkVideoTransmitter Service started at {0}", host.BaseAddresses.ElementAt(0));
                 Console.ResetColor();
 
-                WaitHandle[] handlesToReboot = new WaitHandle[] { Program.ev_RebootHost, TyphoonCom.ev_TyphComStoped };
+                
                 {
                     try
                     {
@@ -171,18 +171,19 @@ namespace OnvifProxy
                     handle.Dispose();
                 }
             }
-                catch(AddressAccessDeniedException aade)
+            catch(AddressAccessDeniedException aade)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Port #80 is busy  - AddressAccessDeniedException raised - {0}", aade.Message);
+                Console.WriteLine(aade.Message.ToString());
                 Console.ResetColor();
                 Program.RebootHost();
-                //Console.ReadLine();
             }
             catch (CommunicationException e)
             {
-                Console.WriteLine(e.Message);
-                throw;
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(e.Message.ToString());
+                Console.ResetColor();
+                Program.RebootHost();
             }
             catch (TimeoutException e)
             {
@@ -192,7 +193,7 @@ namespace OnvifProxy
             {
                 Console.WriteLine(e.Message);
             }
-            catch (Exception e)
+            catch (SystemException e)
             {
                 Console.WriteLine("!!!!! - {0}",e.Message);
                 Console.ReadLine();
