@@ -49,6 +49,5 @@ d:\work\!Prog\repo\OnvifProxy\ConsoleApplication1\bin\Debug\OnvifProxy.exe
 d:\work\!Prog\repo\OnvifProxy\ConsoleApplication1\bin\Debug\OnvifProxy.pdb
 d:\work\!Prog\repo\OnvifProxy\ConsoleApplication1\bin\Debug\log4net.dll
 d:\work\!Prog\repo\OnvifProxy\ConsoleApplication1\bin\Debug\log4net.xml
-d:\work\!Prog\repo\OnvifProxy\ConsoleApplication1\obj\Debug\OnvifProxy.csprojResolveAssemblyReference.cache
 d:\work\!Prog\repo\OnvifProxy\ConsoleApplication1\obj\Debug\OnvifProxy.exe
 d:\work\!Prog\repo\OnvifProxy\ConsoleApplication1\obj\Debug\OnvifProxy.pdb
