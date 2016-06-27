@@ -336,7 +336,6 @@ namespace OnvifProxy
             //--------------------------
             HttpTransportBindingElement httpTransportBindingElement = new HttpTransportBindingElement();
             httpTransportBindingElement.KeepAliveEnabled = false;            
-            //httpTransportBindingElement.AuthenticationScheme = AuthenticationSchemes.Basic;//RFC2617
 
             HttpsTransportBindingElement httpsTransportBindingElement = new HttpsTransportBindingElement();
             httpsTransportBindingElement.RequireClientCertificate = true;
@@ -369,6 +368,10 @@ namespace OnvifProxy
             CustomBinding bindingImaging = new CustomBinding(
                 new TextMessageEncodingBindingElement(MessageVersion.Soap12WSAddressing10, Encoding.UTF8),
                 httpTransportBindingElement);
+
+            CustomBinding bindingMediaRestrictions = new CustomBinding(
+                new TextMessageEncodingBindingElement(MessageVersion.Soap12WSAddressing10, Encoding.UTF8),
+                httpTransportBindingElement);
             //--------------------------
             //binding
             binding.Namespace = "http://www.onvif.org/ver10/device/wsdl";
@@ -379,6 +382,7 @@ namespace OnvifProxy
             bindingReplay.Namespace = "http://www.onvif.org/ver10/replay/wsdl";
             bindingRecSearch.Namespace = "http://www.onvif.org/ver10/search/wsdl";
             bindingImaging.Namespace = "http://www.onvif.org/ver20/imaging/wsdl";
+            bindingMediaRestrictions.Namespace = "urn:ias:cvss:mrm:1.0";
             //--------------------------
 
             ServiceDiscoveryBehavior serviceDiscoveryBehavior = new ServiceDiscoveryBehavior();
@@ -393,7 +397,8 @@ namespace OnvifProxy
                     ReplayServiceEndpoint,
                     RecordingSearchEndPoint,
                     PTZEndpoint,
-                    ImagingEndpoint;
+                    ImagingEndpoint,
+                    MediaRestrictionsEndpoint;
 
             EndpointDiscoveryBehavior MediaServiceBehavior = new EndpointDiscoveryBehavior();
             EndpointDiscoveryBehavior NotificationProducerServiceBehavior = new EndpointDiscoveryBehavior();
@@ -404,6 +409,7 @@ namespace OnvifProxy
             EndpointDiscoveryBehavior ReplayServiceBehavior = new EndpointDiscoveryBehavior();
             EndpointDiscoveryBehavior PTZServiceBehavior = new EndpointDiscoveryBehavior();
             EndpointDiscoveryBehavior ImagingServiceBehavior = new EndpointDiscoveryBehavior();
+            EndpointDiscoveryBehavior MediaRestrictionsServiceBehavior = new EndpointDiscoveryBehavior();
             
             UdpAnnouncementEndpoint udpAnnouncementEndpoint;
             UdpDiscoveryEndpoint udpDiscoveryEndpoint;
@@ -452,6 +458,7 @@ namespace OnvifProxy
                 ReplayServiceBehavior.Enabled = false;
                 PTZServiceBehavior.Enabled = false;
                 ImagingServiceBehavior.Enabled = false;
+                MediaRestrictionsServiceBehavior.Enabled = false;
                 //------------------------------
                 // Add endpoints to the service
                 try
@@ -517,6 +524,11 @@ namespace OnvifProxy
                         typeof(Imaging.IImagingPort),
                         bindingImaging,
                         "/onvif/imaging_service");
+
+                    MediaRestrictionsEndpoint = host.AddServiceEndpoint(
+                        typeof(MediaRestrictions.IMediaRestrictionsManager),
+                        bindingMediaRestrictions,
+                        "/onvif/mediarestrictions_service");
                     
 
                     DeviceServiceEndpoint.Contract.Name = "NetworkVideoTransmitter";
@@ -551,6 +563,9 @@ namespace OnvifProxy
 
                     ImagingEndpoint.Contract.Name = "ImagingService";
                     ImagingEndpoint.Contract.Namespace = "http://www.onvif.org/ver20/imaging/wsdl";
+
+                    MediaRestrictionsEndpoint.Contract.Name = "MediaRestrictionsService";
+                    MediaRestrictionsEndpoint.Contract.Namespace = "urn:ias:cvss:mrm:1.0";
 
                     //----------------------------------------------------------------------------------
                     //если размер отсылаемого пакета больше 1518 байт, например слишком много скопов, 
@@ -607,6 +622,7 @@ namespace OnvifProxy
                     RecordingSearchEndPoint = null;
                     PTZEndpoint = null;
                     ImagingEndpoint = null;
+                    MediaRestrictionsEndpoint = null;
                 }
                 catch (NullReferenceException e)
                 {
@@ -625,6 +641,7 @@ namespace OnvifProxy
                     RecordingSearchEndPoint = null;
                     PTZEndpoint = null;
                     ImagingEndpoint = null;
+                    MediaRestrictionsEndpoint = null;
                 }   
                 return host;
             }

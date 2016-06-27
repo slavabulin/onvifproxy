@@ -26,7 +26,7 @@ using Media;
 
 namespace OnvifProxy
 {
-    public delegate void TyphoonDisconnectEventHandler(object sender, EventArgs ev);
+    public delegate void TyphoonDisconnectEventHandler(object sender, EventArgs e);
     
     public static class TyphoonCom 
     {

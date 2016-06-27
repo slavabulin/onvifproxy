@@ -27,6 +27,7 @@ using RecordingSearch;
 using MediaSourcesProvider;
 using ReplayService;
 using Imaging;
+using MediaRestrictions;
 
 
 namespace OnvifProxy
@@ -37,7 +38,7 @@ namespace OnvifProxy
         IncludeExceptionDetailInFaults = true)]
 
 
-    public sealed partial class Service1 : Device.IDevice,
+    public partial class Service1 : Device.IDevice,
         Media.IMedia,
         Event.INotificationProducer, 
         Event.IEventPortType,
@@ -3677,7 +3678,7 @@ namespace OnvifProxy
         //    return SerializeRequest(messageVersion, parameters);
         //}
     }
-    public sealed partial class Service1 : MediaSourcesProvider.IMediaSourcesProvider
+    public partial class Service1 : MediaSourcesProvider.IMediaSourcesProvider
     {
         public MediaSourcesProvider.GetMediaSourcesResponse GetMediaSources(MediaSourcesProvider.GetMediaSourcesRequest request)
         {
@@ -3767,7 +3768,7 @@ namespace OnvifProxy
             return resp;
         }
     }
-    public sealed partial class Service1 : ReplayService.IReplayPort
+    public partial class Service1 : ReplayService.IReplayPort
     {
         ReplayService.Capabilities ReplayService.IReplayPort.GetServiceCapabilities()
         {
@@ -3837,7 +3838,7 @@ namespace OnvifProxy
             return;
         }
     }
-    public sealed partial class Service1 : RecordingSearch.ISearchPort
+    public partial class Service1 : RecordingSearch.ISearchPort
     {
         public RecordingSearch.Capabilities GetRecordingServiceCapabilities()
         {
@@ -4403,7 +4404,7 @@ namespace OnvifProxy
             throw new NotImplementedException();
         }
     }
-    public sealed partial class Service1 : PTZ.IPTZ
+    public partial class Service1 : PTZ.IPTZ
     {
         PTZ.Capabilities PTZ.IPTZ.GetServiceCapabilities()
         {
@@ -5047,7 +5048,7 @@ namespace OnvifProxy
             throw new NotImplementedException();
         }
     }
-    public sealed partial class Service1 : Imaging.IImagingPort
+    public partial class Service1 : Imaging.IImagingPort
     {
         Imaging.Capabilities Imaging.IImagingPort.GetServiceCapabilities()
         {
@@ -5416,6 +5417,21 @@ namespace OnvifProxy
 
                 return resp;
             }
+        }
+    }
+    public partial class Service1 : MediaRestrictions.IMediaRestrictionsManager
+    {
+        public string SetRestriction(MediaRestrictions.RestrictionType Restriction)
+        {
+            throw new NotImplementedException();
+        }
+        public MediaRestrictions.GetRestrictionsResponse GetRestrictions(MediaRestrictions.GetRestrictionsRequest request)
+        {
+            throw new NotImplementedException();
+        }
+        public MediaRestrictions.ClearRestrictionsResponse ClearRestrictions(MediaRestrictions.ClearRestrictionsRequest request)
+        {
+            throw new NotImplementedException();
         }
     }
     public class IPmgmnt
