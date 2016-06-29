@@ -3733,18 +3733,15 @@ namespace OnvifProxy
 
             return getMediaSourceResp;
         }
-
         public MediaSourcesProvider.FindMediaSourcesResponse FindMediaSources(MediaSourcesProvider.FindMediaSourcesRequest request)
         {
             return new MediaSourcesProvider.FindMediaSourcesResponse();
-        }
-        
+        }        
         public MediaSourcesProvider.GetSearchResultsResponse GetSearchResults(MediaSourcesProvider.GetSearchResultsRequest request)
         {
             MediaSourcesProvider.GetSearchResultsResponse resp = new MediaSourcesProvider.GetSearchResultsResponse();
             return resp;
         }
-
         public MediaSourcesProvider.GetUpdatesResponse GetUpdates(MediaSourcesProvider.GetUpdatesRequest request)
         {
             //int startRef = 0, limit = 1, mediaSourcesLeftToSend = 0;
@@ -4419,7 +4416,7 @@ namespace OnvifProxy
             return caps;
 
         }
-        PTZ.GetNodesResponse PTZ.IPTZ.GetNodes(PTZ.GetNodesRequest request)
+        public PTZ.GetNodesResponse GetNodes(PTZ.GetNodesRequest request)
         {
             #region
             //{
@@ -4500,7 +4497,7 @@ namespace OnvifProxy
                 return resp;
             }
         }
-        PTZ.PTZNode PTZ.IPTZ.GetNode(string NodeToken)
+        public PTZ.PTZNode GetNode(string NodeToken)
         {
             PTZ.GetNodesResponse nodesResp = ((PTZ.IPTZ)this).GetNodes(new PTZ.GetNodesRequest());
             if(nodesResp!=null)
@@ -4516,7 +4513,7 @@ namespace OnvifProxy
                                new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
                                    new FaultCode("NoEntity", "http://www.onvif.org/ver10/error"))));
         }
-        PTZ.PTZConfiguration PTZ.IPTZ.GetConfiguration(string PTZConfigurationToken)
+        public PTZ.PTZConfiguration GetConfiguration(string PTZConfigurationToken)
         {
             #region
             //PTZ.PTZConfiguration config = new PTZ.PTZConfiguration();
@@ -4586,7 +4583,7 @@ namespace OnvifProxy
                                    new FaultCode("PTZConfigurationToken", "http://www.onvif.org/ver10/error"))));
             
         }
-        PTZ.GetConfigurationsResponse PTZ.IPTZ.GetConfigurations(PTZ.GetConfigurationsRequest request)
+        public PTZ.GetConfigurationsResponse GetConfigurations(PTZ.GetConfigurationsRequest request)
         {
             #region
             //PTZ.GetConfigurationsResponse resp0 = new PTZ.GetConfigurationsResponse();
@@ -4673,11 +4670,11 @@ namespace OnvifProxy
             }
 
         }
-        void PTZ.IPTZ.SetConfiguration(PTZ.PTZConfiguration PTZConfiguration, bool ForcePersistence)
+        public void SetConfiguration(PTZ.PTZConfiguration PTZConfiguration, bool ForcePersistence)
         { 
             return;//краткость - сестра
         }
-        PTZ.PTZConfigurationOptions PTZ.IPTZ.GetConfigurationOptions(string ConfigurationToken)
+        public PTZ.PTZConfigurationOptions GetConfigurationOptions(string ConfigurationToken)
         {
             #region
             //options.PTZTimeout = new PTZ.DurationRange();
@@ -4799,35 +4796,35 @@ namespace OnvifProxy
                 return options;
             }
         }
-        string PTZ.IPTZ.SendAuxiliaryCommand(string ProfileToken, string AuxiliaryData)
+        public string SendAuxiliaryCommand(string ProfileToken, string AuxiliaryData)
         {
             throw new NotImplementedException();
         }
-        PTZ.GetPresetsResponse PTZ.IPTZ.GetPresets(PTZ.GetPresetsRequest request)
+        public PTZ.GetPresetsResponse GetPresets(PTZ.GetPresetsRequest request)
         {
             throw new NotImplementedException();
         }
-        PTZ.SetPresetResponse PTZ.IPTZ.SetPreset(PTZ.SetPresetRequest request)
+        public PTZ.SetPresetResponse SetPreset(PTZ.SetPresetRequest request)
         {
             throw new NotImplementedException();
         }
-        void PTZ.IPTZ.RemovePreset(string ProfileToken, string PresetToken)
+        public void RemovePreset(string ProfileToken, string PresetToken)
         {
             throw new NotImplementedException();
         }
-        void PTZ.IPTZ.GotoPreset(string ProfileToken, string PresetToken, PTZ.PTZSpeed Speed)
+        public void GotoPreset(string ProfileToken, string PresetToken, PTZ.PTZSpeed Speed)
         {
             throw new NotImplementedException();
         }
-        void PTZ.IPTZ.GotoHomePosition(string ProfileToken, PTZ.PTZSpeed Speed)
+        public void GotoHomePosition(string ProfileToken, PTZ.PTZSpeed Speed)
         {
             throw new NotImplementedException();
         }
-        void PTZ.IPTZ.SetHomePosition(string ProfileToken)
+        public void SetHomePosition(string ProfileToken)
         {
             throw new NotImplementedException();
         }
-        PTZ.ContinuousMoveResponse PTZ.IPTZ.ContinuousMove(PTZ.ContinuousMoveRequest request)
+        public PTZ.ContinuousMoveResponse ContinuousMove(PTZ.ContinuousMoveRequest request)
         {
             string tempstring = null;
 
@@ -4898,11 +4895,11 @@ namespace OnvifProxy
                 }
             }
         }
-        void PTZ.IPTZ.RelativeMove(string ProfileToken, PTZ.PTZVector Translation, PTZ.PTZSpeed Speed)
+        public void RelativeMove(string ProfileToken, PTZ.PTZVector Translation, PTZ.PTZSpeed Speed)
         {
             throw new NotImplementedException();
         }
-        PTZ.PTZStatus PTZ.IPTZ.GetStatus(string ProfileToken)
+        public PTZ.PTZStatus GetStatus(string ProfileToken)
         {
             using (TyphoonMsg typhmsg = TyphoonMsgManager.SendSyncMsg(200, 29, TyphoonCom.MakeMem(ProfileToken), 0))
             {
@@ -4933,11 +4930,11 @@ namespace OnvifProxy
                 }
             }
         }
-        void PTZ.IPTZ.AbsoluteMove(string ProfileToken, PTZ.PTZVector Position, PTZ.PTZSpeed Speed)
+        public void AbsoluteMove(string ProfileToken, PTZ.PTZVector Position, PTZ.PTZSpeed Speed)
         {
             throw new NotImplementedException();
         }
-        void PTZ.IPTZ.Stop(string ProfileToken, bool PanTilt, bool Zoom)
+        public void Stop(string ProfileToken, bool PanTilt, bool Zoom)
         {
             Stop stop = new Stop();
             stop.ProfileToken = ProfileToken;
@@ -5015,35 +5012,35 @@ namespace OnvifProxy
 
 
         }
-        PTZ.GetPresetToursResponse PTZ.IPTZ.GetPresetTours(PTZ.GetPresetToursRequest request)
+        public PTZ.GetPresetToursResponse GetPresetTours(PTZ.GetPresetToursRequest request)
         {
             throw new NotImplementedException();
         }
-        PTZ.PresetTour PTZ.IPTZ.GetPresetTour(string ProfileToken, string PresetTourToken)
+        public PTZ.PresetTour GetPresetTour(string ProfileToken, string PresetTourToken)
         {
             throw new NotImplementedException();
         }
-        PTZ.PTZPresetTourOptions PTZ.IPTZ.GetPresetTourOptions(string ProfileToken, string PresetTourToken)
+        public PTZ.PTZPresetTourOptions GetPresetTourOptions(string ProfileToken, string PresetTourToken)
         {
             throw new NotImplementedException();
         }
-        string PTZ.IPTZ.CreatePresetTour(string ProfileToken)
+        public string CreatePresetTour(string ProfileToken)
         {
             throw new NotImplementedException();
         }
-        void PTZ.IPTZ.ModifyPresetTour(string ProfileToken, PTZ.PresetTour PresetTour)
+        public void ModifyPresetTour(string ProfileToken, PTZ.PresetTour PresetTour)
         {
             throw new NotImplementedException();
         }
-        void PTZ.IPTZ.OperatePresetTour(string ProfileToken, string PresetTourToken, PTZ.PTZPresetTourOperation Operation)
+        public void OperatePresetTour(string ProfileToken, string PresetTourToken, PTZ.PTZPresetTourOperation Operation)
         {
             throw new NotImplementedException();
         }
-        void PTZ.IPTZ.RemovePresetTour(string ProfileToken, string PresetTourToken)
+        public void RemovePresetTour(string ProfileToken, string PresetTourToken)
         {
             throw new NotImplementedException();
         }
-        PTZ.GetCompatibleConfigurationsResponse PTZ.IPTZ.GetCompatibleConfigurations(PTZ.GetCompatibleConfigurationsRequest request)
+        public PTZ.GetCompatibleConfigurationsResponse GetCompatibleConfigurations(PTZ.GetCompatibleConfigurationsRequest request)
         {
             throw new NotImplementedException();
         }
@@ -5057,7 +5054,7 @@ namespace OnvifProxy
             resp.ImageStabilizationSpecified = true;
             return resp;
         }
-        Imaging.ImagingSettings20 Imaging.IImagingPort.GetImagingSettings(string VideoSourceToken)
+        public Imaging.ImagingSettings20 GetImagingSettings(string VideoSourceToken)
         {
             #region
             //resp.Focus = new Imaging.FocusConfiguration20();
@@ -5137,13 +5134,13 @@ namespace OnvifProxy
                 }
             }
         }
-        void Imaging.IImagingPort.SetImagingSettings(string VideoSourceToken,
+        public void SetImagingSettings(string VideoSourceToken,
             Imaging.ImagingSettings20 ImagingSettings,
             bool ForcePersistence)
         {
             return;
         }
-        Imaging.ImagingOptions20 Imaging.IImagingPort.GetOptions(string VideoSourceToken)
+        public Imaging.ImagingOptions20 GetOptions(string VideoSourceToken)
         {
             using (TyphoonMsg typhmsg = TyphoonMsgManager.SendSyncMsg(200, 33, TyphoonCom.MakeMem(VideoSourceToken), 0))
             {
@@ -5195,7 +5192,7 @@ namespace OnvifProxy
                 }
             }
         }
-        void Imaging.IImagingPort.Move(string VideoSourceToken, FocusMove Focus)
+        public void Move(string VideoSourceToken, FocusMove Focus)
         {
             Move move = new Move();
             move.Focus = Focus;
@@ -5272,7 +5269,7 @@ namespace OnvifProxy
 
             throw new NotImplementedException();
         }
-        Imaging.MoveOptions20 Imaging.IImagingPort.GetMoveOptions(string VideoSourceToken)
+        public Imaging.MoveOptions20 GetMoveOptions(string VideoSourceToken)
         {
             #region
             //Imaging.MoveOptions20 resp = new MoveOptions20();
@@ -5364,7 +5361,7 @@ namespace OnvifProxy
                 }
             }
         }
-        void Imaging.IImagingPort.Stop(string VideoSourceToken)
+        public void Stop(string VideoSourceToken)
         {
             using (TyphoonMsg typhmsg = TyphoonMsgManager.SendSyncMsg(200, 36, TyphoonCom.MakeMem(VideoSourceToken), 0))
             {
@@ -5424,6 +5421,7 @@ namespace OnvifProxy
         public string SetRestriction(MediaRestrictions.RestrictionType Restriction)
         {
             throw new NotImplementedException();
+            //throw new FaultException();
         }
         public MediaRestrictions.GetRestrictionsResponse GetRestrictions(MediaRestrictions.GetRestrictionsRequest request)
         {
