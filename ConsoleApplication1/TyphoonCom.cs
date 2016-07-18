@@ -43,8 +43,8 @@ namespace OnvifProxy
         static AutoResetEvent ev_CommandParseQuit;
         static AutoResetEvent ev_ParseOutBufEnded;
 
-        public static ManualResetEvent ev_TyphComStarted;
-        public static AutoResetEvent ev_TyphComStoped;
+        public static volatile ManualResetEvent ev_TyphComStarted;
+        public static volatile AutoResetEvent ev_TyphComStoped;
         private static AutoResetEvent ev_TyphComConstructorPassed;
 
         //таймер таймаута коннекта к тайфуну
@@ -408,7 +408,7 @@ namespace OnvifProxy
                 }
                 catch (Exception e)
                 {
-                    log.ErrorFormat("Failed to send HelloTyphoon", e.Message);
+                    log.ErrorFormat("Failed to send HelloTyphoon - {0}", e.Message);
                 }
 
                 b_ip_ascii = Encoding.Convert(Encoding.Unicode, Encoding.ASCII, b_ip);                
@@ -582,7 +582,7 @@ namespace OnvifProxy
                 }
                 catch (Exception e)
                 {
-                    log.ErrorFormat("CommandParse - ", e.Message);
+                    log.ErrorFormat("CommandParse - {0}", e.Message);
                 }
             }
             else
@@ -654,21 +654,22 @@ namespace OnvifProxy
                                 }
                                 catch(InvalidOperationException ioe)
                                 {
-                                    throw ioe;
+                                    //throw ioe;
+                                    throw;
                                     //return;
                                 }
                                 catch (Exception ex)
                                 {
                                     nvtClient = new NVTServiceClient(binding, (new EndpointAddress(typhmsg.stringMessageData)));
-                                    if (nvtClient != null)
+                                    //if (nvtClient != null)
                                     {
                                         nvtClientCollection.Add(nvtClient);
                                     }
-                                    else
-                                    {
-                                        Console.WriteLine("Не удалось создать NVTServiceClient");
-                                        break;// и чо?
-                                    }
+                                    //else
+                                    //{
+                                    //    Console.WriteLine("Не удалось создать NVTServiceClient");
+                                    //    break;// и чо?
+                                    //}
                                 }
 
                                 string model, firmware, serial, hardwareid, manufacturer;
@@ -758,15 +759,15 @@ namespace OnvifProxy
                                 catch (Exception)
                                 {
                                     nvtClient = new NVTServiceClient(binding, (new EndpointAddress(typhmsg.stringMessageData)));
-                                    if (nvtClient != null)
+                                    //if (nvtClient != null)
                                     {
                                         nvtClientCollection.Add(nvtClient);
                                     }
-                                    else
-                                    {
-                                        Console.WriteLine("Не удалось создать NVTServiceClient");
-                                        break;
-                                    }
+                                    //else
+                                    //{
+                                    //    Console.WriteLine("Не удалось создать NVTServiceClient");
+                                    //    break;
+                                    //}
                                 }
                                 GetCapabilitiesResponse nvtCapabilitiesResponse;
                                 try
@@ -847,15 +848,15 @@ namespace OnvifProxy
                                 catch (Exception)
                                 {
                                     nvtClient = new NVTServiceClient(binding, (new EndpointAddress(typhmsg.stringMessageData)));
-                                    if (nvtClient != null)
+                                    //if (nvtClient != null)
                                     {
                                         nvtClientCollection.Add(nvtClient);
                                     }
-                                    else
-                                    {
-                                        Console.WriteLine("Не удалось создать NVTServiceClient");
-                                        break;
-                                    }
+                                    //else
+                                    //{
+                                    //    Console.WriteLine("Не удалось создать NVTServiceClient");
+                                    //    break;
+                                    //}
                                 }
 
                                 GetProfilesResponse nvtProfilesResponse;
@@ -926,15 +927,15 @@ namespace OnvifProxy
                                 catch (Exception)
                                 {
                                     nvtClient = new NVTServiceClient(binding, (new EndpointAddress(xaddrs)));
-                                    if (nvtClient != null)
+                                    //if (nvtClient != null)
                                     {
                                         nvtClientCollection.Add(nvtClient);
                                     }
-                                    else
-                                    {
-                                        Console.WriteLine("Не удалось создать NVTServiceClient");
-                                        break;
-                                    }
+                                    //else
+                                    //{
+                                    //    Console.WriteLine("Не удалось создать NVTServiceClient");
+                                    //    break;
+                                    //}
                                 }
 
 
@@ -1073,7 +1074,7 @@ namespace OnvifProxy
                                                 }
                                                 catch (Exception ex)
                                                 {
-                                                    log.DebugFormat("ParseQueueCmd - ", ex.Message.ToString());                                                    
+                                                    log.DebugFormat("ParseQueueCmd - {0}", ex.Message.ToString());                                                    
                                                 }
                                             }
                                         }                                         
@@ -1081,11 +1082,11 @@ namespace OnvifProxy
                                     catch (InvalidOperationException ioe)
                                     {
                                         //try to form notify again
-                                        log.DebugFormat("ParseQueueCmd - ", ioe.Message.ToString());
+                                        log.DebugFormat("ParseQueueCmd - {0}", ioe.Message.ToString());
                                     }
                                     catch (Exception ex)
                                     {
-                                        log.WarnFormat("ParseQueueCmd - ", ex.Message.ToString());
+                                        log.WarnFormat("ParseQueueCmd - {0}", ex.Message.ToString());
                                     }
 
                                 }
@@ -1718,7 +1719,7 @@ namespace OnvifProxy
                     }
                     catch (Exception ae)
                     {
-                        TyphoonCom.log.DebugFormat("TestEventPuller - ", ae.Message);
+                        TyphoonCom.log.DebugFormat("TestEventPuller - {0}", ae.Message);
                         throw;
                     }
                 }

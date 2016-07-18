@@ -287,14 +287,15 @@ namespace OnvifProxy
             { 
                 XmlDocument doc = new XmlDocument();
                 doc.LoadXml("<zero/>");
+                filter = new FilterType();
                 filter.Any = new XmlElement[1];
                 filter.Any[0] = doc.DocumentElement; 
             }
             guid = Guid.NewGuid();
             EndpointAddress epaddr;
             XmlConfig conf = new XmlConfig();
-            ConfigStruct confstr = new ConfigStruct();
-            confstr = conf.Read();
+            ConfigStruct confstr = conf.Read();
+            
 
             this.Filter = filter;
             addr[0] = new Uri("http://" + confstr.IPAddr + "/onvif/pp_subscription_manager/");
@@ -357,8 +358,9 @@ namespace OnvifProxy
         private void OnSubscriptionTimeoutEvent(object source, ElapsedEventArgs e)
         {
             ppSubscriber tmpsubs;
-            if (servhost.State != CommunicationState.Closed ||
-                servhost.State != CommunicationState.Closing ||
+
+            if (servhost.State != CommunicationState.Closing &&
+                servhost.State != CommunicationState.Closed &&
                 servhost.State != CommunicationState.Faulted)
             {
                 try
@@ -486,9 +488,9 @@ namespace OnvifProxy
             RenewResponse1 renewresp1 = new RenewResponse1();
             PullMessagesResponse pmresp = new PullMessagesResponse();
             XmlConfig conf = new XmlConfig();
-            ConfigStruct confstr = new ConfigStruct();
             Helper hlp = new Helper();
-            confstr = conf.Read();
+
+            ConfigStruct confstr = conf.Read();
 
             OperationContext context = OperationContext.Current;
             int a = context.Channel.LocalAddress.Uri.Port;

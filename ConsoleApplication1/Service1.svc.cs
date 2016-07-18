@@ -1142,7 +1142,7 @@ namespace OnvifProxy
                         {
                             string caption = (string)mObj["Caption"];
                             NetworkManagement nm = new NetworkManagement();
-                            if (request.DNSManual != null && request.DNSManual.Length != 0)
+                            if (request.DNSManual.Length != 0)
                             {
                                 nm.setDNS(caption, request.DNSManual[0].IPv4Address);
                             }
