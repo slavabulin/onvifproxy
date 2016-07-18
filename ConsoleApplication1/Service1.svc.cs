@@ -5421,7 +5421,6 @@ namespace OnvifProxy
         public string SetRestriction(MediaRestrictions.RestrictionType Restriction)
         {
             throw new NotImplementedException();
-            //throw new FaultException();
         }
         public MediaRestrictions.GetRestrictionsResponse GetRestrictions(MediaRestrictions.GetRestrictionsRequest request)
         {

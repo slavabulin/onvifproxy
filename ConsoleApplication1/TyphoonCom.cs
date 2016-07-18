@@ -652,7 +652,12 @@ namespace OnvifProxy
                                     nvtClient = TyphoonCom.nvtClientCollection.Single(NVTServiceClient =>
                                         NVTServiceClient.Endpoint.ListenUri == (new Uri(typhmsg.stringMessageData)));
                                 }
-                                catch (Exception)
+                                catch(InvalidOperationException ioe)
+                                {
+                                    throw ioe;
+                                    //return;
+                                }
+                                catch (Exception ex)
                                 {
                                     nvtClient = new NVTServiceClient(binding, (new EndpointAddress(typhmsg.stringMessageData)));
                                     if (nvtClient != null)
@@ -1595,7 +1600,7 @@ namespace OnvifProxy
         //---------------------------------------------------------------------------------------
         void OnTyphoonMessageTimeout(object source, ElapsedEventArgs e)
         {
-            TyphoonMsg msg;
+            TyphoonMsg msg = null;
 
             switch(MessageType)
             {
@@ -1611,24 +1616,25 @@ namespace OnvifProxy
                     if(TyphoonMsgManager.queueRequestToTyphoon.TryRemove(MessageID, out msg))
                     {
                         TyphoonCom.log.DebugFormat("Msg removed from Request queue by timeout- {0} left",
-                            TyphoonMsgManager.queueCommandsFromTyphoon.Count.ToString());
+                            TyphoonMsgManager.queueRequestToTyphoon.Count.ToString());
                     }                    
                     break;
                 case TyphoonMsgType.Responce:
                     if (TyphoonMsgManager.queueResponceFromTyphoon.TryRemove(MessageID, out msg))
                     {
                         TyphoonCom.log.DebugFormat("Msg removed from Response queue by timeout- {0} left",
-                            TyphoonMsgManager.queueCommandsFromTyphoon.Count.ToString());
+                            TyphoonMsgManager.queueResponceFromTyphoon.Count.ToString());
                     }                    
                     break;
                 case TyphoonMsgType.Zond:
                     if(TyphoonMsgManager.queueRequestToTyphoon.TryRemove(MessageID, out msg))
                     {
                         TyphoonCom.log.DebugFormat("Zond removed by timeout - {0} left",
-                            TyphoonMsgManager.queueCommandsFromTyphoon.Count.ToString());
+                            TyphoonMsgManager.queueRequestToTyphoon.Count.ToString());
                     };                    
                     break;
             }
+            if (msg != null) msg.Dispose();
         }
     }
     
