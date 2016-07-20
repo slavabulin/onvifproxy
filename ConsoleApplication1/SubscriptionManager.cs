@@ -244,7 +244,7 @@ namespace OnvifProxy
         public Event.FilterType Filter;
         public System.Timers.Timer SubscriberTimeoutTimer;//:IDisposable
         Guid guid;
-        private ServiceHost servhost;//:IDisposable
+        private ServiceHost servHost;//:IDisposable
         private double timeout = 60000;//минута в миллисекундах
         private Uri[] addr = new Uri[1];
         
@@ -266,8 +266,8 @@ namespace OnvifProxy
             {
                 // Release only managed resources.
                 SubscriberTimeoutTimer.Close();
-                servhost.Close();
-                servhost = null;
+                servHost.Close();
+                servHost = null;
             }
             // Always release unmanaged resources here.
 
@@ -310,7 +310,7 @@ namespace OnvifProxy
             // to lock the timer
             SubscriberTimeoutTimer.SynchronizingObject = null;
 
-            servhost = new ServiceHost(typeof(PullPointNotificationService), addr);
+            servHost = new ServiceHost(typeof(PullPointNotificationService), addr);
             //epaddr = new EndpointAddress(addr[0] + "pp_subscription_manager");
             epaddr = new EndpointAddress(new Uri(addr[0].ToString() + guid.ToString()));
             Addr = epaddr.Uri.ToString();
@@ -323,20 +323,20 @@ namespace OnvifProxy
                     httpTransportBindingElement);
             binding.Namespace = "http://www.onvif.org/ver10/event/wsdl";
 
-            servhost.AddServiceEndpoint(typeof(IPullPointService), binding, guid.ToString());
+            servHost.AddServiceEndpoint(typeof(IPullPointService), binding, guid.ToString());
 
             try
             {
                 ppSubscriptionManager.AddSubscriber(this);
-                servhost.Open();
+                servHost.Open();
                 Console.WriteLine("ep - {0}", Addr);
             }
             catch (CommunicationObjectFaultedException cofe)
             {
                 Console.WriteLine("additional service host openning failed - {0}", cofe.Message);
                 Console.WriteLine("another try ...");
-                servhost.Close();
-                servhost = null;
+                servHost.Close();
+                servHost = null;
                 ppSubscriptionManager.SubscribersCollection.TryRemove(this.Filter, out tmpsubs);
                 new ppSubscriber(filter);
                 
@@ -346,7 +346,7 @@ namespace OnvifProxy
                 Console.WriteLine("additional service host openning failed - {0}", ex.Message);
                 Console.WriteLine("another try ...");
                 ppSubscriptionManager.SubscribersCollection.TryRemove(this.Filter, out tmpsubs);
-                servhost = null;
+                servHost = null;
                 new ppSubscriber(filter);
 
                 Console.WriteLine("!!!!");
@@ -359,25 +359,24 @@ namespace OnvifProxy
         {
             ppSubscriber tmpsubs;
 
-            if (servhost.State != CommunicationState.Closing &&
-                servhost.State != CommunicationState.Closed &&
-                servhost.State != CommunicationState.Faulted)
+            if (servHost.State != CommunicationState.Closing &&
+                servHost.State != CommunicationState.Closed &&
+                servHost.State != CommunicationState.Faulted)
             {
                 try
                 {
                     ppSubscriptionManager.SubscribersCollection.TryRemove(this.Filter, out tmpsubs);
-                    servhost.Close();
+                    servHost.Close();
                     tmpsubs.Dispose();
                     Console.WriteLine("one pull-point subscriber deleted, subs number = {0}", OnvifProxy.ppSubscriptionManager.SubscribersCollection.Count);
-                }
-                
-                catch (Exception ex)
+                }                
+                catch (ApplicationException ex)
                 {
                     Console.WriteLine("failed to close pull-point event service host - {0}", ex.Message);
                 }
 
             }
-            servhost = null;
+            servHost = null;
         }
     }
 

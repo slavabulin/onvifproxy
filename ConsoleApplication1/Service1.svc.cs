@@ -711,7 +711,7 @@ namespace OnvifProxy
                     {
                         try
                         {
-                            if (userlistfromfile == null) throw new Exception();//not to erase pwd.xml
+                            if (userlistfromfile == null) throw new ApplicationException();//not to erase pwd.xml
                             xmlSerializer.Serialize(writer, userlistfromfile);
                         }
                         catch (Exception ex)
@@ -2203,7 +2203,7 @@ namespace OnvifProxy
                         }
                         else
                         {
-                            dnsInformation.DNSFromDHCP = new Device.IPAddress[1];
+                            //dnsInformation.DNSFromDHCP = new Device.IPAddress[1];
                             string[] strarr = (string[])objMO["DNSServerSearchOrder"];
                             if (strarr == null)
                             {
