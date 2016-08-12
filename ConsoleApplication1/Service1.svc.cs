@@ -666,6 +666,12 @@ namespace OnvifProxy
                 {
                     //now we should update data from existing file with data from request
                     userlistfromfile = (UserList)xmlSerializer.Deserialize(fs);
+                    if (userlistfromfile == null)
+                        throw new FaultException(new FaultReason("Couldn't deserialize username"),
+                                      new FaultCode("Sender",
+                                          new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                              new FaultCode("UsernameError", "http://www.onvif.org/ver10/error"))));
+
                     string[] arr_file_username = new string[userlistfromfile.Count()];
 
                     for (int u = 0; u < userlistfromfile.Count(); u++)
@@ -711,7 +717,7 @@ namespace OnvifProxy
                     {
                         try
                         {
-                            if (userlistfromfile == null) throw new ApplicationException();//not to erase pwd.xml
+                            //if (userlistfromfile == null) throw new ApplicationException();//not to erase pwd.xml
                             xmlSerializer.Serialize(writer, userlistfromfile);
                         }
                         catch (Exception ex)

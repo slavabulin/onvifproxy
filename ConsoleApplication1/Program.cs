@@ -272,6 +272,7 @@ namespace OnvifProxy
                 catch (Exception ex)
                 {
                     TyphoonCom.log.Debug("CreateUsers threw exception - {0}", ex);
+                    throw;
                 }
             }
         }
