@@ -5426,7 +5426,24 @@ namespace OnvifProxy
     {
         public string SetRestriction(MediaRestrictions.RestrictionType Restriction)
         {
-            throw new NotImplementedException();
+            if (Restriction == null
+                || Restriction.BeginTime == null
+                || Restriction.EndTime == null
+                || Restriction.MediaSourceToken == null
+                || String.IsNullOrWhiteSpace(Restriction.Subject)
+                )
+                throw new FaultException();
+            string[] restrictionSubjectArr = Restriction.Subject.Split('\u0020');
+            if (restrictionSubjectArr == null) throw new FaultException();
+
+            // get mediasourcetokens
+            MediaSourcesProvider.GetMediaSourcesResponse existingMediaSources = GetMediaSources(new GetMediaSourcesRequest());
+
+            // check if all sources exist / if not - throw
+            // check if all sources are available / if not - throw
+            // change MediaRestrictionMngr settings
+
+            throw new NotImplementedException();             
         }
         public MediaRestrictions.GetRestrictionsResponse GetRestrictions(MediaRestrictions.GetRestrictionsRequest request)
         {
