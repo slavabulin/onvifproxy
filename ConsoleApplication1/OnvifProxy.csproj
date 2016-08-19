@@ -118,11 +118,14 @@
     <Compile Include="CustomMessageFormatter.cs" />
     <Compile Include="IEvent.cs" />
     <Compile Include="IImaging.cs" />
+    <Compile Include="IMediaMarkup.cs" />
     <Compile Include="IMediaRestrictionsManager.cs" />
     <Compile Include="IMediaSourcesProvider.cs" />
     <Compile Include="IPTZ.cs" />
     <Compile Include="IRecordingSearch.cs" />
     <Compile Include="IReplayService.cs" />
+    <Compile Include="ITaskManager.cs" />
+    <Compile Include="MediaRestrictionManager.cs" />
     <Compile Include="MediaSourceList.cs" />
     <Compile Include="NVTClient.cs" />
     <Compile Include="NVTDiscoveryClient.cs" />

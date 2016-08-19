@@ -1,0 +1,46 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="urn:ias:cvss:1.0" 
+            targetNamespace="urn:ias:cvss:1.0" elementFormDefault="qualified">
+  <xsd:simpleType name="TrackTypeEnum">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Image" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:complexType name="GeoCircle">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="GeoPolygon">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+  <xsd:element name="Location" type="tns:GeoCircle" />
+  
+  <xsd:element name="TrackType" type="tns:TrackTypeEnum" />
+
+  <xsd:complexType name="LocationFilterType">
+    <xsd:sequence>
+      <xsd:element name="Circle" type="tns:GeoCircle" minOccurs="0" maxOccurs="unbounded" />
+      <xsd:element name="Polygon" type="tns:GeoPolygon" minOccurs="0" maxOccurs="unbounded" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:element name="LocationFilter" type="tns:LocationFilterType" />
+
+  <xsd:element name="VehicleRegistrationNumberFilter">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="RegistrationNumber" type="xsd:string" />
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

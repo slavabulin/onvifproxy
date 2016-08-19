@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions name="MediaSourcesProvider" targetNamespace="urn:ias:cvss:msp:1.0"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/"
+    xmlns:msp="urn:ias:cvss:msp:1.0"
+    xmlns:cvss="urn:ias:cvss:1.0"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xml="http://www.w3.org/XML/1998/namespace"
+    xmlns:wsa="http://www.w3.org/2005/08/addressing"
+    xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"
+    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+  <wsdl:types>
+    <xsd:schema targetNamespace="urn:ias:cvss:msp:1.0" elementFormDefault="qualified">
+      <xsd:import namespace="urn:ias:cvss:1.0" schemaLocation="cvss.xsd" />
+      <xsd:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="public/xml.xsd" />
+      <xsd:import namespace="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" schemaLocation="public/oasis-200401-wss-wssecurity-secext-1.0.xsd" />
+      <xsd:import namespace="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" schemaLocation="public/oasis-200401-wss-wssecurity-utility-1.0.xsd" />
+      <xsd:import namespace="http://www.w3.org/2005/08/addressing" schemaLocation="public/ws-addr.xsd" />
+      
+      <xsd:complexType name="TLSTokenServerType">
+        <xsd:sequence>
+          <xsd:element name="Certificate" type="xsd:base64Binary" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="TLSTokenClientType">
+        <xsd:sequence>
+          <xsd:element name="Certificate" type="xsd:base64Binary" />
+          <xsd:element name="PrivateKey" type="xsd:base64Binary" />
+        </xsd:sequence>
+      </xsd:complexType>
+      
+	    <xsd:complexType name="TLSTokenType">
+        <xsd:sequence>
+          <xsd:element name="Server" type="msp:TLSTokenServerType" />
+          <xsd:element name="Client" type="msp:TLSTokenClientType" minOccurs="0" />
+        </xsd:sequence>
+        <xsd:attribute ref="wsu:Id" use="required" />
+      </xsd:complexType>
+      <xsd:element name="TLSToken" type="msp:TLSTokenType" />
+	  
+      <xsd:element name="UsernameTokenReference" type="xsd:anyURI" />
+      <xsd:element name="TLSTokenReference" type="xsd:anyURI" />
+	  
+      <xsd:simpleType name="PurposeList">
+        <!-- Media / RecordingSearch / Replay / PTZ / Imaging / Restriction / any extension -->
+        <xsd:list itemType="xsd:string"/>
+      </xsd:simpleType>
+      
+      <xsd:complexType name="EndpointType" >
+        <xsd:complexContent>
+          <xsd:extension base="wsa:EndpointReferenceType">
+            <xsd:attribute name="purpose" use="required" type="msp:PurposeList" />
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      
+      <xsd:complexType name="ONVIFBindingType">
+        <xsd:sequence>
+          <xsd:element name="Endpoint" type="msp:EndpointType" maxOccurs="unbounded" />
+          <xsd:element name="MediaSourceToken" type="xsd:string" />
+          <xsd:element name="ProfileToken" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      
+      <xsd:complexType name="NameType">
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute ref="xml:lang" />
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+      
+      <xsd:complexType name="DescriptionType">
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute ref="xml:lang" />
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+      
+      <xsd:complexType name="MediaSourceType">
+        <xsd:sequence>
+          <xsd:element name="ONVIFBinding" type="msp:ONVIFBindingType" minOccurs="0" />
+          <xsd:element name="Name" type="msp:NameType" maxOccurs="unbounded" />
+          <xsd:element name="Description" type="msp:DescriptionType" minOccurs="0" maxOccurs="unbounded" />
+          <xsd:element name="Location" type="cvss:GeoCircle" minOccurs="0" />
+          <xsd:element name="ViewArea" type="cvss:GeoPolygon" minOccurs="0" />
+        </xsd:sequence>
+        <xsd:attribute name="token" type="xsd:string" use="required" />
+      </xsd:complexType>
+      
+      <xsd:complexType name="UpdateType">
+        <xsd:sequence>
+          <xsd:element name="MediaSourceToken" type="xsd:string" />
+          <xsd:element name="MediaSource" type="msp:MediaSourceType" minOccurs="0" />
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:simpleType name="SearchStateEnum">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="Searching">
+            <xsd:annotation>
+              <xsd:documentation>The search is underway and not yet completed.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="Completed">
+            <xsd:annotation>
+              <xsd:documentation>The search has been completed and no new results will be found.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="Unknown">
+            <xsd:annotation>
+              <xsd:documentation>The state of the search is unknown.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+        </xsd:restriction>
+      </xsd:simpleType>
+      
+      <xsd:element name="GetMediaSources">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="Limit" type="xsd:int" minOccurs="0" />
+            <xsd:element name="StartReference" type="xsd:string" minOccurs="0" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetMediaSourcesResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="NextStartReference" type="xsd:string" minOccurs="0" />
+            <xsd:element name="UpdateToken" type="xsd:string" minOccurs="0" />
+            <xsd:element ref="wsse:Security" minOccurs="0" />
+            <xsd:element name="MediaSource" type="msp:MediaSourceType" minOccurs="0" maxOccurs="unbounded" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      
+      <xsd:complexType name="SearchScopeType">
+        <xsd:sequence>
+          <xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:complexType>
+      
+      <xsd:element name="FindMediaSources">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="Scope" type="msp:SearchScopeType" />
+            <xsd:element name="MaxMatches" type="xsd:int" minOccurs="0" />
+            <xsd:element name="KeepAliveTime" type="xsd:duration" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="FindMediaSourcesResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="SearchToken" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="GetSearchResults">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="SearchToken" type="xsd:string" />
+            <xsd:element name="MinResults" type="xsd:int" minOccurs="0" />
+            <xsd:element name="MaxResults" type="xsd:int" minOccurs="0" />
+            <xsd:element name="WaitTime" type="xsd:duration" minOccurs="0" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetSearchResultsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="SearchState" type="msp:SearchStateEnum" />
+            <xsd:element ref="wsse:Security" minOccurs="0" />
+            <xsd:element name="MediaSource" type="msp:MediaSourceType" minOccurs="0" maxOccurs="unbounded" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="GetUpdates">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="UpdateToken" type="xsd:string" />
+            <xsd:element name="Limit" type="xsd:int" minOccurs="0" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetUpdatesResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="UpdateToken" type="xsd:string" />
+            <xsd:element name="HasMoreUpdates" type="xsd:boolean" minOccurs="0" />
+            <xsd:element ref="wsse:Security" minOccurs="0" />
+            <xsd:element name="Update" type="msp:UpdateType" minOccurs="0" maxOccurs="unbounded" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  
+  <wsdl:message name="GetMediaSourcesRequest">
+    <wsdl:part element="msp:GetMediaSources" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetMediaSourcesResponse">
+    <wsdl:part element="msp:GetMediaSourcesResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="FindMediaSourcesRequest">
+    <wsdl:part element="msp:FindMediaSources" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="FindMediaSourcesResponse">
+    <wsdl:part element="msp:FindMediaSourcesResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetSearchResultsRequest">
+    <wsdl:part element="msp:GetSearchResults" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetSearchResultsResponse">
+    <wsdl:part element="msp:GetSearchResultsResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetUpdatesRequest">
+    <wsdl:part element="msp:GetUpdates" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetUpdatesResponse">
+    <wsdl:part element="msp:GetUpdatesResponse" name="parameters"/>
+  </wsdl:message>
+  
+  <wsdl:portType name="MediaSourcesProvider">
+    <!--
+    Possible faults:
+    env:Sender / ter:InvalidArgVal / msp:InvalidStartReference
+    -->
+    <wsdl:operation name="GetMediaSources">
+      <wsdl:input message="msp:GetMediaSourcesRequest"/>
+      <wsdl:output message="msp:GetMediaSourcesResponse"/>
+    </wsdl:operation>
+    <!--
+    Possible faults:
+    env:Sender / ter:InvalidArgVal / msp:InvalidScope
+    -->
+    <wsdl:operation name="FindMediaSources">
+      <wsdl:input message="msp:FindMediaSourcesRequest"/>
+      <wsdl:output message="msp:FindMediaSourcesResponse"/>
+    </wsdl:operation>
+    <!--
+    Possible faults:
+    env:Sender / ter:InvalidArgVal / ter:InvalidToken
+    -->
+    <wsdl:operation name="GetSearchResults">
+      <wsdl:input message="msp:GetSearchResultsRequest"/>
+      <wsdl:output message="msp:GetSearchResultsResponse"/>
+    </wsdl:operation>
+    <!--
+    Possible faults:
+    env:Sender / ter:InvalidArgVal / ter:InvalidToken
+    -->
+    <wsdl:operation name="GetUpdates">
+      <wsdl:input message="msp:GetUpdatesRequest"/>
+      <wsdl:output message="msp:GetUpdatesResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MediaSourcesProviderSOAP" type="msp:MediaSourcesProvider">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetMediaSources">
+      <soap:operation soapAction="urn:ias:cvss:msp:1.0/GetMediaSources"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindMediaSources">
+      <soap:operation soapAction="urn:ias:cvss:msp:1.0/FindMediaSources"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSearchResults">
+      <soap:operation soapAction="urn:ias:cvss:msp:1.0/GetSearchResults"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUpdates">
+      <soap:operation soapAction="urn:ias:cvss:msp:1.0/GetUpdates"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MediaSourcesProvider">
+    <wsdl:port binding="msp:MediaSourcesProviderSOAP" name="MediaSourcesProviderSOAP">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

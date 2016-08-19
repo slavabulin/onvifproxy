@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions name="MediaRestrictionsManager" targetNamespace="urn:ias:cvss:vddp:1.0"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/"
+    xmlns:vddp="urn:ias:cvss:vddp:1.0"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:wsa="http://www.w3.org/2005/08/addressing">
+  <wsdl:types>
+    <xsd:schema targetNamespace="urn:ias:cvss:vddp:1.0" elementFormDefault="qualified">
+      <xsd:include schemaLocation="vddp.xsd" />
+      <xsd:import namespace="http://www.w3.org/2005/08/addressing" schemaLocation="public/ws-addr.xsd" />
+
+      <xsd:element name="OpenLiveStream">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="ConsumerReference" type="wsa:EndpointReferenceType" />
+            <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="OpenLiveStreamResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="StreamToken" type="xsd:anyURI" />
+            <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="CloseLiveStream">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="StreamToken" type="xsd:anyURI" />
+            <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CloseLiveStreamResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="Find">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="Scope">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element name="TimeFilter" type="vddp:TimeFilterType" />
+                  <xsd:element name="SourceFilter" type="vddp:SourceFilterType" minOccurs="0" />
+                  <xsd:element name="PlateFilter" type="vddp:PlateFilterType" minOccurs="0" />
+                  <xsd:element name="VehicleInformationFilter" type="vddp:VehicleInformationFilterType" minOccurs="0" />
+                  <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded" />
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="ConsumerReference" type="wsa:EndpointReferenceType" />
+            <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="FindResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="SearchToken" type="xsd:anyURI" />
+            <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="EndSearch">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="SearchToken" type="xsd:anyURI" />
+            <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="EndSearchResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:simpleType name="SearchStateEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="Queued" />
+          <xsd:enumeration value="Searching" />
+          <xsd:enumeration value="Completed" />
+          <xsd:enumeration value="Unknown" />
+        </xsd:restriction>
+      </xsd:simpleType>
+
+      <xsd:element name="GetSearchState">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="SearchToken" type="xsd:anyURI" />
+            <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetSearchStateResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="SearchState" type="vddp:SearchStateEnumeration" />
+            <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+    </xsd:schema>
+  </wsdl:types>
+  
+  <wsdl:message name="OpenLiveStreamRequest">
+    <wsdl:part element="vddp:OpenLiveStream" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="OpenLiveStreamResponse">
+    <wsdl:part element="vddp:OpenLiveStreamResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="CloseLiveStreamRequest">
+    <wsdl:part element="vddp:CloseLiveStream" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="CloseLiveStreamResponse">
+    <wsdl:part element="vddp:CloseLiveStreamResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="FindRequest">
+    <wsdl:part element="vddp:Find" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="FindResponse">
+    <wsdl:part element="vddp:FindResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="EndSearchRequest">
+    <wsdl:part element="vddp:EndSearch" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="EndSearchResponse">
+    <wsdl:part element="vddp:EndSearchResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetSearchStateRequest">
+    <wsdl:part element="vddp:GetSearchState" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetSearchStateResponse">
+    <wsdl:part element="vddp:GetSearchStateResponse" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:portType name="VehicleDetectionDataProvider">
+    <wsdl:operation name="OpenLiveStream">
+      <wsdl:input message="vddp:OpenLiveStreamRequest"/>
+      <wsdl:output message="vddp:OpenLiveStreamResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="CloseLiveStream">
+      <wsdl:input message="vddp:CloseLiveStreamRequest"/>
+      <wsdl:output message="vddp:CloseLiveStreamResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="Find">
+      <wsdl:input message="vddp:FindRequest"/>
+      <wsdl:output message="vddp:FindResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="EndSearch">
+      <wsdl:input message="vddp:EndSearchRequest"/>
+      <wsdl:output message="vddp:EndSearchResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetSearchState">
+      <wsdl:input message="vddp:GetSearchStateRequest"/>
+      <wsdl:output message="vddp:GetSearchStateResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  
+  <wsdl:binding name="VehicleDetectionDataProviderSOAP" type="vddp:VehicleDetectionDataProvider">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="OpenLiveStream">
+      <soap:operation soapAction="urn:ias:cvss:vddp:1.0/OpenLiveStream"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CloseLiveStream">
+      <soap:operation soapAction="urn:ias:cvss:vddp:1.0/CloseLiveStream"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Find">
+      <soap:operation soapAction="urn:ias:cvss:vddp:1.0/Find"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EndSearch">
+      <soap:operation soapAction="urn:ias:cvss:vddp:1.0/EndSearch"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSearchState">
+      <soap:operation soapAction="urn:ias:cvss:vddp:1.0/GetSearchState"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="VehicleDetectionDataProvider">
+    <wsdl:port binding="vddp:VehicleDetectionDataProviderSOAP" name="VehicleDetectionDataProviderSOAP">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

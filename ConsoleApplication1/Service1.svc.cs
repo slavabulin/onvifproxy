@@ -203,7 +203,7 @@ namespace OnvifProxy
 
                 GetServicesResponse getServicesResponse = new GetServicesResponse();
                 
-                getServicesResponse.Service = new Device.Service[8];
+                getServicesResponse.Service = new Device.Service[11];
 
                 getServicesResponse.Service[0] = new Device.Service();
                 getServicesResponse.Service[0].XAddr = "http://" + confstr.IPAddr + "/onvif/device_service";
@@ -269,6 +269,30 @@ namespace OnvifProxy
                 getServicesResponse.Service[7].Version.Major = 1;
                 getServicesResponse.Service[7].Version.Minor = 0;
                 getServicesResponse.Service[7].Capabilities = new XmlDocument().CreateElement("cap", "Capabilities", "http://www.onvif.org/ver20/imaging/wsdl");
+
+                getServicesResponse.Service[8] = new Device.Service();
+                getServicesResponse.Service[8].XAddr = "http://" + confstr.IPAddr + "/onvif/mediarestrictions_service";
+                getServicesResponse.Service[8].Namespace = "urn:ias:cvss:mrm:1.0";
+                getServicesResponse.Service[8].Version = new OnvifVersion();
+                getServicesResponse.Service[8].Version.Major = 1;
+                getServicesResponse.Service[8].Version.Minor = 0;
+                getServicesResponse.Service[8].Capabilities = new XmlDocument().CreateElement("cap", "Capabilities", "urn:ias:cvss:mrm:1.0");
+
+                getServicesResponse.Service[9] = new Device.Service();
+                getServicesResponse.Service[9].XAddr = "http://" + confstr.IPAddr + "/onvif/mediamarkup_service";
+                getServicesResponse.Service[9].Namespace = "urn:ias:cvss:mm:1.0";
+                getServicesResponse.Service[9].Version = new OnvifVersion();
+                getServicesResponse.Service[9].Version.Major = 1;
+                getServicesResponse.Service[9].Version.Minor = 0;
+                getServicesResponse.Service[9].Capabilities = new XmlDocument().CreateElement("cap", "Capabilities", "urn:ias:cvss:mm:1.0");
+
+                getServicesResponse.Service[10] = new Device.Service();
+                getServicesResponse.Service[10].XAddr = "http://" + confstr.IPAddr + "/onvif/taskmanager_service";
+                getServicesResponse.Service[10].Namespace = "urn:ias:cvss:tm:1.0";
+                getServicesResponse.Service[10].Version = new OnvifVersion();
+                getServicesResponse.Service[10].Version.Major = 1;
+                getServicesResponse.Service[10].Version.Minor = 0;
+                getServicesResponse.Service[10].Capabilities = new XmlDocument().CreateElement("cap", "Capabilities", "urn:ias:cvss:tm:1.0");
 
                 return getServicesResponse;
             }
@@ -5426,22 +5450,22 @@ namespace OnvifProxy
     {
         public string SetRestriction(MediaRestrictions.RestrictionType Restriction)
         {
-            if (Restriction == null
-                || Restriction.BeginTime == null
-                || Restriction.EndTime == null
-                || Restriction.MediaSourceToken == null
-                || String.IsNullOrWhiteSpace(Restriction.Subject)
-                )
-                throw new FaultException();
-            string[] restrictionSubjectArr = Restriction.Subject.Split('\u0020');
-            if (restrictionSubjectArr == null) throw new FaultException();
+            //if (Restriction == null
+            //    || Restriction.BeginTime == null
+            //    || Restriction.EndTime == null
+            //    || Restriction.MediaSourceToken == null
+            //    || String.IsNullOrWhiteSpace(Restriction.Subject)
+            //    )
+            //    throw new FaultException();
+            //string[] restrictionSubjectArr = Restriction.Subject.Split('\u0020');
+            //if (restrictionSubjectArr == null) throw new FaultException();
 
-            // get mediasourcetokens
-            MediaSourcesProvider.GetMediaSourcesResponse existingMediaSources = GetMediaSources(new GetMediaSourcesRequest());
+            //// get mediasourcetokens
+            //MediaSourcesProvider.GetMediaSourcesResponse existingMediaSources = GetMediaSources(new GetMediaSourcesRequest());
 
-            // check if all sources exist / if not - throw
-            // check if all sources are available / if not - throw
-            // change MediaRestrictionMngr settings
+            //// check if all sources exist / if not - throw
+            //// check if all sources are available / if not - throw
+            //// change MediaRestrictionMngr settings
 
             throw new NotImplementedException();             
         }
@@ -5450,6 +5474,44 @@ namespace OnvifProxy
             throw new NotImplementedException();
         }
         public MediaRestrictions.ClearRestrictionsResponse ClearRestrictions(MediaRestrictions.ClearRestrictionsRequest request)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public partial class Service1 : MediaMarkup.IMediaMarkupPort
+    {
+        public MediaMarkup.SetMarkerResponse SetMarker(MediaMarkup.SetMarkerRequest request)
+        {
+            throw new NotImplementedException();
+        }
+        public MediaMarkup.GetMarkerResponse GetMarker(MediaMarkup.GetMarkerRequest request)
+        {
+            throw new NotImplementedException();
+        }
+        public MediaMarkup.GetMarkedRecordingsResponse GetMarkedRecordings(MediaMarkup.GetMarkedRecordingsRequest request)
+        {
+            throw new NotImplementedException();
+        }
+        public void DeleteMarker(string MarkerToken)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public partial class Service1 : TaskManager.ITaskManager
+    {
+        public string CreateTask(System.Xml.XmlElement Task, System.DateTime TimeBegin, System.DateTime TimeEnd, TaskManager.FeedbackType Feedback)
+        {
+            throw new NotImplementedException();
+        }
+        public TaskManager.GetTaskStatusResponse GetTaskStatus(TaskManager.GetTaskStatusRequest request)
+        {
+            throw new NotImplementedException();
+        }
+        public TaskManager.GetTaskResultsResponse GetTaskResults(TaskManager.GetTaskResultsRequest request)
+        {
+            throw new NotImplementedException();
+        }
+        public void DeleteTask(string TaskToken)
         {
             throw new NotImplementedException();
         }

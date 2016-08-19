@@ -1,0 +1,90 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="urn:ias:cvss:vddp:1.0"
+            xmlns:cvss="urn:ias:cvss:1.0"
+            xmlns:wsa="http://www.w3.org/2005/08/addressing"
+            targetNamespace="urn:ias:cvss:vddp:1.0" elementFormDefault="qualified">
+  <xsd:import namespace="urn:ias:cvss:1.0" schemaLocation="cvss.xsd" />
+  <xsd:import namespace="http://www.w3.org/2005/08/addressing" schemaLocation="public/ws-addr.xsd" />
+
+  <xsd:complexType name="TimeFilterType">
+    <xsd:sequence>
+      <xsd:element name="From" type="xsd:dateTime" />
+      <xsd:element name="To" type="xsd:dateTime" minOccurs="0" />
+      <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="SourceFilterType">
+    <xsd:sequence>
+      <xsd:element name="LocationFilter" type="cvss:LocationFilterType" minOccurs="0" />
+      <xsd:element name="IDFilter" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:list itemType="xsd:int" />
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="PlateFilterType">
+    <xsd:sequence>
+      <xsd:element name="PlateTextPattern" type="xsd:string" />
+      <xsd:element name="AccuracyTreshold" type="xsd:float" minOccurs="0" />
+      <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:simpleType name="VehicleType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Motorcycles" />
+      <xsd:enumeration value="Car" />
+      <xsd:enumeration value="Truck" />
+      <xsd:enumeration value="Bus" />
+      <xsd:enumeration value="Trailer" />
+      <xsd:enumeration value="TruckOrBus" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:complexType name="VehicleInformationFilterType">
+    <xsd:sequence>
+      <xsd:element name="Type" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:list itemType="tns:VehicleType" />
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Maker" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:list itemType="xsd:int" />
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:element name="VehicleTrackingTask">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Scope">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="SourceFilter" type="tns:SourceFilterType" minOccurs="0" />
+              <xsd:element name="PlateFilter" type="tns:PlateFilterType" minOccurs="0" />
+              <xsd:element name="VehicleInformationFilter" type="tns:VehicleInformationFilterType" minOccurs="0" />
+              <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded" />
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="VehicleTrackingFeedback">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ConsumerReference" type="wsa:EndpointReferenceType" />
+        <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded" />
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

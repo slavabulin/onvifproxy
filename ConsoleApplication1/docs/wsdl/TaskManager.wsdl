@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions name="TaskManager" targetNamespace="urn:ias:cvss:tm:1.0"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/"
+    xmlns:tm="urn:ias:cvss:tm:1.0"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xml="http://www.w3.org/XML/1998/namespace"
+    xmlns:wsa="http://www.w3.org/2005/08/addressing">
+  <wsdl:types>
+    <xsd:schema targetNamespace="urn:ias:cvss:tm:1.0" elementFormDefault="qualified">
+      <xsd:complexType name="TaskType">
+        <xsd:sequence>
+          <xsd:any namespace="##any" processContents="lax" />
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:complexType name="FeedbackType">
+        <xsd:sequence>
+          <xsd:any namespace="##any" processContents="lax" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:simpleType name="TaskStatus">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="NotActive" />
+          <xsd:enumeration value="InProgress" />
+          <xsd:enumeration value="Failed" />
+          <xsd:enumeration value="Expired" />
+          <xsd:enumeration value="Done" />
+        </xsd:restriction>
+      </xsd:simpleType>
+
+      <xsd:element name="ScheduledRecordingTask">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="VideoSourceToken" type="xsd:string" maxOccurs="unbounded" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="RegistrationNumberTrackingTask">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="RegistrationNumber" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="CreateTask">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="Task" type="tm:TaskType" />
+            <xsd:element name="TimeBegin" type="xsd:dateTime" />
+            <xsd:element name="TimeEnd" type="xsd:dateTime" />
+            <xsd:element name="Feedback" type="tm:FeedbackType" minOccurs="0" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CreateTaskResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="TaskToken" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      
+      <xsd:element name="GetTaskStatus">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="TaskToken" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetTaskStatusResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="Status" type="tm:TaskStatus" />
+            <xsd:element name="Message" type="xsd:string" minOccurs="0" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="GetTaskResults">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="TaskToken" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetTaskResultsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:any namespace="##any" processContents="lax" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="DeleteTask">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="TaskToken" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="DeleteTaskResponse">
+        <xsd:complexType />
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  
+  <wsdl:message name="CreateTaskRequest">
+    <wsdl:part element="tm:CreateTask" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="CreateTaskResponse">
+    <wsdl:part element="tm:CreateTaskResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetTaskStatusRequest">
+    <wsdl:part element="tm:GetTaskStatus" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetTaskStatusResponse">
+    <wsdl:part element="tm:GetTaskStatusResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetTaskResultsRequest">
+    <wsdl:part element="tm:GetTaskResults" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetTaskResultsResponse">
+    <wsdl:part element="tm:GetTaskResultsResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteTaskRequest">
+    <wsdl:part element="tm:DeleteTask" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteTaskResponse">
+    <wsdl:part element="tm:DeleteTaskResponse" name="parameters"/>
+  </wsdl:message>
+  
+  <wsdl:portType name="TaskManager">
+    <wsdl:operation name="CreateTask">
+      <wsdl:input message="tm:CreateTaskRequest"/>
+      <wsdl:output message="tm:CreateTaskResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskStatus">
+      <wsdl:input message="tm:GetTaskStatusRequest"/>
+      <wsdl:output message="tm:GetTaskStatusResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskResults">
+      <wsdl:input message="tm:GetTaskResultsRequest"/>
+      <wsdl:output message="tm:GetTaskResultsResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTask">
+      <wsdl:input message="tm:DeleteTaskRequest"/>
+      <wsdl:output message="tm:DeleteTaskResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  
+  <wsdl:binding name="TaskManagerSOAP" type="tm:TaskManager">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="CreateTask">
+      <soap:operation soapAction="urn:ias:cvss:tm:1.0/CreateTask"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskStatus">
+      <soap:operation soapAction="urn:ias:cvss:tm:1.0/GetTaskStatus"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskResults">
+      <soap:operation soapAction="urn:ias:cvss:tm:1.0/GetTaskResults"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTask">
+      <soap:operation soapAction="urn:ias:cvss:tm:1.0/DeleteTask"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="TaskManager">
+    <wsdl:port binding="tm:TaskManagerSOAP" name="TaskManagerSOAP">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

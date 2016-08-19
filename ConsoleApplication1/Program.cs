@@ -373,6 +373,14 @@ namespace OnvifProxy
             CustomBinding bindingMediaRestrictions = new CustomBinding(
                 new TextMessageEncodingBindingElement(MessageVersion.Soap12WSAddressing10, Encoding.UTF8),
                 httpTransportBindingElement);
+
+            CustomBinding bindingMediaMarkup = new CustomBinding(
+                new TextMessageEncodingBindingElement(MessageVersion.Soap12WSAddressing10, Encoding.UTF8),
+                httpTransportBindingElement);
+
+            CustomBinding bindingTaskManger = new CustomBinding(
+                new TextMessageEncodingBindingElement(MessageVersion.Soap12WSAddressing10, Encoding.UTF8),
+                httpTransportBindingElement);
             //--------------------------
             //binding
             binding.Namespace = "http://www.onvif.org/ver10/device/wsdl";
@@ -384,6 +392,8 @@ namespace OnvifProxy
             bindingRecSearch.Namespace = "http://www.onvif.org/ver10/search/wsdl";
             bindingImaging.Namespace = "http://www.onvif.org/ver20/imaging/wsdl";
             bindingMediaRestrictions.Namespace = "urn:ias:cvss:mrm:1.0";
+            bindingMediaMarkup.Namespace = "urn:ias:cvss:mm:1.0";
+            bindingTaskManger.Namespace = "urn:ias:cvss:tm:1.0";
             //--------------------------
 
             ServiceDiscoveryBehavior serviceDiscoveryBehavior = new ServiceDiscoveryBehavior();
@@ -399,7 +409,9 @@ namespace OnvifProxy
                     RecordingSearchEndPoint,
                     PTZEndpoint,
                     ImagingEndpoint,
-                    MediaRestrictionsEndpoint;
+                    MediaRestrictionsEndpoint,
+                    MediaMarkupEndpoint,
+                    TaskManagerEndpoint;
 
             EndpointDiscoveryBehavior MediaServiceBehavior = new EndpointDiscoveryBehavior();
             EndpointDiscoveryBehavior NotificationProducerServiceBehavior = new EndpointDiscoveryBehavior();
@@ -411,6 +423,8 @@ namespace OnvifProxy
             EndpointDiscoveryBehavior PTZServiceBehavior = new EndpointDiscoveryBehavior();
             EndpointDiscoveryBehavior ImagingServiceBehavior = new EndpointDiscoveryBehavior();
             EndpointDiscoveryBehavior MediaRestrictionsServiceBehavior = new EndpointDiscoveryBehavior();
+            EndpointDiscoveryBehavior MediaMarkupServiceBehavior = new EndpointDiscoveryBehavior();
+            EndpointDiscoveryBehavior TaskManagerServiceBehavior = new EndpointDiscoveryBehavior();
             
             UdpAnnouncementEndpoint udpAnnouncementEndpoint;
             UdpDiscoveryEndpoint udpDiscoveryEndpoint;
@@ -460,6 +474,8 @@ namespace OnvifProxy
                 PTZServiceBehavior.Enabled = false;
                 ImagingServiceBehavior.Enabled = false;
                 MediaRestrictionsServiceBehavior.Enabled = false;
+                MediaMarkupServiceBehavior.Enabled = false;
+                TaskManagerServiceBehavior.Enabled = false;
                 //------------------------------
                 // Add endpoints to the service
                 try
@@ -530,6 +546,16 @@ namespace OnvifProxy
                         typeof(MediaRestrictions.IMediaRestrictionsManager),
                         bindingMediaRestrictions,
                         "/onvif/mediarestrictions_service");
+
+                    MediaMarkupEndpoint = host.AddServiceEndpoint(
+                        typeof(MediaMarkup.IMediaMarkupPort),
+                        bindingMediaMarkup,
+                        "/onvif/mediamarkup_service");
+
+                    TaskManagerEndpoint = host.AddServiceEndpoint(
+                        typeof(TaskManager.ITaskManager),
+                        bindingTaskManger,
+                        "/onvif/taskmanager_service");
                     
 
                     DeviceServiceEndpoint.Contract.Name = "NetworkVideoTransmitter";
@@ -568,6 +594,11 @@ namespace OnvifProxy
                     MediaRestrictionsEndpoint.Contract.Name = "MediaRestrictionsService";
                     MediaRestrictionsEndpoint.Contract.Namespace = "urn:ias:cvss:mrm:1.0";
 
+                    MediaMarkupEndpoint.Contract.Name = "MediaMarkupService";
+                    MediaMarkupEndpoint.Contract.Namespace = "urn:ias:cvss:mm:1.0";
+
+                    TaskManagerEndpoint.Contract.Name = "TaskManagerService";
+                    MediaMarkupEndpoint.Contract.Namespace = "urn:ias:cvss:tm:1.0";
                     //----------------------------------------------------------------------------------
                     //если размер отсылаемого пакета больше 1518 байт, например слишком много скопов, 
                     //то система отсылает только первые 1518 и больше не досылает ни при Announcement'е
@@ -624,6 +655,8 @@ namespace OnvifProxy
                     PTZEndpoint = null;
                     ImagingEndpoint = null;
                     MediaRestrictionsEndpoint = null;
+                    MediaMarkupEndpoint = null;
+                    TaskManagerEndpoint = null;
                 }
                 catch (NullReferenceException e)
                 {
@@ -643,6 +676,8 @@ namespace OnvifProxy
                     PTZEndpoint = null;
                     ImagingEndpoint = null;
                     MediaRestrictionsEndpoint = null;
+                    MediaMarkupEndpoint = null;
+                    TaskManagerEndpoint = null;
                 }   
                 return host;
             }
