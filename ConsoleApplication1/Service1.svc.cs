@@ -5501,6 +5501,34 @@ namespace OnvifProxy
     {
         public string CreateTask(System.Xml.XmlElement Task, System.DateTime TimeBegin, System.DateTime TimeEnd, TaskManager.FeedbackType Feedback)
         {
+            if (Task == null
+                || TimeBegin == null
+                || TimeEnd == null
+                || Feedback == null)
+                throw new FaultException("Some arguments are null");
+
+            if (TimeEnd.CompareTo(TimeBegin) <= 0)
+                throw new FaultException(new FaultReason("InvalidTime"),
+                          new FaultCode("Sender",
+                              new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("InvalidTime", "urn:ias:cvss:tm:1.0"))));
+
+            XmlNodeList xmlNodeList = Task.GetElementsByTagName("ScheduledRecordingTask", "urn:ias:cvss:tm:1.0");
+            if(xmlNodeList!=null&&xmlNodeList.Count==1)
+            {
+                //xmlNodeList.Item(0).Value
+                //foreach(XmlNode node in xmlNodeList)
+                //{
+                    //node.Get
+                //}
+            }
+            else
+                throw new FaultException(new FaultReason("Invalid Tasks Args"),
+                          new FaultCode("Sender",
+                              new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("InvalidTask", "urn:ias:cvss:tm:1.0"))));
+
+
             throw new NotImplementedException();
         }
         public TaskManager.GetTaskStatusResponse GetTaskStatus(TaskManager.GetTaskStatusRequest request)

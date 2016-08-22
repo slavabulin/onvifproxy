@@ -168,5 +168,12 @@ namespace TaskManager
             this.Any = Any;
         }
     }
-
+    public class Task
+    {
+        public ScheduledRecordingTask scheduledRecordingTask;
+    }
+    class ScheduledRecordingTask
+    {
+        public string mediaSourceToken { get; set; }
+    }
 }
