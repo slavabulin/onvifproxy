@@ -1,0 +1,10 @@
+D:\work\!Prog\repo\OnvifProxy\OnvifProxyTests\obj\Debug\OnvifProxyTests.csprojResolveAssemblyReference.cache
+D:\work\!Prog\repo\OnvifProxy\OnvifProxyTests\bin\Debug\App.config
+D:\work\!Prog\repo\OnvifProxy\OnvifProxyTests\bin\Debug\OnvifProxyTests.dll
+D:\work\!Prog\repo\OnvifProxy\OnvifProxyTests\bin\Debug\OnvifProxyTests.pdb
+D:\work\!Prog\repo\OnvifProxy\OnvifProxyTests\bin\Debug\OnvifProxy.exe
+D:\work\!Prog\repo\OnvifProxy\OnvifProxyTests\bin\Debug\log4net.dll
+D:\work\!Prog\repo\OnvifProxy\OnvifProxyTests\bin\Debug\OnvifProxy.pdb
+D:\work\!Prog\repo\OnvifProxy\OnvifProxyTests\bin\Debug\log4net.xml
+D:\work\!Prog\repo\OnvifProxy\OnvifProxyTests\obj\Debug\OnvifProxyTests.dll
+D:\work\!Prog\repo\OnvifProxy\OnvifProxyTests\obj\Debug\OnvifProxyTests.pdb
