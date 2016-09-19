@@ -6,7 +6,6 @@ using System.Timers;
 using System.Threading;
 using System.IO;
 using System.Xml.Serialization;
-using System.Text.RegularExpressions;
 
 
 
@@ -39,6 +38,7 @@ namespace OnvifProxy
             {
                 if (TyphMsg == null)
                 {
+                    TyphoonCom.log.DebugFormat("GetMediaSourcesFromTyphoon - Typhoon return null");
                     return;
                 }
                 TyphMsg.stringMessageData = TyphoonCom.ParseMem(0, TyphMsg.stringMessageData);

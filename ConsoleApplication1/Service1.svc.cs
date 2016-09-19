@@ -5516,7 +5516,7 @@ namespace OnvifProxy
             XmlNodeList xmlNodeList = Task.GetElementsByTagName("ScheduledRecordingTask", "urn:ias:cvss:tm:1.0");
             if(xmlNodeList!=null&&xmlNodeList.Count==1)
             {
-                //xmlNodeList.Item(0).Value
+                //xmlNodeList.Item(0).Value;
                 //foreach(XmlNode node in xmlNodeList)
                 //{
                     //node.Get

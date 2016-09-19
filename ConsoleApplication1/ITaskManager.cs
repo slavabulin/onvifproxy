@@ -170,7 +170,7 @@ namespace TaskManager
     }
     public class Task
     {
-        public ScheduledRecordingTask scheduledRecordingTask;
+        //public ScheduledRecordingTask scheduledRecordingTask;
     }
     class ScheduledRecordingTask
     {
