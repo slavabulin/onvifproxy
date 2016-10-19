@@ -26,15 +26,15 @@ namespace Media
     public interface IMedia
     {
 
-        ////// CODEGEN: Контракт генерации сообщений с операцией GetServiceCapabilities не является ни RPC, ни упакованным документом.
-        ////[System.ServiceModel.OperationContractAttribute(ReplyAction = "*"
-        ////    ,Name = "MediaGetServiceCapabilities"//added by me, to avoid duplication in INVTService
-        ////    ),
-        ////OnvifProxy.SecurityOperationBehavoir("GetServiceCapabilities", "OnvifProxy.SecurityOperationBehavoir("GetProfiles", "http://www.onvif.org/ver10/media/wsdl", 0)]", 0)]
-        ////[System.ServiceModel.XmlSerializerFormatAttribute()]
-        ////[System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
-        ////[System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
-        ////GetServiceCapabilitiesResponse1 GetServiceCapabilities(GetServiceCapabilitiesRequest request);
+        // CODEGEN: Контракт генерации сообщений с операцией GetServiceCapabilities не является ни RPC, ни упакованным документом.
+        [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"
+            //,Name = "MediaGetServiceCapabilities"//added by me, to avoid duplication in INVTService
+            ),
+        OnvifProxy.SecurityOperationBehavoir("GetServiceCapabilities", "http://www.onvif.org/ver10/media/wsdl", 3)]
+        [System.ServiceModel.XmlSerializerFormatAttribute()]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        GetServiceCapabilitiesResponse1 GetServiceCapabilities(GetServiceCapabilitiesRequest request);
 
         // CODEGEN: Параметр "VideoSources" требует дополнительной информации о схеме, которую невозможно получить в режиме параметров. Указан атрибут "System.Xml.Serialization.XmlElementAttribute".
         //---------------------------------------------------------------------------------
@@ -12227,6 +12227,10 @@ namespace Media
         {
         }
 
+        public Media.GetServiceCapabilitiesResponse1 GetServiceCapabilities(Media.GetServiceCapabilitiesRequest request)
+        {
+            return base.Channel.GetServiceCapabilities(request);
+        }
         //[System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         //GetServiceCapabilitiesResponse1 IMedia.GetServiceCapabilities(GetServiceCapabilitiesRequest request)
         //{

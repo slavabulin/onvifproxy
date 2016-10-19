@@ -7,32 +7,44 @@
 //     повторной генерации кода.
 // </auto-generated>
 //------------------------------------------------------------------------------
-
+using System.ServiceModel;
 
 namespace TaskManager
 {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(Namespace = "urn:ias:cvss:tm:1.0", ConfigurationName = "TaskManager")]
+    [XmlSerializerFormat]
+    [OnvifProxy.SecurityContractBehavior]
     public interface ITaskManager
     {
-
-        [System.ServiceModel.OperationContractAttribute(Action = "urn:ias:cvss:tm:1.0/CreateTask")]
+        [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
+        OnvifProxy.SecurityOperationBehavoir("CreateTask", "urn:ias:cvss:tm:1.0", 2)]
+        //[System.ServiceModel.OperationContractAttribute(Action = "urn:ias:cvss:tm:1.0/CreateTask")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "TaskToken")]
         string CreateTask(System.Xml.XmlElement Task, System.DateTime TimeBegin, System.DateTime TimeEnd, FeedbackType Feedback);
 
+
+        [System.ServiceModel.OperationContractAttribute(ReplyAction = "*", Action = "*"),
+        OnvifProxy.SecurityOperationBehavoir("GetTaskStatus", "urn:ias:cvss:tm:1.0", 2)]
         // CODEGEN: Идет формирование контракта на сообщение, так как операция может иметь много возвращаемых значений.
-        [System.ServiceModel.OperationContractAttribute(Action = "urn:ias:cvss:tm:1.0/GetTaskStatus")]
+        //[System.ServiceModel.OperationContractAttribute(Action = "urn:ias:cvss:tm:1.0/GetTaskStatus")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         GetTaskStatusResponse GetTaskStatus(GetTaskStatusRequest request);
 
+
+        [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
+        OnvifProxy.SecurityOperationBehavoir("GetTaskResults", "urn:ias:cvss:tm:1.0", 2)]
         // CODEGEN: Контракт генерации сообщений с пространством имен частей сообщения () не соответствует значению по умолчанию (urn:ias:cvss:tm:1.0).
-        [System.ServiceModel.OperationContractAttribute(Action = "urn:ias:cvss:tm:1.0/GetTaskResults")]
+        //[System.ServiceModel.OperationContractAttribute(Action = "urn:ias:cvss:tm:1.0/GetTaskResults")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         [return: System.ServiceModel.MessageParameterAttribute(Name = "Any")]
         GetTaskResultsResponse GetTaskResults(GetTaskResultsRequest request);
 
-        [System.ServiceModel.OperationContractAttribute(Action = "urn:ias:cvss:tm:1.0/DeleteTask")]
+
+        [System.ServiceModel.OperationContractAttribute(ReplyAction = "*"),
+        OnvifProxy.SecurityOperationBehavoir("DeleteTask", "urn:ias:cvss:tm:1.0", 2)]
+        //[System.ServiceModel.OperationContractAttribute(Action = "urn:ias:cvss:tm:1.0/DeleteTask")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         void DeleteTask(string TaskToken);
     }
@@ -168,12 +180,14 @@ namespace TaskManager
             this.Any = Any;
         }
     }
-    public class Task
+
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:ias:cvss:tm:1.0")]
+    public class ScheduledRecordingTask
     {
-        //public ScheduledRecordingTask scheduledRecordingTask;
-    }
-    class ScheduledRecordingTask
-    {
-        public string mediaSourceToken { get; set; }
+        public string mediaSourceToken;
+
+        public System.DateTime beginTime;
+
+        public System.DateTime endTime;
     }
 }

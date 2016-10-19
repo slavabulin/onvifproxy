@@ -1654,7 +1654,7 @@ namespace OnvifProxy
 
         static TyphoonMsgManager()
         {
-            ////for testing;
+            ////for leakage testing;
             //Thread eventThread = new Thread(new ThreadStart(TyphoonMsgManager.TestEventPuller));
             //eventThread.IsBackground = true;
             //eventThread.Start();

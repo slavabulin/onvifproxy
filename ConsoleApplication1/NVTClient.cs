@@ -39,7 +39,10 @@ namespace OnvifProxy
         {
         }
 
-
+        public Media.GetServiceCapabilitiesResponse1 GetServiceCapabilities(Media.GetServiceCapabilitiesRequest request)
+        {
+            throw new NotImplementedException();
+        }
         public string GetDeviceInformation(out string Model, out string FirmwareVersion,
             out string SerialNumber, out string HardwareId)
         {

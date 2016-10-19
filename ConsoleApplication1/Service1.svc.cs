@@ -28,6 +28,7 @@ using MediaSourcesProvider;
 using ReplayService;
 using Imaging;
 using MediaRestrictions;
+using TaskManager;
 
 
 namespace OnvifProxy
@@ -2499,7 +2500,15 @@ namespace OnvifProxy
 
         public Media.GetServiceCapabilitiesResponse1 GetServiceCapabilities(Media.GetServiceCapabilitiesRequest request)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            var resp = new GetServiceCapabilitiesResponse();
+            resp.Capabilities = new Media.Capabilities();
+            resp.Capabilities.ProfileCapabilities = new Media.ProfileCapabilities();
+            resp.Capabilities.StreamingCapabilities = new StreamingCapabilities();
+            resp.Capabilities.StreamingCapabilities.RTP_RTSP_TCP = true;
+            resp.Capabilities.SnapshotUri = false;
+            
+            return new GetServiceCapabilitiesResponse1(resp);
         }
  
 //------------------------------Media--------------------------------------------------------------------
@@ -5499,7 +5508,8 @@ namespace OnvifProxy
     }
     public partial class Service1 : TaskManager.ITaskManager
     {
-        public string CreateTask(System.Xml.XmlElement Task, System.DateTime TimeBegin, System.DateTime TimeEnd, TaskManager.FeedbackType Feedback)
+        public string CreateTask(System.Xml.XmlElement Task, System.DateTime TimeBegin,
+            System.DateTime TimeEnd, TaskManager.FeedbackType Feedback)
         {
             if (Task == null
                 || TimeBegin == null
@@ -5507,29 +5517,80 @@ namespace OnvifProxy
                 || Feedback == null)
                 throw new FaultException("Some arguments are null");
 
-            if (TimeEnd.CompareTo(TimeBegin) <= 0)
+            if (TimeEnd.CompareTo(TimeBegin) <= 0
+                || TimeEnd.CompareTo(System.DateTime.Now) <=0
+                || TimeBegin.CompareTo(System.DateTime.Now) <=0)
                 throw new FaultException(new FaultReason("InvalidTime"),
                           new FaultCode("Sender",
                               new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
                                   new FaultCode("InvalidTime", "urn:ias:cvss:tm:1.0"))));
 
-            XmlNodeList xmlNodeList = Task.GetElementsByTagName("ScheduledRecordingTask", "urn:ias:cvss:tm:1.0");
-            if(xmlNodeList!=null&&xmlNodeList.Count==1)
+            //XmlNodeList xmlNodeList = Task.GetElementsByTagName("ScheduledRecordingTask", "urn:ias:cvss:tm:1.0");
+            //XmlNodeList xmlNodeList = Task.;
+            if (Task.LocalName == "ScheduledRecordingTask" && Task.NamespaceURI == "urn:ias:cvss:tm:1.0")
+            //if(xmlNodeList!=null&&xmlNodeList.Count==1)
             {
-                //xmlNodeList.Item(0).Value;
-                //foreach(XmlNode node in xmlNodeList)
-                //{
-                    //node.Get
-                //}
+                //---------------------------------------------------------------------------------------------
+                var scheduledRecordingTask = new TaskManager.ScheduledRecordingTask();
+                scheduledRecordingTask.beginTime = TimeBegin;
+                scheduledRecordingTask.endTime = TimeEnd;
+                //scheduledRecordingTask.mediaSourceToken = xmlNodeList.Item(0).Value;
+                scheduledRecordingTask.mediaSourceToken = Task.InnerText.Trim();
+                string tempstring;
+                XmlSerializer scheduledRecordingTaskSerializer = null;
+                using (var ms = new MemoryStream())
+                {
+                   scheduledRecordingTaskSerializer = new XmlSerializer(typeof(TaskManager.ScheduledRecordingTask),
+                        "urn:ias:cvss:tm:1.0");
+                   
+                    try
+                    {
+                        scheduledRecordingTaskSerializer.Serialize(ms, scheduledRecordingTask);
+                        StreamReader strread = new StreamReader(ms);
+                        ms.Position = 0;
+                        tempstring = strread.ReadToEnd();
+                        if (String.IsNullOrWhiteSpace(tempstring))
+                            throw new FaultException(new FaultReason("scheduledRecordingTaskSerializationException"),
+                              new FaultCode("Sender",
+                                  new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                      new FaultCode("scheduledRecordingTaskSerializationException", "http://www.onvif.org/ver10/error"))));
+
+                    }
+                    catch (SerializationException)
+                    {
+                        throw new FaultException(new FaultReason("scheduledRecordingTaskSerializationException"),
+                              new FaultCode("Sender",
+                                  new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                      new FaultCode("scheduledRecordingTaskSerializationException", "http://www.onvif.org/ver10/error"))));
+                    }
+                }
+                //---------------------------------------------------------------------------------------------
+                //var token = xmlNodeList.Item(0).Value;
+                using (TyphoonMsg typhmsg = TyphoonMsgManager.SendSyncMsg(200, 38, TyphoonCom.MakeMem(tempstring), 0))
+                {
+                    if (typhmsg == null)
+                        throw new FaultException(new FaultReason("No CreateTask returned"),
+                              new FaultCode("Sender",
+                                  new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                      new FaultCode("No CreateTask returned", "http://www.onvif.org/ver10/error"))));
+
+                    string taskToken = TyphoonCom.ParseMem(0, typhmsg.stringMessageData);
+                    if (!String.IsNullOrWhiteSpace(taskToken))
+                        return taskToken;
+                    else
+                    {
+                        throw new FaultException(new FaultReason("No CreateTask returned"),
+                              new FaultCode("Sender",
+                                  new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                      new FaultCode("No CreateTask returned", "http://www.onvif.org/ver10/error"))));
+                    }
+                }
             }
             else
                 throw new FaultException(new FaultReason("Invalid Tasks Args"),
                           new FaultCode("Sender",
                               new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
                                   new FaultCode("InvalidTask", "urn:ias:cvss:tm:1.0"))));
-
-
-            throw new NotImplementedException();
         }
         public TaskManager.GetTaskStatusResponse GetTaskStatus(TaskManager.GetTaskStatusRequest request)
         {
@@ -5539,9 +5600,24 @@ namespace OnvifProxy
         {
             throw new NotImplementedException();
         }
-        public void DeleteTask(string TaskToken)
+        public void DeleteTask(string taskToken)
         {
-            throw new NotImplementedException();
+            if(String.IsNullOrWhiteSpace(taskToken))
+                throw new FaultException(new FaultReason("Whitespace Task token"),
+                          new FaultCode("Sender",
+                              new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("Whitespace Task token", "urn:ias:cvss:tm:1.0"))));
+            using (TyphoonMsg typhmsg = TyphoonMsgManager.SendSyncMsg(200, 41, TyphoonCom.MakeMem(taskToken), 0))
+            {
+                if (typhmsg == null)
+                    throw new FaultException(new FaultReason("No DeleteTask returned"),
+                          new FaultCode("Sender",
+                              new FaultCode("InvalidArgVal", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("No DeleteTask returned", "http://www.onvif.org/ver10/error"))));
+                typhmsg.stringMessageData = TyphoonCom.ParseMem(0, typhmsg.stringMessageData);
+                return;
+            }
+            throw new FaultException();
         }
     }
     public class IPmgmnt

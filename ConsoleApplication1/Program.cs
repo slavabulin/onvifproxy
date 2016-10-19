@@ -22,7 +22,7 @@ using System.ServiceModel.Dispatcher;
 using System.Xml.Serialization;
 using System.IO;
 using System.Xml;
-using System.Web.Services.Protocols; //ддя соап-документс-сеттингс
+using System.Web.Services.Protocols;
 using System.Runtime.InteropServices; // added to set system time&date
 using Microsoft.Win32;
 using System.Management; 
@@ -547,11 +547,11 @@ namespace OnvifProxy
                         bindingMediaRestrictions,
                         "/onvif/mediarestrictions_service");
 
-                    MediaMarkupEndpoint = host.AddServiceEndpoint(
-                        typeof(MediaMarkup.IMediaMarkupPort),
-                        bindingMediaMarkup,
-                        "/onvif/mediamarkup_service");
-
+                    //MediaMarkupEndpoint = host.AddServiceEndpoint(
+                    //    typeof(MediaMarkup.IMediaMarkupPort),
+                    //    bindingMediaMarkup,
+                    //    "/onvif/mediamarkup_service");
+                    
                     TaskManagerEndpoint = host.AddServiceEndpoint(
                         typeof(TaskManager.ITaskManager),
                         bindingTaskManger,
@@ -594,11 +594,11 @@ namespace OnvifProxy
                     MediaRestrictionsEndpoint.Contract.Name = "MediaRestrictionsService";
                     MediaRestrictionsEndpoint.Contract.Namespace = "urn:ias:cvss:mrm:1.0";
 
-                    MediaMarkupEndpoint.Contract.Name = "MediaMarkupService";
-                    MediaMarkupEndpoint.Contract.Namespace = "urn:ias:cvss:mm:1.0";
+                    //MediaMarkupEndpoint.Contract.Name = "MediaMarkupService";
+                    //MediaMarkupEndpoint.Contract.Namespace = "urn:ias:cvss:mm:1.0";
 
                     TaskManagerEndpoint.Contract.Name = "TaskManagerService";
-                    MediaMarkupEndpoint.Contract.Namespace = "urn:ias:cvss:tm:1.0";
+                    TaskManagerEndpoint.Contract.Namespace = "urn:ias:cvss:tm:1.0";
                     //----------------------------------------------------------------------------------
                     //если размер отсылаемого пакета больше 1518 байт, например слишком много скопов, 
                     //то система отсылает только первые 1518 и больше не досылает ни при Announcement'е
