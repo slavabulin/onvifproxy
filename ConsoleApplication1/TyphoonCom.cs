@@ -75,14 +75,14 @@ namespace OnvifProxy
         private static UInt32 msgIDCounter;
         private static WSHttpBinding binding;
         private static NVTServiceClient nvtClient;
-        private static System.Collections.ObjectModel.Collection<NVTServiceClient> nvtClientCollection;// = null;
+        private static System.Collections.ObjectModel.Collection<NVTServiceClient> nvtClientCollection;
 
         private const int TYPHOON_PORT_NUM = 7520;
         private const int TYPHOON_CONNECTION_TIMEOUT = 10000;
         private const int TYPHOON_ZOND_PERIOD = 2000;
         private const int TYPHOON_CONNECTION_RESTART_TIMEOUT = 1000;
         private const int TYPHOON_EVENT_TIMEOUT = 60000;
-        private const int TYPHOON_COMMAND_BUFFER_LENGHT = 10240;
+        private const int TYPHOON_COMMAND_BUFFER_LENGTH = 10240;
 
         public static void TyphoonComInit (object ip)
         {
@@ -92,7 +92,7 @@ namespace OnvifProxy
 
             if(nvtClientCollection ==null)nvtClientCollection = new Collection<NVTServiceClient>();
 
-            commandBuffer = new byte[TYPHOON_COMMAND_BUFFER_LENGHT];
+            commandBuffer = new byte[TYPHOON_COMMAND_BUFFER_LENGTH];
 
             //зарегистрировать только один обработчик на событие TyphoonDisconnect
             if (!flg_OnConnectionFailed)
@@ -269,7 +269,7 @@ namespace OnvifProxy
                         {   
                             lock(locker)
                             {
-                                commandBuffer = new byte[TYPHOON_COMMAND_BUFFER_LENGHT];
+                                commandBuffer = new byte[TYPHOON_COMMAND_BUFFER_LENGTH];
                                 stream.BeginRead(commandBuffer,
                                 0,
                                 commandBuffer.Length,
