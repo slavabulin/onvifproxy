@@ -58,7 +58,6 @@ namespace OnvifProxy
 
         //----implementing IDisposable-------------------
         private bool _isDisposed = false;
-
         public void Dispose()
         {
             Dispose(true);
@@ -171,8 +170,6 @@ namespace OnvifProxy
             Dispose(false);
         }
         //-----------------------------------------------
-
-
         public TyphoonEvent(EventData curData, double timeout)
         {
 
@@ -192,7 +189,6 @@ namespace OnvifProxy
                 throw new ArgumentNullException("аргументы конструктора TyphoonEvent равны нулю");
             }
         }
-
         private void OnSubscriptionTimeoutEvent(object source, ElapsedEventArgs e)
         {
             lock (((ICollection)EventStorage.storage).SyncRoot)

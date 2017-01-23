@@ -3239,7 +3239,8 @@ namespace OnvifProxy
             geteventprop.TopicSet.Any = new System.Xml.XmlElement[2];
             XmlDocument doc = new XmlDocument();
 
-            doc.LoadXml("<tns1:VideoSource wstop:topic = 'true' xmlns:tns1 = 'http://www.onvif.org/ver10/topics' xmlns:tt='http://www.onvif.org/ver10/schema' xmlns:wstop = 'http://docs.oasis-open.org/wsn/t-1'>"
+            doc.LoadXml("<tns1:VideoSource wstop:topic = 'true' xmlns:tns1 = 'http://www.onvif.org/ver10/topics'"
+                +" xmlns:tt='http://www.onvif.org/ver10/schema' xmlns:wstop = 'http://docs.oasis-open.org/wsn/t-1'>"
                 + "<tt:MessageDescription><tt:Source><tt:SimpleItemDescription Name='app' Type='xsd:string' /> "
                 + "</tt:Source><tt:Key><tt:SimpleItemDescription Name='channel' Type='xsd:int' /></tt:Key><tt:Data> "
                 + "<tt:SimpleItemDescription Name='tampering' Type='xsd:int' /> </tt:Data></tt:MessageDescription>"
