@@ -1,8 +1,0 @@
-POST /onvif/device_service HTTP/1.1
-Host: 192.168.1.57
-User-Agent: gSOAP/2.8
-Content-Type: application/soap+xml; charset=utf-8; action="http://www.onvif.org/ver10/device/wsdl/GetCapabilities"
-Content-Length: 2970
-Connection: close
-SOAPAction: "http://www.onvif.org/ver10/device/wsdl/GetCapabilities"
-
