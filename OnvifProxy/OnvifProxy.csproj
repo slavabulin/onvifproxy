@@ -127,6 +127,7 @@
     <Compile Include="ITaskManager.cs" />
     <Compile Include="MediaRestrictionManager.cs" />
     <Compile Include="MediaSourceList.cs" />
+    <Compile Include="Msg.cs" />
     <Compile Include="NVTClient.cs" />
     <Compile Include="NVTDiscoveryClient.cs" />
     <Compile Include="IDevice.cs" />

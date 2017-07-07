@@ -1,4 +1,7 @@
-﻿using System;
+﻿// This is an independent project of an individual developer. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
+using System;
 using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
@@ -930,10 +933,10 @@ namespace OnvifProxy
                             //    TyphMsg.MessageID = TyphMsg.MessageID << 8;
                             //    TyphMsg.MessageID += tmp[9 - a];
                             //}
-                            //TyphoonMsg typhMsg = new TyphoonMsg(TyphoonMsgType.Request);
-                            //typhMsg.byteMessageData = TyphoonCom.FormPacket(tmp);
+                            //TyphoonMsg msg = new TyphoonMsg(TyphoonMsgType.Request);
+                            //msg.byteMessageData = TyphoonCom.FormPacket(tmp);
 
-                            //TyphoonMsgManager.EnqueueMsg(typhMsg);
+                            //TyphoonMsgManager.EnqueueMsg(msg);
 
                         //    {
                         //        do

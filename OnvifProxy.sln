@@ -6,9 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnvifProxy", "OnvifProxy\OnvifProxy.csproj", "{A54774A4-5108-49B6-8C50-428F85076D71}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{18177888-72B7-4693-8896-019AF3C9D4B0}"
-	ProjectSection(SolutionItems) = preProject
-		Performance1.psess = Performance1.psess
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnvifProxyUnitTests", "OnvifProxyUnitTests\OnvifProxyUnitTests.csproj", "{19A817B7-6E03-42DD-BCD8-6BE4C0F6DD7D}"
 EndProject
@@ -37,8 +34,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

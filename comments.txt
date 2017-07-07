@@ -51,6 +51,7 @@ private static void Process(object ipaddr) - stream.WriteByte(0); - как обойтись
 
 
 ToDo:
+RecordingSearch.GetMediaAttributes, 
 - should be Disposable: NVTDiscoClient, bnSubscriber, TyphoonEvent, ppSubscriber, AsyncResult - make Disposable and use using/Dispose()
 - берет ip с первой карточки(у шарова)
 - дорефакторить TyphoonMsgManager

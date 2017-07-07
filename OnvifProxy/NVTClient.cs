@@ -1,48 +1,46 @@
-﻿using System;
+﻿// This is an independent project of an individual developer. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Device;
 using Media;
 using System.ServiceModel;
-
+using System.ServiceModel.Channels;
 
 
 namespace OnvifProxy
 {
     [System.ServiceModel.ServiceContractAttribute(Namespace = "http://www.onvif.org/ver10/device/wsdl", ConfigurationName = "NetworkVideoTransmitter")]
-    public interface INVTService : Device.IDevice, Media.IMedia
+    public interface INVTDeviceServiceChannel : Device.IDevice, System.ServiceModel.IClientChannel
     {
     }
-    public interface INVTServiceChannel : INVTService, System.ServiceModel.IClientChannel
+    public interface INVTMediaServiceChannel : Media.IMedia, System.ServiceModel.IClientChannel
     {
     }
-
-    public partial class NVTServiceClient : System.ServiceModel.ClientBase<INVTServiceChannel>, INVTService
+    public partial class NVTDeviceServiceClient : System.ServiceModel.ClientBase<INVTDeviceServiceChannel>, IDevice
     {
-        public NVTServiceClient()
+        public NVTDeviceServiceClient()
         { 
         }
 
-        public NVTServiceClient(string endpointConfigurationName) :
+        public NVTDeviceServiceClient(string endpointConfigurationName) :
             base(endpointConfigurationName)
         {
         }
 
-        public NVTServiceClient(System.ServiceModel.Description.ServiceEndpoint serviceEndpoint) :
+        public NVTDeviceServiceClient(System.ServiceModel.Description.ServiceEndpoint serviceEndpoint) :
             base(serviceEndpoint)
         {
         }
 
-        public NVTServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) :
+        public NVTDeviceServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) :
             base(binding, remoteAddress)
         {
         }
 
-        public Media.GetServiceCapabilitiesResponse1 GetServiceCapabilities(Media.GetServiceCapabilitiesRequest request)
-        {
-            throw new NotImplementedException();
-        }
         public string GetDeviceInformation(out string Model, out string FirmwareVersion,
             out string SerialNumber, out string HardwareId)
         {
@@ -50,12 +48,12 @@ namespace OnvifProxy
             {
                 return base.Channel.GetDeviceInformation(out Model, out FirmwareVersion, out SerialNumber, out HardwareId);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Model = FirmwareVersion = SerialNumber = HardwareId = String.Empty;
             }
             return String.Empty;
-            
+
         }
 
         public GetCapabilitiesResponse GetCapabilities(GetCapabilitiesRequest request)
@@ -67,21 +65,14 @@ namespace OnvifProxy
             {
                 return base.Channel.GetCapabilities(request);
             }
-            catch (ProtocolException pe)
+            catch (ProtocolException)
             {
 
             }
             return new GetCapabilitiesResponse();
-            
+
         }
 
-        public GetProfilesResponse GetProfiles(GetProfilesRequest request)
-        {
-            return base.Channel.GetProfiles(request);
-        }
-
-
-        #region
         public void UnauthorizedAccessFault()
         {
             throw new FaultException(new FaultReason("The requested operation is not permitted by the device"),
@@ -89,529 +80,7 @@ namespace OnvifProxy
                               new FaultCode("NotAuthorized", "http://www.onvif.org/ver10/error",
                                   new FaultCode("Operation not Permitted", "http://www.onvif.org/ver10/error"))));
         }
-        public void ActionNotSupported()
-        {
-            throw new FaultException(new FaultReason("ActionNotSupported"),
-                            new FaultCode("Sender",
-                                new FaultCode("ActionNotSupported", "http://www.onvif.org/ver10/error",
-                                    new FaultCode("ActionNotSupported", "http://www.onvif.org/ver10/error"))));
-        }
-
-
-        public MediaUri GetSnapshotUri(string ProfileToken)
-        {
-            return base.Channel.GetSnapshotUri(ProfileToken);
-        }
-
-        public void AddVideoEncoderConfiguration(string ProfileToken, string ConfigurationToken)
-        {
-            base.Channel.AddVideoEncoderConfiguration(ProfileToken, ConfigurationToken);
-        }
-
-        public void RemoveVideoEncoderConfiguration(string ProfileToken)
-        {
-            base.Channel.RemoveVideoEncoderConfiguration(ProfileToken);
-        }
-
-        public void AddVideoSourceConfiguration(string ProfileToken, string ConfigurationToken)
-        {
-            base.Channel.AddVideoSourceConfiguration(ProfileToken, ConfigurationToken);
-        }
-
-        public void RemoveVideoSourceConfiguration(string ProfileToken)
-        {
-            base.Channel.RemoveVideoSourceConfiguration(ProfileToken);
-        }
-
-        public void AddAudioEncoderConfiguration(string ProfileToken, string ConfigurationToken)
-        {
-            base.Channel.AddAudioEncoderConfiguration(ProfileToken, ConfigurationToken);
-        }
-
-        public void RemoveAudioEncoderConfiguration(string ProfileToken)
-        {
-            base.Channel.RemoveAudioEncoderConfiguration(ProfileToken);
-        }
-
-        public void AddAudioSourceConfiguration(string ProfileToken, string ConfigurationToken)
-        {
-            base.Channel.AddAudioSourceConfiguration(ProfileToken, ConfigurationToken);
-        }
-
-        public void RemoveAudioSourceConfiguration(string ProfileToken)
-        {
-            base.Channel.RemoveAudioSourceConfiguration(ProfileToken);
-        }
-
-        public void AddPTZConfiguration(string ProfileToken, string ConfigurationToken)
-        {
-            base.Channel.AddPTZConfiguration(ProfileToken, ConfigurationToken);
-        }
-
-        public void RemovePTZConfiguration(string ProfileToken)
-        {
-            base.Channel.RemovePTZConfiguration(ProfileToken);
-        }
-
-        public void AddVideoAnalyticsConfiguration(string ProfileToken, string ConfigurationToken)
-        {
-            base.Channel.AddVideoAnalyticsConfiguration(ProfileToken, ConfigurationToken);
-        }
-
-        public void RemoveVideoAnalyticsConfiguration(string ProfileToken)
-        {
-            base.Channel.RemoveVideoAnalyticsConfiguration(ProfileToken);
-        }
-
-        public void AddMetadataConfiguration(string ProfileToken, string ConfigurationToken)
-        {
-            base.Channel.AddMetadataConfiguration(ProfileToken, ConfigurationToken);
-        }
-
-        public void RemoveMetadataConfiguration(string ProfileToken)
-        {
-            base.Channel.RemoveMetadataConfiguration(ProfileToken);
-        }
-
-        public void AddAudioOutputConfiguration(string ProfileToken, string ConfigurationToken)
-        {
-            base.Channel.AddAudioOutputConfiguration(ProfileToken, ConfigurationToken);
-        }
-
-        public void RemoveAudioOutputConfiguration(string ProfileToken)
-        {
-            base.Channel.RemoveAudioOutputConfiguration(ProfileToken);
-        }
-
-        public void AddAudioDecoderConfiguration(string ProfileToken, string ConfigurationToken)
-        {
-            base.Channel.AddAudioDecoderConfiguration(ProfileToken, ConfigurationToken);
-        }
-
-        public void RemoveAudioDecoderConfiguration(string ProfileToken)
-        {
-            base.Channel.RemoveAudioDecoderConfiguration(ProfileToken);
-        }
-
-        public void DeleteProfile(string ProfileToken)
-        {
-            base.Channel.DeleteProfile(ProfileToken);
-        }
-
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        GetVideoSourceConfigurationsResponse IMedia.GetVideoSourceConfigurations(GetVideoSourceConfigurationsRequest request)
-        {
-            return base.Channel.GetVideoSourceConfigurations(request);
-        }
-
-        public VideoSourceConfiguration[] GetVideoSourceConfigurations()
-        {
-            GetVideoSourceConfigurationsRequest inValue = new GetVideoSourceConfigurationsRequest();
-            GetVideoSourceConfigurationsResponse retVal = ((IMedia)(this)).GetVideoSourceConfigurations(inValue);
-            return retVal.Configurations;
-        }
-
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        GetVideoEncoderConfigurationsResponse IMedia.GetVideoEncoderConfigurations(GetVideoEncoderConfigurationsRequest request)
-        {
-            return base.Channel.GetVideoEncoderConfigurations(request);
-        }
-
-        public VideoEncoderConfiguration[] GetVideoEncoderConfigurations()
-        {
-            GetVideoEncoderConfigurationsRequest inValue = new GetVideoEncoderConfigurationsRequest();
-            GetVideoEncoderConfigurationsResponse retVal = ((IMedia)(this)).GetVideoEncoderConfigurations(inValue);
-            return retVal.Configurations;
-        }
-
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        GetAudioSourceConfigurationsResponse IMedia.GetAudioSourceConfigurations(GetAudioSourceConfigurationsRequest request)
-        {
-            return base.Channel.GetAudioSourceConfigurations(request);
-        }
-
-        public AudioSourceConfiguration[] GetAudioSourceConfigurations()
-        {
-            GetAudioSourceConfigurationsRequest inValue = new GetAudioSourceConfigurationsRequest();
-            GetAudioSourceConfigurationsResponse retVal = ((IMedia)(this)).GetAudioSourceConfigurations(inValue);
-            return retVal.Configurations;
-        }
-
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        GetAudioEncoderConfigurationsResponse IMedia.GetAudioEncoderConfigurations(GetAudioEncoderConfigurationsRequest request)
-        {
-            return base.Channel.GetAudioEncoderConfigurations(request);
-        }
-
-        public AudioEncoderConfiguration[] GetAudioEncoderConfigurations()
-        {
-            GetAudioEncoderConfigurationsRequest inValue = new GetAudioEncoderConfigurationsRequest();
-            GetAudioEncoderConfigurationsResponse retVal = ((IMedia)(this)).GetAudioEncoderConfigurations(inValue);
-            return retVal.Configurations;
-        }
-
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        GetVideoAnalyticsConfigurationsResponse IMedia.GetVideoAnalyticsConfigurations(GetVideoAnalyticsConfigurationsRequest request)
-        {
-            return base.Channel.GetVideoAnalyticsConfigurations(request);
-        }
-
-        public VideoAnalyticsConfiguration[] GetVideoAnalyticsConfigurations()
-        {
-            GetVideoAnalyticsConfigurationsRequest inValue = new GetVideoAnalyticsConfigurationsRequest();
-            GetVideoAnalyticsConfigurationsResponse retVal = ((IMedia)(this)).GetVideoAnalyticsConfigurations(inValue);
-            return retVal.Configurations;
-        }
-
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        GetMetadataConfigurationsResponse IMedia.GetMetadataConfigurations(GetMetadataConfigurationsRequest request)
-        {
-            return base.Channel.GetMetadataConfigurations(request);
-        }
-
-        public MetadataConfiguration[] GetMetadataConfigurations()
-        {
-            GetMetadataConfigurationsRequest inValue = new GetMetadataConfigurationsRequest();
-            GetMetadataConfigurationsResponse retVal = ((IMedia)(this)).GetMetadataConfigurations(inValue);
-            return retVal.Configurations;
-        }
-
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        GetAudioOutputConfigurationsResponse IMedia.GetAudioOutputConfigurations(GetAudioOutputConfigurationsRequest request)
-        {
-            return base.Channel.GetAudioOutputConfigurations(request);
-        }
-
-        public AudioOutputConfiguration[] GetAudioOutputConfigurations()
-        {
-            GetAudioOutputConfigurationsRequest inValue = new GetAudioOutputConfigurationsRequest();
-            GetAudioOutputConfigurationsResponse retVal = ((IMedia)(this)).GetAudioOutputConfigurations(inValue);
-            return retVal.Configurations;
-        }
-
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        GetAudioDecoderConfigurationsResponse IMedia.GetAudioDecoderConfigurations(GetAudioDecoderConfigurationsRequest request)
-        {
-            return base.Channel.GetAudioDecoderConfigurations(request);
-        }
-
-        public AudioDecoderConfiguration[] GetAudioDecoderConfigurations()
-        {
-            GetAudioDecoderConfigurationsRequest inValue = new GetAudioDecoderConfigurationsRequest();
-            GetAudioDecoderConfigurationsResponse retVal = ((IMedia)(this)).GetAudioDecoderConfigurations(inValue);
-            return retVal.Configurations;
-        }
-
-        public VideoSourceConfiguration GetVideoSourceConfiguration(string ConfigurationToken)
-        {
-            return base.Channel.GetVideoSourceConfiguration(ConfigurationToken);
-        }
-
-        public VideoEncoderConfiguration GetVideoEncoderConfiguration(string ConfigurationToken)
-        {
-            return base.Channel.GetVideoEncoderConfiguration(ConfigurationToken);
-        }
-
-        public AudioSourceConfiguration GetAudioSourceConfiguration(string ConfigurationToken)
-        {
-            return base.Channel.GetAudioSourceConfiguration(ConfigurationToken);
-        }
-
-        public AudioEncoderConfiguration GetAudioEncoderConfiguration(string ConfigurationToken)
-        {
-            return base.Channel.GetAudioEncoderConfiguration(ConfigurationToken);
-        }
-
-        public VideoAnalyticsConfiguration GetVideoAnalyticsConfiguration(string ConfigurationToken)
-        {
-            return base.Channel.GetVideoAnalyticsConfiguration(ConfigurationToken);
-        }
-
-        public MetadataConfiguration GetMetadataConfiguration(string ConfigurationToken)
-        {
-            return base.Channel.GetMetadataConfiguration(ConfigurationToken);
-        }
-
-        public AudioOutputConfiguration GetAudioOutputConfiguration(string ConfigurationToken)
-        {
-            return base.Channel.GetAudioOutputConfiguration(ConfigurationToken);
-        }
-
-        public AudioDecoderConfiguration GetAudioDecoderConfiguration(string ConfigurationToken)
-        {
-            return base.Channel.GetAudioDecoderConfiguration(ConfigurationToken);
-        }
-
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        GetCompatibleVideoEncoderConfigurationsResponse IMedia.GetCompatibleVideoEncoderConfigurations(GetCompatibleVideoEncoderConfigurationsRequest request)
-        {
-            return base.Channel.GetCompatibleVideoEncoderConfigurations(request);
-        }
-
-        public VideoEncoderConfiguration[] GetCompatibleVideoEncoderConfigurations(string ProfileToken)
-        {
-            GetCompatibleVideoEncoderConfigurationsRequest inValue = new GetCompatibleVideoEncoderConfigurationsRequest();
-            inValue.ProfileToken = ProfileToken;
-            GetCompatibleVideoEncoderConfigurationsResponse retVal = ((IMedia)(this)).GetCompatibleVideoEncoderConfigurations(inValue);
-            return retVal.Configurations;
-        }
-
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        GetCompatibleVideoSourceConfigurationsResponse IMedia.GetCompatibleVideoSourceConfigurations(GetCompatibleVideoSourceConfigurationsRequest request)
-        {
-            return base.Channel.GetCompatibleVideoSourceConfigurations(request);
-        }
-
-        public VideoSourceConfiguration[] GetCompatibleVideoSourceConfigurations(string ProfileToken)
-        {
-            GetCompatibleVideoSourceConfigurationsRequest inValue = new GetCompatibleVideoSourceConfigurationsRequest();
-            inValue.ProfileToken = ProfileToken;
-            GetCompatibleVideoSourceConfigurationsResponse retVal = ((IMedia)(this)).GetCompatibleVideoSourceConfigurations(inValue);
-            return retVal.Configurations;
-        }
-
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        GetCompatibleAudioEncoderConfigurationsResponse IMedia.GetCompatibleAudioEncoderConfigurations(GetCompatibleAudioEncoderConfigurationsRequest request)
-        {
-            return base.Channel.GetCompatibleAudioEncoderConfigurations(request);
-        }
-
-        public AudioEncoderConfiguration[] GetCompatibleAudioEncoderConfigurations(string ProfileToken)
-        {
-            GetCompatibleAudioEncoderConfigurationsRequest inValue = new GetCompatibleAudioEncoderConfigurationsRequest();
-            inValue.ProfileToken = ProfileToken;
-            GetCompatibleAudioEncoderConfigurationsResponse retVal = ((IMedia)(this)).GetCompatibleAudioEncoderConfigurations(inValue);
-            return retVal.Configurations;
-        }
-
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        GetCompatibleAudioSourceConfigurationsResponse IMedia.GetCompatibleAudioSourceConfigurations(GetCompatibleAudioSourceConfigurationsRequest request)
-        {
-            return base.Channel.GetCompatibleAudioSourceConfigurations(request);
-        }
-
-        public AudioSourceConfiguration[] GetCompatibleAudioSourceConfigurations(string ProfileToken)
-        {
-            GetCompatibleAudioSourceConfigurationsRequest inValue = new GetCompatibleAudioSourceConfigurationsRequest();
-            inValue.ProfileToken = ProfileToken;
-            GetCompatibleAudioSourceConfigurationsResponse retVal = ((IMedia)(this)).GetCompatibleAudioSourceConfigurations(inValue);
-            return retVal.Configurations;
-        }
-
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        GetCompatibleVideoAnalyticsConfigurationsResponse IMedia.GetCompatibleVideoAnalyticsConfigurations(GetCompatibleVideoAnalyticsConfigurationsRequest request)
-        {
-            return base.Channel.GetCompatibleVideoAnalyticsConfigurations(request);
-        }
-
-        public VideoAnalyticsConfiguration[] GetCompatibleVideoAnalyticsConfigurations(string ProfileToken)
-        {
-            GetCompatibleVideoAnalyticsConfigurationsRequest inValue = new GetCompatibleVideoAnalyticsConfigurationsRequest();
-            inValue.ProfileToken = ProfileToken;
-            GetCompatibleVideoAnalyticsConfigurationsResponse retVal = ((IMedia)(this)).GetCompatibleVideoAnalyticsConfigurations(inValue);
-            return retVal.Configurations;
-        }
-
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        GetCompatibleMetadataConfigurationsResponse IMedia.GetCompatibleMetadataConfigurations(GetCompatibleMetadataConfigurationsRequest request)
-        {
-            return base.Channel.GetCompatibleMetadataConfigurations(request);
-        }
-
-        public MetadataConfiguration[] GetCompatibleMetadataConfigurations(string ProfileToken)
-        {
-            GetCompatibleMetadataConfigurationsRequest inValue = new GetCompatibleMetadataConfigurationsRequest();
-            inValue.ProfileToken = ProfileToken;
-            GetCompatibleMetadataConfigurationsResponse retVal = ((IMedia)(this)).GetCompatibleMetadataConfigurations(inValue);
-            return retVal.Configurations;
-        }
-
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        GetCompatibleAudioOutputConfigurationsResponse IMedia.GetCompatibleAudioOutputConfigurations(GetCompatibleAudioOutputConfigurationsRequest request)
-        {
-            return base.Channel.GetCompatibleAudioOutputConfigurations(request);
-        }
-
-        public AudioOutputConfiguration[] GetCompatibleAudioOutputConfigurations(string ProfileToken)
-        {
-            GetCompatibleAudioOutputConfigurationsRequest inValue = new GetCompatibleAudioOutputConfigurationsRequest();
-            inValue.ProfileToken = ProfileToken;
-            GetCompatibleAudioOutputConfigurationsResponse retVal = ((IMedia)(this)).GetCompatibleAudioOutputConfigurations(inValue);
-            return retVal.Configurations;
-        }
-
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        GetCompatibleAudioDecoderConfigurationsResponse IMedia.GetCompatibleAudioDecoderConfigurations(GetCompatibleAudioDecoderConfigurationsRequest request)
-        {
-            return base.Channel.GetCompatibleAudioDecoderConfigurations(request);
-        }
-
-        public AudioDecoderConfiguration[] GetCompatibleAudioDecoderConfigurations(string ProfileToken)
-        {
-            GetCompatibleAudioDecoderConfigurationsRequest inValue = new GetCompatibleAudioDecoderConfigurationsRequest();
-            inValue.ProfileToken = ProfileToken;
-            GetCompatibleAudioDecoderConfigurationsResponse retVal = ((IMedia)(this)).GetCompatibleAudioDecoderConfigurations(inValue);
-            return retVal.Configurations;
-        }
-
-        public void SetVideoSourceConfiguration(VideoSourceConfiguration Configuration, bool ForcePersistence)
-        {
-            base.Channel.SetVideoSourceConfiguration(Configuration, ForcePersistence);
-        }
-
-        public void SetVideoEncoderConfiguration(VideoEncoderConfiguration Configuration, bool ForcePersistence)
-        {
-            base.Channel.SetVideoEncoderConfiguration(Configuration, ForcePersistence);
-        }
-
-        public void SetAudioSourceConfiguration(AudioSourceConfiguration Configuration, bool ForcePersistence)
-        {
-            base.Channel.SetAudioSourceConfiguration(Configuration, ForcePersistence);
-        }
-
-        public void SetAudioEncoderConfiguration(AudioEncoderConfiguration Configuration, bool ForcePersistence)
-        {
-            base.Channel.SetAudioEncoderConfiguration(Configuration, ForcePersistence);
-        }
-
-        public void SetVideoAnalyticsConfiguration(VideoAnalyticsConfiguration Configuration, bool ForcePersistence)
-        {
-            base.Channel.SetVideoAnalyticsConfiguration(Configuration, ForcePersistence);
-        }
-
-        public void SetMetadataConfiguration(MetadataConfiguration Configuration, bool ForcePersistence)
-        {
-            base.Channel.SetMetadataConfiguration(Configuration, ForcePersistence);
-        }
-
-        public void SetAudioOutputConfiguration(AudioOutputConfiguration Configuration, bool ForcePersistence)
-        {
-            base.Channel.SetAudioOutputConfiguration(Configuration, ForcePersistence);
-        }
-
-        public void SetAudioDecoderConfiguration(AudioDecoderConfiguration Configuration, bool ForcePersistence)
-        {
-            base.Channel.SetAudioDecoderConfiguration(Configuration, ForcePersistence);
-        }
-
-        public VideoSourceConfigurationOptions GetVideoSourceConfigurationOptions(string ConfigurationToken, string ProfileToken)
-        {
-            return base.Channel.GetVideoSourceConfigurationOptions(ConfigurationToken, ProfileToken);
-        }
-
-        public VideoEncoderConfigurationOptions GetVideoEncoderConfigurationOptions(string ConfigurationToken, string ProfileToken)
-        {
-            return base.Channel.GetVideoEncoderConfigurationOptions(ConfigurationToken, ProfileToken);
-        }
-
-        public AudioSourceConfigurationOptions GetAudioSourceConfigurationOptions(string ConfigurationToken, string ProfileToken)
-        {
-            return base.Channel.GetAudioSourceConfigurationOptions(ConfigurationToken, ProfileToken);
-        }
-
-        public AudioEncoderConfigurationOptions GetAudioEncoderConfigurationOptions(string ConfigurationToken, string ProfileToken)
-        {
-            return base.Channel.GetAudioEncoderConfigurationOptions(ConfigurationToken, ProfileToken);
-        }
-
-        public MetadataConfigurationOptions GetMetadataConfigurationOptions(string ConfigurationToken, string ProfileToken)
-        {
-            return base.Channel.GetMetadataConfigurationOptions(ConfigurationToken, ProfileToken);
-        }
-
-        public AudioOutputConfigurationOptions GetAudioOutputConfigurationOptions(string ConfigurationToken, string ProfileToken)
-        {
-            return base.Channel.GetAudioOutputConfigurationOptions(ConfigurationToken, ProfileToken);
-        }
-
-        public AudioDecoderConfigurationOptions GetAudioDecoderConfigurationOptions(string ConfigurationToken, string ProfileToken)
-        {
-            return base.Channel.GetAudioDecoderConfigurationOptions(ConfigurationToken, ProfileToken);
-        }
-
-        public int GetGuaranteedNumberOfVideoEncoderInstances(out int JPEG, out int H264, out int MPEG4, string ConfigurationToken)
-        {
-            return base.Channel.GetGuaranteedNumberOfVideoEncoderInstances(out JPEG, out H264, out MPEG4, ConfigurationToken);
-        }
-
-        public MediaUri GetStreamUri(StreamSetup StreamSetup, string ProfileToken)
-        {
-            return base.Channel.GetStreamUri(StreamSetup, ProfileToken);
-        }
-
-        public void StartMulticastStreaming(string ProfileToken)
-        {
-            base.Channel.StartMulticastStreaming(ProfileToken);
-        }
-
-        public void StopMulticastStreaming(string ProfileToken)
-        {
-            base.Channel.StopMulticastStreaming(ProfileToken);
-        }
-
-        public void SetSynchronizationPoint(string ProfileToken)
-        {
-            base.Channel.SetSynchronizationPoint(ProfileToken);
-        }
-        public Media.AudioOutput[] GetAudioOutputs()
-        {
-            GetAudioOutputsRequest inValue = new GetAudioOutputsRequest();
-            GetAudioOutputsResponse retVal = ((IMedia)(this)).GetAudioOutputs(inValue);
-            return retVal.AudioOutputs;
-        }
-
-        public Profile CreateProfile(string Name, string Token)
-        {
-            return base.Channel.CreateProfile(Name, Token);
-        }
-
-        public Profile GetProfile(string ProfileToken)
-        {
-            return base.Channel.GetProfile(ProfileToken);
-        }
-
-        GetAudioOutputsResponse IMedia.GetAudioOutputs(GetAudioOutputsRequest request)
-        {
-            return base.Channel.GetAudioOutputs(request);
-        }
-
-        GetAudioSourcesResponse IMedia.GetAudioSources(GetAudioSourcesRequest request)
-        {
-            return base.Channel.GetAudioSources(request);
-        }
-
-        public Media.AudioSource[] GetAudioSources()
-        {
-            GetAudioSourcesRequest inValue = new GetAudioSourcesRequest();
-            GetAudioSourcesResponse retVal = ((IMedia)(this)).GetAudioSources(inValue);
-            return retVal.AudioSources;
-        }
-
-
-        public Media.VideoSource[] GetVideoSources()
-        {
-            GetVideoSourcesRequest inValue = new GetVideoSourcesRequest();
-            GetVideoSourcesResponse retVal = ((IMedia)(this)).GetVideoSources(inValue);
-            return retVal.VideoSources;
-        }
-
-        GetVideoSourcesResponse IMedia.GetVideoSources(GetVideoSourcesRequest request)
-        {
-            return base.Channel.GetVideoSources(request);
-        }
-
-        //GetServiceCapabilitiesResponse1 IMedia.GetServiceCapabilities(GetServiceCapabilitiesRequest request)
-        //{
-        //    return base.Channel.GetServiceCapabilities(request);
-        //}
-
-        //public GetServiceCapabilitiesResponse GetServiceCapabilities(GetServiceCapabilities GetServiceCapabilities1)
-        //{
-        //    GetServiceCapabilitiesRequest inValue = new GetServiceCapabilitiesRequest();
-        //    inValue.GetServiceCapabilities = GetServiceCapabilities1;
-        //    GetServiceCapabilitiesResponse1 retVal = ((IMedia)(this)).GetServiceCapabilities(inValue);
-        //    return retVal.GetServiceCapabilitiesResponse;
-        //}
+        
 
         public StartSystemRestoreResponse StartSystemRestore(StartSystemRestoreRequest request)
         {
@@ -857,7 +326,7 @@ namespace OnvifProxy
             return new GetUsersResponse();
         }
 
-        public  void SetRemoteUser(RemoteUser RemoteUser)
+        public void SetRemoteUser(RemoteUser RemoteUser)
         {
         }
 
@@ -898,7 +367,7 @@ namespace OnvifProxy
         {
             return new DiscoveryMode();
         }
-        
+
         public RemoveScopesResponse RemoveScopes(RemoveScopesRequest request)
         {
             return new RemoveScopesResponse();
@@ -957,6 +426,601 @@ namespace OnvifProxy
         {
             return new GetServicesResponse();
         }
-        #endregion
     }
+    public partial class NVTMediaServiceClient : System.ServiceModel.ClientBase<INVTMediaServiceChannel>, IMedia
+    {
+        public NVTMediaServiceClient()
+        { 
+        }
+
+        public NVTMediaServiceClient(string endpointConfigurationName) :
+            base(endpointConfigurationName)
+        {
+        }
+
+        public NVTMediaServiceClient(System.ServiceModel.Description.ServiceEndpoint serviceEndpoint) :
+            base(serviceEndpoint)
+        {
+        }
+
+        public NVTMediaServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) :
+            base(binding, remoteAddress)
+        {
+        }
+
+        public void ActionNotSupported()
+        {
+            throw new FaultException(new FaultReason("ActionNotSupported"),
+                            new FaultCode("Sender",
+                                new FaultCode("ActionNotSupported", "http://www.onvif.org/ver10/error",
+                                    new FaultCode("ActionNotSupported", "http://www.onvif.org/ver10/error"))));
+        }
+
+        public GetServiceCapabilitiesResponse1 GetServiceCapabilities(Media.GetServiceCapabilitiesRequest request)
+        {
+            throw new NotImplementedException();
+        }
+        public MediaUri GetSnapshotUri(string ProfileToken)
+        {
+            return base.Channel.GetSnapshotUri(ProfileToken);
+        }
+
+        GetAudioOutputConfigurationsResponse GetAudioOutputConfigurations(GetAudioOutputConfigurationsRequest request)
+        {
+            return base.Channel.GetAudioOutputConfigurations(request);
+        }
+
+        public void AddVideoEncoderConfiguration(string ProfileToken, string ConfigurationToken)
+        {
+            base.Channel.AddVideoEncoderConfiguration(ProfileToken, ConfigurationToken);
+        }
+
+        public void RemoveVideoEncoderConfiguration(string ProfileToken)
+        {
+            base.Channel.RemoveVideoEncoderConfiguration(ProfileToken);
+        }
+
+        public void AddVideoSourceConfiguration(string ProfileToken, string ConfigurationToken)
+        {
+            base.Channel.AddVideoSourceConfiguration(ProfileToken, ConfigurationToken);
+        }
+
+        public void RemoveVideoSourceConfiguration(string ProfileToken)
+        {
+            base.Channel.RemoveVideoSourceConfiguration(ProfileToken);
+        }
+
+        public void AddAudioEncoderConfiguration(string ProfileToken, string ConfigurationToken)
+        {
+            base.Channel.AddAudioEncoderConfiguration(ProfileToken, ConfigurationToken);
+        }
+
+        public void RemoveAudioEncoderConfiguration(string ProfileToken)
+        {
+            base.Channel.RemoveAudioEncoderConfiguration(ProfileToken);
+        }
+
+        public void AddAudioSourceConfiguration(string ProfileToken, string ConfigurationToken)
+        {
+            base.Channel.AddAudioSourceConfiguration(ProfileToken, ConfigurationToken);
+        }
+
+        public void RemoveAudioSourceConfiguration(string ProfileToken)
+        {
+            base.Channel.RemoveAudioSourceConfiguration(ProfileToken);
+        }
+
+        public void AddPTZConfiguration(string ProfileToken, string ConfigurationToken)
+        {
+            base.Channel.AddPTZConfiguration(ProfileToken, ConfigurationToken);
+        }
+
+        public void RemovePTZConfiguration(string ProfileToken)
+        {
+            base.Channel.RemovePTZConfiguration(ProfileToken);
+        }
+
+        public void AddVideoAnalyticsConfiguration(string profiletoken, string configurationtoken)
+        {
+            base.Channel.AddVideoAnalyticsConfiguration(profiletoken, configurationtoken);
+        }
+
+        public void RemoveVideoAnalyticsConfiguration(string ProfileToken)
+        {
+            base.Channel.RemoveVideoAnalyticsConfiguration(ProfileToken);
+        }
+
+        public void AddMetadataConfiguration(string ProfileToken, string ConfigurationToken)
+        {
+            base.Channel.AddMetadataConfiguration(ProfileToken, ConfigurationToken);
+        }
+
+        public void RemoveMetadataConfiguration(string ProfileToken)
+        {
+            base.Channel.RemoveMetadataConfiguration(ProfileToken);
+        }
+
+        public void AddAudioOutputConfiguration(string ProfileToken, string ConfigurationToken)
+        {
+            base.Channel.AddAudioOutputConfiguration(ProfileToken, ConfigurationToken);
+        }
+
+        public void RemoveAudioOutputConfiguration(string ProfileToken)
+        {
+            base.Channel.RemoveAudioOutputConfiguration(ProfileToken);
+        }
+
+        public void AddAudioDecoderConfiguration(string ProfileToken, string ConfigurationToken)
+        {
+            base.Channel.AddAudioDecoderConfiguration(ProfileToken, ConfigurationToken);
+        }
+
+        public void RemoveAudioDecoderConfiguration(string ProfileToken)
+        {
+            base.Channel.RemoveAudioDecoderConfiguration(ProfileToken);
+        }
+
+        public void DeleteProfile(string ProfileToken)
+        {
+            base.Channel.DeleteProfile(ProfileToken);
+        }
+
+        //[System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public GetVideoSourceConfigurationsResponse GetVideoSourceConfigurations(GetVideoSourceConfigurationsRequest request)
+            //GetVideoSourceConfigurationsResponse IMedia.GetVideoSourceConfigurations(GetVideoSourceConfigurationsRequest request)
+        {
+            return base.Channel.GetVideoSourceConfigurations(request);
+        }
+
+        //public GetCapabilitiesResponse GetCapabilities(GetCapabilitiesRequest request)
+        //{
+        //    //йа заглушко!
+        //    //нужно авторизоваться при GetDeviceInformation
+        //    //на Axis'ах
+        //    try
+        //    {
+        //        return base.Channel.GetCapabilities(request);
+        //    }
+        //    catch (ProtocolException)
+        //    {
+
+        //    }
+        //    return new GetCapabilitiesResponse();
+
+        //}
+
+        public GetProfilesResponse GetProfiles(GetProfilesRequest request)
+        {
+            return base.Channel.GetProfiles(request);
+        }
+
+
+        //#region
+        public void UnauthorizedAccessFault()
+        {
+            throw new FaultException(new FaultReason("The requested operation is not permitted by the device"),
+                          new FaultCode("Sender",
+                              new FaultCode("NotAuthorized", "http://www.onvif.org/ver10/error",
+                                  new FaultCode("Operation not Permitted", "http://www.onvif.org/ver10/error"))));
+        }
+       
+        //[System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        GetVideoEncoderConfigurationsResponse IMedia.GetVideoEncoderConfigurations(GetVideoEncoderConfigurationsRequest request)
+        {
+            return base.Channel.GetVideoEncoderConfigurations(request);
+        }
+
+        //public VideoEncoderConfiguration[] GetVideoEncoderConfigurations()
+        //{
+        //    GetVideoEncoderConfigurationsRequest inValue = new GetVideoEncoderConfigurationsRequest();
+        //    GetVideoEncoderConfigurationsResponse retVal = ((IMedia)(this)).GetVideoEncoderConfigurations(inValue);
+        //    return retVal.Configurations;
+        //}
+
+        //[System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        GetAudioSourceConfigurationsResponse IMedia.GetAudioSourceConfigurations(GetAudioSourceConfigurationsRequest request)
+        {
+            return base.Channel.GetAudioSourceConfigurations(request);
+        }
+
+        //public AudioSourceConfiguration[] GetAudioSourceConfigurations()
+        //{
+        //    GetAudioSourceConfigurationsRequest inValue = new GetAudioSourceConfigurationsRequest();
+        //    GetAudioSourceConfigurationsResponse retVal = ((IMedia)(this)).GetAudioSourceConfigurations(inValue);
+        //    return retVal.Configurations;
+        //}
+
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        GetAudioEncoderConfigurationsResponse IMedia.GetAudioEncoderConfigurations(GetAudioEncoderConfigurationsRequest request)
+        {
+            return base.Channel.GetAudioEncoderConfigurations(request);
+        }
+
+        //public AudioEncoderConfiguration[] GetAudioEncoderConfigurations()
+        //{
+        //    GetAudioEncoderConfigurationsRequest inValue = new GetAudioEncoderConfigurationsRequest();
+        //    GetAudioEncoderConfigurationsResponse retVal = ((IMedia)(this)).GetAudioEncoderConfigurations(inValue);
+        //    return retVal.Configurations;
+        //}
+
+        //[System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        GetVideoAnalyticsConfigurationsResponse IMedia.GetVideoAnalyticsConfigurations(GetVideoAnalyticsConfigurationsRequest request)
+        {
+            return base.Channel.GetVideoAnalyticsConfigurations(request);
+        }
+
+        //public VideoAnalyticsConfiguration[] GetVideoAnalyticsConfigurations()
+        //{
+        //    GetVideoAnalyticsConfigurationsRequest inValue = new GetVideoAnalyticsConfigurationsRequest();
+        //    GetVideoAnalyticsConfigurationsResponse retVal = ((IMedia)(this)).GetVideoAnalyticsConfigurations(inValue);
+        //    return retVal.Configurations;
+        //}
+
+        //[System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        GetMetadataConfigurationsResponse IMedia.GetMetadataConfigurations(GetMetadataConfigurationsRequest request)
+        {
+            return base.Channel.GetMetadataConfigurations(request);
+        }
+
+        //public MetadataConfiguration[] GetMetadataConfigurations()
+        //{
+        //    GetMetadataConfigurationsRequest inValue = new GetMetadataConfigurationsRequest();
+        //    GetMetadataConfigurationsResponse retVal = ((IMedia)(this)).GetMetadataConfigurations(inValue);
+        //    return retVal.Configurations;
+        //}
+
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        GetAudioOutputConfigurationsResponse IMedia.GetAudioOutputConfigurations(GetAudioOutputConfigurationsRequest request)
+        {
+            return base.Channel.GetAudioOutputConfigurations(request);
+        }
+
+        //public AudioOutputConfiguration[] GetAudioOutputConfigurations()
+        //{
+        //    GetAudioOutputConfigurationsRequest inValue = new GetAudioOutputConfigurationsRequest();
+        //    GetAudioOutputConfigurationsResponse retVal = ((IMedia)(this)).GetAudioOutputConfigurations(inValue);
+        //    return retVal.Configurations;
+        //}
+
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        GetAudioDecoderConfigurationsResponse IMedia.GetAudioDecoderConfigurations(GetAudioDecoderConfigurationsRequest request)
+        {
+            return base.Channel.GetAudioDecoderConfigurations(request);
+        }
+
+        public AudioDecoderConfiguration[] GetAudioDecoderConfigurations()
+        {
+            GetAudioDecoderConfigurationsRequest inValue = new GetAudioDecoderConfigurationsRequest();
+            GetAudioDecoderConfigurationsResponse retVal = ((IMedia)(this)).GetAudioDecoderConfigurations(inValue);
+            return retVal.Configurations;
+        }
+
+        public VideoSourceConfiguration GetVideoSourceConfiguration(string ConfigurationToken)
+        {
+            return base.Channel.GetVideoSourceConfiguration(ConfigurationToken);
+        }
+
+        public VideoEncoderConfiguration GetVideoEncoderConfiguration(string ConfigurationToken)
+        {
+            return base.Channel.GetVideoEncoderConfiguration(ConfigurationToken);
+        }
+
+        public AudioSourceConfiguration GetAudioSourceConfiguration(string ConfigurationToken)
+        {
+            return base.Channel.GetAudioSourceConfiguration(ConfigurationToken);
+        }
+
+        public AudioEncoderConfiguration GetAudioEncoderConfiguration(string ConfigurationToken)
+        {
+            return base.Channel.GetAudioEncoderConfiguration(ConfigurationToken);
+        }
+
+        public VideoAnalyticsConfiguration GetVideoAnalyticsConfiguration(string ConfigurationToken)
+        {
+            return base.Channel.GetVideoAnalyticsConfiguration(ConfigurationToken);
+        }
+
+        public MetadataConfiguration GetMetadataConfiguration(string ConfigurationToken)
+        {
+            return base.Channel.GetMetadataConfiguration(ConfigurationToken);
+        }
+
+        public AudioOutputConfiguration GetAudioOutputConfiguration(string ConfigurationToken)
+        {
+            return base.Channel.GetAudioOutputConfiguration(ConfigurationToken);
+        }
+
+        public AudioDecoderConfiguration GetAudioDecoderConfiguration(string ConfigurationToken)
+        {
+            return base.Channel.GetAudioDecoderConfiguration(ConfigurationToken);
+        }
+
+        //[System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public GetCompatibleVideoEncoderConfigurationsResponse GetCompatibleVideoEncoderConfigurations(GetCompatibleVideoEncoderConfigurationsRequest request)
+        {
+            return base.Channel.GetCompatibleVideoEncoderConfigurations(request);
+        }
+
+        //public VideoEncoderConfiguration[] GetCompatibleVideoEncoderConfigurations(string ProfileToken)
+        //{
+        //    GetCompatibleVideoEncoderConfigurationsRequest inValue = new GetCompatibleVideoEncoderConfigurationsRequest();
+        //    inValue.ProfileToken = ProfileToken;
+        //    GetCompatibleVideoEncoderConfigurationsResponse retVal = ((IMedia)(this)).GetCompatibleVideoEncoderConfigurations(inValue);
+        //    return retVal.Configurations;
+        //}
+
+        //[System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public GetCompatibleVideoSourceConfigurationsResponse GetCompatibleVideoSourceConfigurations(GetCompatibleVideoSourceConfigurationsRequest request)
+        {
+            return base.Channel.GetCompatibleVideoSourceConfigurations(request);
+        }
+
+        //public VideoSourceConfiguration[] GetCompatibleVideoSourceConfigurations(string ProfileToken)
+        //{
+        //    GetCompatibleVideoSourceConfigurationsRequest inValue = new GetCompatibleVideoSourceConfigurationsRequest();
+        //    inValue.ProfileToken = ProfileToken;
+        //    GetCompatibleVideoSourceConfigurationsResponse retVal = ((IMedia)(this)).GetCompatibleVideoSourceConfigurations(inValue);
+        //    return retVal.Configurations;
+        //}
+
+        //[System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public GetCompatibleAudioEncoderConfigurationsResponse GetCompatibleAudioEncoderConfigurations(GetCompatibleAudioEncoderConfigurationsRequest request)
+        {
+            return base.Channel.GetCompatibleAudioEncoderConfigurations(request);
+        }
+
+        //public AudioEncoderConfiguration[] GetCompatibleAudioEncoderConfigurations(string ProfileToken)
+        //{
+        //    GetCompatibleAudioEncoderConfigurationsRequest inValue = new GetCompatibleAudioEncoderConfigurationsRequest();
+        //    inValue.ProfileToken = ProfileToken;
+        //    GetCompatibleAudioEncoderConfigurationsResponse retVal = ((IMedia)(this)).GetCompatibleAudioEncoderConfigurations(inValue);
+        //    return retVal.Configurations;
+        //}
+
+        //[System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public GetCompatibleAudioSourceConfigurationsResponse GetCompatibleAudioSourceConfigurations(GetCompatibleAudioSourceConfigurationsRequest request)
+        {
+            return base.Channel.GetCompatibleAudioSourceConfigurations(request);
+        }
+
+        //public AudioSourceConfiguration[] GetCompatibleAudioSourceConfigurations(string ProfileToken)
+        //{
+        //    GetCompatibleAudioSourceConfigurationsRequest inValue = new GetCompatibleAudioSourceConfigurationsRequest();
+        //    inValue.ProfileToken = ProfileToken;
+        //    GetCompatibleAudioSourceConfigurationsResponse retVal = ((IMedia)(this)).GetCompatibleAudioSourceConfigurations(inValue);
+        //    return retVal.Configurations;
+        //}
+
+        //[System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public GetCompatibleVideoAnalyticsConfigurationsResponse GetCompatibleVideoAnalyticsConfigurations(GetCompatibleVideoAnalyticsConfigurationsRequest request)
+        {
+            return base.Channel.GetCompatibleVideoAnalyticsConfigurations(request);
+        }
+
+        //public VideoAnalyticsConfiguration[] GetCompatibleVideoAnalyticsConfigurations(string ProfileToken)
+        //{
+        //    GetCompatibleVideoAnalyticsConfigurationsRequest inValue = new GetCompatibleVideoAnalyticsConfigurationsRequest();
+        //    inValue.ProfileToken = ProfileToken;
+        //    GetCompatibleVideoAnalyticsConfigurationsResponse retVal = ((IMedia)(this)).GetCompatibleVideoAnalyticsConfigurations(inValue);
+        //    return retVal.Configurations;
+        //}
+
+        //[System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public GetCompatibleMetadataConfigurationsResponse GetCompatibleMetadataConfigurations(GetCompatibleMetadataConfigurationsRequest request)
+        {
+            return base.Channel.GetCompatibleMetadataConfigurations(request);
+        }
+
+        //public MetadataConfiguration[] GetCompatibleMetadataConfigurations(string ProfileToken)
+        //{
+        //    GetCompatibleMetadataConfigurationsRequest inValue = new GetCompatibleMetadataConfigurationsRequest();
+        //    inValue.ProfileToken = ProfileToken;
+        //    GetCompatibleMetadataConfigurationsResponse retVal = ((IMedia)(this)).GetCompatibleMetadataConfigurations(inValue);
+        //    return retVal.Configurations;
+        //}
+
+        //[System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public GetCompatibleAudioOutputConfigurationsResponse GetCompatibleAudioOutputConfigurations(GetCompatibleAudioOutputConfigurationsRequest request)
+        {
+            return base.Channel.GetCompatibleAudioOutputConfigurations(request);
+        }
+
+        //public AudioOutputConfiguration[] GetCompatibleAudioOutputConfigurations(string ProfileToken)
+        //{
+        //    GetCompatibleAudioOutputConfigurationsRequest inValue = new GetCompatibleAudioOutputConfigurationsRequest();
+        //    inValue.ProfileToken = ProfileToken;
+        //    GetCompatibleAudioOutputConfigurationsResponse retVal = ((IMedia)(this)).GetCompatibleAudioOutputConfigurations(inValue);
+        //    return retVal.Configurations;
+        //}
+
+        //[System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public GetCompatibleAudioDecoderConfigurationsResponse GetCompatibleAudioDecoderConfigurations(GetCompatibleAudioDecoderConfigurationsRequest request)
+        {
+            return base.Channel.GetCompatibleAudioDecoderConfigurations(request);
+        }
+
+        //public AudioDecoderConfiguration[] GetCompatibleAudioDecoderConfigurations(string ProfileToken)
+        //{
+        //    GetCompatibleAudioDecoderConfigurationsRequest inValue = new GetCompatibleAudioDecoderConfigurationsRequest();
+        //    inValue.ProfileToken = ProfileToken;
+        //    GetCompatibleAudioDecoderConfigurationsResponse retVal = ((IMedia)(this)).GetCompatibleAudioDecoderConfigurations(inValue);
+        //    return retVal.Configurations;
+        //}
+
+        public void SetVideoSourceConfiguration(VideoSourceConfiguration Configuration, bool ForcePersistence)
+        {
+            base.Channel.SetVideoSourceConfiguration(Configuration, ForcePersistence);
+        }
+
+        public void SetVideoEncoderConfiguration(VideoEncoderConfiguration Configuration, bool ForcePersistence)
+        {
+            base.Channel.SetVideoEncoderConfiguration(Configuration, ForcePersistence);
+        }
+
+        public void SetAudioSourceConfiguration(AudioSourceConfiguration Configuration, bool ForcePersistence)
+        {
+            base.Channel.SetAudioSourceConfiguration(Configuration, ForcePersistence);
+        }
+
+        public void SetAudioEncoderConfiguration(AudioEncoderConfiguration Configuration, bool ForcePersistence)
+        {
+            base.Channel.SetAudioEncoderConfiguration(Configuration, ForcePersistence);
+        }
+
+        public void SetVideoAnalyticsConfiguration(VideoAnalyticsConfiguration Configuration, bool ForcePersistence)
+        {
+            base.Channel.SetVideoAnalyticsConfiguration(Configuration, ForcePersistence);
+        }
+
+        public void SetMetadataConfiguration(MetadataConfiguration Configuration, bool ForcePersistence)
+        {
+            base.Channel.SetMetadataConfiguration(Configuration, ForcePersistence);
+        }
+
+        public void SetAudioOutputConfiguration(AudioOutputConfiguration Configuration, bool ForcePersistence)
+        {
+            base.Channel.SetAudioOutputConfiguration(Configuration, ForcePersistence);
+        }
+
+        public void SetAudioDecoderConfiguration(AudioDecoderConfiguration Configuration, bool ForcePersistence)
+        {
+            base.Channel.SetAudioDecoderConfiguration(Configuration, ForcePersistence);
+        }
+
+        public VideoSourceConfigurationOptions GetVideoSourceConfigurationOptions(string ConfigurationToken, string ProfileToken)
+        {
+            return base.Channel.GetVideoSourceConfigurationOptions(ConfigurationToken, ProfileToken);
+        }
+
+        public VideoEncoderConfigurationOptions GetVideoEncoderConfigurationOptions(string ConfigurationToken, string ProfileToken)
+        {
+            return base.Channel.GetVideoEncoderConfigurationOptions(ConfigurationToken, ProfileToken);
+        }
+
+        public AudioSourceConfigurationOptions GetAudioSourceConfigurationOptions(string ConfigurationToken, string ProfileToken)
+        {
+            return base.Channel.GetAudioSourceConfigurationOptions(ConfigurationToken, ProfileToken);
+        }
+
+        public AudioEncoderConfigurationOptions GetAudioEncoderConfigurationOptions(string ConfigurationToken, string ProfileToken)
+        {
+            return base.Channel.GetAudioEncoderConfigurationOptions(ConfigurationToken, ProfileToken);
+        }
+
+        public MetadataConfigurationOptions GetMetadataConfigurationOptions(string ConfigurationToken, string ProfileToken)
+        {
+            return base.Channel.GetMetadataConfigurationOptions(ConfigurationToken, ProfileToken);
+        }
+
+        public AudioOutputConfigurationOptions GetAudioOutputConfigurationOptions(string ConfigurationToken, string ProfileToken)
+        {
+            return base.Channel.GetAudioOutputConfigurationOptions(ConfigurationToken, ProfileToken);
+        }
+
+        public AudioDecoderConfigurationOptions GetAudioDecoderConfigurationOptions(string ConfigurationToken, string ProfileToken)
+        {
+            return base.Channel.GetAudioDecoderConfigurationOptions(ConfigurationToken, ProfileToken);
+        }
+
+        public int GetGuaranteedNumberOfVideoEncoderInstances(out int JPEG, out int H264, out int MPEG4, string ConfigurationToken)
+        {
+            return base.Channel.GetGuaranteedNumberOfVideoEncoderInstances(out JPEG, out H264, out MPEG4, ConfigurationToken);
+        }
+
+        public MediaUri GetStreamUri(StreamSetup StreamSetup, string ProfileToken)
+        {
+            return base.Channel.GetStreamUri(StreamSetup, ProfileToken);
+        }
+
+        public void StartMulticastStreaming(string ProfileToken)
+        {
+            base.Channel.StartMulticastStreaming(ProfileToken);
+        }
+
+        public void StopMulticastStreaming(string ProfileToken)
+        {
+            base.Channel.StopMulticastStreaming(ProfileToken);
+        }
+
+        public void SetSynchronizationPoint(string ProfileToken)
+        {
+            base.Channel.SetSynchronizationPoint(ProfileToken);
+        }
+        public Media.AudioOutput[] GetAudioOutputs()
+        {
+            GetAudioOutputsRequest inValue = new GetAudioOutputsRequest();
+            GetAudioOutputsResponse retVal = ((IMedia)(this)).GetAudioOutputs(inValue);
+            return retVal.AudioOutputs;
+        }
+
+        public Profile CreateProfile(string Name, string Token)
+        {
+            return base.Channel.CreateProfile(Name, Token);
+        }
+
+        public Profile GetProfile(string ProfileToken)
+        {
+            return base.Channel.GetProfile(ProfileToken);
+        }
+
+        GetAudioOutputsResponse IMedia.GetAudioOutputs(GetAudioOutputsRequest request)
+        {
+            return base.Channel.GetAudioOutputs(request);
+        }
+
+        GetAudioSourcesResponse IMedia.GetAudioSources(GetAudioSourcesRequest request)
+        {
+            return base.Channel.GetAudioSources(request);
+        }
+        public GetVideoSourcesResponse GetVideoSources(GetVideoSourcesRequest request)
+        {
+            return base.Channel.GetVideoSources(request);
+        }
+    }
+
+    public class NVTClient : IDisposable
+    {
+        public NVTDeviceServiceClient DeviceClient;
+        public NVTMediaServiceClient MediaClient;
+
+        private bool _isDisposed = false;
+
+
+        public NVTClient(Binding binding, EndpointAddress remoteAddress)
+        {
+            DeviceClient = new NVTDeviceServiceClient(binding, remoteAddress);
+            MediaClient = new NVTMediaServiceClient(binding, remoteAddress);
+        }
+
+        //----implementing IDisposable-------------------
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);//чтобы при ошибке не вывалиться в деструктор
+        }
+
+        protected virtual void Dispose(bool isDisposing)
+        {
+            if (this._isDisposed)
+                return;
+
+            if (isDisposing)
+            {
+                // Release only managed resources.
+                DeviceClient.Close();
+                MediaClient.Close();
+            }
+            // Always release unmanaged resources here.
+
+            // Indicate that the object has been disposed.
+            this._isDisposed = true;
+        }
+
+        ~NVTClient()
+        {
+            Dispose(false);
+        }
+        //-----------------------------------------------
+    }
+    
 }

@@ -1,4 +1,7 @@
-﻿//----------------------------------------------------------------
+﻿// This is an independent project of an individual developer. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
+//----------------------------------------------------------------
 // Copyright (c) Microsoft Corporation.  All rights reserved.
 //----------------------------------------------------------------
 
@@ -23,7 +26,7 @@ namespace OnvifProxy
         public void Dispose()
         {
             Dispose(true);
-            //MessageTimeoutTimer.Dispose();
+            //msgTimer.Dispose();
             GC.SuppressFinalize(this);//чтобы при ошибке не вывалиться в деструктор
         }
         protected virtual void Dispose(bool isDisposing)
