@@ -1840,7 +1840,7 @@ namespace OnvifProxy
             task.Dispose();            
         }
 
-        //public static TyphoonMsg GetMsg(uint MsgID)
+        //public static TyphoonMsg GetResponceMsg(uint MsgID)
         //{
         //    TyphoonMsg msg = new TyphoonMsg(TyphoonMsgType.Responce);
 
@@ -1848,7 +1848,7 @@ namespace OnvifProxy
 
         //    CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
         //    CancellationToken token = cancelTokenSource.Token;
-        //    Task<TyphoonMsg> task = new Task<TyphoonMsg>(() => TaskGetMsg(MsgID, token), token);
+        //    Task<TyphoonMsg> task = new Task<TyphoonMsg>(() => TaskGetResponceMsg(MsgID, token), token);
 
         //    task.Start();
         //    task.Wait(TYPHOON_RESPONSE_TIMEOUT);

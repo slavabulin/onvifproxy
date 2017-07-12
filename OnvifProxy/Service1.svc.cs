@@ -3045,8 +3045,6 @@ namespace OnvifProxy
                                    new FaultCode("NoStreamUriFound", "http://www.onvif.org/ver10/error"))));
                 }
             }
-
-            
         }
 
         public void StartMulticastStreaming(string ProfileToken)
