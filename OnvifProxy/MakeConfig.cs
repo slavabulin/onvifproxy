@@ -53,8 +53,8 @@ namespace OnvifProxy
             //config.Scopes = new Collection<OnvifScope>();
             ////we.ScopeType = OnvifScope.ScopeTypes.Fixed;
             ////we2.ScopeType = OnvifScope.ScopeTypes.Variable;
-            //we.Data = "onvif://www.onvif.org/type/video_encoder";
-            //we2.Data = "onvif://www.onvif.org/hardware/TyphoonPC";
+            //we.data = "onvif://www.onvif.org/type/video_encoder";
+            //we2.data = "onvif://www.onvif.org/hardware/TyphoonPC";
 
             //config.Scopes.Add(we);
             //config.Scopes.Add(we2);
@@ -293,8 +293,8 @@ namespace OnvifProxy
             //config.Scopes = new Collection<OnvifScope>();
             ////we.ScopeType = OnvifScope.ScopeTypes.Fixed;
             ////we2.ScopeType = OnvifScope.ScopeTypes.Variable;
-            //we.Data = "onvif://www.onvif.org/type/video_encoder";
-            //we2.Data = "onvif://www.onvif.org/hardware/TyphoonPC";
+            //we.data = "onvif://www.onvif.org/type/video_encoder";
+            //we2.data = "onvif://www.onvif.org/hardware/TyphoonPC";
 
             //config.Scopes.Add(we);
             //config.Scopes.Add(we2);

@@ -362,7 +362,7 @@ namespace OnvifProxy
             //////{
             //////    for (int i = 0; i < confstr.Scopes.Count; i++)
             //////    {
-            //////        if (confstr.Scopes.ElementAt(i).Data == request.Scopes[a])
+            //////        if (confstr.Scopes.ElementAt(i).data == request.Scopes[a])
             //////        {
             //////            ////пересекающиеся выкинуть?
             //////            //confstr.Scopes.Remove(confstr.Scopes.ElementAt(i));
@@ -429,7 +429,7 @@ namespace OnvifProxy
                                 confstr.Scopes.Remove(confstr.Scopes[i]);
                             }
                         }
-                        //Console.WriteLine("adding " + onvfScope[i].Data);
+                        //Console.WriteLine("adding " + onvfScope[i].data);
                     }
                     //если нет - то добавить в список
                     for (int a = 0; a < request.ScopeItem.Length; a++)
@@ -930,8 +930,8 @@ namespace OnvifProxy
                     //byte[] tmp = TyphoonCom.FormCommand(200, 4, null, 0);
                             //for (int a = 0; a < 4; a++)
                             //{
-                            //    TyphMsg.MessageID = TyphMsg.MessageID << 8;
-                            //    TyphMsg.MessageID += tmp[9 - a];
+                            //    TyphMsg.msgID = TyphMsg.msgID << 8;
+                            //    TyphMsg.msgID += tmp[9 - a];
                             //}
                             //TyphoonMsg msg = new TyphoonMsg(TyphoonMsgType.Request);
                             //msg.byteMessageData = TyphoonCom.FormPacket(tmp);
@@ -951,7 +951,7 @@ namespace OnvifProxy
                         //            try
                         //            {
                         //                //находим в очереди ответ с ID отправленного нами запроса
-                        //                Buf = TyphoonMsgManager.queueResponceFromTyphoon.Single(TyphoonMessage => TyphoonMessage.Value.MessageID == TyphMsg.MessageID).Value.stringMessageData;
+                        //                Buf = TyphoonMsgManager.queueResponceFromTyphoon.Single(TyphoonMessage => TyphoonMessage.Value.msgID == TyphMsg.msgID).Value.stringMessageData;
                         //            }
                         //            catch (Exception ex)
                         //            {
@@ -960,7 +960,7 @@ namespace OnvifProxy
                         //            //удаляем из очереди мессагу с ID отправленного нами запроса
                         //            try
                         //            {
-                        //                TyphoonMsgManager.queueResponceFromTyphoon.TryRemove(TyphMsg.MessageID, out tmpmsg);
+                        //                TyphoonMsgManager.queueResponceFromTyphoon.TryRemove(TyphMsg.msgID, out tmpmsg);
                         //                ////рихтуем данные 
                         //                if (Buf.Length == 12)
                         //                {
@@ -3122,8 +3122,8 @@ namespace OnvifProxy
 
             //for (int a = 0; a < 4; a++)
             //{
-            //    TyphMsg.MessageID = TyphMsg.MessageID << 8;
-            //    TyphMsg.MessageID += tmp[9 - a];
+            //    TyphMsg.msgID = TyphMsg.msgID << 8;
+            //    TyphMsg.msgID += tmp[9 - a];
             //}
             ////ждем первого ответа, кста, это не гарантирует, что это нужный ответ, надо бы переделать
             //do
@@ -3136,7 +3136,7 @@ namespace OnvifProxy
             //    try
             //    {
             //        //находим в очереди ответ с ID отправленного нами запроса
-            //        Buf = TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID).MessageData;
+            //        Buf = TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.msgID == TyphMsg.msgID).MessageData;
             //        Buf = TyphoonCom.ParseMem(0, Buf);
             //    }
             //    catch (Exception ex)
@@ -3146,7 +3146,7 @@ namespace OnvifProxy
             //    //удаляем из очереди мессагу с ID отправленного нами запроса
             //    try
             //    {
-            //        TyphoonCom.queueResponce.Remove(TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.MessageID == TyphMsg.MessageID));
+            //        TyphoonCom.queueResponce.Remove(TyphoonCom.queueResponce.Single(TyphoonMessage => TyphoonMessage.msgID == TyphMsg.msgID));
             //        ////рихтуем данные 
             //    }
             //    catch (Exception ex)
