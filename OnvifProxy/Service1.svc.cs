@@ -942,16 +942,16 @@ namespace OnvifProxy
                         //        do
                         //        {
                         //            Thread.Sleep(1);
-                        //        } while (TyphoonMsgManager.queueResponceFromTyphoon.Count == 0);
+                        //        } while (TyphoonMsgManager.queueResponseFromTyphoon.Count == 0);
 
-                        //        if (TyphoonMsgManager.queueResponceFromTyphoon.Count > 0)
+                        //        if (TyphoonMsgManager.queueResponseFromTyphoon.Count > 0)
                         //        {
                         //            ConfigStruct tmpconfstr = new ConfigStruct();
 
                         //            try
                         //            {
                         //                //находим в очереди ответ с ID отправленного нами запроса
-                        //                Buf = TyphoonMsgManager.queueResponceFromTyphoon.Single(TyphoonMessage => TyphoonMessage.Value.msgID == TyphMsg.msgID).Value.stringMessageData;
+                        //                Buf = TyphoonMsgManager.queueResponseFromTyphoon.Single(TyphoonMessage => TyphoonMessage.Value.msgID == TyphMsg.msgID).Value.stringMessageData;
                         //            }
                         //            catch (Exception ex)
                         //            {
@@ -960,7 +960,7 @@ namespace OnvifProxy
                         //            //удаляем из очереди мессагу с ID отправленного нами запроса
                         //            try
                         //            {
-                        //                TyphoonMsgManager.queueResponceFromTyphoon.TryRemove(TyphMsg.msgID, out tmpmsg);
+                        //                TyphoonMsgManager.queueResponseFromTyphoon.TryRemove(TyphMsg.msgID, out tmpmsg);
                         //                ////рихтуем данные 
                         //                if (Buf.Length == 12)
                         //                {
@@ -2595,12 +2595,12 @@ namespace OnvifProxy
 
         public Media.Profile GetProfile(string ProfileToken)
         {         
-            TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
+            //TyphoonMsg typhmsgresp = new TyphoonMsg(TyphoonMsgType.Responce);
             Media.GetProfilesResponse mediaprofile = new Media.GetProfilesResponse();
             XmlConfig config = new XmlConfig();
 
             ///формируем команду GetProfiles
-            using(typhmsgresp = TyphoonMsgManager.SendSyncMsg(2))
+            using(var typhmsgresp = TyphoonMsgManager.SendSyncMsg(2))
             {
                 if (typhmsgresp == null || String.IsNullOrEmpty(typhmsgresp.stringMessageData))
                     throw new FaultException(new FaultReason("NoProfile"),

@@ -446,7 +446,7 @@ namespace OnvifProxy
         //---------------------------------------------------------
         // разбирает команды, пришедшие в пакете
         //---------------------------------------------------------
-        private static void CommandParse(byte[] CommandBuff)
+        private static void CommandParse(byte[] commandBuff)
         {
             Encoding cp1251 = Encoding.GetEncoding(1251);
             byte[] tmpByteAr = new byte[4];
@@ -454,11 +454,11 @@ namespace OnvifProxy
 
             TyphoonMsg tmpTyphMsg;
             
-            if (CommandBuff != null)
+            if (commandBuff != null)
             {
                 try
                 {
-                    switch (CommandBuff[intCommandPtr])//здесь эксепшен аут оф рэндж
+                    switch (commandBuff[intCommandPtr])//здесь эксепшен аут оф рэндж
                     {
                         case 0:
                             #region
@@ -474,7 +474,7 @@ namespace OnvifProxy
                             ///вынимаем номер субкоманды
                             for (int a = 0; a < 4; a++)
                             {
-                                tmpByteAr[a] = CommandBuff[2 + a + intCommandPtr];
+                                tmpByteAr[a] = commandBuff[2 + a + intCommandPtr];
                             }
                             //и кладем в TyphMsg.MessageSubComNum
                             tmpTyphMsg.MessageSubComNum = ByteArtoInt32(tmpByteAr);
@@ -482,7 +482,7 @@ namespace OnvifProxy
                             //вынимаем ID команды 
                             for (int a = 0; a < 4; a++)
                             {
-                                tmpByteAr[a] = CommandBuff[6 + a + intCommandPtr];
+                                tmpByteAr[a] = commandBuff[6 + a + intCommandPtr];
                             }
                             //и кладем в TyphMsg.msgID
                             tmpTyphMsg.MessageID = ByteArtoInt32(tmpByteAr);
@@ -491,14 +491,14 @@ namespace OnvifProxy
                             //вынимаем длину команды
                             for (int a = 0; a < 4; a++)
                             {
-                                tmpByteAr[a] = CommandBuff[10 + a + intCommandPtr];
+                                tmpByteAr[a] = commandBuff[10 + a + intCommandPtr];
                             }
                             //и кладем в dataBlockLen
                             dataBlockLen = ByteArtoInt32(tmpByteAr);
                             Data = new byte[dataBlockLen];
                             for (int a = 0; a < dataBlockLen; a++)
                             {
-                                Data[a] = CommandBuff[14 + a + intCommandPtr];
+                                Data[a] = commandBuff[14 + a + intCommandPtr];
                             }
                             intCommandPtr += (dataBlockLen + 13);
 
@@ -519,7 +519,7 @@ namespace OnvifProxy
                             ///по нему мы будем определять, чего хочет тайфун
                             for (int a = 0; a < 4; a++)
                             {
-                                tmpByteAr[a] = CommandBuff[2 + a + intCommandPtr];
+                                tmpByteAr[a] = commandBuff[2 + a + intCommandPtr];
                             }
 
                             //и кладем в TyphMsg.MessageSubComNum
@@ -528,7 +528,7 @@ namespace OnvifProxy
                             //вынимаем ID команды 
                             for (int a = 0; a < 4; a++)
                             {
-                                tmpByteAr[a] = CommandBuff[6 + a + intCommandPtr];
+                                tmpByteAr[a] = commandBuff[6 + a + intCommandPtr];
                             }
 
                             //и кладем в TyphMsg.msgID
@@ -537,7 +537,7 @@ namespace OnvifProxy
                             //вынимаем длину набора команд
                             for (int a = 0; a < 4; a++)
                             {
-                                tmpByteAr[a] = CommandBuff[10 + a + intCommandPtr];
+                                tmpByteAr[a] = commandBuff[10 + a + intCommandPtr];
                             }
 
                             //и кладем в dataBlockLen
@@ -546,7 +546,7 @@ namespace OnvifProxy
                             Data = new byte[dataBlockLen];
                             for (int a = 0; a < dataBlockLen; a++)
                             {
-                                Data[a] = CommandBuff[14 + a + intCommandPtr];
+                                Data[a] = commandBuff[14 + a + intCommandPtr];
                             }
 
                             ///сдвигаем указатель внутри блока данных
@@ -579,12 +579,12 @@ namespace OnvifProxy
                             //byte[] tmpAr = new byte[4];
                             //for (int a = 0; a < 4; a++)
                             //{
-                            //    tmpAr[a] = CommandBuff[10 + a + intCommandPtr];
+                            //    tmpAr[a] = commandBuff[10 + a + intCommandPtr];
                             //}
                             ////и кладем в dataBlockLen
                             //uint dataLen = ByteArtoInt32(tmpAr);
                             //intCommandPtr += dataLen;
-                            ////////intCommandPtr = (uint)(CommandBuff.Length - 1);
+                            ////////intCommandPtr = (uint)(commandBuff.Length - 1);
                             //break;
                             return;
                             #endregion
@@ -601,11 +601,11 @@ namespace OnvifProxy
                 intCommandPtr = 0;
             }
             ///если не дошли до конца - продолжаем
-            if (intCommandPtr < CommandBuff.Length-1)//если текущий номер ячейки массива меньше максимального номера ячейки в буфере, то
+            if (intCommandPtr < commandBuff.Length-1)//если текущий номер ячейки массива меньше максимального номера ячейки в буфере, то
             {
                 TyphoonCom.log.Debug("слипшиеся команды");
                 intCommandPtr++;//сдвинем указатель и пиздуем далее
-                CommandParse(CommandBuff);
+                CommandParse(commandBuff);
             }
             else
             {
@@ -1226,7 +1226,7 @@ namespace OnvifProxy
                     Data_Command_Block[6 + t] = MsgIDAr[t];
                 }
                 //делаем из длины данных массив байт
-                //DataLengthAr = Int32toByteAr((uint)(data.Length));
+                //dataLengthAr = Int32toByteAr((uint)(data.Length));
                 DataLengthAr = Int32toByteAr((uint)(ASCIIBytes.Length));
                 //и засовываем в массив с 10 по 13 байты
                 for (int t = 0; t < 4; t++)
@@ -1643,6 +1643,18 @@ namespace OnvifProxy
             //eventThread.IsBackground = true;
             //eventThread.Start();
 
+            //Thread eventThread = new Thread(new ThreadStart(TyphoonMsgManager.TestMsgCreatorCreate));
+            //eventThread.IsBackground = true;
+            //eventThread.Start();
+        }
+
+        static void TestMsgCreatorCreate()
+        {
+            do
+            {
+                MsgQueue.Add(MsgCreator.Create(0, 0, null, TyphoonMsgType.Zond));
+                Thread.Sleep(1);
+            } while (true);
         }
         static void TestMsgQueue()
         {
