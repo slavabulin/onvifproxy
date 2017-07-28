@@ -10,6 +10,15 @@ using Media;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 
+using System.ServiceModel.Description;
+using System.IdentityModel;
+using System.IdentityModel.Tokens;
+using System.IdentityModel.Selectors;
+using System.ServiceModel.Dispatcher;
+using System.ServiceModel.Security;
+using System.Security.Cryptography;
+
+
 
 namespace OnvifProxy
 {
@@ -39,6 +48,13 @@ namespace OnvifProxy
         public NVTDeviceServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) :
             base(binding, remoteAddress)
         {
+            //need to create CustomTokenSerializer binding to make Digest and Nonce
+
+            //base.ClientCredentials.HttpDigest.ClientCredential.Password = "root";
+            //base.ClientCredentials.HttpDigest.ClientCredential.UserName = "root";
+            //base.ClientCredentials.UserName.UserName = "root";
+            //base.ClientCredentials.UserName.Password = "root";
+
         }
 
         public string GetDeviceInformation(out string Model, out string FirmwareVersion,
@@ -61,6 +77,9 @@ namespace OnvifProxy
             //йа заглушко!
             //нужно авторизоваться при GetDeviceInformation
             //на Axis'ах
+
+            //set
+           
             try
             {
                 return base.Channel.GetCapabilities(request);
@@ -992,6 +1011,58 @@ namespace OnvifProxy
             MediaClient = new NVTMediaServiceClient(binding, remoteAddress);
         }
 
+        public NVTClient(Binding binding, EndpointAddress remoteAddress, string username, string password)
+        {
+            //var security = TransportSecurityBindingElement.CreateUserNameOverTransportBindingElement();
+            //security.IncludeTimestamp = false;
+            //security.DefaultAlgorithmSuite = SecurityAlgorithmSuite.Basic256;
+            //security.MessageSecurityVersion = MessageSecurityVersion.WSSecurity10WSTrustFebruary2005WSSecureConversationFebruary2005WSSecurityPolicy11BasicSecurityProfile10;
+            //var encoding = new TextMessageEncodingBindingElement();
+            //encoding.MessageVersion = MessageVersion.Soap11;
+
+            //var transport = new HttpTransportBindingElement();
+            //transport.MaxReceivedMessageSize = 20000000; // 20 megs
+            
+            //binding = new CustomBinding(encoding, security, transport);
+
+
+            var security = TransportSecurityBindingElement.CreateUserNameOverTransportBindingElement();
+            security.AllowInsecureTransport = true;
+            security.IncludeTimestamp = false;
+            security.DefaultAlgorithmSuite = SecurityAlgorithmSuite.Basic256;
+            //security.MessageSecurityVersion = MessageSecurityVersion.WSSecurity10WSTrustFebruary2005WSSecureConversationFebruary2005WSSecurityPolicy11BasicSecurityProfile10;
+            security.MessageSecurityVersion = MessageSecurityVersion.WSSecurity10WSTrustFebruary2005WSSecureConversationFebruary2005WSSecurityPolicy11BasicSecurityProfile10;
+
+            var encoding = new TextMessageEncodingBindingElement();
+            //encoding.MessageVersion = MessageVersion.Soap11;
+            encoding.MessageVersion = MessageVersion.Soap12;
+
+            var transport = new HttpTransportBindingElement();
+            transport.MaxReceivedMessageSize = 20000000; // 20 megs
+
+            var cBinding = new CustomBinding();//encoding, security, transport);
+            cBinding.Elements.Add(security);
+            cBinding.Elements.Add(encoding);
+            cBinding.Elements.Add(transport);
+
+
+            DeviceClient = new NVTDeviceServiceClient(cBinding, remoteAddress);
+            MediaClient = new NVTMediaServiceClient(cBinding, remoteAddress);
+
+            DeviceClient.ChannelFactory.Endpoint.Behaviors.Remove<System.ServiceModel.Description.ClientCredentials>();
+            DeviceClient.ChannelFactory.Endpoint.Behaviors.Add(new CustomCredentials());
+
+            DeviceClient.ClientCredentials.UserName.UserName = username;
+            DeviceClient.ClientCredentials.UserName.Password = password;
+
+            MediaClient.ChannelFactory.Endpoint.Behaviors.Remove<System.ServiceModel.Description.ClientCredentials>();
+            MediaClient.ChannelFactory.Endpoint.Behaviors.Add(new CustomCredentials());
+
+            MediaClient.ClientCredentials.UserName.UserName = username;
+            MediaClient.ClientCredentials.UserName.Password = password;
+
+        }
+
         //----implementing IDisposable-------------------
         public void Dispose()
         {
@@ -1022,5 +1093,134 @@ namespace OnvifProxy
         }
         //-----------------------------------------------
     }
-    
+
+
+    public class CustomCredentials : ClientCredentials
+    {
+        public CustomCredentials()
+        { }
+
+        protected CustomCredentials(CustomCredentials cc)
+            : base(cc)
+        { }
+
+        public override System.IdentityModel.Selectors.SecurityTokenManager CreateSecurityTokenManager()
+        {
+            return new CustomSecurityTokenManager(this);
+        }
+
+        protected override ClientCredentials CloneCore()
+        {
+            return new CustomCredentials(this);
+        }
+    }
+
+    public class CustomSecurityTokenManager : ClientCredentialsSecurityTokenManager
+    {
+        public CustomSecurityTokenManager(CustomCredentials cred)
+            : base(cred)
+        { }
+
+        public override System.IdentityModel.Selectors.SecurityTokenSerializer CreateSecurityTokenSerializer(System.IdentityModel.Selectors.SecurityTokenVersion version)
+        {
+            return new CustomTokenSerializer(System.ServiceModel.Security.SecurityVersion.WSSecurity11);
+        }
+    }
+
+    public class CustomTokenSerializer : WSSecurityTokenSerializer
+    {
+        public CustomTokenSerializer(SecurityVersion sv)
+            : base(sv)
+        { }
+        #region
+        //protected override void WriteTokenCore(System.Xml.XmlWriter writer,
+        //                                        System.IdentityModel.Tokens.SecurityToken token)
+        //{
+        //    UserNameSecurityToken userToken = token as UserNameSecurityToken;
+
+        //    string tokennamespace = "o";
+
+        //    var created = System.DateTime.Now;
+        //    string createdStr = created.ToString("yyyy-MM-ddThh:mm:ss.fffZ");
+
+        //    // unique Nonce value - encode with SHA-1 for 'randomness'
+        //    // in theory the nonce could just be the GUID by itself
+        //    string phrase = Guid.NewGuid().ToString();
+        //    var nonce = GetSHA1String(phrase);
+
+        //    // in this case password is plain text
+        //    // for digest mode password needs to be encoded as:
+        //    // PasswordAsDigest = Base64(SHA-1(Nonce + Created + Password))
+        //    // and profile needs to change to
+        //    //string password = GetSHA1String(nonce + createdStr + userToken.Password);
+
+        //    string password = userToken.Password;
+
+        //    writer.WriteRaw(string.Format(
+        //    "<{0}:UsernameToken u:Id=\"" + token.Id +
+        //    "\" xmlns:u=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\">" +
+        //    "<{0}:Username>" + userToken.UserName + "</{0}:Username>" +
+        //    "<{0}:Password Type=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText\">" +
+        //    password + "</{0}:Password>" +
+        //    "<{0}:Nonce EncodingType=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary\">" +
+        //    nonce + "</{0}:Nonce>" +
+        //    "<u:Created>" + createdStr + "</u:Created></{0}:UsernameToken>", tokennamespace));
+        //}
+        #endregion
+
+        protected override void WriteTokenCore(System.Xml.XmlWriter writer,
+                                        System.IdentityModel.Tokens.SecurityToken token)
+        {
+            UserNameSecurityToken userToken = token as UserNameSecurityToken;
+
+            string tokennamespace = "o";
+            var created = System.DateTime.UtcNow;
+            string createdStr = created.ToString("yyyy-MM-ddTHH:mm:ssZ");
+
+            // unique Nonce value - encode with SHA-1 for 'randomness'
+            // in theory the nonce could just be the GUID by itself
+            string phrase = Guid.NewGuid().ToString();
+            var nonce = GetSHA1String(phrase);
+            string password = GetPasswordDigest(nonce, createdStr, userToken.Password); 
+            
+            writer.WriteRaw(string.Format(
+            "<{0}:UsernameToken " +
+            " xmlns:u=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\">" +
+            "<{0}:Username>" + userToken.UserName + "</{0}:Username>" +
+            "<{0}:Password Type=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest\">" +
+            password + "</{0}:Password>" +
+            "<{0}:Nonce>" +
+            nonce + "</{0}:Nonce>" +
+            "<u:Created>" + createdStr + "</u:Created></{0}:UsernameToken>", tokennamespace));
+        }
+
+        protected string GetSHA1String(string phrase)
+        {
+            SHA1CryptoServiceProvider sha1Hasher = new SHA1CryptoServiceProvider();
+            byte[] hashedDataBytes = sha1Hasher.ComputeHash(Encoding.UTF8.GetBytes(phrase));
+            return Convert.ToBase64String(hashedDataBytes);
+        }
+
+        public static string GetPasswordDigest(string nonce, string created, string pass)
+        {
+            byte[] bNonce = Convert.FromBase64String(nonce);
+            byte[] bCreated = Encoding.UTF8.GetBytes(created);
+            byte[] bPass = Encoding.UTF8.GetBytes(pass);
+            byte[] bAll = new byte[bNonce.Length + bCreated.Length + bPass.Length];
+
+            Buffer.BlockCopy(bNonce, 0, bAll, 0, bNonce.Length);
+            Buffer.BlockCopy(bCreated, 0, bAll, bNonce.Length, bCreated.Length);
+            Buffer.BlockCopy(bPass, 0, bAll, bNonce.Length + bCreated.Length, bPass.Length);
+
+            return Sha1Base64Digest(bAll);
+        }
+
+        public static String Sha1Base64Digest(byte[] phrase)
+        {
+            SHA1CryptoServiceProvider sha1Hasher = new SHA1CryptoServiceProvider();
+            byte[] hashedDataBytes = sha1Hasher.ComputeHash(phrase);
+            return Convert.ToBase64String(hashedDataBytes);
+        }
+
+    }
 }
