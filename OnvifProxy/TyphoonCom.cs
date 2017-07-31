@@ -377,10 +377,6 @@ namespace OnvifProxy
         {
             if (TyphoonCom.flg_Connected)
             {
-                //TyphoonMsg typhmsg = new TyphoonMsg(TyphoonMsgType.Zond);
-                //typhmsg.byteMessageData = FormPacket(null);
-                //TyphoonMsgManager.EnqueueMsg(typhmsg);
-
                 TyphoonMsgManager.SendAsyncMsg(0, 0, null, 0);
             }
         }
@@ -633,15 +629,12 @@ namespace OnvifProxy
         private static void ParseQueueCmd()
         {
             TyphoonMsg typhmsg, tmpmsg ;
-            //bnSubscriber subs;
             Object obj = new object();
             binding = new WSHttpBinding(SecurityMode.None);
-            
 
             //---------------------------------------------------------
             //крутится пока не разберет всю очередь
             //команд от тайфуна, потом выходит 
-            //using(typhmsg)
             while (TyphoonMsgManager.queueCommandsFromTyphoon.Count > 0)
             {
                 Console.WriteLine("queueCmd.Length - {0}", TyphoonMsgManager.queueCommandsFromTyphoon.Count);
@@ -675,7 +668,6 @@ namespace OnvifProxy
                                 nvtClient = new NVTClient(binding, (new EndpointAddress(typhmsg.stringMessageData)), memList.ElementAt(1), memList.ElementAt(2));
                                 nvtClientCollection.Add(nvtClient);
                             }
-
                         }
                     }
 
@@ -701,39 +693,11 @@ namespace OnvifProxy
                                 #region дернуть GetDeviceInformation() у NVTClient
                                 
                                 Console.WriteLine("SubCom - 2 - GetDeviceInformation");
-
-                                
-                                //if (memList.ElementAt(0) != null)
-                                //{
-                                //    typhmsg.stringMessageData = memList.ElementAt(0);
-                                //}
-                                //else
-                                //    break;
-                                
-                                //try
-                                //{
-                                //    nvtClient = TyphoonCom.nvtClientCollection.Single(NVTServiceClient =>
-                                //        NVTServiceClient.DeviceClient.Endpoint.ListenUri
-                                //        == (new Uri(typhmsg.stringMessageData)));
-                                //}
-                                //catch (InvalidOperationException)
-                                //{
-                                //    if(String.IsNullOrEmpty(memList.ElementAt(1)))
-                                //    {
-                                //        nvtClient = new NVTClient(binding, (new EndpointAddress(typhmsg.stringMessageData)));
-                                //        nvtClientCollection.Add(nvtClient);
-                                //    }
-                                //    else
-                                //    {
-                                //        nvtClient = new NVTClient(binding, (new EndpointAddress(typhmsg.stringMessageData)), memList.ElementAt(1), memList.ElementAt(2));
-                                //        nvtClientCollection.Add(nvtClient);
-                                //    }
-                                    
-                                //}
                                 
                                 string model, firmware, serial, hardwareid, manufacturer;
                                 byte[] b_model, b_firmware, b_serial, b_hardwareid, b_manufacturer, b_totalData;
                                 int ptr = 0;
+
                                 try
                                 {
                                     manufacturer = nvtClient.DeviceClient.GetDeviceInformation(out model, out firmware, out serial, out hardwareid);
@@ -743,12 +707,13 @@ namespace OnvifProxy
                                     log.ErrorFormat("failed to GetDeviceInformation from {0}", typhmsg.stringMessageData);
                                     break;
                                 }
+
                                 b_model = MakeMem(model);
                                 b_firmware = MakeMem(firmware);
                                 b_serial = MakeMem(serial);
                                 b_hardwareid = MakeMem(hardwareid);
                                 b_manufacturer = MakeMem(manufacturer);
-
+                                
                                 b_totalData = new byte[(b_model.Length + b_firmware.Length + b_serial.Length
                                     + b_hardwareid.Length + b_manufacturer.Length)];
                                 for (int a = 0; a < b_manufacturer.Length; a++)
@@ -782,7 +747,6 @@ namespace OnvifProxy
                                 typhmsg.byteMessageData = FormPacket(FormCommand(201, 2, b_totalData, typhmsg.MessageID));
                                 typhmsg.MessageType = TyphoonMsgType.Request;
 
-                                //TyphoonMsgManager.SendAsyncMsg(201, 2, b_totalData, typhmsg.msgID);
                                 if (TyphoonMsgManager.EnqueueMsg(typhmsg))
                                 {
                                     TyphoonCom.log.DebugFormat("sending succeseed");
@@ -799,35 +763,15 @@ namespace OnvifProxy
                                 //---------------
                                 Console.WriteLine("SubCom - 3 - GetMediaCapabilities");
 
-                                //List<String> memList = ParseMsgStringToMemList(typhmsg.stringMessageData);
-                                //if (memList.ElementAt(0) != null)
-                                //{
-                                //    typhmsg.stringMessageData = memList.ElementAt(0);
-                                //}
-                                //else
-                                //    break;
-
                                 if (TyphoonMsgManager.queueCommandsFromTyphoon.TryRemove(typhmsg.MessageID, out typhmsg))
                                 {
                                     Console.WriteLine("removing passed !");
                                 };
 
-                                //typhmsg.stringMessageData = ParseMem(0, typhmsg.stringMessageData);
-
                                 ptr = 0;
                                 string xaddr, rtpmulticast, rtp_tcp, rtp_rtsp_tcp;
                                 byte[] b_xaddr, b_rtpmulticast, b_rtp_tcp, b_rtp_rtsp_tcp;
-                                
-                                //try
-                                //{
-                                //    nvtClient = TyphoonCom.nvtClientCollection.Single(NVTServiceClient =>
-                                //        NVTServiceClient.DeviceClient.Endpoint.ListenUri == (new Uri(typhmsg.stringMessageData)));
-                                //}
-                                //catch (InvalidOperationException)
-                                //{
-                                //    nvtClient = new NVTClient(binding, (new EndpointAddress(typhmsg.stringMessageData)));
-                                //    nvtClientCollection.Add(nvtClient);
-                                //}
+
 
                                 GetCapabilitiesResponse nvtCapabilitiesResponse;
                                 try
@@ -844,7 +788,6 @@ namespace OnvifProxy
                                     log.ErrorFormat("failed to GetCapabilities from {0}", typhmsg.stringMessageData);
                                     break;
                                 }
-
 
                                 xaddr = nvtCapabilitiesResponse.Capabilities.Media.XAddr;
                                 rtpmulticast = nvtCapabilitiesResponse
@@ -894,19 +837,7 @@ namespace OnvifProxy
                                 #region дернуть GetMediaProfiles() у NVTClient
 
                                 Console.WriteLine("SubCom - 4 - GetMediaProfiles");
-                                //typhmsg.stringMessageData = ParseMem(0, typhmsg.stringMessageData);
-
-                                //try
-                                //{
-                                //    nvtClient = TyphoonCom.nvtClientCollection.Single(NVTServiceClient =>
-                                //        NVTServiceClient.DeviceClient.Endpoint.ListenUri == (new Uri(typhmsg.stringMessageData)));
-                                //}
-                                //catch (InvalidOperationException)
-                                //{
-                                //    nvtClient = new NVTClient(binding, (new EndpointAddress(typhmsg.stringMessageData)));
-                                //    nvtClientCollection.Add(nvtClient);
-                                //}
-
+                                
                                 GetProfilesResponse nvtProfilesResponse;
                                 try
                                 {
@@ -956,28 +887,10 @@ namespace OnvifProxy
                                 byte[] b_streamUri = null;
                                 StreamSetup streamSetup = new StreamSetup();
 
-                                int tmpptr = 0;
-                                string xaddrs = ParseMem(tmpptr, typhmsg.stringMessageData);
-                                tmpptr += xaddrs.Length + 4;
-                                string stream = ParseMem(tmpptr, typhmsg.stringMessageData);
-                                tmpptr += stream.Length + 4;
-                                string protocol = ParseMem(tmpptr, typhmsg.stringMessageData);
-                                tmpptr += protocol.Length + 4;
-                                string profileToken = ParseMem(tmpptr, typhmsg.stringMessageData);
-                                tmpptr += profileToken.Length + 4;
-
-                                //try
-                                //{
-                                //    typhmsg.stringMessageData = ParseMem(0, typhmsg.stringMessageData);
-
-                                //    nvtClient = TyphoonCom.nvtClientCollection.Single(NVTServiceClient =>
-                                //        NVTServiceClient.DeviceClient.Endpoint.ListenUri == (new Uri(typhmsg.stringMessageData)));
-                                //}
-                                //catch (InvalidOperationException)
-                                //{
-                                //    nvtClient = new NVTClient(binding, (new EndpointAddress(typhmsg.stringMessageData)));
-                                //    nvtClientCollection.Add(nvtClient);
-                                //}
+                                string xaddrs = memList.ElementAt(0);
+                                string stream = memList.ElementAt(1);
+                                string protocol = memList.ElementAt(2);
+                                string profileToken = memList.ElementAt(3);
 
                                 switch (stream)
                                 {

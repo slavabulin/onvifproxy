@@ -67,29 +67,21 @@ namespace OnvifProxy
             catch (Exception ex)
             {
                 Model = FirmwareVersion = SerialNumber = HardwareId = String.Empty;
+                return String.Empty;
             }
-            return String.Empty;
-
         }
 
         public GetCapabilitiesResponse GetCapabilities(GetCapabilitiesRequest request)
-        {
-            //йа заглушко!
-            //нужно авторизоваться при GetDeviceInformation
-            //на Axis'ах
-
-            //set
-           
+        {    
             try
             {
                 return base.Channel.GetCapabilities(request);
             }
-            catch (ProtocolException)
+            catch (Exception)
             {
 
             }
             return new GetCapabilitiesResponse();
-
         }
 
         public void UnauthorizedAccessFault()
@@ -172,7 +164,7 @@ namespace OnvifProxy
 
         public string SendAuxiliaryCommand(string AuxiliaryCommand)
         {
-            return "";
+            return String.Empty;
         }
 
         public void SetRelayOutputState(string RelayOutputToken, RelayLogicalState LogicalState)
@@ -584,33 +576,22 @@ namespace OnvifProxy
             base.Channel.DeleteProfile(ProfileToken);
         }
 
-        //[System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         public GetVideoSourceConfigurationsResponse GetVideoSourceConfigurations(GetVideoSourceConfigurationsRequest request)
-            //GetVideoSourceConfigurationsResponse IMedia.GetVideoSourceConfigurations(GetVideoSourceConfigurationsRequest request)
         {
             return base.Channel.GetVideoSourceConfigurations(request);
         }
 
-        //public GetCapabilitiesResponse GetCapabilities(GetCapabilitiesRequest request)
-        //{
-        //    //йа заглушко!
-        //    //нужно авторизоваться при GetDeviceInformation
-        //    //на Axis'ах
-        //    try
-        //    {
-        //        return base.Channel.GetCapabilities(request);
-        //    }
-        //    catch (ProtocolException)
-        //    {
-
-        //    }
-        //    return new GetCapabilitiesResponse();
-
-        //}
 
         public GetProfilesResponse GetProfiles(GetProfilesRequest request)
         {
-            return base.Channel.GetProfiles(request);
+            try
+            {
+                return base.Channel.GetProfiles(request);
+            }
+            catch(CommunicationException ce)
+            {
+                return null;
+            }
         }
 
 
@@ -623,31 +604,15 @@ namespace OnvifProxy
                                   new FaultCode("Operation not Permitted", "http://www.onvif.org/ver10/error"))));
         }
        
-        //[System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         GetVideoEncoderConfigurationsResponse IMedia.GetVideoEncoderConfigurations(GetVideoEncoderConfigurationsRequest request)
         {
             return base.Channel.GetVideoEncoderConfigurations(request);
         }
 
-        //public VideoEncoderConfiguration[] GetVideoEncoderConfigurations()
-        //{
-        //    GetVideoEncoderConfigurationsRequest inValue = new GetVideoEncoderConfigurationsRequest();
-        //    GetVideoEncoderConfigurationsResponse retVal = ((IMedia)(this)).GetVideoEncoderConfigurations(inValue);
-        //    return retVal.Configurations;
-        //}
-
-        //[System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         GetAudioSourceConfigurationsResponse IMedia.GetAudioSourceConfigurations(GetAudioSourceConfigurationsRequest request)
         {
             return base.Channel.GetAudioSourceConfigurations(request);
         }
-
-        //public AudioSourceConfiguration[] GetAudioSourceConfigurations()
-        //{
-        //    GetAudioSourceConfigurationsRequest inValue = new GetAudioSourceConfigurationsRequest();
-        //    GetAudioSourceConfigurationsResponse retVal = ((IMedia)(this)).GetAudioSourceConfigurations(inValue);
-        //    return retVal.Configurations;
-        //}
 
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         GetAudioEncoderConfigurationsResponse IMedia.GetAudioEncoderConfigurations(GetAudioEncoderConfigurationsRequest request)
@@ -655,51 +620,21 @@ namespace OnvifProxy
             return base.Channel.GetAudioEncoderConfigurations(request);
         }
 
-        //public AudioEncoderConfiguration[] GetAudioEncoderConfigurations()
-        //{
-        //    GetAudioEncoderConfigurationsRequest inValue = new GetAudioEncoderConfigurationsRequest();
-        //    GetAudioEncoderConfigurationsResponse retVal = ((IMedia)(this)).GetAudioEncoderConfigurations(inValue);
-        //    return retVal.Configurations;
-        //}
-
-        //[System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         GetVideoAnalyticsConfigurationsResponse IMedia.GetVideoAnalyticsConfigurations(GetVideoAnalyticsConfigurationsRequest request)
         {
             return base.Channel.GetVideoAnalyticsConfigurations(request);
         }
 
-        //public VideoAnalyticsConfiguration[] GetVideoAnalyticsConfigurations()
-        //{
-        //    GetVideoAnalyticsConfigurationsRequest inValue = new GetVideoAnalyticsConfigurationsRequest();
-        //    GetVideoAnalyticsConfigurationsResponse retVal = ((IMedia)(this)).GetVideoAnalyticsConfigurations(inValue);
-        //    return retVal.Configurations;
-        //}
-
-        //[System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         GetMetadataConfigurationsResponse IMedia.GetMetadataConfigurations(GetMetadataConfigurationsRequest request)
         {
             return base.Channel.GetMetadataConfigurations(request);
         }
-
-        //public MetadataConfiguration[] GetMetadataConfigurations()
-        //{
-        //    GetMetadataConfigurationsRequest inValue = new GetMetadataConfigurationsRequest();
-        //    GetMetadataConfigurationsResponse retVal = ((IMedia)(this)).GetMetadataConfigurations(inValue);
-        //    return retVal.Configurations;
-        //}
 
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         GetAudioOutputConfigurationsResponse IMedia.GetAudioOutputConfigurations(GetAudioOutputConfigurationsRequest request)
         {
             return base.Channel.GetAudioOutputConfigurations(request);
         }
-
-        //public AudioOutputConfiguration[] GetAudioOutputConfigurations()
-        //{
-        //    GetAudioOutputConfigurationsRequest inValue = new GetAudioOutputConfigurationsRequest();
-        //    GetAudioOutputConfigurationsResponse retVal = ((IMedia)(this)).GetAudioOutputConfigurations(inValue);
-        //    return retVal.Configurations;
-        //}
 
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         GetAudioDecoderConfigurationsResponse IMedia.GetAudioDecoderConfigurations(GetAudioDecoderConfigurationsRequest request)
@@ -760,111 +695,40 @@ namespace OnvifProxy
             return base.Channel.GetCompatibleVideoEncoderConfigurations(request);
         }
 
-        //public VideoEncoderConfiguration[] GetCompatibleVideoEncoderConfigurations(string ProfileToken)
-        //{
-        //    GetCompatibleVideoEncoderConfigurationsRequest inValue = new GetCompatibleVideoEncoderConfigurationsRequest();
-        //    inValue.ProfileToken = ProfileToken;
-        //    GetCompatibleVideoEncoderConfigurationsResponse retVal = ((IMedia)(this)).GetCompatibleVideoEncoderConfigurations(inValue);
-        //    return retVal.Configurations;
-        //}
-
-        //[System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         public GetCompatibleVideoSourceConfigurationsResponse GetCompatibleVideoSourceConfigurations(GetCompatibleVideoSourceConfigurationsRequest request)
         {
             return base.Channel.GetCompatibleVideoSourceConfigurations(request);
         }
 
-        //public VideoSourceConfiguration[] GetCompatibleVideoSourceConfigurations(string ProfileToken)
-        //{
-        //    GetCompatibleVideoSourceConfigurationsRequest inValue = new GetCompatibleVideoSourceConfigurationsRequest();
-        //    inValue.ProfileToken = ProfileToken;
-        //    GetCompatibleVideoSourceConfigurationsResponse retVal = ((IMedia)(this)).GetCompatibleVideoSourceConfigurations(inValue);
-        //    return retVal.Configurations;
-        //}
-
-        //[System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         public GetCompatibleAudioEncoderConfigurationsResponse GetCompatibleAudioEncoderConfigurations(GetCompatibleAudioEncoderConfigurationsRequest request)
         {
             return base.Channel.GetCompatibleAudioEncoderConfigurations(request);
         }
 
-        //public AudioEncoderConfiguration[] GetCompatibleAudioEncoderConfigurations(string ProfileToken)
-        //{
-        //    GetCompatibleAudioEncoderConfigurationsRequest inValue = new GetCompatibleAudioEncoderConfigurationsRequest();
-        //    inValue.ProfileToken = ProfileToken;
-        //    GetCompatibleAudioEncoderConfigurationsResponse retVal = ((IMedia)(this)).GetCompatibleAudioEncoderConfigurations(inValue);
-        //    return retVal.Configurations;
-        //}
-
-        //[System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         public GetCompatibleAudioSourceConfigurationsResponse GetCompatibleAudioSourceConfigurations(GetCompatibleAudioSourceConfigurationsRequest request)
         {
             return base.Channel.GetCompatibleAudioSourceConfigurations(request);
         }
 
-        //public AudioSourceConfiguration[] GetCompatibleAudioSourceConfigurations(string ProfileToken)
-        //{
-        //    GetCompatibleAudioSourceConfigurationsRequest inValue = new GetCompatibleAudioSourceConfigurationsRequest();
-        //    inValue.ProfileToken = ProfileToken;
-        //    GetCompatibleAudioSourceConfigurationsResponse retVal = ((IMedia)(this)).GetCompatibleAudioSourceConfigurations(inValue);
-        //    return retVal.Configurations;
-        //}
-
-        //[System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         public GetCompatibleVideoAnalyticsConfigurationsResponse GetCompatibleVideoAnalyticsConfigurations(GetCompatibleVideoAnalyticsConfigurationsRequest request)
         {
             return base.Channel.GetCompatibleVideoAnalyticsConfigurations(request);
         }
 
-        //public VideoAnalyticsConfiguration[] GetCompatibleVideoAnalyticsConfigurations(string ProfileToken)
-        //{
-        //    GetCompatibleVideoAnalyticsConfigurationsRequest inValue = new GetCompatibleVideoAnalyticsConfigurationsRequest();
-        //    inValue.ProfileToken = ProfileToken;
-        //    GetCompatibleVideoAnalyticsConfigurationsResponse retVal = ((IMedia)(this)).GetCompatibleVideoAnalyticsConfigurations(inValue);
-        //    return retVal.Configurations;
-        //}
-
-        //[System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         public GetCompatibleMetadataConfigurationsResponse GetCompatibleMetadataConfigurations(GetCompatibleMetadataConfigurationsRequest request)
         {
             return base.Channel.GetCompatibleMetadataConfigurations(request);
         }
 
-        //public MetadataConfiguration[] GetCompatibleMetadataConfigurations(string ProfileToken)
-        //{
-        //    GetCompatibleMetadataConfigurationsRequest inValue = new GetCompatibleMetadataConfigurationsRequest();
-        //    inValue.ProfileToken = ProfileToken;
-        //    GetCompatibleMetadataConfigurationsResponse retVal = ((IMedia)(this)).GetCompatibleMetadataConfigurations(inValue);
-        //    return retVal.Configurations;
-        //}
-
-        //[System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         public GetCompatibleAudioOutputConfigurationsResponse GetCompatibleAudioOutputConfigurations(GetCompatibleAudioOutputConfigurationsRequest request)
         {
             return base.Channel.GetCompatibleAudioOutputConfigurations(request);
         }
 
-        //public AudioOutputConfiguration[] GetCompatibleAudioOutputConfigurations(string ProfileToken)
-        //{
-        //    GetCompatibleAudioOutputConfigurationsRequest inValue = new GetCompatibleAudioOutputConfigurationsRequest();
-        //    inValue.ProfileToken = ProfileToken;
-        //    GetCompatibleAudioOutputConfigurationsResponse retVal = ((IMedia)(this)).GetCompatibleAudioOutputConfigurations(inValue);
-        //    return retVal.Configurations;
-        //}
-
-        //[System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         public GetCompatibleAudioDecoderConfigurationsResponse GetCompatibleAudioDecoderConfigurations(GetCompatibleAudioDecoderConfigurationsRequest request)
         {
             return base.Channel.GetCompatibleAudioDecoderConfigurations(request);
         }
-
-        //public AudioDecoderConfiguration[] GetCompatibleAudioDecoderConfigurations(string ProfileToken)
-        //{
-        //    GetCompatibleAudioDecoderConfigurationsRequest inValue = new GetCompatibleAudioDecoderConfigurationsRequest();
-        //    inValue.ProfileToken = ProfileToken;
-        //    GetCompatibleAudioDecoderConfigurationsResponse retVal = ((IMedia)(this)).GetCompatibleAudioDecoderConfigurations(inValue);
-        //    return retVal.Configurations;
-        //}
 
         public void SetVideoSourceConfiguration(VideoSourceConfiguration Configuration, bool ForcePersistence)
         {
@@ -1013,34 +877,19 @@ namespace OnvifProxy
 
         public NVTClient(Binding binding, EndpointAddress remoteAddress, string username, string password)
         {
-            //var security = TransportSecurityBindingElement.CreateUserNameOverTransportBindingElement();
-            //security.IncludeTimestamp = false;
-            //security.DefaultAlgorithmSuite = SecurityAlgorithmSuite.Basic256;
-            //security.MessageSecurityVersion = MessageSecurityVersion.WSSecurity10WSTrustFebruary2005WSSecureConversationFebruary2005WSSecurityPolicy11BasicSecurityProfile10;
-            //var encoding = new TextMessageEncodingBindingElement();
-            //encoding.MessageVersion = MessageVersion.Soap11;
-
-            //var transport = new HttpTransportBindingElement();
-            //transport.MaxReceivedMessageSize = 20000000; // 20 megs
-            
-            //binding = new CustomBinding(encoding, security, transport);
-
-
             var security = TransportSecurityBindingElement.CreateUserNameOverTransportBindingElement();
             security.AllowInsecureTransport = true;
             security.IncludeTimestamp = false;
             security.DefaultAlgorithmSuite = SecurityAlgorithmSuite.Basic256;
-            //security.MessageSecurityVersion = MessageSecurityVersion.WSSecurity10WSTrustFebruary2005WSSecureConversationFebruary2005WSSecurityPolicy11BasicSecurityProfile10;
             security.MessageSecurityVersion = MessageSecurityVersion.WSSecurity10WSTrustFebruary2005WSSecureConversationFebruary2005WSSecurityPolicy11BasicSecurityProfile10;
 
             var encoding = new TextMessageEncodingBindingElement();
-            //encoding.MessageVersion = MessageVersion.Soap11;
             encoding.MessageVersion = MessageVersion.Soap12;
 
             var transport = new HttpTransportBindingElement();
             transport.MaxReceivedMessageSize = 20000000; // 20 megs
 
-            var cBinding = new CustomBinding();//encoding, security, transport);
+            var cBinding = new CustomBinding();
             cBinding.Elements.Add(security);
             cBinding.Elements.Add(encoding);
             cBinding.Elements.Add(transport);

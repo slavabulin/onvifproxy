@@ -60,3 +60,4 @@ d:\work\!Prog\repo\OnvifProxy\OnvifProxy\bin\Debug\log4net.dll
 d:\work\!Prog\repo\OnvifProxy\OnvifProxy\bin\Debug\log4net.xml
 d:\work\!Prog\repo\OnvifProxy\OnvifProxy\obj\Debug\OnvifProxy.exe
 d:\work\!Prog\repo\OnvifProxy\OnvifProxy\obj\Debug\OnvifProxy.pdb
+D:\work\!Prog\repo\OnvifProxy\OnvifProxy\obj\Debug\OnvifProxy.csprojResolveAssemblyReference.cache
