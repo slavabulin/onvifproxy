@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions name="MediaMarkup" targetNamespace="urn:ias:cvss:mm:1.0"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/"
+    xmlns:mm="urn:ias:cvss:mm:1.0"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xml="http://www.w3.org/XML/1998/namespace"
+    xmlns:wsa="http://www.w3.org/2005/08/addressing">
+  <wsdl:types>
+    <xsd:schema targetNamespace="urn:ias:cvss:mm:1.0" elementFormDefault="qualified">
+      <xsd:complexType name="MarkerBounds">
+        <xsd:sequence>
+          <xsd:any minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="x" type="xsd:float" use="required" />
+        <xsd:attribute name="y" type="xsd:float" use="required" />
+        <xsd:anyAttribute namespace="##any" processContents="lax" />
+      </xsd:complexType>
+
+      <xsd:complexType name="MarkerInformation">
+        <xsd:sequence>
+          <xsd:element name="Title" type="xsd:string" />
+          <xsd:element name="From" type="xsd:dateTime" />
+          <xsd:element name="To" type="xsd:dateTime" minOccurs="0" />
+          <xsd:element name="Bounds" type="mm:MarkerBounds" minOccurs="0" />
+          <xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="token" type="xsd:string" />
+      </xsd:complexType>
+      
+      <xsd:element name="SetMarker">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:choice>
+              <xsd:element name="MediaSourceToken" type="xsd:string" />
+              <xsd:element name="RecordingToken"   type="xsd:string" />
+            </xsd:choice>
+            <xsd:element name="Marker" type="mm:MarkerInformation" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="SetMarkerResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="MarkerToken" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="SetMarkerRequest">
+    <wsdl:part element="mm:SetMarker" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="SetMarkerResponse">
+    <wsdl:part element="mm:SetMarkerResponse" name="parameters"/>
+  </wsdl:message>
+  
+  <!--
+    Possible faults:
+    env:Sender / ter:InvalidArgVal / mm:InvalidBounds
+    env:Sender / ter:InvalidArgVal / mm:InvalidTime
+    env:Sender / ter:InvalidArgVal / mm:InvalidSource
+    -->
+  <wsdl:portType name="MediaMarkupPort">
+    <wsdl:operation name="SetMarker">
+      <wsdl:input message="mm:SetMarkerRequest"/>
+      <wsdl:output message="mm:SetMarkerResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MediaMarkupSOAP" type="mm:MediaMarkupPort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="SetMarker">
+      <soap:operation soapAction="urn:ias:cvss:mm:1.0/SetMarker"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MediaMarkup">
+    <wsdl:port binding="mm:MediaMarkupSOAP" name="MediaMarkupSOAP">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

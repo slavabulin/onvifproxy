@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions name="RecordingImporter" targetNamespace="urn:ias:cvss:ri:1.0"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/"
+    xmlns:ri="urn:ias:cvss:ri:1.0"
+    xmlns:cvss="urn:ias:cvss:1.0"
+    xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xml="http://www.w3.org/XML/1998/namespace"
+    xmlns:wsa="http://www.w3.org/2005/08/addressing"
+    xmlns:tt="http://www.onvif.org/ver10/schema">
+  <wsdl:types>
+    <xsd:schema targetNamespace="urn:ias:cvss:ri:1.0" elementFormDefault="qualified">
+      <xsd:import namespace="http://www.onvif.org/ver10/schema" schemaLocation="public/onvif.xsd"/>
+      <xsd:import namespace="urn:ias:cvss:1.0" schemaLocation="cvss.xsd"/>
+      <xsd:element name="GetUploadUri">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="DataSize" type="xsd:int" minOccurs="0" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetUploadUriResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="UploadUri" type="xsd:anyURI" maxOccurs="unbounded" />
+            <xsd:element name="FileUri" type="xsd:anyURI" />
+            <xsd:element name="InvalidationTime" type="xsd:dateTime" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+        
+      <xsd:complexType name="RecordingInformation">
+        <xsd:sequence>
+          <xsd:element name="MediaUri" type="xsd:anyURI" />
+          <xsd:element name="MediaSourceToken" type="xsd:string" minOccurs="0" />
+          <xsd:element name="Name" type="xsd:string" />
+          <xsd:element name="Content" type="xsd:string" minOccurs="0" />
+          <xsd:element name="Track" type="tt:TrackInformation" maxOccurs="unbounded" />
+          <xsd:choice>
+            <xsd:element name="LocationUri" type="xsd:anyURI" />
+            <xsd:element name="Location"    type="cvss:GeoCircle" />
+          </xsd:choice>
+        </xsd:sequence>
+      </xsd:complexType>
+      
+      <xsd:element name="ImportRecording">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="Recording" type="ri:RecordingInformation" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ImportRecordingResponse">
+        <xsd:complexType />
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+
+  <wsdl:message name="GetUploadUriRequest">
+    <wsdl:part element="ri:GetUploadUri" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetUploadUriResponse">
+    <wsdl:part element="ri:GetUploadUriResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="ImportRecordingRequest">
+    <wsdl:part element="ri:ImportRecording" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="ImportRecordingResponse">
+    <wsdl:part element="ri:ImportRecordingResponse" name="parameters"/>
+  </wsdl:message>
+  
+  <wsdl:portType name="RecordingImporter">
+    <wsdl:operation name="GetUploadUri">
+      <wsdl:input message="ri:GetUploadUriRequest" wsaw:Action="urn:ias:cvss:ri:1.0/GetUploadUri" />
+      <wsdl:output message="ri:GetUploadUriResponse" wsaw:Action="urn:ias:cvss:ri:1.0/GetUploadUriResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportRecording">
+      <wsdl:input message="ri:ImportRecordingRequest" wsaw:Action="urn:ias:cvss:ri:1.0/ImportRecording" />
+      <wsdl:output message="ri:ImportRecordingResponse" wsaw:Action="urn:ias:cvss:ri:1.0/ImportRecordingResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+
+  <wsdl:binding name="RecordingImporterSOAP" type="ri:RecordingImporter">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetUploadUri">
+      <soap:operation soapAction="urn:ias:cvss:ri:1.0/GetUploadUri"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportRecording">
+      <soap:operation soapAction="urn:ias:cvss:ri:1.0/ImportRecording"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="RecordingImporter">
+    <wsdl:port binding="ri:RecordingImporterSOAP" name="RecordingImporterSOAP">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

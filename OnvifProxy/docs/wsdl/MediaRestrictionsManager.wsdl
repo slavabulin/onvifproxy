@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions name="MediaRestrictionsManager" targetNamespace="urn:ias:cvss:mrm:1.0"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/"
+    xmlns:mrm="urn:ias:cvss:mrm:1.0"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xml="http://www.w3.org/XML/1998/namespace"
+    xmlns:wsa="http://www.w3.org/2005/08/addressing">
+  <wsdl:types>
+    <xsd:schema targetNamespace="urn:ias:cvss:mrm:1.0" elementFormDefault="qualified">
+      <xsd:simpleType name="RestrictionSubjectList">
+        <!-- Media / RecordingSearchAndReplay / PTZ / Imaging / any extension -->
+        <xsd:list itemType="xsd:string"/>
+      </xsd:simpleType>
+  
+      <xsd:complexType name="RestrictionType">
+        <xsd:sequence>
+          <xsd:element name="MediaSourceToken" type="xsd:string" maxOccurs="unbounded" />
+          <xsd:element name="BeginTime" type="xsd:dateTime" />
+          <xsd:element name="EndTime" type="xsd:dateTime" />
+          <xsd:element name="Subject" type="mrm:RestrictionSubjectList" />
+          <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="token" type="xsd:string" use="optional" />
+      </xsd:complexType>
+      
+      <xsd:element name="SetRestriction">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="Restriction" type="mrm:RestrictionType" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="SetRestrictionResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="RestrictionToken" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="GetRestrictions">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="Limit" type="xsd:int" minOccurs="0" />
+            <xsd:element name="StartReference" type="xsd:string" minOccurs="0" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetRestrictionsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="NextStartReference" type="xsd:string" minOccurs="0" />
+            <xsd:element name="Restriction" type="mrm:RestrictionType" minOccurs="0" maxOccurs="unbounded" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      
+      <xsd:element name="ClearRestrictions">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="RestrictionToken" type="xsd:string" maxOccurs="unbounded" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ClearRestrictionsResponse">
+        <xsd:complexType />
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  
+  <wsdl:message name="SetRestrictionRequest">
+    <wsdl:part element="mrm:SetRestriction" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="SetRestrictionResponse">
+    <wsdl:part element="mrm:SetRestrictionResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetRestrictionsRequest">
+    <wsdl:part element="mrm:GetRestrictions" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetRestrictionsResponse">
+    <wsdl:part element="mrm:GetRestrictionsResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="ClearRestrictionsRequest">
+    <wsdl:part element="mrm:ClearRestrictions" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="ClearRestrictionsResponse">
+    <wsdl:part element="mrm:ClearRestrictionsResponse" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:portType name="MediaRestrictionsManager">
+    <wsdl:operation name="SetRestriction">
+      <wsdl:input message="mrm:SetRestrictionRequest"/>
+      <wsdl:output message="mrm:SetRestrictionResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetRestrictions">
+      <wsdl:input message="mrm:GetRestrictionsRequest"/>
+      <wsdl:output message="mrm:GetRestrictionsResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="ClearRestrictions">
+      <wsdl:input message="mrm:ClearRestrictionsRequest"/>
+      <wsdl:output message="mrm:ClearRestrictionsResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  
+  <wsdl:binding name="MediaRestrictionsManagerSOAP" type="mrm:MediaRestrictionsManager">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="SetRestriction">
+      <soap:operation soapAction="urn:ias:cvss:mrm:1.0/SetRestriction"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRestrictions">
+      <soap:operation soapAction="urn:ias:cvss:mrm:1.0/GetRestrictions"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ClearRestrictions">
+      <soap:operation soapAction="urn:ias:cvss:mrm:1.0/ClearRestrictions"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MediaRestrictionsManager">
+    <wsdl:port binding="mrm:MediaRestrictionsManagerSOAP" name="MediaRestrictionsManagerSOAP">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

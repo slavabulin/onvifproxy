@@ -1,0 +1,9 @@
+D:\work\!Prog\repo\OnvifProxy\ConsoleApplication1\bin\Release\App.config
+D:\work\!Prog\repo\OnvifProxy\ConsoleApplication1\bin\Release\OnvifProxy.exe.config
+D:\work\!Prog\repo\OnvifProxy\ConsoleApplication1\bin\Release\OnvifProxy.exe
+D:\work\!Prog\repo\OnvifProxy\ConsoleApplication1\bin\Release\OnvifProxy.pdb
+D:\work\!Prog\repo\OnvifProxy\ConsoleApplication1\bin\Release\log4net.dll
+D:\work\!Prog\repo\OnvifProxy\ConsoleApplication1\bin\Release\log4net.xml
+D:\work\!Prog\repo\OnvifProxy\ConsoleApplication1\obj\x86\Release\OnvifProxy.exe
+D:\work\!Prog\repo\OnvifProxy\ConsoleApplication1\obj\x86\Release\OnvifProxy.pdb
+D:\work\!Prog\repo\OnvifProxy\ConsoleApplication1\obj\x86\Release\OnvifProxy.csprojResolveAssemblyReference.cache

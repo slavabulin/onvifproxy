@@ -1,0 +1,777 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+      <xs:complexType>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="Solution_Path">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="SolutionPath" type="xs:string" minOccurs="0" />
+                <xs:element name="SolutionVersion" type="xs:string" minOccurs="0" />
+                <xs:element name="PlogVersion" type="xs:unsignedInt" minOccurs="0" />
+                <xs:element name="ModificationDate" msdata:DateTimeMode="Utc" type="xs:dateTime" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="PVS-Studio_Analysis_Log">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="FavIcon" type="xs:boolean" minOccurs="0" />
+                <xs:element name="Level" type="xs:unsignedInt" minOccurs="0" />
+                <xs:element name="DefaultOrder" type="xs:int" minOccurs="0" />
+                <xs:element name="ErrorCode" type="xs:string" minOccurs="0" />
+                <xs:element name="Message" type="xs:string" />
+                <xs:element name="Project" type="xs:string" minOccurs="0" />
+                <xs:element name="ShortFile" type="xs:string" minOccurs="0" />
+                <xs:element name="Line" type="xs:int" />
+                <xs:element name="FalseAlarm" type="xs:boolean" minOccurs="0" />
+                <xs:element name="File" type="xs:string" />
+                <xs:element name="CodePrev" type="xs:unsignedInt" minOccurs="0" />
+                <xs:element name="CodeCurrent" type="xs:unsignedInt" minOccurs="0" />
+                <xs:element name="CodeNext" type="xs:unsignedInt" minOccurs="0" />
+                <xs:element name="TrialMessage" type="xs:boolean" minOccurs="0" />
+                <xs:element name="Analyzer" type="xs:int" minOccurs="0" />
+                <xs:element name="LineExtension" type="xs:string" minOccurs="0" />
+                <xs:element name="Retired" type="xs:boolean" default="false" minOccurs="0" />
+                <xs:element name="AnalyzedSourceFiles" type="xs:string" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+      </xs:complexType>
+      <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+        <xs:selector xpath=".//PVS-Studio_Analysis_Log" />
+        <xs:field xpath="Line" />
+        <xs:field xpath="Message" />
+        <xs:field xpath="File" />
+      </xs:unique>
+    </xs:element>
+  </xs:schema>
+  <Solution_Path>
+    <SolutionPath>D:\work\!Prog\repo\OnvifProxy\OnvifProxy.sln</SolutionPath>
+    <SolutionVersion>12.0</SolutionVersion>
+    <PlogVersion>4</PlogVersion>
+    <ModificationDate>2017-01-30T14:04:03.6814023Z</ModificationDate>
+  </Solution_Path>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>2</Level>
+    <DefaultOrder>1</DefaultOrder>
+    <ErrorCode>V3072</ErrorCode>
+    <Message>The 'Restriction' class containing IDisposable members does not itself implement IDisposable. Inspect: restrictionTimer.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>MediaRestrictionManager.cs</ShortFile>
+    <Line>37</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\MediaRestrictionManager.cs</File>
+    <CodePrev>0</CodePrev>
+    <CodeCurrent>191026724</CodeCurrent>
+    <CodeNext>123</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>37,42</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>2</Level>
+    <DefaultOrder>2</DefaultOrder>
+    <ErrorCode>V3117</ErrorCode>
+    <Message>Constructor parameter 'restriction' is not used.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>MediaRestrictionManager.cs</ShortFile>
+    <Line>43</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\MediaRestrictionManager.cs</File>
+    <CodePrev>945784054</CodePrev>
+    <CodeCurrent>1771064482</CodeCurrent>
+    <CodeNext>123</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension />
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>3</Level>
+    <DefaultOrder>3</DefaultOrder>
+    <ErrorCode>V3013</ErrorCode>
+    <Message>It is odd that the body of 'GetRemoteDiscoveryMode' function is fully equivalent to the body of 'GetDiscoveryMode' function (891, line 900).</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>NVTClient.cs</ShortFile>
+    <Line>891</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\NVTClient.cs</File>
+    <CodePrev>0</CodePrev>
+    <CodeCurrent>3665623480</CodeCurrent>
+    <CodeNext>123</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>891,900</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>1</Level>
+    <DefaultOrder>4</DefaultOrder>
+    <ErrorCode>V3095</ErrorCode>
+    <Message>The 'MediaSourceList' object was used before it was verified against null. Check lines: 83, 99.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>MediaSourceList.cs</ShortFile>
+    <Line>83</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\MediaSourceList.cs</File>
+    <CodePrev>36679629</CodePrev>
+    <CodeCurrent>1280531755</CodeCurrent>
+    <CodeNext>123</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>83,99</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>3</Level>
+    <DefaultOrder>5</DefaultOrder>
+    <ErrorCode>V3008</ErrorCode>
+    <Message>The 'findCriteria.ScopeMatchBy' variable is assigned values twice successively. Perhaps this is a mistake. Check lines: 68, 67.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>NVTDiscoveryClient.cs</ShortFile>
+    <Line>68</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\NVTDiscoveryClient.cs</File>
+    <CodePrev>1622956030</CodePrev>
+    <CodeCurrent>3764591381</CodeCurrent>
+    <CodeNext>1296105398</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>68,67</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>3</Level>
+    <DefaultOrder>6</DefaultOrder>
+    <ErrorCode>V3013</ErrorCode>
+    <Message>It is odd that the body of 'AddBindingParameters' function is fully equivalent to the body of 'ApplyClientBehavior' function (20, line 26).</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>SecurityContractBehaviorAttribute.cs</ShortFile>
+    <Line>20</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\SecurityContractBehaviorAttribute.cs</File>
+    <CodePrev>0</CodePrev>
+    <CodeCurrent>2408131314</CodeCurrent>
+    <CodeNext>123</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>20,26</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>2</Level>
+    <DefaultOrder>7</DefaultOrder>
+    <ErrorCode>V3117</ErrorCode>
+    <Message>Constructor parameter 'usertype' is not used.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>SecurityOperationBehaviorAttribute.cs</ShortFile>
+    <Line>38</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\SecurityOperationBehaviorAttribute.cs</File>
+    <CodePrev>0</CodePrev>
+    <CodeCurrent>349541596</CodeCurrent>
+    <CodeNext>123</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension />
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>3</Level>
+    <DefaultOrder>8</DefaultOrder>
+    <ErrorCode>V3024</ErrorCode>
+    <Message>An odd precise comparison: timeout != 0. Consider using a comparison with defined precision: Math.Abs(A - B) &gt; Epsilon.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>SubscriptionManager.cs</ShortFile>
+    <Line>179</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\SubscriptionManager.cs</File>
+    <CodePrev>0</CodePrev>
+    <CodeCurrent>2480283152</CodeCurrent>
+    <CodeNext>123</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension />
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>1</Level>
+    <DefaultOrder>9</DefaultOrder>
+    <ErrorCode>V3010</ErrorCode>
+    <Message>The return value of function 'AddHours' is required to be utilized.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>SubscriptionManager.cs</ShortFile>
+    <Line>564</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\SubscriptionManager.cs</File>
+    <CodePrev>2730299592</CodePrev>
+    <CodeCurrent>1574399914</CodeCurrent>
+    <CodeNext>125</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension />
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>1</Level>
+    <DefaultOrder>10</DefaultOrder>
+    <ErrorCode>V3010</ErrorCode>
+    <Message>The return value of function 'AddMinutes' is required to be utilized.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>SubscriptionManager.cs</ShortFile>
+    <Line>570</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\SubscriptionManager.cs</File>
+    <CodePrev>919410604</CodePrev>
+    <CodeCurrent>1913089752</CodeCurrent>
+    <CodeNext>125</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension />
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>3</Level>
+    <DefaultOrder>11</DefaultOrder>
+    <ErrorCode>V3052</ErrorCode>
+    <Message>The original exception object 'e' was swallowed. Stack of original exception could be lost.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>TyphoonCom.cs</ShortFile>
+    <Line>428</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\TyphoonCom.cs</File>
+    <CodePrev>125</CodePrev>
+    <CodeCurrent>612729777</CodeCurrent>
+    <CodeNext>123</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>428,431</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>3</Level>
+    <DefaultOrder>12</DefaultOrder>
+    <ErrorCode>V3008</ErrorCode>
+    <Message>The 'conf' variable is assigned values twice successively. Perhaps this is a mistake. Check lines: 400, 399.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>TyphoonCom.cs</ShortFile>
+    <Line>400</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\TyphoonCom.cs</File>
+    <CodePrev>2529368742</CodePrev>
+    <CodeCurrent>34806433</CodeCurrent>
+    <CodeNext>3579799691</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>400,399</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>3</Level>
+    <DefaultOrder>13</DefaultOrder>
+    <ErrorCode>V3008</ErrorCode>
+    <Message>The 'tmp' variable is assigned values twice successively. Perhaps this is a mistake. Check lines: 1332, 1331.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>TyphoonCom.cs</ShortFile>
+    <Line>1332</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\TyphoonCom.cs</File>
+    <CodePrev>76605465</CodePrev>
+    <CodeCurrent>808237891</CodeCurrent>
+    <CodeNext>3785157424</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>1332,1331</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>3</Level>
+    <DefaultOrder>14</DefaultOrder>
+    <ErrorCode>V3008</ErrorCode>
+    <Message>The 'tmp' variable is assigned values twice successively. Perhaps this is a mistake. Check lines: 1366, 1364.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>TyphoonCom.cs</ShortFile>
+    <Line>1366</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\TyphoonCom.cs</File>
+    <CodePrev>0</CodePrev>
+    <CodeCurrent>808237891</CodeCurrent>
+    <CodeNext>3785157424</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>1366,1364</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>2</Level>
+    <DefaultOrder>15</DefaultOrder>
+    <ErrorCode>V3114</ErrorCode>
+    <Message>IDisposable object 'typhmsg' is not disposed before method returns.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>TyphoonCom.cs</ShortFile>
+    <Line>1767</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\TyphoonCom.cs</File>
+    <CodePrev>123</CodePrev>
+    <CodeCurrent>3165766156</CodeCurrent>
+    <CodeNext>125</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension />
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>2</Level>
+    <DefaultOrder>16</DefaultOrder>
+    <ErrorCode>V3114</ErrorCode>
+    <Message>IDisposable object 'msg' is not disposed before method returns.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>TyphoonCom.cs</ShortFile>
+    <Line>1776</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\TyphoonCom.cs</File>
+    <CodePrev>123</CodePrev>
+    <CodeCurrent>3209799180</CodeCurrent>
+    <CodeNext>20219</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension />
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>3</Level>
+    <DefaultOrder>17</DefaultOrder>
+    <ErrorCode>V3008</ErrorCode>
+    <Message>The 'msg' variable is assigned values twice successively. Perhaps this is a mistake. Check lines: 1777, 1776.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>TyphoonCom.cs</ShortFile>
+    <Line>1777</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\TyphoonCom.cs</File>
+    <CodePrev>3209799180</CodePrev>
+    <CodeCurrent>20219</CodeCurrent>
+    <CodeNext>125</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>1777,1776</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>3</Level>
+    <DefaultOrder>18</DefaultOrder>
+    <ErrorCode>V3008</ErrorCode>
+    <Message>The 'TyphMsg' variable is assigned values twice successively. Perhaps this is a mistake. Check lines: 1963, 1962.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>TyphoonCom.cs</ShortFile>
+    <Line>1963</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\TyphoonCom.cs</File>
+    <CodePrev>2181087756</CodePrev>
+    <CodeCurrent>3624565879</CodeCurrent>
+    <CodeNext>709009</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>1963,1962</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>3</Level>
+    <DefaultOrder>19</DefaultOrder>
+    <ErrorCode>V3013</ErrorCode>
+    <Message>It is odd that the body of 'GetCACertificates' function is fully equivalent to the body of 'GetCertificates' function (1952, line 1994).</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>Service1.svc.cs</ShortFile>
+    <Line>1952</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\Service1.svc.cs</File>
+    <CodePrev>125</CodePrev>
+    <CodeCurrent>2263296719</CodeCurrent>
+    <CodeNext>123</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>1952,1994</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>3</Level>
+    <DefaultOrder>20</DefaultOrder>
+    <ErrorCode>V3013</ErrorCode>
+    <Message>It is odd that the body of 'GetPkcs10Request' function is fully equivalent to the body of 'GetAccessPolicy' function (1980, line 2005).</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>Service1.svc.cs</ShortFile>
+    <Line>1980</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\Service1.svc.cs</File>
+    <CodePrev>125</CodePrev>
+    <CodeCurrent>460738286</CodeCurrent>
+    <CodeNext>123</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>1980,2005</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>3</Level>
+    <DefaultOrder>21</DefaultOrder>
+    <ErrorCode>V3008</ErrorCode>
+    <Message>The 'tmpconfstr' variable is assigned values twice successively. Perhaps this is a mistake. Check lines: 842, 835.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>Service1.svc.cs</ShortFile>
+    <Line>842</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\Service1.svc.cs</File>
+    <CodePrev>1474367514</CodePrev>
+    <CodeCurrent>3617559335</CodeCurrent>
+    <CodeNext>333</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>842,835</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>3</Level>
+    <DefaultOrder>22</DefaultOrder>
+    <ErrorCode>V3008</ErrorCode>
+    <Message>The 'confstr' variable is assigned values twice successively. Perhaps this is a mistake. Check lines: 1148, 1142.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>Service1.svc.cs</ShortFile>
+    <Line>1148</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\Service1.svc.cs</File>
+    <CodePrev>0</CodePrev>
+    <CodeCurrent>37029081</CodeCurrent>
+    <CodeNext>0</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>1148,1142</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>3</Level>
+    <DefaultOrder>23</DefaultOrder>
+    <ErrorCode>V3008</ErrorCode>
+    <Message>The 'confstr' variable is assigned values twice successively. Perhaps this is a mistake. Check lines: 1692, 1691.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>Service1.svc.cs</ShortFile>
+    <Line>1692</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\Service1.svc.cs</File>
+    <CodePrev>3579799691</CodePrev>
+    <CodeCurrent>37029081</CodeCurrent>
+    <CodeNext>0</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>1692,1691</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>3</Level>
+    <DefaultOrder>24</DefaultOrder>
+    <ErrorCode>V3008</ErrorCode>
+    <Message>The 'confstr' variable is assigned values twice successively. Perhaps this is a mistake. Check lines: 2065, 2064.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>Service1.svc.cs</ShortFile>
+    <Line>2065</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\Service1.svc.cs</File>
+    <CodePrev>3579799691</CodePrev>
+    <CodeCurrent>37029081</CodeCurrent>
+    <CodeNext>0</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>2065,2064</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>3</Level>
+    <DefaultOrder>25</DefaultOrder>
+    <ErrorCode>V3008</ErrorCode>
+    <Message>The 'confstr' variable is assigned values twice successively. Perhaps this is a mistake. Check lines: 2210, 2209.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>Service1.svc.cs</ShortFile>
+    <Line>2210</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\Service1.svc.cs</File>
+    <CodePrev>3579799691</CodePrev>
+    <CodeCurrent>37029081</CodeCurrent>
+    <CodeNext>0</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>2210,2209</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>3</Level>
+    <DefaultOrder>26</DefaultOrder>
+    <ErrorCode>V3008</ErrorCode>
+    <Message>The 'confstr' variable is assigned values twice successively. Perhaps this is a mistake. Check lines: 2299, 2298.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>Service1.svc.cs</ShortFile>
+    <Line>2299</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\Service1.svc.cs</File>
+    <CodePrev>3579799691</CodePrev>
+    <CodeCurrent>37029081</CodeCurrent>
+    <CodeNext>0</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>2299,2298</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>3</Level>
+    <DefaultOrder>27</DefaultOrder>
+    <ErrorCode>V3008</ErrorCode>
+    <Message>The 'today' variable is assigned values twice successively. Perhaps this is a mistake. Check lines: 2482, 2472.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>Service1.svc.cs</ShortFile>
+    <Line>2482</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\Service1.svc.cs</File>
+    <CodePrev>309397946</CodePrev>
+    <CodeCurrent>2725520537</CodeCurrent>
+    <CodeNext>91156467</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>2482,2472</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>3</Level>
+    <DefaultOrder>28</DefaultOrder>
+    <ErrorCode>V3008</ErrorCode>
+    <Message>The 'typhmsgresp' variable is assigned values twice successively. Perhaps this is a mistake. Check lines: 2531, 2529.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>Service1.svc.cs</ShortFile>
+    <Line>2531</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\Service1.svc.cs</File>
+    <CodePrev>0</CodePrev>
+    <CodeCurrent>1898087470</CodeCurrent>
+    <CodeNext>0</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>2531,2529</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>2</Level>
+    <DefaultOrder>29</DefaultOrder>
+    <ErrorCode>V3114</ErrorCode>
+    <Message>IDisposable object 'typhmsgresp' is not disposed before method returns.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>Service1.svc.cs</ShortFile>
+    <Line>2598</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\Service1.svc.cs</File>
+    <CodePrev>123</CodePrev>
+    <CodeCurrent>2930446937</CodeCurrent>
+    <CodeNext>1298112016</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension />
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>3</Level>
+    <DefaultOrder>30</DefaultOrder>
+    <ErrorCode>V3008</ErrorCode>
+    <Message>The 'typhmsgresp' variable is assigned values twice successively. Perhaps this is a mistake. Check lines: 2603, 2598.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>Service1.svc.cs</ShortFile>
+    <Line>2603</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\Service1.svc.cs</File>
+    <CodePrev>2799134553</CodePrev>
+    <CodeCurrent>1884439596</CodeCurrent>
+    <CodeNext>123</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>2603,2598</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>3</Level>
+    <DefaultOrder>31</DefaultOrder>
+    <ErrorCode>V3008</ErrorCode>
+    <Message>The 'typhmsgresp' variable is assigned values twice successively. Perhaps this is a mistake. Check lines: 2634, 2632.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>Service1.svc.cs</ShortFile>
+    <Line>2634</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\Service1.svc.cs</File>
+    <CodePrev>0</CodePrev>
+    <CodeCurrent>1898087486</CodeCurrent>
+    <CodeNext>0</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>2634,2632</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>3</Level>
+    <DefaultOrder>32</DefaultOrder>
+    <ErrorCode>V3008</ErrorCode>
+    <Message>The 'mediaprofile' variable is assigned values twice successively. Perhaps this is a mistake. Check lines: 2643, 2640.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>Service1.svc.cs</ShortFile>
+    <Line>2643</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\Service1.svc.cs</File>
+    <CodePrev>232119272</CodePrev>
+    <CodeCurrent>520778845</CodeCurrent>
+    <CodeNext>197027249</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>2643,2640</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>3</Level>
+    <DefaultOrder>33</DefaultOrder>
+    <ErrorCode>V3008</ErrorCode>
+    <Message>The 'tmptime' variable is assigned values twice successively. Perhaps this is a mistake. Check lines: 3196, 3195.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>Service1.svc.cs</ShortFile>
+    <Line>3196</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\Service1.svc.cs</File>
+    <CodePrev>629591473</CodePrev>
+    <CodeCurrent>4291345925</CodeCurrent>
+    <CodeNext>652001174</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>3196,3195</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>3</Level>
+    <DefaultOrder>34</DefaultOrder>
+    <ErrorCode>V3008</ErrorCode>
+    <Message>The 'confstr' variable is assigned values twice successively. Perhaps this is a mistake. Check lines: 3282, 3279.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>Service1.svc.cs</ShortFile>
+    <Line>3282</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\Service1.svc.cs</File>
+    <CodePrev>0</CodePrev>
+    <CodeCurrent>37029081</CodeCurrent>
+    <CodeNext>0</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>3282,3279</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>3</Level>
+    <DefaultOrder>35</DefaultOrder>
+    <ErrorCode>V3008</ErrorCode>
+    <Message>The 'tmptime' variable is assigned values twice successively. Perhaps this is a mistake. Check lines: 3396, 3395.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>Service1.svc.cs</ShortFile>
+    <Line>3396</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\Service1.svc.cs</File>
+    <CodePrev>629591473</CodePrev>
+    <CodeCurrent>2328754789</CodeCurrent>
+    <CodeNext>9297150</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>3396,3395</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>3</Level>
+    <DefaultOrder>36</DefaultOrder>
+    <ErrorCode>V3008</ErrorCode>
+    <Message>The 'confstr' variable is assigned values twice successively. Perhaps this is a mistake. Check lines: 5687, 5686.</Message>
+    <Project>OnvifProxy</Project>
+    <ShortFile>Service1.svc.cs</ShortFile>
+    <Line>5687</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>D:\work\!Prog\repo\OnvifProxy\OnvifProxy\Service1.svc.cs</File>
+    <CodePrev>3579799691</CodePrev>
+    <CodeCurrent>37029081</CodeCurrent>
+    <CodeNext>4129044676</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>5687,5686</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+</NewDataSet>
