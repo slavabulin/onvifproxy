@@ -30,6 +30,7 @@ namespace OnvifProxy
             RenewTimer.AutoReset = true;
             RenewTimer.Enabled = true;
         }
+
         private static void GetMediaSourcesFromTyphoon(object source, ElapsedEventArgs e)
         {
             TyphoonCom.log.Debug("GetMediaSourcesFromTyphoon called");
@@ -54,6 +55,12 @@ namespace OnvifProxy
                         getMediaSourceResp = (MediaSourcesProvider.GetMediaSourcesResponse)xmlSerializer.Deserialize(ms);
                         MediaSourceList.Clear();
                         TyphoonCom.log.DebugFormat("MediaSourceList - {0}", MediaSourceList.Count);
+                        if (getMediaSourceResp == null
+                            || getMediaSourceResp.MediaSource == null
+                            || getMediaSourceResp.MediaSource.Length == 0)
+                        {
+                            return;
+                        }
                         foreach (MediaSourcesProvider.MediaSourceType mediaSource in getMediaSourceResp.MediaSource)
                         {
                             MediaSourceList.Add(mediaSource);
@@ -67,6 +74,7 @@ namespace OnvifProxy
                 }
             }            
         }
+
         public static MediaSourcesProvider.MediaSourceType[] GetUpdatesOfMediaSourceList(string tokenstring)
         {
             if (String.IsNullOrEmpty(tokenstring)) return null;

@@ -145,34 +145,6 @@ namespace OnvifProxy
         public System.DateTime eventTime;
         public System.Timers.Timer EventTimeoutTimer;//:IDisposable
 
-        //----implementing IDisposable-------------------
-        private bool _isDisposed = false;
-        public void Dispose()
-        {
-            Dispose(true);
-            //msgTimer.Dispose();
-            GC.SuppressFinalize(this);//чтобы при ошибке не вывалиться в деструктор
-        }
-        protected virtual void Dispose(bool isDisposing)
-        {
-            if (this._isDisposed)
-                return;
-
-            if (isDisposing)
-            {
-                // Release only managed resources.
-                EventTimeoutTimer.Close();
-            }
-            // Always release unmanaged resources here.
-
-            // Indicate that the object has been disposed.
-            this._isDisposed = true;
-        }
-        ~TyphoonEvent()
-        {
-            Dispose(false);
-        }
-        //-----------------------------------------------
         public TyphoonEvent(EventData curData, double timeout)
         {
 
@@ -224,6 +196,34 @@ namespace OnvifProxy
                 }
             }
         }
+        //----implementing IDisposable-------------------
+        private bool _isDisposed = false;
+        public void Dispose()
+        {
+            Dispose(true);
+            //msgTimer.Dispose();
+            GC.SuppressFinalize(this);//чтобы при ошибке не вывалиться в деструктор
+        }
+        protected virtual void Dispose(bool isDisposing)
+        {
+            if (this._isDisposed)
+                return;
+
+            if (isDisposing)
+            {
+                // Release only managed resources.
+                EventTimeoutTimer.Close();
+            }
+            // Always release unmanaged resources here.
+
+            // Indicate that the object has been disposed.
+            this._isDisposed = true;
+        }
+        ~TyphoonEvent()
+        {
+            Dispose(false);
+        }
+        //-----------------------------------------------
     }
 
     public static class EventStorage

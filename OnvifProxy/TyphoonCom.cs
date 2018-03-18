@@ -974,6 +974,7 @@ namespace OnvifProxy
                                 //здесь добавим в EventStorage
                                 using (TyphoonEvent tevent = new TyphoonEvent(eventdata, TYPHOON_EVENT_TIMEOUT))
                                 {
+                                    //TODO : check if devicenumber exists
                                     EventStorage.AddEvent(tevent);
                                 }                                
                                 //------------------------------------------

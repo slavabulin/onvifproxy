@@ -61,3 +61,13 @@ d:\work\!Prog\repo\OnvifProxy\OnvifProxy\bin\Debug\log4net.xml
 d:\work\!Prog\repo\OnvifProxy\OnvifProxy\obj\Debug\OnvifProxy.exe
 d:\work\!Prog\repo\OnvifProxy\OnvifProxy\obj\Debug\OnvifProxy.pdb
 D:\work\!Prog\repo\OnvifProxy\OnvifProxy\obj\Debug\OnvifProxy.csprojResolveAssemblyReference.cache
+e:\work\sla\repo\OnvifProxy\bin\Debug\App.config
+e:\work\sla\repo\OnvifProxy\bin\Debug\OnvifProxy.exe.config
+e:\work\sla\repo\OnvifProxy\bin\Debug\OnvifProxy.exe
+e:\work\sla\repo\OnvifProxy\bin\Debug\OnvifProxy.pdb
+e:\work\sla\repo\OnvifProxy\bin\Debug\log4net.dll
+e:\work\sla\repo\OnvifProxy\bin\Debug\log4net.xml
+e:\work\sla\repo\OnvifProxy\obj\Debug\OnvifProxy.csprojResolveAssemblyReference.cache
+e:\work\sla\repo\OnvifProxy\obj\Debug\OnvifProxy.csproj.CoreCompileInputs.cache
+e:\work\sla\repo\OnvifProxy\obj\Debug\OnvifProxy.exe
+e:\work\sla\repo\OnvifProxy\obj\Debug\OnvifProxy.pdb

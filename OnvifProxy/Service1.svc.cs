@@ -3698,26 +3698,7 @@ namespace OnvifProxy
         {
             throw new NotImplementedException();
         }
-
-        //public object DeserializeReply(System.ServiceModel.Channels.Message message, object[] parameters)
-        //{
-        //    return DeserializeReply(message, parameters);
-        //}
-
-        //public System.ServiceModel.Channels.Message SerializeRequest(MessageVersion messageVersion, object[] parameters)
-        //{
-        //    //System.ServiceModel.Channels.Message message = System.ServiceModel.Channels.Message.CreateMessage(messageVersion, action);
-
-        //    ////address.ApplyTo(message);
-        //    ////UriBuilder builder = new UriBuilder(message.Headers.To);
-        //    ////builder.Path = builder.Path + "/" + this.operationName;
-        //    ////builder.Query = SerializeParameters(parameterInfos, parameters);
-        //    ////message.Headers.To = builder.Uri;
-        //    ////message.Properties.Via = builder.Uri;
-
-        //    //return message;
-        //    return SerializeRequest(messageVersion, parameters);
-        //}
+        
     }
     public partial class Service1 : MediaSourcesProvider.IMediaSourcesProvider
     {

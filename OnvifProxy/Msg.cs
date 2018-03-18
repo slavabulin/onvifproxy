@@ -189,22 +189,38 @@ namespace OnvifProxy
             SendAsyncMsg(msg);
             var respMsg = GetResponceMsg(msg.MsgID);
             return respMsg;
-        }        
+        }
         private static Msg GetResponceMsg(UInt32 msgID)
         {
             //TyphoonCom.log.DebugFormat("msgID- {0}", msg.msgID.ToString());
-
             CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
-            CancellationToken token = cancelTokenSource.Token;
-            Task<Msg> task = new Task<Msg>(() => TaskGetResponceMsg(msgID, token), token);
-
-            task.Start();
-            task.Wait(TYPHOON_RESPONSE_TIMEOUT);
-
-            cancelTokenSource.Cancel();
-            cancelTokenSource.Dispose();
-            var msg = task.Result;
-            task.Dispose();
+            Task<Msg> task = null;
+            Msg msg = null;
+            try
+            {
+                var token = cancelTokenSource.Token;
+                task = Task<Msg>.Factory.StartNew(() => TaskGetResponceMsg(msgID, token), token);
+                task.Wait(TYPHOON_RESPONSE_TIMEOUT);
+                cancelTokenSource.Cancel();
+                if(task!=null) msg = task.Result;//??????????? 
+            }
+            catch (ObjectDisposedException ode)
+            {
+                TyphoonCom.log.ErrorFormat("msgID- {0}, Exception - {1}", msgID.ToString(), ode.StackTrace.ToString());
+            }
+            catch (ArgumentNullException ane)
+            {
+                TyphoonCom.log.ErrorFormat("msgID- {0}, Exception - {1}", msgID.ToString(), ane.StackTrace.ToString());
+            }
+            catch (AggregateException ae)
+            {
+                TyphoonCom.log.ErrorFormat("msgID- {0}, Exception - {1}", msgID.ToString(), ae.StackTrace.ToString());
+            }
+            finally
+            {
+                if (task != null) task.Dispose();
+                if (cancelTokenSource != null) cancelTokenSource.Dispose();
+            }
             return msg;
         }
         private static void PutMsg(Msg msg)

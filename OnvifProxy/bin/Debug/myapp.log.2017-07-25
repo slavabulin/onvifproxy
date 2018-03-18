@@ -1,0 +1,326 @@
+2017-07-25 16:03:46,143 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2017-07-25 16:03:48,992 [DEBUG] OnvifProxy.TyphoonCom - done?
+2017-07-25 16:03:49,982 [DEBUG] OnvifProxy.TyphoonCom - Send_HelloTyphoon sent
+2017-07-25 16:03:49,988 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2017-07-25 16:03:51,246 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2017-07-25 16:03:54,005 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2017-07-25 16:03:54,427 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2017-07-25 16:04:02,077 [DEBUG] OnvifProxy.TyphoonCom - Faulted
+2017-07-25 16:04:02,088 [DEBUG] OnvifProxy.TyphoonCom - GetMediaSourcesFromTyphoon called
+2017-07-25 16:04:02,089 [DEBUG] OnvifProxy.TyphoonCom - MsgID- 2
+2017-07-25 16:04:02,832 [DEBUG] OnvifProxy.TyphoonCom - MediaSourceList - 0
+2017-07-25 16:04:02,833 [DEBUG] OnvifProxy.TyphoonCom - MediaSourceList - 4
+2017-07-25 16:04:07,986 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2017-07-25 16:04:08,110 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2017-07-25 16:04:08,110 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2017-07-25 16:04:08,617 [DEBUG] OnvifProxy.TyphoonCom - Faulted
+2017-07-25 16:07:08,237 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2017-07-25 16:07:09,084 [DEBUG] OnvifProxy.TyphoonCom - done?
+2017-07-25 16:07:09,116 [DEBUG] OnvifProxy.TyphoonCom - Send_HelloTyphoon sent
+2017-07-25 16:07:09,119 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2017-07-25 16:07:09,164 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2017-07-25 16:07:09,670 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2017-07-25 16:07:09,710 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2017-07-25 16:07:10,756 [DEBUG] OnvifProxy.TyphoonCom - Faulted
+2017-07-25 16:07:10,757 [DEBUG] OnvifProxy.TyphoonCom - GetMediaSourcesFromTyphoon called
+2017-07-25 16:07:10,759 [DEBUG] OnvifProxy.TyphoonCom - MsgID- 2
+2017-07-25 16:07:10,982 [DEBUG] OnvifProxy.TyphoonCom - MediaSourceList - 0
+2017-07-25 16:07:10,982 [DEBUG] OnvifProxy.TyphoonCom - MediaSourceList - 4
+2017-07-25 16:07:16,073 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2017-07-25 16:07:16,208 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2017-07-25 16:07:16,208 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2017-07-25 16:07:16,694 [DEBUG] OnvifProxy.TyphoonCom - Faulted
+2017-07-25 16:11:05,905 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2017-07-25 16:11:06,439 [DEBUG] OnvifProxy.TyphoonCom - done?
+2017-07-25 16:11:06,474 [DEBUG] OnvifProxy.TyphoonCom - Send_HelloTyphoon sent
+2017-07-25 16:11:06,478 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2017-07-25 16:11:06,541 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2017-07-25 16:11:07,202 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2017-07-25 16:11:07,257 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2017-07-25 16:11:08,435 [DEBUG] OnvifProxy.TyphoonCom - Faulted
+2017-07-25 16:11:08,437 [DEBUG] OnvifProxy.TyphoonCom - GetMediaSourcesFromTyphoon called
+2017-07-25 16:11:08,438 [DEBUG] OnvifProxy.TyphoonCom - MsgID- 2
+2017-07-25 16:11:08,560 [DEBUG] OnvifProxy.TyphoonCom - MediaSourceList - 0
+2017-07-25 16:11:08,560 [DEBUG] OnvifProxy.TyphoonCom - MediaSourceList - 4
+2017-07-25 16:14:19,920 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2017-07-25 16:14:20,409 [DEBUG] OnvifProxy.TyphoonCom - done?
+2017-07-25 16:14:26,353 [DEBUG] OnvifProxy.TyphoonCom - Send_HelloTyphoon sent
+2017-07-25 16:14:42,176 [DEBUG] OnvifProxy.TyphoonCom - TyphoonMsgManager.SendMsg() failed to send msg - TyphoonMsgId already exists in RequestQueue, Msg skipped
+2017-07-25 16:14:42,183 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2017-07-25 16:14:42,252 [DEBUG] OnvifProxy.TyphoonCom - stream.DataAvailable - Exception Ссылка на объект не указывает на экземпляр объекта.
+2017-07-25 16:14:42,314 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2017-07-25 16:14:45,658 [DEBUG] OnvifProxy.TyphoonCom - done?
+2017-07-25 16:14:45,667 [DEBUG] OnvifProxy.TyphoonCom - TyphoonMsgManager.SendMsg() failed to send msg - TyphoonMsgId already exists in RequestQueue, Msg skipped
+2017-07-25 16:14:45,667 [DEBUG] OnvifProxy.TyphoonCom - Send_HelloTyphoon sent
+2017-07-25 16:14:45,668 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2017-07-25 16:14:59,811 [DEBUG] OnvifProxy.TyphoonCom - done?
+2017-07-25 16:14:59,835 [DEBUG] OnvifProxy.TyphoonCom - ObjectDisposedException - Доступ к ликвидированному объекту невозможен.
+Имя объекта: "System.Net.Sockets.NetworkStream".
+2017-07-25 16:14:59,849 [DEBUG] OnvifProxy.TyphoonCom - stream.DataAvailable - Exception Ссылка на объект не указывает на экземпляр объекта.
+2017-07-25 16:14:59,850 [DEBUG] OnvifProxy.TyphoonCom - Send_HelloTyphoon sent
+2017-07-25 16:14:59,850 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2017-07-25 16:14:59,864 [DEBUG] OnvifProxy.TyphoonCom - stream.DataAvailable - Exception Ссылка на объект не указывает на экземпляр объекта.
+2017-07-25 16:14:59,944 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2017-07-25 16:14:59,982 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2017-07-25 16:15:00,852 [DEBUG] OnvifProxy.TyphoonCom - done?
+2017-07-25 16:15:00,859 [DEBUG] OnvifProxy.TyphoonCom - TyphoonMsgManager.SendMsg() failed to send msg - TyphoonMsgId already exists in RequestQueue, Msg skipped
+2017-07-25 16:15:00,860 [DEBUG] OnvifProxy.TyphoonCom - Send_HelloTyphoon sent
+2017-07-25 16:15:00,860 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2017-07-25 16:15:00,996 [DEBUG] OnvifProxy.TyphoonCom - Faulted
+2017-07-25 16:15:00,997 [DEBUG] OnvifProxy.TyphoonCom - GetMediaSourcesFromTyphoon called
+2017-07-25 16:15:00,998 [DEBUG] OnvifProxy.TyphoonCom - MsgID- 2
+2017-07-25 16:15:01,212 [DEBUG] OnvifProxy.TyphoonCom - MediaSourceList - 0
+2017-07-25 16:15:01,212 [DEBUG] OnvifProxy.TyphoonCom - MediaSourceList - 4
+2017-07-25 16:15:13,205 [DEBUG] OnvifProxy.TyphoonCom - PacketParseEx - Не удается прочитать данные из транспортного соединения: EndReceive может вызываться только один раз для каждой асинхронной операции..
+2017-07-25 16:15:13,210 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2017-07-25 16:15:46,647 [DEBUG] OnvifProxy.TyphoonCom - PacketParseEx - Не удается прочитать данные из транспортного соединения: EndReceive может вызываться только один раз для каждой асинхронной операции..
+2017-07-25 16:15:46,660 [DEBUG] OnvifProxy.TyphoonCom - stream.DataAvailable - Exception Ссылка на объект не указывает на экземпляр объекта.
+2017-07-25 16:15:46,749 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2017-07-25 16:15:46,750 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2017-07-25 16:15:47,318 [DEBUG] OnvifProxy.TyphoonCom - Faulted
+2017-07-25 16:15:47,636 [DEBUG] OnvifProxy.TyphoonCom - done?
+2017-07-25 16:15:47,643 [DEBUG] OnvifProxy.TyphoonCom - Send_HelloTyphoon sent
+2017-07-25 16:15:47,643 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2017-07-25 16:16:00,550 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2017-07-25 16:16:00,839 [DEBUG] OnvifProxy.TyphoonCom - done?
+2017-07-25 16:16:10,821 [DEBUG] OnvifProxy.TyphoonCom - Send_HelloTyphoon sent
+2017-07-25 16:16:10,826 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2017-07-25 16:16:11,128 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2017-07-25 16:16:11,822 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2017-07-25 16:16:12,004 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2017-07-25 16:16:15,532 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2017-07-25 16:16:15,535 [DEBUG] OnvifProxy.TyphoonCom - GetMediaSourcesFromTyphoon called
+2017-07-25 16:16:15,537 [DEBUG] OnvifProxy.TyphoonCom - MsgID- 2
+2017-07-25 16:16:15,711 [DEBUG] OnvifProxy.TyphoonCom - MediaSourceList - 0
+2017-07-25 16:16:15,711 [DEBUG] OnvifProxy.TyphoonCom - MediaSourceList - 4
+2017-07-25 16:16:15,711 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2017-07-25 16:20:04,358 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2017-07-25 16:20:04,800 [DEBUG] OnvifProxy.TyphoonCom - done?
+2017-07-25 16:20:04,846 [DEBUG] OnvifProxy.TyphoonCom - Send_HelloTyphoon sent
+2017-07-25 16:20:04,862 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2017-07-25 16:20:04,893 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2017-07-25 16:20:05,421 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2017-07-25 16:20:05,452 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2017-07-25 16:20:06,455 [DEBUG] OnvifProxy.TyphoonCom - Faulted
+2017-07-25 16:20:06,455 [DEBUG] OnvifProxy.TyphoonCom - GetMediaSourcesFromTyphoon called
+2017-07-25 16:20:06,455 [DEBUG] OnvifProxy.TyphoonCom - MsgID- 2
+2017-07-25 16:20:06,678 [DEBUG] OnvifProxy.TyphoonCom - MediaSourceList - 0
+2017-07-25 16:20:06,678 [DEBUG] OnvifProxy.TyphoonCom - MediaSourceList - 4
+2017-07-25 16:28:58,567 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2017-07-25 16:28:59,265 [DEBUG] OnvifProxy.TyphoonCom - done?
+2017-07-25 16:28:59,295 [DEBUG] OnvifProxy.TyphoonCom - Send_HelloTyphoon sent
+2017-07-25 16:28:59,295 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2017-07-25 16:28:59,346 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2017-07-25 16:28:59,842 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2017-07-25 16:28:59,889 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2017-07-25 16:29:03,358 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2017-07-25 16:29:03,374 [DEBUG] OnvifProxy.TyphoonCom - GetMediaSourcesFromTyphoon called
+2017-07-25 16:29:03,374 [DEBUG] OnvifProxy.TyphoonCom - MsgID- 2
+2017-07-25 16:29:03,577 [DEBUG] OnvifProxy.TyphoonCom - MediaSourceList - 0
+2017-07-25 16:29:03,577 [DEBUG] OnvifProxy.TyphoonCom - MediaSourceList - 4
+2017-07-25 16:29:03,577 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2017-07-25 16:29:21,173 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  1
+2017-07-25 16:29:23,404 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  2
+2017-07-25 16:29:24,916 [DEBUG] OnvifProxy.TyphoonCom - sending succeseed
+2017-07-25 16:29:24,963 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  3
+2017-07-25 16:30:42,999 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2017-07-25 16:30:43,411 [DEBUG] OnvifProxy.TyphoonCom - done?
+2017-07-25 16:30:43,442 [DEBUG] OnvifProxy.TyphoonCom - Send_HelloTyphoon sent
+2017-07-25 16:30:43,442 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2017-07-25 16:30:43,489 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2017-07-25 16:30:44,005 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2017-07-25 16:30:44,052 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2017-07-25 16:30:46,643 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2017-07-25 16:30:46,643 [DEBUG] OnvifProxy.TyphoonCom - GetMediaSourcesFromTyphoon called
+2017-07-25 16:30:46,643 [DEBUG] OnvifProxy.TyphoonCom - MsgID- 2
+2017-07-25 16:30:46,846 [DEBUG] OnvifProxy.TyphoonCom - MediaSourceList - 0
+2017-07-25 16:30:46,846 [DEBUG] OnvifProxy.TyphoonCom - MediaSourceList - 4
+2017-07-25 16:30:46,846 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2017-07-25 16:30:50,279 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  1
+2017-07-25 16:30:52,138 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  2
+2017-07-25 16:30:53,183 [DEBUG] OnvifProxy.TyphoonCom - sending succeseed
+2017-07-25 16:30:53,199 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  3
+2017-07-25 16:30:53,252 [DEBUG] OnvifProxy.TyphoonCom - ParseQueueCmd - InvalidOperationException - Объект только для чтения.
+2017-07-25 16:31:02,093 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  2
+2017-07-25 16:31:02,559 [DEBUG] OnvifProxy.TyphoonCom - sending succeseed
+2017-07-25 16:31:02,578 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  3
+2017-07-25 16:31:02,591 [DEBUG] OnvifProxy.TyphoonCom - ParseQueueCmd - InvalidOperationException - Объект только для чтения.
+2017-07-25 16:31:06,285 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  2
+2017-07-25 16:31:06,426 [DEBUG] OnvifProxy.TyphoonCom - sending succeseed
+2017-07-25 16:31:06,473 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  3
+2017-07-25 16:31:06,491 [DEBUG] OnvifProxy.TyphoonCom - ParseQueueCmd - InvalidOperationException - Объект только для чтения.
+2017-07-25 16:31:21,763 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  2
+2017-07-25 16:31:21,856 [DEBUG] OnvifProxy.TyphoonCom - sending succeseed
+2017-07-25 16:31:21,903 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  3
+2017-07-25 16:31:30,362 [DEBUG] OnvifProxy.TyphoonCom - PacketParseEx - Не удается прочитать данные из транспортного соединения: EndReceive может вызываться только один раз для каждой асинхронной операции..
+2017-07-25 16:32:44,269 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2017-07-25 16:32:44,830 [DEBUG] OnvifProxy.TyphoonCom - done?
+2017-07-25 16:32:44,877 [DEBUG] OnvifProxy.TyphoonCom - Send_HelloTyphoon sent
+2017-07-25 16:32:44,877 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2017-07-25 16:32:44,940 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2017-07-25 16:32:45,631 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2017-07-25 16:32:45,678 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2017-07-25 16:32:48,439 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2017-07-25 16:32:48,441 [DEBUG] OnvifProxy.TyphoonCom - GetMediaSourcesFromTyphoon called
+2017-07-25 16:32:48,485 [DEBUG] OnvifProxy.TyphoonCom - MsgID- 2
+2017-07-25 16:32:48,765 [DEBUG] OnvifProxy.TyphoonCom - MediaSourceList - 0
+2017-07-25 16:32:48,765 [DEBUG] OnvifProxy.TyphoonCom - MediaSourceList - 4
+2017-07-25 16:32:48,765 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2017-07-25 16:32:53,186 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  1
+2017-07-25 16:32:55,541 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  2
+2017-07-25 16:32:56,413 [DEBUG] OnvifProxy.TyphoonCom - sending succeseed
+2017-07-25 16:32:56,460 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  3
+2017-07-25 16:33:04,110 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  2
+2017-07-25 16:33:04,358 [DEBUG] OnvifProxy.TyphoonCom - sending succeseed
+2017-07-25 16:33:04,368 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  3
+2017-07-25 16:33:04,487 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  4
+2017-07-25 16:33:08,742 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  2
+2017-07-25 16:33:08,968 [DEBUG] OnvifProxy.TyphoonCom - sending succeseed
+2017-07-25 16:33:09,015 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  3
+2017-07-25 16:33:11,685 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  2
+2017-07-25 16:33:11,701 [DEBUG] OnvifProxy.TyphoonCom - sending succeseed
+2017-07-25 16:33:11,748 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  3
+2017-07-25 16:33:11,792 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  4
+2017-07-25 16:33:13,442 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  2
+2017-07-25 16:33:13,614 [DEBUG] OnvifProxy.TyphoonCom - sending succeseed
+2017-07-25 16:33:13,645 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  3
+2017-07-25 16:33:13,707 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  4
+2017-07-25 16:33:15,261 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  2
+2017-07-25 16:33:15,496 [DEBUG] OnvifProxy.TyphoonCom - sending succeseed
+2017-07-25 16:33:15,527 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  3
+2017-07-25 16:33:48,779 [DEBUG] OnvifProxy.TyphoonCom - GetMediaSourcesFromTyphoon called
+2017-07-25 16:33:48,779 [DEBUG] OnvifProxy.TyphoonCom - MsgID- 9
+2017-07-25 16:33:48,889 [DEBUG] OnvifProxy.TyphoonCom - MediaSourceList - 0
+2017-07-25 16:33:48,889 [DEBUG] OnvifProxy.TyphoonCom - MediaSourceList - 4
+2017-07-25 16:33:49,364 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  2
+2017-07-25 16:33:49,598 [DEBUG] OnvifProxy.TyphoonCom - sending succeseed
+2017-07-25 16:33:49,645 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  3
+2017-07-25 16:34:31,658 [DEBUG] OnvifProxy.TyphoonCom - PacketParseEx - Не удается прочитать данные из транспортного соединения: EndReceive может вызываться только один раз для каждой асинхронной операции..
+2017-07-25 16:34:31,673 [DEBUG] OnvifProxy.TyphoonCom - PacketParseEx - Не удается прочитать данные из транспортного соединения: EndReceive может вызываться только один раз для каждой асинхронной операции..
+2017-07-25 16:34:33,646 [DEBUG] OnvifProxy.TyphoonCom - stream.Write - IOException Не удается записать данные в транспортное соединение: Программа на вашем хост-компьютере разорвала установленное подключение.
+2017-07-25 16:34:33,648 [DEBUG] OnvifProxy.TyphoonCom - Opened
+2017-07-25 16:34:34,661 [DEBUG] OnvifProxy.TyphoonCom - done?
+2017-07-25 16:34:34,677 [DEBUG] OnvifProxy.TyphoonCom - Send_HelloTyphoon sent
+2017-07-25 16:34:34,677 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2017-07-25 16:34:34,943 [DEBUG] OnvifProxy.TyphoonCom - Host closed
+2017-07-25 16:34:40,062 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2017-07-25 16:34:40,189 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2017-07-25 16:34:40,189 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2017-07-25 16:34:41,660 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2017-07-25 16:34:41,660 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2017-07-25 16:34:59,592 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  1
+2017-07-25 16:35:00,958 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  2
+2017-07-25 16:35:01,206 [DEBUG] OnvifProxy.TyphoonCom - sending succeseed
+2017-07-25 16:35:01,218 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  3
+2017-07-25 16:35:01,246 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  4
+2017-07-25 16:35:03,380 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  2
+2017-07-25 16:35:03,661 [DEBUG] OnvifProxy.TyphoonCom - sending succeseed
+2017-07-25 16:35:03,708 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  3
+2017-07-25 16:35:04,969 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  2
+2017-07-25 16:35:05,420 [DEBUG] OnvifProxy.TyphoonCom - sending succeseed
+2017-07-25 16:35:05,467 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  3
+2017-07-25 16:35:05,530 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  4
+2017-07-25 16:35:06,706 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  2
+2017-07-25 16:35:06,721 [DEBUG] OnvifProxy.TyphoonCom - sending succeseed
+2017-07-25 16:35:06,768 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  3
+2017-07-25 16:35:06,831 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  4
+2017-07-25 16:35:07,808 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  2
+2017-07-25 16:35:07,839 [DEBUG] OnvifProxy.TyphoonCom - sending succeseed
+2017-07-25 16:35:07,886 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  3
+2017-07-25 16:35:07,948 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  4
+2017-07-25 16:35:08,514 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  2
+2017-07-25 16:35:08,529 [DEBUG] OnvifProxy.TyphoonCom - sending succeseed
+2017-07-25 16:35:08,576 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  3
+2017-07-25 16:35:08,670 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  4
+2017-07-25 16:35:09,657 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  2
+2017-07-25 16:35:09,868 [DEBUG] OnvifProxy.TyphoonCom - sending succeseed
+2017-07-25 16:35:09,899 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  3
+2017-07-25 16:35:09,961 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  4
+2017-07-25 16:35:11,121 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  2
+2017-07-25 16:35:11,389 [DEBUG] OnvifProxy.TyphoonCom - sending succeseed
+2017-07-25 16:35:11,436 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  3
+2017-07-25 16:35:14,312 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  2
+2017-07-25 16:35:14,556 [DEBUG] OnvifProxy.TyphoonCom - sending succeseed
+2017-07-25 16:35:14,588 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  3
+2017-07-25 16:35:14,728 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  4
+2017-07-25 16:35:41,675 [DEBUG] OnvifProxy.TyphoonCom - GetMediaSourcesFromTyphoon called
+2017-07-25 16:35:41,675 [DEBUG] OnvifProxy.TyphoonCom - MsgID- 8
+2017-07-25 16:35:41,784 [DEBUG] OnvifProxy.TyphoonCom - MediaSourceList - 0
+2017-07-25 16:35:41,784 [DEBUG] OnvifProxy.TyphoonCom - MediaSourceList - 4
+2017-07-25 16:35:42,241 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  5
+2017-07-25 16:36:00,954 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  1
+2017-07-25 16:36:02,479 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  2
+2017-07-25 16:36:02,776 [DEBUG] OnvifProxy.TyphoonCom - sending succeseed
+2017-07-25 16:36:02,823 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  3
+2017-07-25 16:42:46,336 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2017-07-25 16:42:46,743 [DEBUG] OnvifProxy.TyphoonCom - done?
+2017-07-25 16:42:46,793 [DEBUG] OnvifProxy.TyphoonCom - Send_HelloTyphoon sent
+2017-07-25 16:42:46,797 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2017-07-25 16:42:46,829 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2017-07-25 16:42:47,326 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2017-07-25 16:42:47,358 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2017-07-25 16:42:49,665 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2017-07-25 16:42:49,665 [DEBUG] OnvifProxy.TyphoonCom - GetMediaSourcesFromTyphoon called
+2017-07-25 16:42:49,665 [DEBUG] OnvifProxy.TyphoonCom - MsgID- 2
+2017-07-25 16:42:49,868 [DEBUG] OnvifProxy.TyphoonCom - MediaSourceList - 0
+2017-07-25 16:42:49,868 [DEBUG] OnvifProxy.TyphoonCom - MediaSourceList - 4
+2017-07-25 16:42:49,868 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2017-07-25 16:43:01,747 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  1
+2017-07-25 16:43:03,833 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  2
+2017-07-25 16:43:04,677 [DEBUG] OnvifProxy.TyphoonCom - sending succeseed
+2017-07-25 16:43:04,723 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  3
+2017-07-25 16:43:38,530 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  1
+2017-07-25 16:43:40,197 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  2
+2017-07-25 16:44:02,015 [DEBUG] OnvifProxy.TyphoonCom - GetMediaSourcesFromTyphoon called
+2017-07-25 16:44:02,031 [DEBUG] OnvifProxy.TyphoonCom - MsgID- 15
+2017-07-25 16:44:02,125 [DEBUG] OnvifProxy.TyphoonCom - PacketParseEx - Не удается прочитать данные из транспортного соединения: EndReceive может вызываться только один раз для каждой асинхронной операции..
+2017-07-25 16:44:02,312 [DEBUG] OnvifProxy.TyphoonCom - stream.Write - IOException Не удается записать данные в транспортное соединение: Программа на вашем хост-компьютере разорвала установленное подключение.
+2017-07-25 16:44:02,312 [DEBUG] OnvifProxy.TyphoonCom - Opened
+2017-07-25 16:44:02,327 [DEBUG] OnvifProxy.TyphoonCom - ParseQueueCmd - NullReferenceException - Ссылка на объект не указывает на экземпляр объекта.
+2017-07-25 16:44:02,359 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  2
+2017-07-25 16:44:07,271 [DEBUG] OnvifProxy.TyphoonCom - GetMediaSourcesFromTyphoon - Typhoon return null
+2017-07-25 16:44:11,545 [DEBUG] OnvifProxy.TyphoonCom - done?
+2017-07-25 16:44:11,608 [DEBUG] OnvifProxy.TyphoonCom - Send_HelloTyphoon sent
+2017-07-25 16:44:11,608 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2017-07-25 16:44:12,683 [DEBUG] OnvifProxy.TyphoonCom - Host closed
+2017-07-25 16:44:17,698 [DEBUG] OnvifProxy.TyphoonCom - sending succeseed
+2017-07-25 16:44:17,730 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  3
+2017-07-25 16:44:19,833 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2017-07-25 16:44:19,942 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2017-07-25 16:44:19,942 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2017-07-25 16:44:21,133 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2017-07-25 16:44:21,133 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2017-07-25 16:46:36,724 [DEBUG] OnvifProxy.TyphoonCom - ----------------------------------------------------------------
+2017-07-25 16:46:37,146 [DEBUG] OnvifProxy.TyphoonCom - done?
+2017-07-25 16:46:37,184 [DEBUG] OnvifProxy.TyphoonCom - Send_HelloTyphoon sent
+2017-07-25 16:46:37,187 [DEBUG] OnvifProxy.TyphoonCom - Done.
+
+2017-07-25 16:46:37,237 [DEBUG] OnvifProxy.TyphoonCom - (CreateServiceHost)FlagServiceDiscoverable = Discoverable
+2017-07-25 16:46:37,778 [DEBUG] OnvifProxy.TyphoonCom - DiscoveryMode - Discoverable
+2017-07-25 16:46:37,825 [DEBUG] OnvifProxy.TyphoonCom - host.State - Created
+2017-07-25 16:46:40,337 [DEBUG] OnvifProxy.TyphoonCom - Host opened
+2017-07-25 16:46:40,339 [DEBUG] OnvifProxy.TyphoonCom - GetMediaSourcesFromTyphoon called
+2017-07-25 16:46:40,341 [DEBUG] OnvifProxy.TyphoonCom - MsgID- 2
+2017-07-25 16:46:40,554 [DEBUG] OnvifProxy.TyphoonCom - MediaSourceList - 0
+2017-07-25 16:46:40,554 [DEBUG] OnvifProxy.TyphoonCom - MediaSourceList - 4
+2017-07-25 16:46:40,554 [DEBUG] OnvifProxy.TyphoonCom - NetworkVideoTransmitter Service started at http://192.168.1.170/
+2017-07-25 16:46:43,364 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  1
+2017-07-25 16:46:50,833 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  2
+2017-07-25 16:46:52,302 [DEBUG] OnvifProxy.TyphoonCom - sending succeseed
+2017-07-25 16:46:52,349 [DEBUG] OnvifProxy.TyphoonCom - MessageSubComNum =  3

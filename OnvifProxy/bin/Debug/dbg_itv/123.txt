@@ -1,0 +1,44 @@
+Нет WS-Addressing:
+
+POST http://172.16.38.1/onvif/device_service HTTP/1.1
+Connection: close
+Accept-Encoding: gzip,deflate
+Content-Type: application/soap+xml;charset=UTF-8;action="http://www.onvif.org/ver10/device/wsdl/GetCapabilities"
+Content-Length: 289
+Host: 172.16.38.1
+User-Agent: Apache-HttpClient/4.1.1 (java 1.5)
+
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:wsdl="http://www.onvif.org/ver10/device/wsdl">
+   <soap:Header/>
+   <soap:Body>
+      <wsdl:GetCapabilities>
+         <wsdl:Category>All</wsdl:Category>
+      </wsdl:GetCapabilities>
+   </soap:Body>
+</soap:Envelope>
+----------------------------------------
+HTTP/1.1 500 Internal Server Error
+
+
+
+
+Есть WS-Addressing:
+
+POST http://172.16.38.1/onvif/device_service HTTP/1.1
+Connection: close
+Accept-Encoding: gzip,deflate
+Content-Type: application/soap+xml;charset=UTF-8;action="http://www.onvif.org/ver10/device/wsdl/Device/GetCapabilitiesRequest"
+Content-Length: 468
+Host: 172.16.38.1
+User-Agent: Apache-HttpClient/4.1.1 (java 1.5)
+
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:wsdl="http://www.onvif.org/ver10/device/wsdl">
+   <soap:Header xmlns:wsa="http://www.w3.org/2005/08/addressing"><wsa:Action soap:mustUnderstand="1">http://www.onvif.org/ver10/device/wsdl/Device/GetCapabilitiesRequest</wsa:Action></soap:Header>
+   <soap:Body>
+      <wsdl:GetCapabilities>
+         <wsdl:Category>All</wsdl:Category>
+      </wsdl:GetCapabilities>
+   </soap:Body>
+</soap:Envelope>
+----------------------------------------
+HTTP/1.1 200 OK
